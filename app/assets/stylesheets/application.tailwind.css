@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Sign In Styling */
+
+.password-container {
+    position: relative;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    top: 65%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding-right:20px;
+  }
+  
+  /* Style the eye icon when password is visible */
+  .password-visible .toggle-password {
+    color: #007bff;
+  }
+  
+  /* mobile view */
+  
+  @media (max-width: 768px) {
+    .form {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      border-radius: 0;
+    }
+    .form .form-control {
+      border-radius: 0;
+    }
+    .form .form-control:focus {
+      border-color: #007bff;
+      box-shadow: none;
+    }
+    .form .form-control:focus + .input-group-append .input-group-text {
+      border-color: #007bff;
+    }
+    .form .input-group-text {
+      border-radius: 0;
+    }
+    .form .input-group-text i {
+      font-size: 18px;
+    }
+    .form .btn-block {
+      border-radius: 0;
+    }
+    .form h1 {
+      font-size: 32px;
+      text-align: center;
+    }
+  
+    .form p {
+      font-size: 14px;
+      text-align: center;
+    }
+  
+  }
+  
+  .coverside{
+      background-color:#b42429;
+    /* height:100%; */
+  }
+
+
+  /* Sign Up  */
+
+  .password-container {
+    position: relative;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    top: 65%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding-right:20px;
+  }
+  
+  /* Style the eye icon when password is visible */
+  .password-visible .toggle-password {
+    color: #007bff;
+  }
+  
+  /* mobile view */
+  
+  @media (max-width: 768px) {
+    .form {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      border-radius: 0;
+    }
+    .form .form-control {
+      border-radius: 0;
+    }
+    .form .form-control:focus {
+      border-color: #007bff;
+      box-shadow: none;
+    }
+    .form .form-control:focus + .input-group-append .input-group-text {
+      border-color: #007bff;
+    }
+    .form .input-group-text {
+      border-radius: 0;
+    }
+    .form .input-group-text i {
+      font-size: 18px;
+    }
+    .form .btn-block {
+      border-radius: 0;
+    }
+    .form h1 {
+      font-size: 32px;
+      text-align: center;
+    }
+  
+    .form p {
+      font-size: 14px;
+      text-align: center;
+    }
+  
+  }
+
+
+  /* Seach box Styling */
+
+  .searchbox {
+    display: flex;
+    flex-direction: column;
+  }
+
+  section {
+    display:none;
+
+    &:target{
+        display:flex;
+        flex-direction: column;
+    }
+}
+
+.athlete-form-container{
+  padding:100px 50px 100px 50px;
+}
+
+#suggestions-container{
+  border-radius: 5px;
+  background-color: #e5e5e5;
+  color: #242424;
+  margin-left:45px;
+}
+
+article{
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.suggestions-box{
+  padding:10px;
+}
+
+.suggestions-box:hover{
+  background-color: lightseagreen;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Portal</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body>
+    <% if user_signed_in? %>
+      <main class="bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 h-screen flex flex-col">
+          <%= render 'components/navigation' %>
+          <div class="flex-grow overflow-y-auto md:ml-64">
+            <%= yield %>
+          </div>
+      </main>
+    <%else%>
+      <main>
+        <%=yield%>
+      </main>
+    <%end%>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+
+
+
+
+<% @links = ["Athlete", "Info", "Data"] %>
+
+
+<div class="athlete-form-container">
+  <%= render partial: 'components/tabs', locals: { links: @links } %>
+    <%= form_for @athlete do |form| %>
+        <section id="<%=@links.first.downcase%>" class="toggle-section" style="display:flex;">
+        <article class=" p-10 min-h-116 max-w-3xl w-full rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
+                            <h2 class="mt-5 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10"> Search the Athlete </h2>
+                            <p class="mt-5 font-light">Tap next if athlete not registered</p>
+                        <div class="mt-10">
+                            <%= render partial: "search/js_form" , locals: {results:[]} %>
+                        </div>
+                        <div class="mt-16 flex justify-between ">
+                            <span class="p-3 pl-0 font-bold"></span>
+                            <a href="#<%=@links.second.downcase%>" onclick="handleClick(this)" class="toggle-link">
+                            <span class="p-3 text-gray-500  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
+                            Next
+                            </span>
+                            </a>
+                        </div>
+        </article>
+        </section>
+
+
+
+        <section id="<%=@links.second.downcase%>" class="toggle-section">
+        <input type="hidden" id="user-id" value="user.id" class="here">
+        <article class=" p-10 min-h-116 max-w-3xl w-full rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
+                            <h2 class="mt-5 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10"> Athlete Personal Information</h2>
+                            <p class="mt-5 font-light">add contact information of the athlete</p>
+                        <div class="mt-10 flex flex-row">
+                            <input type="text" id="user-username" placeholder="Username" class="m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+                            <%= form.email_field :email,id:"user-email", placeholder:"email@example.com", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"%>
+                        </div>
+                        <div class="flex flex-row">
+                            <%= form.text_field :first_name,id:"user-firstName", placeholder: "John", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>          
+                            <%= form.text_field :last_name,id:"user-lastName", placeholder: "Smith", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>          
+                        </div>
+                        <div class="mt-2 flex flex-col">
+                            <label class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Athlete's Date of Birth</label>
+                            <%= form.date_field :dob,  class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+                        </div>
+                        <p class="mt-5 mb-2 font-light">Contact Information</p>
+                        <hr/>
+                        <div class="mt-5 flex flex-row">
+                            <%= form.text_field :phone, class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", placeholder:"+44..." %>
+                            <%= form.text_field :school_name , class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" , placeholder:"e.g. King's College School." %>
+                        </div>
+                        <div class="mt-5 flex flex-row">
+                            <%= form.text_field :address, class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", placeholder:"e.g. 61 Meridian Wy." %>
+                            <%= form.text_field :city , class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" , placeholder:"e.g. London" %>
+                        </div>
+                        <div class="mt-16 flex justify-between ">
+                            <a href="#<%=@links.first.downcase%>" onclick="handleClick(this)" class="toggle-link">
+                            <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
+                            Back
+                            </span>
+                            <a href="#<%=@links.third.downcase%>" onclick="handleClick(this)" class="toggle-link">
+                            <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
+                            Next
+                            </span>
+                            </a>
+                        </div>
+        </article>
+        </section>
+
+        <section id="<%=@links.third.downcase%>" class="toggle-section">
+        <article class=" p-10 min-h-116 max-w-3xl w-full rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
+                            <h2 class="mt-5 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10"> Athlete's Data </h2>
+                            <p class="mt-5 font-light">Tap next if athlete not registered</p>
+                        <div class="mt-20">
+                            <div class="mt-10 flex flex-row">
+                                <%= form.text_field :height ,placeholder: "5'10''", id:"height", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"%>
+                                <%= form.text_field :weight ,placeholder:"80 lbs",  class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+                            </div>
+                             <div class="mt-10 flex flex-row">
+                                <%= form.text_field :power_of_ten ,placeholder: "Power of ten", id:"height", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"%>
+                                <%= select_tag :level, options_for_select(AthleteProfile.levels.map { |key, value| [AthleteProfile.human_attribute_name("level.#{key}"), value] }, @athlete.level.to_i), class: 'm-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white' %>
+                            </div>
+                        </div>
+                        <div class="mt-16 flex justify-between ">
+                            <a href="#<%=@links.second.downcase%>" onclick="handleClick(this)" class="toggle-link">
+                            <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
+                            Back
+                            </span>
+                            </a>
+                            <%= form.submit "Save", class: "confirm-btn bg-gradient-to-r from-red-500 to-red-800 text-white font-bold py-3 px-4 rounded", style: "transition: background-color 0.3s;" %>
+                            <a href="#<%=@links.third.downcase%>" onclick="handleClick(this)" class="toggle-link">
+                            <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
+                            Submit
+                            </span>
+                            </a>
+                        </div>
+        </article>
+        </section>
+    <%end%>
+</div>
+
