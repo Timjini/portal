@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   
   has_one_attached :avatar
+  has_one :athlete_profile
 
   # searchkick text_middle: %i[username email first_name last_name]
 

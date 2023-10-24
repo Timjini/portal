@@ -7,13 +7,14 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "home#index"
+  root "dashboard#index"
 
 
   resources :athlete_profiles, only: [:new, :create, :index ,:show ,:edit, :update]
   # get '/athlete_users/:id' , to: 'athlete_profiles#athlete_users'
   get 'athlete_users/autocomplete', to: 'athlete_profiles#autocomplete'
   get 'users/:id' , to: 'users#show'
+  get'goals_rewards_achievements', to: 'dashboard#goals_rewards_achievements'
 
   #search 
   post 'search' , to: 'search#index', as: 'search'
