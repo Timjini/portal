@@ -1,0 +1,68 @@
+<div class="h-screen md:flex">
+  <div class="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr coverside i justify-around items-center hidden">
+    <div>
+      <h1 class="text-white font-bold text-4xl font-sans">Chamber For Sport</h1>
+      <p class="text-white mt-1">Let’s Start The Race.</p>
+    </div>
+    <div class="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+    <div class="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+  </div>
+  
+  <div class="form flex flex-wrap md:w-1/2 justify-center py-10 items-center bg-slate-50 dark:bg-transparent dark:bg-gradient-to-tl dark:from-gray-900 dark:to-slate-800  shadow-soft-xl">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="p-32">
+        <div class="space-y-12">
+          <div class="border-b border-gray-900/10 pb-12">
+            <h2 class="text-base font-semibold leading-7 dark:text-white">Profile</h2>
+            <p class="mt-1 text-sm leading-6 text-gray-600">Edit your profile's Information</p>
+            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <div class="sm:col-span-4">
+                <label for="username" class="block text-sm font-medium leading-6 dark:text-white">Username</label>
+                <div class="mt-2">
+                  <div class="flex flex-wrap rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <%= f.text_field :username, autocomplete: "name", class:"block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="email" class="block text-sm font-medium leading-6 dark:text-white">Email address</label>
+                <div class="mt-2">
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+                </div>
+              </div>
+              <div class="col-span-full">
+                <label for="photo" class="block text-sm font-medium leading-6 dark:text-white">Avatar</label>
+                <div class="mt-2 flex flex-wrap items-center gap-x-3">
+                  <%
+=begin%>
+ <%= f.file_field :avatar, class: "avatar-btn" %> 
+<%
+=end%>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="border-b border-gray-900/10 pb-12">
+            <h2 class="text-base font-semibold leading-7 dark:text-white">Password</h2>
+            <div class="mt-2">
+              <div class="flex flex-wrap rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md mb-5">
+                <%= f.password_field :password, class:"block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+              </div>
+              <h2 class="text-base font-semibold leading-7 dark:text-white">Password Confirmation</h2>
+              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                <%=f.password_field :password_confirmation, class:"block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6 flex flex-wrap items-center justify-end gap-x-6">
+          <%= link_to "Login", :back, class:"text-sm font-semibold leading-6 dark:text-white" %>
+          <%= f.submit "Sign Up", class:"rounded-md bg-red-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

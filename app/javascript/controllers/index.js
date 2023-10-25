@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import AvatarController from "./avatar_controller"
+application.register("avatar", AvatarController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
@@ -12,3 +15,9 @@ application.register("search", SearchController)
 
 import SidebarController from "./sidebar_controller"
 application.register("sidebar", SidebarController)
+
+import ThemeController from "./theme_controller"
+application.register("theme", ThemeController)
+
+import VisibilityController from "./visibility_controller"
+application.register("visibility", VisibilityController)

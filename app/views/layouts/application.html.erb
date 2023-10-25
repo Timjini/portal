@@ -8,6 +8,17 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
+  <style>
+        .main-screen{
+      background-image: url('<%= asset_path('run.jpg') %>');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+      height:100%;
+    }
+  </style>
   </head>
 
   <body>
@@ -19,7 +30,7 @@
           </div>
       </main>
     <%else%>
-      <main>
+      <main class="main-screen">
         <%=yield%>
       </main>
     <%end%>
