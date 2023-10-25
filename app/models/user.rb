@@ -8,11 +8,18 @@ class User < ApplicationRecord
   has_one :athlete_profile
 
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :username, length: { minimum: 3, maximum: 20 }
+  # validates :username, length: { minimum: 3, maximum: 20 }
 
   # searchkick text_middle: %i[username email first_name last_name]
 
-  enum role: { athlete: 0, parent_role: 1, child_athlete: 2, coach: 3, admin: 4 }
+   enum role: {
+    'athlete' => 'athlete',
+    'athlete_parent' => 'athlete_parent',
+    'child_athlete' => 'child_athlete',
+    'coach' => 'coach',
+    'admin' => 'admin'
+  }
+
 
   def avatar_thumbnail
     if avatar.attached?

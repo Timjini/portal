@@ -42,32 +42,32 @@ document.addEventListener("DOMContentLoaded", function() {
     })
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    const email = document.getElementById('email');
-    const firstName = document.getElementById('firstName');
-    const lastName = document.getElementById('lastName');
-    const password = document.getElementById('password');
-    const passwordConfirmInput = document.getElementById('passwordConfirm');
-    const nextBtn = document.getElementById('next');
+// document.addEventListener("DOMContentLoaded", function() {
+//     const email = document.getElementById('email');
+//     const firstName = document.getElementById('firstName');
+//     const lastName = document.getElementById('lastName');
+//     const password = document.getElementById('password');
+//     const passwordConfirmInput = document.getElementById('passwordConfirm');
+//     const nextBtn = document.getElementById('next');
 
-    // Function to check if all fields are filled
-    function checkFields() {
-        if (email.value.trim() !== '' && firstName.value.trim() !== '' && lastName.value.trim() !== '' 
-            && password.value.trim() !== '' && passwordConfirmInput.value.trim() !== '' ) {
-            nextBtn.classList.remove('no-visibility');
-        } else {
-            nextBtn.classList.add('no-visibility');
-        }
-    }
+//     // Function to check if all fields are filled
+//     function checkFields() {
+//         if (email.value.trim() !== '' && firstName.value.trim() !== '' && lastName.value.trim() !== '' 
+//             && password.value.trim() !== '' && passwordConfirmInput.value.trim() !== '' ) {
+//             nextBtn.classList.remove('no-visibility');
+//         } else {
+//             nextBtn.classList.add('no-visibility');
+//         }
+//     }
 
-    // Call the checkFields function whenever the user interacts with the fields
-    email.addEventListener('input', checkFields);
-    firstName.addEventListener('input', checkFields);
-    lastName.addEventListener('input', checkFields);
+//     // Call the checkFields function whenever the user interacts with the fields
+//     email.addEventListener('input', checkFields);
+//     firstName.addEventListener('input', checkFields);
+//     lastName.addEventListener('input', checkFields);
 
-    // Call checkFields once to initialize the button visibility
-    checkFields();
-});
+//     // Call checkFields once to initialize the button visibility
+//     checkFields();
+// });
 
 
 function handleClick(element) {
@@ -151,7 +151,7 @@ function handleClick(element) {
                                     </span>
                                     </a>
 
-                                    <a href="#<%=@links.second.downcase%>" id="next" onclick="handleClick(this)" class="toggle-link no-visibility">
+                                    <a href="#<%=@links.second.downcase%>" id="next" onclick="handleClick(this)" class="toggle-link">
                                         <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
                                         Next
                                         </span>
@@ -181,7 +181,7 @@ function handleClick(element) {
                                             <label
                                                 class="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm mr-4">
                                                 <div class="text-teal-600 mr-3">
-                                                <%= form.radio_button :role, 1, id: "parent_role", class:"form-radio focus:outline-none focus:shadow-outline" %>
+                                                <%= form.radio_button :role, 'athlete_parent', id: "parent_role", class:"form-radio focus:outline-none focus:shadow-outline" %>
                                                 </div>
                                                 <div class="select-none text-gray-700">a Parent of an Athlete(s)</div>
                                             </label>
@@ -189,7 +189,7 @@ function handleClick(element) {
                                             <label
                                                 class="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm">
                                                 <div class="text-teal-600 mr-3">
-                                                <%= form.radio_button :role, 0, id: "athlete_role", class:"form-radio focus:outline-none focus:shadow-outline" %>
+                                                <%= form.radio_button :role, 'athlete', id: "athlete_role", class:"form-radio focus:outline-none focus:shadow-outline" %>
                                                 <%= form.radio_button :role, nil, id: "no_role", class:"hidden" %>
                                                 </div>
                                                 <div class="select-none text-gray-700">an Athlete</div>
