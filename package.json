@@ -16,6 +16,9 @@
     "turbolinks": "^5.2.0",
     "yarn": "^1.22.19"
   },
+  "engines": {
+    "node": ">=18.17.1 <19.0.0"
+  },
   "version": "0.1.0",
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
