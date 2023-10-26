@@ -255,3 +255,56 @@ article{
 .no-visibility {
   visibility: hidden;
 }
+
+
+/* LOGIN PAGE ANIAMATION */
+
+@-webkit-keyframes bg-pan-right {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+@keyframes bg-pan-right {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.bg-pan-right {
+-webkit-animation: bg-pan-right 8s both;
+        animation: bg-pan-right 8s both;
+}
+
+
+/* FLASH MESSAGES STYLING */
+
+@keyframes slidein {
+  from {
+    right: -250px;
+    /* width: 300%; */
+  }
+
+  to {
+    right: 0;
+    /* width: 100%; */
+  }
+}
+
+.slide-pop-up{
+  animation-duration: 5s;
+  animation-name: slidein;
+}
+
+.notice{
+
+}
+
+.success{
+
+}
