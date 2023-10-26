@@ -279,10 +279,51 @@ article{
 .bg-pan-right {
 -webkit-animation: bg-pan-right 8s both;
         animation: bg-pan-right 8s both;
+        animation: 8s ease 0s 1 normal both running bg-pan-left;
+}
+
+#box-object-gradient-hor {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  background-image: -webkit-gradient(linear,right top,left top,from(#cc6aa5),color-stop(#3e91cc),to(#2dcca7));
+  background-image: linear-gradient(270deg,#cc6aa5,#3e91cc,#2dcca7);
+  background-size: 600% 100%;
 }
 
 
 /* FLASH MESSAGES STYLING */
+
+#hideMe {
+    -moz-animation: cssAnimation 0s ease-in 2s forwards;
+    /* Firefox */
+    -webkit-animation: cssAnimation 0s ease-in 2s forwards;
+    /* Safari and Chrome */
+    -o-animation: cssAnimation 0s ease-in 2s forwards;
+    /* Opera */
+    animation: cssAnimation 0s ease-in 2s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        padding:0;
+        overflow:hidden;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        padding:0;
+        visibility:hidden;
+    }
+}
 
 @keyframes slidein {
   from {
@@ -296,9 +337,13 @@ article{
   }
 }
 
+
 .slide-pop-up{
-  animation-duration: 5s;
+  animation-duration: 1.5s;
   animation-name: slidein;
+}
+.alert{
+
 }
 
 .notice{
@@ -308,3 +353,6 @@ article{
 .success{
 
 }
+
+
+
