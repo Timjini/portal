@@ -19,5 +19,5 @@ test:
 production:
   <<: *default
   database: <%= ENV["DATABASE_URL"] %>
-  username: dwain
+  username: portal_production
   password: <%= ENV["DWAIN_DATABASE_PASSWORD"] %>
