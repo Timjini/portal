@@ -119,6 +119,8 @@ GEM
       multi_json
     error_highlight (0.5.1)
     erubi (1.12.0)
+    esbuild-rails (0.1.4)
+      rails (>= 6.0.0)
     faraday (2.7.11)
       base64
       faraday-net_http (>= 2.0, < 3.1)
@@ -279,6 +281,7 @@ DEPENDENCIES
   devise (~> 4.9)
   elasticsearch
   error_highlight (>= 0.4.0)
+  esbuild-rails
   jbuilder
   jsbundling-rails
   pg
