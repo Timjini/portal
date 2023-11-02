@@ -96,7 +96,22 @@ html, body {
       font-size: 14px;
       text-align: center;
     }
+
+    .form-container{
+      max-width:400px;
+    }
+
+    .remember{
+      display:block !important;
+    }
+
+    .athlete-form-container{
+      padding:0!important;
+    }
   
+    .search-form{
+      min-width: 300px !important;
+    }
   }
   
   .coverside{
@@ -141,6 +156,9 @@ html, body {
     }
 }
 
+.search-form{
+  min-width:800px;
+}
 .athlete-form-container{
   padding:100px 50px 100px 50px;
 }
@@ -167,6 +185,8 @@ article{
   border-radius: 0.25rem;
   border: 1px solid lightgrey;
   padding:0.75rem;
+  padding-left: 3rem;
+  padding-right:3rem;
   cursor: pointer;
 }
 
@@ -248,7 +268,6 @@ article{
 
 .warning {
   border : 1px solid #d0416a;
-  background-color: #d0416a;
   background-image: linear-gradient(135deg, #d0416a 0%, #c85076 46%, #f9d298 100%);
 }
 
@@ -354,5 +373,16 @@ article{
 
 }
 
+/* LOGIN FORM */
 
+
+.remember{
+  display:flex; 
+  flex-direction:row;
+  align-items:center;
+  justify-content:space-between;
+}
+.form-container{
+  width: 550px;
+}
 

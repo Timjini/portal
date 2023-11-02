@@ -28,34 +28,37 @@ class AthleteProfilesController < ApplicationController
 
         user = User.find_by(email:params[:athlete_profile][:email])
 
-
+      @athlete = AthleteProfile.create!(athlete_params)
       if user.present?
         @athlete = AthleteProfile.create!(athlete_params)
       else
-        user_account = User.new(
-          email:params[:athlete_profile][:email],
-          username:params[:athlete_profile][:username],
-          first_name:params[:athlete_profile][:first_name],
-          last_name:params[:athlete_profile][:first_name],
-          password:"password"
-        )
-        user_account.save!
+        # user_account = User.new(
+        #   email:params[:athlete_profile][:email],
+        #   username:params[:athlete_profile][:username],
+        #   first_name:params[:athlete_profile][:first_name],
+        #   last_name:params[:athlete_profile][:first_name],
+        #   password:"password"
+        # )
+        # user_account.save!
 
-        @athlete = AthleteProfile.new(
-          user_id:user_account.id,
-          first_name: params[:athlete_profile][:first_name],
-          last_name: params[:athlete_profile][:last_name],
-          dob: params[:athlete_profile][:dob],
-          email:params[:athlete_profile][:email],
-          height:params[:athlete_profile][:height],
-          weight: params[:athlete_profile][:weight],
-          phone:params[:athlete_profile][:phone],
-          school_name:params[:athlete_profile][:school_name],
-          address: params[:athlete_profile][:address],
-          city:params[:athlete_profile][:city],
-          power_of_ten: params[:athlete_profile][:power_of_ten],
-          level:params[:athlete_profile][:level]
-        )
+        # @athlete = AthleteProfile.new(
+        #   user_id:user_account.id,
+        #   first_name: params[:athlete_profile][:first_name],
+        #   last_name: params[:athlete_profile][:last_name],
+        #   dob: params[:athlete_profile][:dob],
+        #   email:params[:athlete_profile][:email],
+        #   height:params[:athlete_profile][:height],
+        #   weight: params[:athlete_profile][:weight],
+        #   phone:params[:athlete_profile][:phone],
+        #   school_name:params[:athlete_profile][:school_name],
+        #   address: params[:athlete_profile][:address],
+        #   city:params[:athlete_profile][:city],
+        #   power_of_ten: params[:athlete_profile][:power_of_ten],
+        #   level:params[:athlete_profile][:level]
+        # )
+
+        flash[:alert] = "Player must exist"
+        redirect_to root_path
       end
 
         

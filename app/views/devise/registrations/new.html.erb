@@ -42,32 +42,32 @@ document.addEventListener("DOMContentLoaded", function() {
     })
 });
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     const email = document.getElementById('email');
-//     const firstName = document.getElementById('firstName');
-//     const lastName = document.getElementById('lastName');
-//     const password = document.getElementById('password');
-//     const passwordConfirmInput = document.getElementById('passwordConfirm');
-//     const nextBtn = document.getElementById('next');
+document.addEventListener("DOMContentLoaded", function() {
+    const email = document.getElementById('email');
+    const firstName = document.getElementById('firstName');
+    const lastName = document.getElementById('lastName');
+    const password = document.getElementById('password');
+    const passwordConfirmInput = document.getElementById('passwordConfirm');
+    const nextBtn = document.getElementById('next');
 
-//     // Function to check if all fields are filled
-//     function checkFields() {
-//         if (email.value.trim() !== '' && firstName.value.trim() !== '' && lastName.value.trim() !== '' 
-//             && password.value.trim() !== '' && passwordConfirmInput.value.trim() !== '' ) {
-//             nextBtn.classList.remove('no-visibility');
-//         } else {
-//             nextBtn.classList.add('no-visibility');
-//         }
-//     }
+    // Function to check if all fields are filled
+    function checkFields() {
+        if (email.value.trim() !== '' && firstName.value.trim() !== '' && lastName.value.trim() !== '' 
+            && password.value.trim() !== '' && passwordConfirmInput.value.trim() !== '' ) {
+            nextBtn.classList.remove('no-visibility');
+        } else {
+            nextBtn.classList.add('no-visibility');
+        }
+    }
 
-//     // Call the checkFields function whenever the user interacts with the fields
-//     email.addEventListener('input', checkFields);
-//     firstName.addEventListener('input', checkFields);
-//     lastName.addEventListener('input', checkFields);
+    // Call the checkFields function whenever the user interacts with the fields
+    email.addEventListener('input', checkFields);
+    firstName.addEventListener('input', checkFields);
+    lastName.addEventListener('input', checkFields);
 
-//     // Call checkFields once to initialize the button visibility
-//     checkFields();
-// });
+    // Call checkFields once to initialize the button visibility
+    checkFields();
+});
 
 
 function handleClick(element) {
@@ -86,7 +86,7 @@ function handleClick(element) {
 
 <% @links =  ["Step1", "Step2"] %>
  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |form| %>
-    <main class="sign-up-form ">
+    <main class="sign-up-form">
         <section id="<%=@links.first.downcase%>" class="toggle-section bg-slate-50 dark:bg-transparent dark:bg-gradient-to-tl dark:from-gray-900 dark:to-slate-800 shadow-soft-xl rounded-2xl bg-clip-border " style="display:flex;">
                 <input type="hidden" id="user-id" value="user.id" class="here">
                 <article class=" p-10 flex flex-col justify-between rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
@@ -144,7 +144,10 @@ function handleClick(element) {
                                      <%=form.password_field :password_confirmation,id:"passwordConfirm" , placeholder:"******", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
                                     </div>
                                 </div>
-                                <div class="mt-16 flex justify-between inset-x-0 bottom-0">
+                                <div>
+                                    <a href="/users/sign_in" class="inline mr-3 pb-1 border-b-2 border-blue-200 hover:border-blue-700 m-2 text-sm font-medium text-gray-400 hover:text-blue-300 dark:text-white">I already have an account.</a>
+                                </div>
+                                <div class="mt-8 flex justify-between inset-x-0 bottom-0">
                                     <a href="#<%=@links.first.downcase%>" onclick="handleClick(this)" class="toggle-link no-visibility">
                                     <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
                                     Back
@@ -152,7 +155,7 @@ function handleClick(element) {
                                     </a>
 
                                     <a href="#<%=@links.second.downcase%>" id="next" onclick="handleClick(this)" class="toggle-link">
-                                        <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
+                                        <span class="p-3 px-12 border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
                                         Next
                                         </span>
                                     </a> 
@@ -164,7 +167,7 @@ function handleClick(element) {
                 <article class=" p-10 flex flex-col h-screen justify-between rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
                                 <div class=" mt-2 mb-10">
                                     <h2 class="mt-5 mb-24 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10 text-center"> Personal Information</h2>
-                                    <div class="flex flex-row">
+                                    <div class="flex flex-col">
                                         <div class="mx-1">
                                             <label for="phone" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Phone</label>
                                             <%= form.text_field :phone,id:"user-phone", placeholder: "+44 ", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>          
@@ -199,7 +202,7 @@ function handleClick(element) {
                                 </div>
                                 <div class="flex justify-between">
                                     <a href="#<%=@links.first.downcase%>" onclick="handleClick(this)" class="toggle-link" style="margin-top:15px;">
-                                    <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
+                                    <span class="p-3 px-12 border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
                                     Back
                                     </span>
                                     </a>
