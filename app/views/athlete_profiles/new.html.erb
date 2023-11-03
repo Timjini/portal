@@ -35,11 +35,11 @@ onDocumentReady(function() {
                     data.forEach(user => {
                         const suggestionDiv = document.createElement('div');
                         suggestionDiv.classList.add('suggestions-box');
-                        suggestionDiv.textContent = `${user.username} - ${user.email} - ${user.first_name} - ${user.last_name}`;
+                        suggestionDiv.textContent = `${user.first_name} - ${user.last_name}`;
                         suggestionDiv.setAttribute('data-user-id', user.id);
                         suggestionDiv.addEventListener('click', function() {
                             // Set the selected user's information inside the search box
-                            searchInput.value = `${user.username} - ${user.email} - ${user.first_name} - ${user.last_name}`;
+                            searchInput.value = `${user.first_name} - ${user.last_name}`;
                             // Set the selected user's ID to the hidden input field
                             userIdInput.value = user.id;
 
@@ -182,13 +182,25 @@ onDocumentReady(function() {
                             <h2 class="mt-5 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10"> Athlete's Data </h2>
                             <p class="mt-5 font-light">Tap next if athlete not registered</p>
                         <div class="mt-20">
-                            <div class="mt-10 flex flex-row">
-                                <%= form.text_field :height ,placeholder: "5'10''", id:"height", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"%>
-                                <%= form.text_field :weight ,placeholder:"80 lbs",  class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+                            <div class="mt-10 form-fields">
+                                <div>
+                                    <label for="height" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Height</label>    
+                                    <%= form.text_field :height ,placeholder: "5'10''", id:"height", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"%>
+                                </div>
+                                <div>
+                                    <label for="weight" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Weight</label>    
+                                    <%= form.text_field :weight ,placeholder:"80 lbs",  class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+                                </div>
                             </div>
-                             <div class="mt-10 flex flex-row">
-                                <%= form.text_field :power_of_ten ,placeholder: "Power of ten", id:"height", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"%>
-                                <%= select_tag :level, options_for_select(AthleteProfile.levels.map { |key, value| [AthleteProfile.human_attribute_name("level.#{key}"), value] }, @athlete.level.to_i), class: 'm-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white' %>
+                             <div class="mt-10 form-fields">
+                                <div>
+                                    <label for="weight" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Power Of Ten</label>    
+                                    <%= form.text_field :power_of_ten ,placeholder: "Power of ten", id:"height", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"%>
+                                </div>
+                                <div>
+                                    <label for="weight" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Athlete's Level</label>    
+                                    <%= select_tag :level, options_for_select(AthleteProfile.levels.map { |key, value| [AthleteProfile.human_attribute_name("level.#{key}"), value] }, @athlete.level.to_i), class: 'inputWidth m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white' %>
+                                </div>
                             </div>
                         </div>
                         <div class="mt-16 flex justify-between ">

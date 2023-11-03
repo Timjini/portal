@@ -25,24 +25,32 @@ class AthleteProfilesController < ApplicationController
       @athlete = AthleteProfile.new
     end
 
-    def create
-        params[:athlete_profile][:level] = params[:level].to_i
+   def create
+      params[:athlete_profile][:level] = params[:level].to_i
 
-        user = User.find_by(id:params[:athlete_profile][:user_id])
+      user = User.find_by(id: params[:athlete_profile][:user_id])
+      existing_profile = AthleteProfile.find_by(user_id: params[:athlete_profile][:user_id])
 
-        @athlete = AthleteProfile.create!(athlete_params)
-        
-          if @athlete.save
-            # create_user(@athlete)
-            flash[:success] = "AthleteProfile Profile created!"
-            redirect_to athlete_profile_path(@athlete)
-          else
-            flash[:warning] = "Ooops something went wrong!"
-            render 'new'
-          end
+      if existing_profile.present?
+        flash[:warning] = "Profile already created for this user."
+        redirect_to athlete_profile_path(existing_profile)
+      elsif user.present?
+        @athlete = AthleteProfile.create(athlete_params)
 
-
+        if @athlete.persisted?
+          flash[:success] = "Athlete Profile created!"
+          redirect_to athlete_profile_path(@athlete)
+        else
+          flash[:warning] = "Ooops something went wrong!"
+          render 'new'
+        end
+      else
+        flash[:warning] = "User not found with the provided user_id!"
+        redirect_to new_athlete_profile_path
+      end
     end
+
+
 
     def athlete_users
       # users = User.where(role: ['athlete', 'parent_role', 'child_athlete'])
@@ -54,6 +62,10 @@ class AthleteProfilesController < ApplicationController
       term = params[:term]
       users = User.where(role: ['athlete', 'parent_role', 'child_athlete']).where("username LIKE ? OR email LIKE ? OR first_name LIKE ? OR last_name LIKE ?", "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%").pluck(:id, :username, :email, :first_name, :last_name)
       render json: users.map { |user| { id: user[0], username: user[1], first_name: user[2], last_name: user[3], email: user[4] } }
+    end
+
+    def edit
+      @athlete = AthleteProfile.find(params[:id])
     end
 
 
