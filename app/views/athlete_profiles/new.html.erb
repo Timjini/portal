@@ -1,5 +1,3 @@
-
-
 <script defer>
 function onDocumentReady(callback) {
     if (document.readyState === 'loading') {
@@ -11,6 +9,7 @@ function onDocumentReady(callback) {
 
 onDocumentReady(function() {
     const searchInput = document.getElementById('user-search');
+    console.log(searchInput);
     const userIdInput = document.getElementById('user-id');
     const suggestionsContainer = document.getElementById('suggestions-container');
 
@@ -55,14 +54,14 @@ onDocumentReady(function() {
                                         const userFirstName = document.getElementById('user-firstName');
                                         const userLastName = document.getElementById('user-lastName');
 
-                                        usernameInput.placeholder = userData.username;
-                                        usernameInput.value = userData.username;
-                                        userEmail.placeholder = userData.email;
-                                        userEmail.value = userData.email;
-                                        userFirstName.placeholder = userData.first_name;
-                                        userFirstName.value = userData.first_name;
-                                        userLastName.placeholder = userData.last_name;
-                                        userLastName.value = userData.last_name;
+                                        // usernameInput.placeholder = userData.username;
+                                        // usernameInput.value = userData.username;
+                                        // userEmail.placeholder = userData.email;
+                                        // userEmail.value = userData.email;
+                                        // userFirstName.placeholder = userData.first_name;
+                                        // userFirstName.value = userData.first_name;
+                                        // userLastName.placeholder = userData.last_name;
+                                        // userLastName.value = userData.last_name;
                                     })
                                     .catch(error => {
                                         console.error('Error:', error);
@@ -126,7 +125,7 @@ onDocumentReady(function() {
 </script>
 
 
-<% @links = ["Athlete", "Info", "Data"] %>
+<% @links = ["Athlete", "Data"] %>
 
 
 <div class="athlete-form-container">
@@ -144,6 +143,7 @@ onDocumentReady(function() {
     </div>
     <%= form_for @athlete do |form| %>
         <section id="<%=@links.first.downcase%>" class="toggle-section " style="display:flex;">
+            <%= form.hidden_field :user_id, id: "user-id", class: "here" %>
             <article class="search-form p-10 flex flex-col justify-between rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
                             <div>
                                 <h2 class="mt-5 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10"> Search the Athlete </h2>
@@ -177,53 +177,7 @@ onDocumentReady(function() {
         </section>
 
 
-
         <section id="<%=@links.second.downcase%>" class="toggle-section">
-            <input type="hidden" id="user-id" value="user.id" class="here">
-            <article class=" p-10 min-h-116 max-w-3xl w-full rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
-                                <h2 class="mt-5 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10"> Athlete Personal Information</h2>
-                                <p class="mt-5 font-light">add contact information of the athlete</p>
-                            <div class="mt-10 flex flex-row">
-                                <%
-=begin%>
- <%= form.text_field :username,id:"user-username", placeholder:"Username", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"%> 
-<%
-=end%>
-                                <%= form.email_field :email,id:"user-email", placeholder:"email@example.com", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"%>
-                            </div>
-                            <div class="flex flex-row">
-                                <%= form.text_field :first_name,id:"user-firstName", placeholder: "John", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>          
-                                <%= form.text_field :last_name,id:"user-lastName", placeholder: "Smith", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>          
-                            </div>
-                            <div class="mt-2 flex flex-col">
-                                <label class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Athlete's Date of Birth</label>
-                                <%= form.date_field :dob,  class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
-                            </div>
-                            <p class="mt-5 mb-2 font-light">Contact Information</p>
-                            <hr/>
-                            <div class="mt-5 flex flex-row">
-                                <%= form.text_field :phone, class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", placeholder:"+44..." %>
-                                <%= form.text_field :school_name , class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" , placeholder:"e.g. King's College School." %>
-                            </div>
-                            <div class="mt-5 flex flex-row">
-                                <%= form.text_field :address, class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", placeholder:"e.g. 61 Meridian Wy." %>
-                                <%= form.text_field :city , class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" , placeholder:"e.g. London" %>
-                            </div>
-                            <div class="mt-16 flex justify-between ">
-                                <a href="#<%=@links.first.downcase%>" onclick="handleClick(this)" class="toggle-link">
-                                <span class="p-3 px-12 border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
-                                Back
-                                </span>
-                                <a href="#<%=@links.third.downcase%>" onclick="handleClick(this)" class="toggle-link">
-                                <span class="p-3 px-12 border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
-                                Next
-                                </span>
-                                </a>
-                            </div>
-            </article>
-        </section>
-
-        <section id="<%=@links.third.downcase%>" class="toggle-section">
         <article class=" p-10 min-h-116 max-w-3xl w-full rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
                             <h2 class="mt-5 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10"> Athlete's Data </h2>
                             <p class="mt-5 font-light">Tap next if athlete not registered</p>
@@ -238,7 +192,7 @@ onDocumentReady(function() {
                             </div>
                         </div>
                         <div class="mt-16 flex justify-between ">
-                            <a href="#<%=@links.second.downcase%>" onclick="handleClick(this)" class="toggle-link">
+                            <a href="#<%=@links.first.downcase%>" onclick="handleClick(this)" class="toggle-link">
                             <span class="p-3 px-12 border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
                             Back
                             </span>

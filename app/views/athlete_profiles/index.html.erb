@@ -31,14 +31,14 @@
                 <li class="py-3 sm:py-4">
                     <div class="flex items-center space-x-4">
                         <div class="flex-shrink-0">
-                            <%= image_tag (atl.image_thumbnail) , class:"w-8 h-8 rounded-full"%>
+                            <%= image_tag (atl.user.avatar_thumbnail) , class:"w-8 h-8 rounded-full"%>
                         </div>
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                <%= link_to atl.athlete_full_name, athlete_profile_path(atl) %>
+                                <%= link_to atl.user.full_name, athlete_profile_path(atl) %>
                             </p>
                             <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                            <%= atl.email%>
+                            <%= atl.user.email%>
                             </p>
                         </div>
                         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
