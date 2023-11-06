@@ -1,5 +1,4 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  include AthleteProfileHelper
 
   def new
     @user = User.new
