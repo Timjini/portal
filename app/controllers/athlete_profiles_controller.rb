@@ -1,7 +1,7 @@
 class AthleteProfilesController < ApplicationController
   before_action :authenticate_user!
 
-  include AthleteProfilesHelper
+  # include AthleteProfilesHelper
 
     def index
       if params[:level].present?
