@@ -16,8 +16,8 @@ class User < ApplicationRecord
 
    enum role: {
     'athlete' => 'athlete',
-    'athlete_parent' => 'athlete_parent',
-    'child_athlete' => 'child_athlete',
+    'parent_user' => 'parent_user',
+    'child_user' => 'child_user',
     'coach' => 'coach',
     'admin' => 'admin'
   }

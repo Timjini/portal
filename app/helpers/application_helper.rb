@@ -1,11 +1,11 @@
 module ApplicationHelper
 
    def render_coach_dashboard_if_coach(user)
-        if user&.coach?
+        if user&.coach? || user&.admin?
             render 'dashboard/coach_dashboard'
-        elsif user.role == 'athlete_parent'
+        elsif user.role == 'parent_user'
             render 'dashboard/parent_dashboard'
-        elsif user.role == 'child_athlete'
+        elsif user.role == 'child_user'
             render 'dashboard/child_athlete_dashboard'
         else
             render 'dashboard/athlete_dashboard'

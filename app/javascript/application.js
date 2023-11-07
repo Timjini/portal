@@ -110,3 +110,34 @@ document.addEventListener('turbo:load',function() {
             });
     });
 });
+
+
+// Inside your JavaScript file or script tag
+document.addEventListener('turbo:load', () => {
+    const buttons = document.querySelectorAll('[data-accordion-target]');
+  
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const accordionBodyId = button.getAttribute('data-accordion-target');
+        const accordionFrame = document.getElementById('accordion-frame');
+        const accordionBody = accordionFrame.querySelector(accordionBodyId);
+  
+        if (accordionBody) {
+          const isExpanded = accordionBody.getAttribute('aria-expanded') === 'true';
+  
+          // Toggle the aria-expanded attribute
+          accordionBody.setAttribute('aria-expanded', !isExpanded);
+  
+          // Toggle the hidden class to show/hide the accordion body
+          accordionBody.classList.toggle('hidden');
+  
+          // Rotate the accordion icon based on the expanded state
+          const accordionIcon = button.querySelector('[data-accordion-icon]');
+          if (accordionIcon) {
+            accordionIcon.classList.toggle('rotate-180', !isExpanded);
+          }
+        }
+      });
+    });
+  });
+  

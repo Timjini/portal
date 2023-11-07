@@ -10,12 +10,29 @@
                 Dashboard
             </a>
 
+        <!-- ADMIN USER ITEMS -->
+        <%if current_user.role == 'admin'%>
+        <a href="/accounts/all_accounts" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+                manage_accounts
+            </span>
+            All accounts
+        </a>
+
+        <a href="/subscriptions" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+            wallet
+            </span>
+            Subscriptions
+        </a>
+
         <!-- COACH USER ITEMS -->
-        <%if current_user.role == 'coach'%>
+        <%elsif current_user.role =='coach'%>
+
         
 
         <!-- PARENT USER ITEMS -->
-        <%elsif current_user.role == 'athlete_parent'%>
+        <%elsif current_user.role == 'parent_user'%>
             <a href="/accounts" class="flex gap-2 nav_item">
                 <span class="material-symbols-outlined">
                 supervised_user_circle
@@ -29,7 +46,7 @@
                 Progress
             </a>
         <!-- CHILD USER ITEMS -->
-        <%elsif current_user.role == 'child_athlete'%>
+        <%elsif current_user.role == 'child_user'%>
         <a href="#" class="flex gap-2 nav_item">
                <span class="material-symbols-outlined">
                 bar_chart

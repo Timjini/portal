@@ -69,9 +69,10 @@
                             <span> Add a child</span>
                         </a>
                     </div>
+                    <% if !@accounts.nil?%>
                         <%@accounts.each do |account|%>
                             <a href="/athlete_profiles/<%=account.athlete_profile.id%>" class="child_card">
-                                <%= image_tag(current_user.avatar_thumbnail, class:"")%>
+                                <%= image_tag(account.avatar_thumbnail, class:"")%>
                                 <div>
                                     <div class="px-5 flex flex-col gap-1">
                                         <span class="font-bold text-2xl"> <%=account.full_name%> </span>
@@ -82,6 +83,7 @@
                                 </div>
                             </a>
                         <%end%>
+                    <%end%>
                 </div>
 
 

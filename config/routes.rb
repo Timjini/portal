@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   #Accounts
   resources :accounts, only: [:new, :create, :index ,:show ,:edit, :update]
+  get 'accounts/all_accounts', to: 'accounts#all_accounts'
 
   #search 
   post 'search' , to: 'search#index', as: 'search'
@@ -32,5 +33,6 @@ Rails.application.routes.draw do
   
 
   get '/dashboard' , to: "dashboard#index"
+  get '/subscriptions', to: "home#subscriptions"
 
 end
