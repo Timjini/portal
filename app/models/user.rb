@@ -36,5 +36,20 @@ class User < ApplicationRecord
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
 
+  def age
+    profile = AthleteProfile.find_by(user_id: self.id)
+    
+    if profile && profile.dob
+      dob = profile.dob
+      current_date = Date.today
+      age = current_date.year - dob.year - ((current_date.month > dob.month || (current_date.month == dob.month && current_date.day >= dob.day)) ? 0 : 1)
+      return age
+    end
+
+    # Return nil if there is no valid DOB
+    nil
+  end
+
+
 
 end

@@ -12,9 +12,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     puts "#{params.inspect}"
 
     if @user.persisted? 
-      if @user.user_type == 'athlete'
-        create_athlete_when_user_sign_in(@user)
-      end
       puts "Athelete was successfully created"
       sign_in(@user)  # Manually sign in the user
       flash[:success] = "Athlete Profile created!"

@@ -21,6 +21,10 @@ Rails.application.routes.draw do
   get 'users/:id' , to: 'users#show'
   get'goals_rewards_achievements', to: 'dashboard#goals_rewards_achievements'
 
+
+  #Accounts
+  resources :accounts, only: [:new, :create, :index ,:show ,:edit, :update]
+
   #search 
   post 'search' , to: 'search#index', as: 'search'
   post 'search/suggestions' , to: 'search#suggestions', as: 'search_suggestions'
