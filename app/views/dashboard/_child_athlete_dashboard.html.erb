@@ -1,2 +1,29 @@
             <%= render 'dashboard/dashbord_hero'%>
             <%= render 'dashboard/spot_light'%>
+            <div id="scanner-container"></div>
+            <script src="https://cdn.jsdelivr.net/npm/quagga/dist/quagga.min.js"></script>
+    <script>
+    Quagga.init({
+  inputStream: {
+    name: "Live",
+    type: "LiveStream",
+    target: document.querySelector("#scanner-container"),
+    constraints: {
+      width: 640,
+      height: 480,
+      facingMode: "environment", // or "user" for front camera
+    },
+  },
+  decoder: {
+    readers: ["code_128_reader", "ean_reader", "ean_8_reader", "code_39_reader", "code_39_vin_reader", "codabar_reader", "upc_reader", "upc_e_reader", "i2of5_reader", "2of5_reader", "code_93_reader"],
+  },
+}, function(err) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log("Initialization finished. Ready to start.");
+  Quagga.start();
+});
+
+    </script>

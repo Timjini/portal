@@ -41,13 +41,13 @@
             </a>
             <a href="#" class="flex gap-2 nav_item">
                <span class="material-symbols-outlined">
-                bar_chart
+                credit_card
                 </span>
-                Progress
+                Subscription
             </a>
         <!-- CHILD USER ITEMS -->
         <%elsif current_user.role == 'child_user'%>
-        <a href="#" class="flex gap-2 nav_item">
+        <a href="/athlete_profile/<%=current_user.id%>" class="flex gap-2 nav_item">
                <span class="material-symbols-outlined">
                 bar_chart
                 </span>
@@ -55,7 +55,7 @@
             </a>
         <!-- ATHLETE USER ITEMS -->
         <%elsif current_user.role == 'athlete'%>
-            <a href="#" class="flex gap-2 nav_item">
+            <a href="/athlete_profile/<%=current_user.id%>" class="flex gap-2 nav_item">
                <span class="material-symbols-outlined">
                 bar_chart
                 </span>

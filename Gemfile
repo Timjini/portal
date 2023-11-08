@@ -35,6 +35,10 @@ gem "redis", ">= 4.0.1"
 
 gem "esbuild-rails"
 
+# Qr generator
+gem 'rqrcode'
+
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
