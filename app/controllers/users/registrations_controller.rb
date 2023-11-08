@@ -15,7 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       puts "Athelete was successfully created"
       sign_in(@user)  # Manually sign in the user
       flash[:success] = "Athlete Profile created!"
-      redirect_to dashboard_student_users_path
+      redirect_to root_path
     else
       flash[:alert] = "Oops, something went wrong!"
       puts "Something went wrong"
