@@ -47,20 +47,24 @@
             </a>
         <!-- CHILD USER ITEMS -->
         <%elsif current_user.role == 'child_user'%>
+        <% if !current_user.athlete_profile.nil?%>
         <a href="/athlete_profiles/<%=current_user.athlete_profile.id%>" class="flex gap-2 nav_item">
                <span class="material-symbols-outlined">
                 bar_chart
                 </span>
                 Progress
             </a>
+        <%end%>
         <!-- ATHLETE USER ITEMS -->
         <%elsif current_user.role == 'athlete'%>
+                <% if !current_user.athlete_profile.nil?%>
             <a href="/athlete_profiles/<%=current_user.athlete_profile.id%>" class="flex gap-2 nav_item">
                <span class="material-symbols-outlined">
                 bar_chart
                 </span>
                 Progress
             </a>
+            <%end%>
 
         <%else%>
         <%end%>
