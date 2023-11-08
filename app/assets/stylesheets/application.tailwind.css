@@ -202,6 +202,14 @@ a:hover{opacity: 0.9;}
     background-color: rgba(0, 0, 0, 0.5); /* Overlay background color */
   }
 
+
+  /* FORM STYLING */
+  .form{
+    margin-left: 50px;
+    box-shadow: var(--shadow);
+    border-radius: 5px;
+  }
+
   /* TABLES STYLING */
   table{margin-top: 100px;}
   tr:hover{
