@@ -1,8 +1,17 @@
 <div class="mobile_navigation">
                 <div class="flex flex-row gap-5 justify-center content-center">
-                            <div><span class="material-symbols-outlined icon_span">menu_open</span></div>
+                            <div><span class="material-symbols-outlined icon_span" onclick="something();">menu</span></div>
                             <div><span class="material-symbols-outlined icon_span">notifications</span></div>
                             <div><span class="material-symbols-outlined icon_span">chat</span></div>
                             <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 rounded-full")%>
                 </div>
 </div>
+
+<script>
+function something(){
+    const sidebar = document.querySelector(".main_screen");
+    
+    // sidebar.classList.toggle("show-sidebar");
+    sidebar.style.display = "flex";
+}
+</script>
