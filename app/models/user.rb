@@ -3,10 +3,13 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
+
+      
          
   
   has_one_attached :avatar
   has_one :athlete_profile
+  has_many :qr_codes
   
   validates_uniqueness_of :username
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }

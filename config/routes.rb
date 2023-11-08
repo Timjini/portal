@@ -26,6 +26,11 @@ Rails.application.routes.draw do
   resources :accounts, only: [:new, :create, :index ,:show ,:edit, :update]
   get 'accounts/all_accounts', to: 'accounts#all_accounts'
 
+  #QR Code generation
+  resources :qr_codes, only: [:new, :create, :index, :show]
+  get 'qr_code_generation', to: 'qr_codes#index'
+  get 'scanner' , to: 'qr_codes#scanner'
+
   #search 
   post 'search' , to: 'search#index', as: 'search'
   post 'search/suggestions' , to: 'search#suggestions', as: 'search_suggestions'
