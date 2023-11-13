@@ -3,7 +3,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def new
     @user = User.new
 
-    @role_labels = { "athlete" => "Athlete", "athlete_parent" => "Parent" }
+    # @role_labels = { "athlete" => "Athlete", "athlete_parent" => "Parent" }
   end
 
   def create
@@ -24,7 +24,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   
-  prepend_view_path 'app/views/users'
+  # prepend_view_path 'app/views/users'
 
   private
   def user_params

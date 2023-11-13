@@ -39,6 +39,10 @@ class User < ApplicationRecord
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
 
+  # def name
+  #   "#{first_name} #{last_name}"
+  # end
+
   def age
     profile = AthleteProfile.find_by(user_id: self.id)
     

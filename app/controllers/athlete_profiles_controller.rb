@@ -95,11 +95,11 @@ end
     "#{first_name} #{last_name}"
   end
 
-  def full_name=(name)
-    parts = name.split(" ", 2)
-    self.first_name = parts[0]
-    self.last_name = parts[1]
-  end
+  # def full_name=(name)
+  #   parts = name.split(" ", 2)
+  #   self.first_name = parts[0]
+  #   self.last_name = parts[1]
+  # end
 
   def athlete_params
     params.require(:athlete_profile).permit(:first_name, :last_name, :dob, :height, :weight, :email, :phone, :school_name, :address,:city, :power_of_ten, :level, :image, :user_id)

@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.1.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.1"
+gem 'rails', '~> 7.1.2'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -40,7 +40,9 @@ gem 'rqrcode'
 
 
 gem "image_processing", "~> 1.2"
-gem "aws-sdk-s3", require: false
+gem 'aws-sdk-s3', '~> 1.136', require: false
+
+gem 'activestorage', '7.1.2'
 
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
