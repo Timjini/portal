@@ -1,6 +1,6 @@
 class AthleteProfile < ApplicationRecord
   belongs_to :user , optional: true
-  has_one_attached :image
+  # has_one_attached :image
 
   # validates :last_name, uniqueness: { case_sensitive: false }
   # validates :first_name, uniqueness: { case_sensitive: false }
