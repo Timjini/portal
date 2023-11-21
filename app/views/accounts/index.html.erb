@@ -57,12 +57,8 @@
                     <% if !@accounts.nil? && %>
                         <%@accounts.each do |account|%>
                         <% if !account.athlete_profile.nil? %>
-                            <a href="#" class="child_card">
-                                <% if account.user.avatar_thumbnail.attached? %>
-                                <   %= image_tag(account.user.avatar_thumbnail, class: "") %>
-                                <% else %>
-                                    <%= image_tag("default_avatar.jpg", class: "") %>
-                                <% end %>
+                            <a href="/users/<%=account.id%>" class="child_card">
+                                <%= image_tag(account.avatar_thumbnail, class: "") %>
                                 <div>
                                     <div class="px-5 flex flex-col gap-1">
                                         <span class="font-bold text-2xl"> <%=account.full_name%> </span>

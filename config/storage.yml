@@ -5,6 +5,7 @@ test:
 local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
+
 cloudflare:
   service: S3
   endpoint: <%= "https://#{ENV['CLOUDFLARE_ACCOUNT_ID']}.r2.cloudflarestorage.com" %>

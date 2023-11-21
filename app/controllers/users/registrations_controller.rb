@@ -9,16 +9,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     @user = User.create(user_params)
 
-    puts "#{params.inspect}"
-
     if @user.persisted? 
-      puts "Athelete was successfully created"
+
+      if @user.role == "athlete" 
+        @athlete_profile = AthleteProfile.create(user_id: @user.id)
+        puts "Athlete Profile created**************************"
+      end
+
       sign_in(@user)  # Manually sign in the user
+
       flash[:success] = "Athlete Profile created!"
       redirect_to root_path
     else
       flash[:alert] = "Oops, something went wrong!"
-      puts "Something went wrong"
       render 'new'
     end
   end
