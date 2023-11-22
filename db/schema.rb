@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_08_110342) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_22_101605) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,6 +62,20 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_08_110342) do
     t.index ["user_id"], name: "index_athlete_profiles_on_user_id"
   end
 
+  create_table "check_lists", force: :cascade do |t|
+    t.string "title"
+    t.bigint "level_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["level_id"], name: "index_check_lists_on_level_id"
+  end
+
+  create_table "levels", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "qr_codes", force: :cascade do |t|
     t.boolean "scanned", default: false
     t.string "data"
@@ -70,6 +84,29 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_08_110342) do
     t.datetime "updated_at", null: false
     t.index ["scanned"], name: "index_qr_codes_on_scanned", unique: true
     t.index ["user_id"], name: "index_qr_codes_on_user_id"
+  end
+
+  create_table "user_checklists", force: :cascade do |t|
+    t.bigint "user_level_id", null: false
+    t.bigint "check_list_id", null: false
+    t.bigint "user_id", null: false
+    t.boolean "completed"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["check_list_id"], name: "index_user_checklists_on_check_list_id"
+    t.index ["user_id"], name: "index_user_checklists_on_user_id"
+    t.index ["user_level_id"], name: "index_user_checklists_on_user_level_id"
+  end
+
+  create_table "user_levels", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "level_id", null: false
+    t.string "status", default: "not_started", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["level_id"], name: "index_user_levels_on_level_id"
+    t.index ["user_id"], name: "index_user_levels_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -94,5 +131,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_08_110342) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "athlete_profiles", "users"
+  add_foreign_key "check_lists", "levels"
   add_foreign_key "qr_codes", "users"
+  add_foreign_key "user_checklists", "check_lists"
+  add_foreign_key "user_checklists", "user_levels"
+  add_foreign_key "user_checklists", "users"
+  add_foreign_key "user_levels", "levels"
+  add_foreign_key "user_levels", "users"
 end
