@@ -35,7 +35,8 @@ Rails.application.routes.draw do
   post 'search' , to: 'search#index', as: 'search'
   post 'search/suggestions' , to: 'search#suggestions', as: 'search_suggestions'
 
-  
+  #Kpi routes
+  get '/kpis', to: "kpi#index"
 
   get '/dashboard' , to: "dashboard#index"
   get '/subscriptions', to: "home#subscriptions"
