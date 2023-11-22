@@ -1,23 +1,33 @@
 <% if current_user.role == 'admin' && !@levels.nil? %>
+  <div class="">
+                        <h3 class="text-lg font-bold py-3">Create KPI's</h3>
+                        <a onclick="addChildModal();" class=" flex flex-row mx-auto gap-2">
+                            <span class="material-symbols-outlined">
+                            add_circle
+                            </span>
+                            <span> Add a new KPI</span>
+                        </a>
+                    </div>
   <div class="relative overflow-x-auto">
     <div id="accordion" data-accordion="collapse">
       <% @levels.each do |level| %>
         <div class="mb-4">
           <div class="border-b">
             <div class="flex items-center justify-between p-5 cursor-pointer border rounded-t-xl" data-accordion-target="#accordion-body-<%= level.id %>" aria-expanded="true" aria-controls="accordion-body-<%= level.id %>">
-              <span class="font-medium whitespace-nowrap"><%= level.title %></span>
-              <svg data-accordion-icon class="w-4 h-4 rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-              </svg>
+              <h3 class="font-medium whitespace-nowrap text-2xl"><%= level.title %></h3>
             </div>
           </div>
-          <div id="accordion-body-<%= level.id %>" class=" p-5 border border-b-0 rounded-b-xl">
-            <% level.check_lists.each do |checklist| %>
+          <div id="accordion-body-<%= level.id %>" class="px-5 border border-b-0 rounded-b-xl">
+            <div  class="mb-2">
+              <span class="text-lg">List of KPI's</span>
+            </div>
               <div class="flex items-center mb-4">
-                <input id="checkpoint-<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4">
-                <label for="checkpoint-<%= checklist.id %>" class="ml-2 text-sm font-medium"><%= checklist.title %></label>
-              </div>
+              <ul>
+            <% level.check_lists.each do |checklist| %>
+                <li><%= checklist.title %></li>
             <% end %>
+              </ul>
+              </div>
           </div>
         </div>
       <% end %>
