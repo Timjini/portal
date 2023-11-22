@@ -54,18 +54,22 @@
                 </span>
                 Progress
             </a>
+            
         <%end%>
+        <a href="users/<%=current_user.id%>" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+            face
+            </span>
+            Profile
+        </a>
         <!-- ATHLETE USER ITEMS -->
         <%elsif current_user.role == 'athlete'%>
-                <% if !current_user.athlete_profile.nil?%>
-            <a href="/athlete_profiles/<%=current_user.athlete_profile.id%>" class="flex gap-2 nav_item">
+            <a href="users/<%=current_user.id%>" class="flex gap-2 nav_item">
                <span class="material-symbols-outlined">
-                bar_chart
+                account_circle
                 </span>
-                Progress
+                Profile
             </a>
-            <%end%>
-
         <%else%>
         <%end%>
         <!-- LOGOUT -->

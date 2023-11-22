@@ -60,7 +60,7 @@ class User < ApplicationRecord
   def height
     h = AthleteProfile.find_by(user_id: self.id)
     if h.nil?
-      return 0 
+       return "---"
     else
       h.height
     end
@@ -69,7 +69,7 @@ class User < ApplicationRecord
   def weight
     w = AthleteProfile.find_by(user_id: self.id)
     if w.nil?
-      return 0 
+       return "---"
     else
       w.weight
     end
@@ -78,7 +78,7 @@ class User < ApplicationRecord
   def power_of_ten
     p = AthleteProfile.find_by(user_id: self.id)
     if p.nil?
-      return 0 
+      return "---"
     else
       p.power_of_ten
     end
@@ -88,7 +88,7 @@ class User < ApplicationRecord
   def level
     l = AthleteProfile.find_by(user_id: self.id)
     if l.nil?
-      return 0 
+      return "---"
     else
       l.level
     end
