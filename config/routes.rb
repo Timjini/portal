@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   #Accounts
   resources :accounts, only: [:new, :create, :index ,:show ,:edit, :update] do
   get 'all_accounts', on: :collection, to: 'accounts#all_accounts'
-  post 'create_child_user', to: 'accounts#create_child_user'
+  post 'create_child_user', on: :collection, to: 'accounts#create_child_user'
   end
 
   #QR Code generation

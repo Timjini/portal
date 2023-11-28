@@ -37,7 +37,7 @@ class AccountsController < ApplicationController
         @account.role = 'child_user'
         
         if @account.save
-            create_athlete_child_profile(@account.id, params[:dob], params[:school_name], params[:password], params[:height], params[:weight], params[:power_of_ten], params[:level])
+            create_athlete_child_profile(@account.id, params[:dob], params[:school_name], params[:password], params[:height], params[:weight])
             flash[:success] = "Child user created!"
 
             respond_to do |format|
