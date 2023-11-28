@@ -9,6 +9,8 @@
 /.bundle
 
 # Ignore all environment files (except templates).
+# config file 
+!/config/environments/*.rb
 /.env*
 !/.env*.erb
 
