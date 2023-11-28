@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
   #Kpi routes
   get '/kpis', to: "kpi#index"
+  post '/kpis_create', to: "kpi#create"
 
   get '/dashboard' , to: "dashboard#index"
   get '/subscriptions', to: "home#subscriptions"
