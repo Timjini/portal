@@ -1,0 +1,28 @@
+                <div class="w-120">
+                    <div class="">
+                        <h3 class="text-lg font-bold py-3">My Children</h3>
+                        <a onclick="addChildModal();" class=" flex flex-row mx-auto gap-2">
+                            <span class="material-symbols-outlined">
+                            add_circle
+                            </span>
+                            <span> Add a child</span>
+                        </a>
+                    </div>
+                    <% if !@accounts.nil? && %>
+                        <%@accounts.each do |account|%>
+                        <% if !account.athlete_profile.nil? %>
+                            <a href="/users/<%=account.id%>" class="child_card">
+                                <%= image_tag(account.avatar_thumbnail, class: "child_image") %>
+                                <div>
+                                    <div class="px-5 flex flex-col gap-1">
+                                        <span class="font-bold text-2xl"> <%=account.full_name%> </span>
+                                        <span class="py-2"> <strong>Age :</strong><%=account.age%></span>
+                                        <span> <strong>Username:</strong> <%=account.username%></span>
+                                        <span><strong>Password:</strong> <%=account.child_password%></span>
+                                    </div>
+                                </div>
+                            </a>
+                        <%end%>
+                        <%end%>
+                    <%end%>
+                </div>

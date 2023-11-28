@@ -7,7 +7,9 @@ default: &default
 
 development:
   <<: *default
-  database: portal_development
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -17,7 +19,10 @@ test:
   database: portal_test
 
 production:
-  <<: *default
-  database: <%= ENV["DATABASE_URL"] %>
-  username: portal_production
-  password: <%= ENV["DWAIN_DATABASE_PASSWORD"] %>
+  adapter: postgresql
+  encoding: unicode
+  database: <%= ENV['DB_NAME'] %>
+  pool: 5
+  username: <%= ENV['DB_USER_PROD'] %>
+  password: <%= ENV['DB_PASSWORD_PROD'] %>
+  host: localhost

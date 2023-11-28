@@ -8,7 +8,7 @@ class User < ApplicationRecord
          
   
   has_one_attached :avatar
-  has_one :athlete_profile
+  has_one :athlete_profile , dependent: :destroy
   has_many :qr_codes
   
   validates_uniqueness_of :username
@@ -91,6 +91,15 @@ class User < ApplicationRecord
       return "---"
     else
       l.level
+    end
+  end
+
+  def child_password
+    p = AthleteProfile.find_by(user_id: self.id)
+    if p.nil?
+      return "---"
+    else
+      p.child_password
     end
   end
 

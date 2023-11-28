@@ -568,3 +568,4 @@ article{
 }
 
 .inputWidth{min-width:236px;}
+.child_image{height: 200px;width: 200px;object-fit: cover;border-radius: 50%;}
