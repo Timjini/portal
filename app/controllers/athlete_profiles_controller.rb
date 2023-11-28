@@ -12,15 +12,15 @@ class AthleteProfilesController < ApplicationController
     end
 
 
-    def show
-  @athlete = AthleteProfile.find(params[:id])
-  @user = User.find_by(id: @athlete.user_id)
+  def show
+    @athlete = AthleteProfile.find(params[:id])
+    @user = User.find_by(id: @athlete.user_id)
 
-  respond_to do |format|
-    format.html # Your regular HTML response
-    format.turbo_stream # Turbo Streams response for Turbo Frames
+    respond_to do |format|
+      format.html # Your regular HTML response
+      format.turbo_stream # Turbo Streams response for Turbo Frames
+    end
   end
-end
 
 
     def edit
