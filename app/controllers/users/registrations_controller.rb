@@ -7,9 +7,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    @user = User.create(user_params)
+    @user = User.new
+    @user.email = params[:user][:email]
+    @user.username = params[:user][:username].downcase
+    @user.first_name = params[:user][:first_name]
+    @user.last_name = params[:user][:last_name]
+    @user.role = params[:user][:role]
+    @user.password = params[:user][:password]
+    @user.phone = params[:user][:phone]
+    @user.address = params[:user][:address]
+    @user.save
 
-    if @user.persisted? 
+    if @user.persisted?
 
       if @user.role == "athlete" 
         @athlete_profile = AthleteProfile.create(user_id: @user.id)
