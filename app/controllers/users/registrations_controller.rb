@@ -1,4 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  include AthleteProfilesHelper
 
   def new
     @user = User.new
@@ -21,7 +22,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if @user.persisted?
 
       if @user.role == "athlete" 
-        @athlete_profile = AthleteProfile.create(user_id: @user.id)
+        create_athlete_profile(@user.id)
         puts "Athlete Profile created**************************"
       end
 

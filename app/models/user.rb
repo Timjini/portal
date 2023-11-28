@@ -94,6 +94,15 @@ class User < ApplicationRecord
     end
   end
 
+  def child_password
+    p = AthleteProfile.find_by(user_id: self.id)
+    if p.nil?
+      return "---"
+    else
+      p.child_password
+    end
+  end
+
 
 
 end
