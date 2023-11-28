@@ -32,6 +32,7 @@ class AccountsController < ApplicationController
         @account.last_name = params[:last_name]
         @account.username = params[:username].downcase
         @account.password = params[:password]
+        @account.avatar = params[:avatar]
         @account.address = current_user.address
         @account.role = 'child_user'
         
