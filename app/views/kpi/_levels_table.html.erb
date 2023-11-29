@@ -1,36 +1,65 @@
+
+
+
 <% if current_user.role == 'admin' && !@levels.nil? %>
-  <div class="">
-                        <h3 class="text-lg font-bold py-3">Create KPI's</h3>
-                        <a onclick="addKpi();" class=" flex flex-row mx-auto gap-2">
+<div class="">
+    <h3 class="text-lg font-bold py-3">Create KPI's</h3>
+    <a onclick="addKpi();" class=" flex flex-row mx-auto gap-2">
                             <span class="material-symbols-outlined">
                             add_circle
                             </span>
                             <span> Add a new KPI</span>
-                        </a>
-                    </div>
-  <div class="relative overflow-x-auto">
-    <div id="accordion" data-accordion="collapse">
-      <% @levels.each do |level| %>
-        <div class="mb-4">
-          <div class="border-b">
-            <div class="flex items-center justify-between p-5 cursor-pointer border rounded-t-xl" data-accordion-target="#accordion-body-<%= level.id %>" aria-expanded="true" aria-controls="accordion-body-<%= level.id %>">
-              <h3 class="font-medium whitespace-nowrap text-2xl"><%= level.title %></h3>
-            </div>
-          </div>
-          <div id="accordion-body-<%= level.id %>" class="px-5 border border-b-0 rounded-b-xl">
-            <div  class="mb-2">
-              <span class="text-lg">List of KPI's</span>
-            </div>
-              <div class="flex items-center mb-4">
-              <ul>
-            <% level.check_lists.each do |checklist| %>
-                <li><%= checklist.title %></li>
-            <% end %>
-              </ul>
-              </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+    </a>
+</div>
+<div class="relative overflow-x-auto general_card">
+    <table class="w-full text-sm text-left " style="padding:0;margin:0;">
+        <thead class="text-xs uppercase table_header">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Level
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Check List
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @levels.each do |level| %>
+                <tr class="border-b ">
+                    <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+                        <%=level.title%>
+                    </th>
+                    <td class="px-6 py-4">
+                      <% level.check_lists.each do |checklist| %>
+                          <li style="list-style:none;" class="flex flex-row gap-2">
+                          <span class="material-symbols-outlined">
+                          check_circle
+                          </span>
+                          <div>
+                            <%= checklist.title %>
+                          </div>
+                          </li>
+                      <% end %>
+                    </td>
+                    <td class="px-6 py-4">
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="material-symbols-outlined">
+                            edit
+                        </span>
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </td>
+                </tr>
+            <%end%>
+        </tbody>
+    </table>
+</div>
+<%end%>
