@@ -1,7 +1,7 @@
 class UserLevel < ApplicationRecord
   belongs_to :user
   belongs_to :level
-  has_many :check_lists, dependent: :destroy
+  # has_many :check_lists, dependent: :destroy
 
 
 

@@ -12,14 +12,7 @@
                     </h2>
                     <div id="accordion-collapse-body-<%=level.id%>" class="hidden" aria-labelledby="accordion-collapse-heading-<%=level.id%>">
                         <div class="p-5 border border-b-0 ">
-                        <turbo-frame id="checkbox-frame">
-                            <% level.check_lists.each do |checklist| %>
-                            <div class="flex items-center mb-4">
-                                    <input data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4 " >
-                                    <label for="checklist-<%= checklist.id %>" class="ml-2 text-sm font-medium "><%= checklist.title %></label>
-                            </div>
-                            <% end %>
-                        </turbo-frame>
+                       <%= render 'athlete_profiles/check_list' , level: level %>
                         </div>
                         <div>
                             <form class="mt-2 mb-3">

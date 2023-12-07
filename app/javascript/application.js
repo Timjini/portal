@@ -151,95 +151,139 @@ document.addEventListener('turbo:load', () => {
 
 //   new turbo frame id checklist
 
-document.addEventListener('turbo:load', () => {
-    const checkboxFrame = document.getElementById('checkbox-frame');
+// document.addEventListener('turbo:load', () => {
+//     const checkboxFrame = document.getElementById('checkbox-frame');
   
-    // Use querySelectorAll to get all checkboxes within the checkbox-frame
-    const checkboxes = checkboxFrame.querySelectorAll('[data-checkbox-target]');
+//     // Use querySelectorAll to get all checkboxes within the checkbox-frame
+//     const checkboxes = checkboxFrame.querySelectorAll('[data-checkbox-target]');
   
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('click', () => {
-          const checklistId = checkbox.getAttribute('data-checklist-id');
-          const userId = checkbox.getAttribute('data-user-id');
-        //   const itemId = checkbox.getAttribute('data-item-id');
+//     checkboxes.forEach(checkbox => {
+//         checkbox.addEventListener('click', () => {
+//           const checklistId = checkbox.getAttribute('data-checklist-id');
+//           const userId = checkbox.getAttribute('data-user-id');
+//         //   const itemId = checkbox.getAttribute('data-item-id');
           
-          const postData = {
-            checklist_item: {
-              checklist_id: checklistId,
-              user_id: userId,
-            //   item_id: itemId,
-              completed: checkbox.checked,
-            },
-          };
+//           const postData = {
+//             checklist_item: {
+//               checklist_id: checklistId,
+//               user_id: userId,
+//             //   item_id: itemId,
+//               completed: checkbox.checked,
+//             },
+//           };
       
-          console.log(postData);
+//           console.log(postData);
       
-          if (checkbox.checked) {
-            // Make a POST request for creating a checklist item
-            fetch('/checklist_items', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(postData),
-            })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
-              return response.json();
-            })
-            .then(data => {
-              console.log('POST successful:', data);
-              Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Checklist item added!',
-              });
-            })
-            .catch(error => {
-              console.error('Error during POST request:', error);
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-              });
-            });
-          } else {
-            // Make a DELETE request for deleting a checklist item
-            fetch('/checklist_items', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(postData),
-            })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
-              return response.json();
-            })
-            .then(data => {
-              console.log('DELETE successful:', data);
-              Swal.fire({
-                icon: 'info',
-                title: 'Removed!',
-                text: 'Checklist item Removed!',
-              });
-            })
-            .catch(error => {
-              console.error('Error during DELETE request:', error);
-              Swal.fire({
-                icon: 'error',
-                title: 'Eroor!',
-                text: 'Something went wrong!',
-              });
-            });
-          }
-        });
-      });
+//           if (checkbox.checked) {
+//             // Make a POST request for creating a checklist item
+//             fetch('/checklist_items', {
+//               method: 'POST',
+//               headers: {
+//                 'Content-Type': 'application/json',
+//               },
+//               body: JSON.stringify(postData),
+//             })
+//             .then(response => {
+//               if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//               }
+//               return response.json();
+//             })
+//             .then(data => {
+//               console.log('POST successful:', data);
+//               Swal.fire({
+//                 icon: 'success',
+//                 title: 'Success!',
+//                 text: 'Checklist item added!',
+//               });
+//             })
+//             .catch(error => {
+//               console.error('Error during POST request:', error);
+//               Swal.fire({
+//                 icon: 'error',
+//                 title: 'Oops...',
+//                 text: 'Something went wrong!',
+//               });
+//             });
+//           } else {
+//             // Make a DELETE request for deleting a checklist item
+//             fetch('/checklist_items', {
+//               method: 'POST',
+//               headers: {
+//                 'Content-Type': 'application/json',
+//               },
+//               body: JSON.stringify(postData),
+//             })
+//             .then(response => {
+//               if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//               }
+//               return response.json();
+//             })
+//             .then(data => {
+//               console.log('DELETE successful:', data);
+//               Swal.fire({
+//                 icon: 'info',
+//                 title: 'Removed!',
+//                 text: 'Checklist item Removed!',
+//               });
+//             })
+//             .catch(error => {
+//               console.error('Error during DELETE request:', error);
+//               Swal.fire({
+//                 icon: 'error',
+//                 title: 'Eroor!',
+//                 text: 'Something went wrong!',
+//               });
+//             });
+//           }
+//         });
+//       });
       
       
-  });
+//   });
   
+// Model window
+function addKpi() {
+    const modalFrame = document.getElementById('modal-frame');
+    const modalOpenButtons = document.querySelectorAll('[data-modal-target]');
+    const modalCloseButtons = document.querySelectorAll('[data-modal-close]');
+    const modal = document.getElementById("myModal");
+    const closeBtn = document.getElementsByClassName("close")[0];
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    function showModal() {
+        modal.style.display = "block";
+    }
+
+    function handleModalClose(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+
+    function initializeModal() {
+        showModal();
+
+        closeBtn.onclick = closeModal;
+
+        window.onclick = handleModalClose;
+    }
+
+    modalOpenButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modalId = button.getAttribute('data-modal-target');
+            const modalElement = modalFrame.querySelector(modalId);
+
+            if (modalElement) {
+                modalElement.classList.remove('hidden');
+                initializeModal();
+            }
+        });
+    });
+}
+
+document.addEventListener('turbo:load', addKpi);

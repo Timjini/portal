@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_one :athlete_profile , dependent: :destroy
   has_many :qr_codes
+  has_many :user_checklists
+  has_many :user_levels
   
   validates_uniqueness_of :username
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -100,6 +102,14 @@ class User < ApplicationRecord
       return "---"
     else
       p.child_password
+    end
+  end
+
+  def athlete_profile_url
+    if self.athlete_profile
+      "/athlete_profiles/#{self.athlete_profile.id}"
+    else
+      ""
     end
   end
 

@@ -1,57 +1,59 @@
-   <div id="myModal" class="modal" >
-        <!-- Main modal -->
-        <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full mx-auto">
-            <div class="relative w-full max-w-md max-h-full mx-auto mt-24">
-                            <!-- Modal content -->
-                            <div class="relativerounded-lg shadow  add_child_model">
-                                <button type="button" class="close absolute top-3 right-2.5 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center " data-modal-hide="authentication-modal">
-                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                    </svg>
-                                    <span class="sr-only">Close modal</span>
-                                </button>
-                                <div class="px-6 py-6 lg:px-8">
-                                    <h3 class="mb-4 text-xl font-medium ">Create A New Level.</h3>
-                                    <form class="space-y-6" id="kpi-form">
-                                      <div>
-                                        <label for="username" class="block mb-2 text-sm font-medium">Level's Title</label>
-                                        <input type="text" name="title" id="title" class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Level 1" style="color: gray;" required>
-                                      </div>
-
-                                       <div>
-                                        <label for="degree" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-                                        <select id="degree" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                          <option selected>Choose a Degree</option>
-                                          <option value="0">1- beginner</option>
-                                          <option value="1">2- intermediate</option>
-                                          <option value="2">3- advanced</option>
-                                          <option value="3">4- expert</option>
-                                          <option value="4">5- master</option>
-                                        </select>
-                                      </div>
-                                      
-
-                                      <div id="checklist-container">
-                                        <div class="checklist-item pb-2">
-                                          <label for="username" class="block mb-2 text-sm font-medium">Check List Item</label>
-                                          <input type="text" name="checklist[]" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Checklist item" style="color: gray;" required>
+   <turbo-frame id="modal-frame">
+      <div id="myModal" class="modal" data-modal-target="model" >
+          <!-- Main modal -->
+          <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full mx-auto">
+              <div class="relative w-full max-w-md max-h-full mx-auto mt-24">
+                              <!-- Modal content -->
+                              <div class="relativerounded-lg shadow  add_child_model">
+                                  <button type="button" class="close absolute top-3 right-2.5 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center " data-modal-hide="authentication-modal">
+                                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                      </svg>
+                                      <span class="sr-only">Close modal</span>
+                                  </button>
+                                  <div class="px-6 py-6 lg:px-8">
+                                      <h3 class="mb-4 text-xl font-medium ">Create A New Level.</h3>
+                                      <form class="space-y-6" id="kpi-form">
+                                        <div>
+                                          <label for="username" class="block mb-2 text-sm font-medium">Level's Title</label>
+                                          <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Level 1" style="color: gray;" required>
                                         </div>
-                                      </div>
-                                      
 
-                                      <div class="flex flex-row">
-                                        <a class="material-symbols-outlined mx-auto hover:text-green-500" onclick="addTask()">
-                                          add_task
-                                        </a>
-                                      </div>
+                                        <div>
+                                          <label for="degree" class="block mb-2 text-sm font-medium ">Select an option</label>
+                                          <select id="degree" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option selected>Choose a Degree</option>
+                                            <option value="0">1- beginner</option>
+                                            <option value="1">2- intermediate</option>
+                                            <option value="2">3- advanced</option>
+                                            <option value="3">4- expert</option>
+                                            <option value="4">5- master</option>
+                                          </select>
+                                        </div>
+                                        
 
-                                      <button type="submit" class="w-full focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center btn">Create Kpi Level</button>
-                                    </form>
-                                </div>
-                            </div>
-            </div>
-        </div> 
-    </div>
+                                        <div id="checklist-container">
+                                          <div class="checklist-item pb-2">
+                                            <label for="username" class="block mb-2 text-sm font-medium">Check List Item</label>
+                                            <input type="text" name="checklist[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Checklist item" style="color: gray;" required>
+                                          </div>
+                                        </div>
+                                        
+
+                                        <div class="flex flex-row">
+                                          <a class="material-symbols-outlined mx-auto hover:text-green-500" onclick="addTask()">
+                                            add_task
+                                          </a>
+                                        </div>
+
+                                        <button type="submit" class="w-full focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center btn">Create Kpi Level</button>
+                                      </form>
+                                  </div>
+                              </div>
+              </div>
+          </div> 
+      </div>
+    </turbo-frame>
 
 <script>
   // JavaScript function to show the modal
@@ -82,7 +84,7 @@ function addTask() {
 
   newItem.innerHTML = `
     <label for="username" class="block mb-2 text-sm font-medium">Check List Item</label>
-    <input type="text" name="checklist[]" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Checklist item" style="color: gray;" required>
+    <input type="text" name="checklist[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Checklist item" style="color: gray;" required>
   `;
 
   checklistContainer.appendChild(newItem);

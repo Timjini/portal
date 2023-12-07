@@ -11,7 +11,7 @@
                     <% if !@accounts.nil? && %>
                         <%@accounts.each do |account|%>
                         <% if !account.athlete_profile.nil? %>
-                            <a href="/users/<%=account.id%>" class="child_card">
+                            <a href="<%=account.athlete_profile_url%>" class="child_card">
                                 <%= image_tag(account.avatar_thumbnail, class: "child_image") %>
                                 <div>
                                     <div class="px-5 flex flex-col gap-1">

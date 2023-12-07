@@ -100,17 +100,22 @@ class AthleteProfilesController < ApplicationController
       completed = params[:checklist_item][:completed]
 
       check_list = CheckList.find_by(id: checklist_id)
+      current_level_id = check_list.level_id
+
+      # Check the length of the checklist items
+      checklist_items = CheckList.where(level_id: current_level_id).count
 
         if check_list.nil?
             render json: { status: 'error', message: 'Checklist not found!' }
-          else
+            return
+        end
 
           user_checklist = UserChecklist.find_by(check_list_id: checklist_id, user_id: user_id)
           user_level = UserLevel.find_by(user_id: user_id, level_id: check_list.level_id)
 
-          if user_level.nil?
-            user_level = UserLevel.create(user_id: user_id, user_level_id: check_list.level_id)
 
+          if user_level.nil?
+            user_level = UserLevel.create(user_id: user_id, level_id: check_list.level_id, status: 'in_progress')
           end
 
           if user_checklist.present?
@@ -119,9 +124,11 @@ class AthleteProfilesController < ApplicationController
             UserChecklist.create(check_list_id: checklist_id, user_id: user_id, completed: completed, user_level_id: user_level.id)
           end
 
-        end
+          respond_to do |format|
+            format.turbo_stream
+          end
 
-        render json: { status: 'success', message: 'Checklist updated!' }
+          render json: { status: 'success', message: 'Checklist updated!' }
 
         
     end
@@ -130,15 +137,6 @@ class AthleteProfilesController < ApplicationController
 
   private
 
-  def athlete_full_name
-    "#{first_name} #{last_name}"
-  end
-
-  # def full_name=(name)
-  #   parts = name.split(" ", 2)
-  #   self.first_name = parts[0]
-  #   self.last_name = parts[1]
-  # end
 
   def athlete_params
     params.require(:athlete_profile).permit(:first_name, :last_name, :dob, :height, :weight, :email, :phone, :school_name, :address,:city, :power_of_ten, :level, :image, :user_id)

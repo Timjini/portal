@@ -1,5 +1,5 @@
 class UserChecklist < ApplicationRecord
-  belongs_to :user_level, optional: true
+  # belongs_to :user_level, optional: true
   belongs_to :check_list, optional: true
   belongs_to :user
 
