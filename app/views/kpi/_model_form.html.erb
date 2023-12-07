@@ -18,12 +18,26 @@
                                         <input type="text" name="title" id="title" class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Level 1" style="color: gray;" required>
                                       </div>
 
+                                       <div>
+                                        <label for="degree" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+                                        <select id="degree" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                          <option selected>Choose a Degree</option>
+                                          <option value="0">1- beginner</option>
+                                          <option value="1">2- intermediate</option>
+                                          <option value="2">3- advanced</option>
+                                          <option value="3">4- expert</option>
+                                          <option value="4">5- master</option>
+                                        </select>
+                                      </div>
+                                      
+
                                       <div id="checklist-container">
                                         <div class="checklist-item pb-2">
                                           <label for="username" class="block mb-2 text-sm font-medium">Check List Item</label>
                                           <input type="text" name="checklist[]" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Checklist item" style="color: gray;" required>
                                         </div>
                                       </div>
+                                      
 
                                       <div class="flex flex-row">
                                         <a class="material-symbols-outlined mx-auto hover:text-green-500" onclick="addTask()">
@@ -81,6 +95,11 @@ form.addEventListener('submit', async event => {
   event.preventDefault();
 
   const data = new FormData(form);
+  
+  // Add degree to data
+  const degreeSelect = document.getElementById('degree');
+  const selectedDegree = degreeSelect.value;
+  data.append('degree', selectedDegree);
 
   console.log(data);
   try {

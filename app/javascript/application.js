@@ -2,6 +2,7 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 import "./main"
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 
 document.addEventListener('turbo:load', function () {
@@ -157,10 +158,88 @@ document.addEventListener('turbo:load', () => {
     const checkboxes = checkboxFrame.querySelectorAll('[data-checkbox-target]');
   
     checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('click', () => {
-        console.log('Checkbox clicked:', checkbox.checked);
-        // You can perform additional actions when a checkbox is clicked
+        checkbox.addEventListener('click', () => {
+          const checklistId = checkbox.getAttribute('data-checklist-id');
+          const userId = checkbox.getAttribute('data-user-id');
+        //   const itemId = checkbox.getAttribute('data-item-id');
+          
+          const postData = {
+            checklist_item: {
+              checklist_id: checklistId,
+              user_id: userId,
+            //   item_id: itemId,
+              completed: checkbox.checked,
+            },
+          };
+      
+          console.log(postData);
+      
+          if (checkbox.checked) {
+            // Make a POST request for creating a checklist item
+            fetch('/checklist_items', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(postData),
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('POST successful:', data);
+              Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Checklist item added!',
+              });
+            })
+            .catch(error => {
+              console.error('Error during POST request:', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+              });
+            });
+          } else {
+            // Make a DELETE request for deleting a checklist item
+            fetch('/checklist_items', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(postData),
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('DELETE successful:', data);
+              Swal.fire({
+                icon: 'info',
+                title: 'Removed!',
+                text: 'Checklist item Removed!',
+              });
+            })
+            .catch(error => {
+              console.error('Error during DELETE request:', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Eroor!',
+                text: 'Something went wrong!',
+              });
+            });
+          }
+        });
       });
-    });
+      
+      
   });
   

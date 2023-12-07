@@ -1,5 +1,6 @@
 class AthleteProfilesController < ApplicationController
   before_action :authenticate_user!
+  skip_forgery_protection only: [:create, :checked_items]
 
   # include AthleteProfilesHelper
 
@@ -94,8 +95,38 @@ class AthleteProfilesController < ApplicationController
 
     # Routes for Users Checked items 
     def checked_items
+      checklist_id = params[:checklist_item][:checklist_id]
+      user_id = params[:checklist_item][:user_id]
+      completed = params[:checklist_item][:completed]
 
+      check_list = CheckList.find_by(id: checklist_id)
+
+        if check_list.nil?
+            render json: { status: 'error', message: 'Checklist not found!' }
+          else
+
+          user_checklist = UserChecklist.find_by(check_list_id: checklist_id, user_id: user_id)
+          user_level = UserLevel.find_by(user_id: user_id, level_id: check_list.level_id)
+
+          if user_level.nil?
+            user_level = UserLevel.create(user_id: user_id, user_level_id: check_list.level_id)
+
+          end
+
+          if user_checklist.present?
+            user_checklist.update(completed: completed)
+          else
+            UserChecklist.create(check_list_id: checklist_id, user_id: user_id, completed: completed, user_level_id: user_level.id)
+          end
+
+        end
+
+        render json: { status: 'success', message: 'Checklist updated!' }
+
+        
     end
+
+
 
   private
 

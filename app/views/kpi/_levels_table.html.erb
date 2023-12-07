@@ -22,7 +22,7 @@
                     Check List
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    
+                    Degree
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Action
@@ -48,9 +48,11 @@
                       <% end %>
                     </td>
                     <td class="px-6 py-4">
+                        <%=level.degree%>
                     </td>
                     <td class="px-6 py-4">
-                        <span class="material-symbols-outlined">
+                    <!-- hidden until edit is implemented -->
+                        <span class="material-symbols-outlined" style="visibility:hidden">
                             edit
                         </span>
                     <a href="kpis/<%=level.id%>" class="material-symbols-outlined">

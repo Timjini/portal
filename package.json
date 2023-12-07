@@ -4,13 +4,14 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/turbo-rails": "^7.1.0",
+    "@rails/actioncable": "^6.0.0",
+    "@rails/activestorage": "^6.0.0",
     "esbuild": "^0.14.11",
     "postcss": "^8.4.31",
+    "sweetalert2": "^11.10.1",
     "tailwindcss": "^3.3.3",
     "turbolinks": "^5.2.0",
-    "yarn": "^1.22.19",
-    "@rails/actioncable": "^6.0.0",
-    "@rails/activestorage": "^6.0.0"
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",

@@ -8,10 +8,13 @@ class KpiController < ApplicationController
     end
 
     def create
+        puts "params: #{params.inspect}"
+
         title = params[:title]
+        degree = params[:degree].to_i
         checklist_items = params[:checklist]
 
-        @level = Level.new(title: title)
+        @level = Level.new(title: title , degree: degree)
        
         if @level.save
 
@@ -22,7 +25,7 @@ class KpiController < ApplicationController
             flash[:success] = "Level created!"
 
             respond_to do |format|
-                # format.html { redirect_to kpi_index_path }
+                # format.html { redirect_to kpis_path }
                 format.json { render json: { status: 'success', message: 'Level created!' } }
             end
             
@@ -55,6 +58,6 @@ class KpiController < ApplicationController
     private
 
     def level_params
-        params.require(:kpi).permit(:title)
+        params.require(:kpi).permit(:title, :degree)
     end
 end

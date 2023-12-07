@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'athlete_users/autocomplete', to: 'athlete_profiles#autocomplete'
   get 'users/:id' , to: 'users#show'
   get'goals_rewards_achievements', to: 'dashboard#goals_rewards_achievements'
+  post '/checklist_items', to: 'athlete_profiles#checked_items'
 
 
   #Accounts
