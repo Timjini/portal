@@ -31,4 +31,38 @@
                                 </h5>
                             <%end%>
     </div>
+
+    <button type="submit" id="send" onclick="sendEmail()">Send Email</button>
 </div>
+
+
+<script>
+
+const sendEmail = () => {
+    const email = document.getElementById('send').value;
+
+    // post to send_email
+
+    fetch('/send_email_test', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email
+        })
+    })
+
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('Success:', data);
+    })
+
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+}
+
+    
+</script>

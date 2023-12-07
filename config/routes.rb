@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "dashboard#index"
 
+  post '/send_email_test', to: 'home#send_email_test'
+
 
   resources :athlete_profiles, only: [:new, :create, :index ,:show ,:edit, :update]
   # get '/athlete_users/:id' , to: 'athlete_profiles#athlete_users'

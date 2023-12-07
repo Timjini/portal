@@ -27,6 +27,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
 
       sign_in(@user)  # Manually sign in the user
+      UserMailer.test_email.deliver_now
 
       flash[:success] = "Athlete Profile created!"
       redirect_to root_path
