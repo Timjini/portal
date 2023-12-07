@@ -1,5 +1,5 @@
 class KpiController < ApplicationController 
-    skip_forgery_protection only: [:create]
+    skip_forgery_protection only: [:create, :destroy]
 
     before_action :authenticate_user!
 
@@ -36,6 +36,20 @@ class KpiController < ApplicationController
 
         end
     end
+
+    def destroy
+        @level = Level.find(params[:id])
+        # destroy level
+        if @level.destroy
+            flash[:success] = "Level deleted!"
+            redirect_to kpis_path
+        else
+            flash[:alert] = "Oops, something went wrong!"
+            redirect_to kpis_path
+        end
+    end
+
+
 
 
     private

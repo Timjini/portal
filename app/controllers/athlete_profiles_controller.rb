@@ -13,6 +13,7 @@ class AthleteProfilesController < ApplicationController
 
 
   def show
+    @levels = Level.all
     @athlete = AthleteProfile.find(params[:id])
     @user = User.find_by(id: @athlete.user_id)
 
@@ -38,8 +39,9 @@ class AthleteProfilesController < ApplicationController
       existing_profile = AthleteProfile.find_by(user_id: params[:athlete_profile][:user_id])
 
       if existing_profile.present?
-        flash[:warning] = "Profile already created for this user."
-        redirect_to athlete_profile_path(existing_profile)
+        existing_profile.update(athlete_params)
+        flash[:warning] = "Account has been updated!"
+        redirect_to dashboard_path
       elsif user.present?
         @athlete = AthleteProfile.create(athlete_params)
 
@@ -87,6 +89,12 @@ class AthleteProfilesController < ApplicationController
       else
         render :edit
       end
+    end
+
+
+    # Routes for Users Checked items 
+    def checked_items
+
     end
 
   private

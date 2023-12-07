@@ -112,6 +112,11 @@ document.addEventListener('turbo:load',function() {
 });
 
 
+  // Add the checked function
+  function checkedItem(checklistId) {
+    console.log(checklistId);
+}
+
 // Inside your JavaScript file or script tag
 document.addEventListener('turbo:load', () => {
     const buttons = document.querySelectorAll('[data-accordion-target]');
@@ -139,6 +144,23 @@ document.addEventListener('turbo:load', () => {
         }
       });
     });
+   
   });
   
 
+//   new turbo frame id checklist
+
+document.addEventListener('turbo:load', () => {
+    const checkboxFrame = document.getElementById('checkbox-frame');
+  
+    // Use querySelectorAll to get all checkboxes within the checkbox-frame
+    const checkboxes = checkboxFrame.querySelectorAll('[data-checkbox-target]');
+  
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('click', () => {
+        console.log('Checkbox clicked:', checkbox.checked);
+        // You can perform additional actions when a checkbox is clicked
+      });
+    });
+  });
+  
