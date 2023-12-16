@@ -6,6 +6,13 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
+    # white list 
+  config.hosts << /[a-z0-9]+\.c9users\.io/
+  config.hosts << /[a-z0-9]+\.c9\.io/
+  config.hosts << "chambersforsport.net"
+  config.hosts << "chambersforsport.com"
+  config.hosts << "club.chambersforsport.com"
+
   # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 
   # Eager load code on boot. This eager loads most of Rails and
