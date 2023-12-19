@@ -16,8 +16,14 @@ module Portal
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
 
-    config.action_controller.default_url_options = { host: 'chambersforsport.net', protocol: 'https' }
+    #config.action_controller.default_url_options = { host: 'chambersforsport.net', protocol: 'https' }
     config.action_mailer.default_url_options = { host: 'club.chambersforsport.com', protocol: 'https' }
+
+    # production
+    config.action_controller.default_url_options = { host: 'chambersforsport.net' }
+    
+    # development 
+    # config.action_controller.default_url_options = { host: 'localhost:3000' } 
 
     # Configuration for the application, engines, and railties goes here.
     #
