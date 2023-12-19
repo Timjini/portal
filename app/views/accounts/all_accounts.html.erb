@@ -1,6 +1,6 @@
 
 <%if current_user.role == 'admin'%>
-<%=render 'components/drawer',locals: { account: @account }%>
+<%=render 'components/back_button'%>
 <div class="relative overflow-x-auto">
     <table class="w-full text-sm text-left ">
         <thead class="text-xs uppercase ">
@@ -34,12 +34,14 @@
                         <%= account.role%>
                     </td>
                     <td class="px-6 py-4">
-                        <span class="material-symbols-outlined">
+                        <a class="material-symbols-outlined" href="/edit_user/<%=account.id%>">
                             edit
-                        </span>
-                        <span class="material-symbols-outlined">
+                        </a>
+                        <turbo-frame id="user-frame">
+                        <a class="material-symbols-outlined delete-user-button" data-user-id="<%= account.id %>">
                             delete
-                        </span>
+                        </a>
+                        </turbo-frame>
                     </td>
                 </tr>
             <%end%>
@@ -48,3 +50,48 @@
 </div>
 
 <%end%>
+
+<script>
+document.addEventListener('turbo:load', () => {
+  const deleteUserButtons = document.querySelectorAll('.delete-user-button');
+
+  deleteUserButtons.forEach(button => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+
+      const userId = button.getAttribute('data-user-id');
+      const confirmation = confirm('Are you sure you want to delete this user?');
+
+      if (confirmation) {
+        try {
+          const res = await fetch(`/delete_user/${userId}`, { method: 'DELETE' });
+
+          if (res.ok) {
+            Turbo.visit(`all_accounts`, { action: 'replace' });
+            Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: 'User deleted successfully!',
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops!',
+              text: 'User deletion failed. Please try again.',
+            });
+          }
+        } catch (error) {
+          console.error('Error during delete:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'An error occurred. Please try again later.',
+          });
+        }
+      }
+    });
+  });
+});
+
+
+</script>

@@ -287,3 +287,4 @@ function addKpi() {
 }
 
 document.addEventListener('turbo:load', addKpi);
+

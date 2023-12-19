@@ -10,8 +10,8 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_one :athlete_profile , dependent: :destroy
   has_many :qr_codes
-  has_many :user_checklists
-  has_many :user_levels
+  has_many :user_checklists, dependent: :destroy
+  has_many :user_levels, dependent: :destroy
   
   validates_uniqueness_of :username
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
