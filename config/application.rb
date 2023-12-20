@@ -18,7 +18,7 @@ module Portal
 
     #config.action_controller.default_url_options = { host: 'chambersforsport.net', protocol: 'https' }
     # config.action_mailer.default_url_options = { host: 'club.chambersforsport.com', protocol: 'https' }
-    config.action_mailer.default_url_options = { host: 'localhost:3000'}
+    config.action_mailer.default_url_options = { host: 'chambersforsport.net' }
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.perform_deliveries = true
 
