@@ -23,7 +23,7 @@ module Portal
     config.action_controller.default_url_options = { host: 'chambersforsport.net' }
     
     # development 
-    # config.action_controller.default_url_options = { host: 'localhost:3000' } 
+    #config.action_controller.default_url_options = { host: 'localhost:3000' } 
 
     # Configuration for the application, engines, and railties goes here.
     #
