@@ -55,4 +55,9 @@ class AthleteProfile < ApplicationRecord
   def full_address
     "#{address} #{city}"
   end
+
+  def check_lists
+    user = User.find(self.user_id)
+    user.user_checklists
+  end
 end

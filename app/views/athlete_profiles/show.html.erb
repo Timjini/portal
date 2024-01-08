@@ -7,7 +7,7 @@
                             <div class="profile-container">
                                 <div>
                                 <%= image_tag(@athlete.user.avatar_thumbnail, class:"w-24 h-24 object-cover rounded-full")%>
-                                
+                                <%@athlete.check_lists.inspect%>
                                 
                                 <div class="flex items-center">
                                     <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">

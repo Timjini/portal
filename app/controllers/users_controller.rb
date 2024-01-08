@@ -8,7 +8,6 @@ class UsersController < ApplicationController
     end
 
     def show
-
         #Levels 
         @levels = Level.all
 

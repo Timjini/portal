@@ -61,7 +61,10 @@ end
   #Kpi routes
   get '/kpis', to: "kpi#index"
   post '/kpis_create', to: "kpi#create"
-  get '/kpis/:id', to: "kpi#destroy", as: 'kpi_destroy'
+  delete '/kpis/:id', to: "kpi#destroy"
+  get 'kpis/:id/edit', to: "kpi#edit", as: 'edit_kpi'
+  patch '/kpis/:id/edit', to: "kpi#update", as: 'update_kpi'
+
 
   get '/dashboard' , to: "dashboard#index"
   get '/subscriptions', to: "home#subscriptions"

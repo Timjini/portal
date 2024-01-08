@@ -1,0 +1,110 @@
+<!-- Your HTML form for editing a KPI -->
+<div class="">
+   <h3 class="text-lg font-bold py-3">Create KPI's</h3>
+   <a onclick="addKpi();" class=" flex flex-row mx-auto gap-2">
+   <span class="material-symbols-outlined">
+   add_circle
+   </span>
+   <span> Update KPI</span>
+   </a>
+</div>
+<form id="editKpiForm" class="flex flex-col" style="min-height:80vh; padding-bottom:20px;">
+  <div class="flex flex-row ">
+    <div class="pr-4">
+    <label for="title" class="block mb-2 text-sm font-medium "> KPI Title:</label>
+    <input type="text" id="title" name="title" value="<%= @level.title %>" class="m-2 rounded  border block flex-1 min-w-0 w-full text-sm  p-2.5 table_header" required>
+    </div>
+    <div class="pr-4">
+      <label for="category" class="block mb-2 text-sm font-medium ">KPI Category:</label>
+      <select id="category" name="category" class="m-2 rounded border block flex-1 min-w-0 w-full text-sm p-2.5 table_header" >
+        <option value="" <%= 'selected' if @level.category.blank? %>>Please Select</option> <!-- Add this line for an empty default option -->
+        <% Level.categories.each do |key, value| %>
+          <option value="<%= value %>" <%= 'selected' if @level.category == value %>><%= key.humanize %></option>
+        <% end %>
+      </select>
+    </div>
+
+      <div class="pr-4">
+    <label for="degree" class="block mb-2 text-sm font-medium ">KPI Level:</label>
+    <select id="degree" name="degree" class="m-2 rounded  border block flex-1 min-w-0 w-full text-sm  p-2.5 table_header" >
+      <option value="" <%= 'selected' if @level.degree.blank? %>>Please Select</option>
+      <% Level.degrees.each do |key, value| %>
+        <option value="<%= value %>" <%= 'selected' if @level.degree == value %>><%= key.humanize %></option>
+      <% end %>
+    </select>
+  </div>
+  </div>
+
+  <%if !@check_list.nil?%>
+   <div class="flex flex-col">
+      <label for="check_list" class="block mb-2 text-sm font-medium "> KPI Check List:</label>
+          <div class="check_list_container">
+
+    <% @check_list.each do |check| %>       
+        <div class="pr-2">
+        <textarea type="text" id="check_list_<%=check.id%>" name="check_list[]" value="<%= check.title %>" class="block  m-2 rounded  border block flex-1 min-w-0 w-96 text-sm  p-2.5 table_header h-36"  required><%=check.title%></textarea>
+        <input type="hidden" name="checklist_ids[]" value="<%= check.id %>">
+        </div>
+    <% end %>
+    </div>
+     </div>
+  <% end %>
+
+  <div class="flex flex-row mt-auto gap-6">
+    <button type="button" class="btn" onclick="updateKpi()">Update KPI</button>
+    <a class="btnSecondary" href="/kpis"> Return </a>
+  </div>
+</form>
+
+<script>
+   function updateKpi() {
+    const form = document.getElementById('editKpiForm');
+    const formData = new FormData(form);
+
+    const kpiId = '<%= @level.id %>';
+    const url = `/kpis/${kpiId}/edit`;
+
+    // Convert checklist data to an array of objects
+    const checklistData = [];
+    document.querySelectorAll('[name^="checklist_ids"]').forEach((idInput, index) => {
+      const titleInput = document.querySelector(`#check_list_${idInput.value}`);
+      checklistData.push({ id: idInput.value, title: titleInput.value });
+    });
+
+    // Append the JSON string to the form data
+    formData.append('checklist_data', JSON.stringify(checklistData));
+
+fetch(url, {
+  method: 'PATCH',
+  body: formData
+})
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'success') {
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Level Edited successfully!',
+      }).then((result) => {
+        // Check if the user clicked the "OK" button
+        if (result.isConfirmed) {
+          // Reload the window
+          window.location.href = data.redirect_url || '/kpis';
+        }
+      });
+    } else {
+      // Handle the case where data.status is false
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Failed to edit level.',
+      });
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Optionally, handle errors, e.g., show an alert or update UI
+  });
+   }
+
+</script>
