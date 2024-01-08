@@ -1,0 +1,26 @@
+<div class="text-sm font-medium text-center text-gray-500  border-gray-200 dark:text-gray-400 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px">
+        <% links.each do |link| %>
+            <li class="mr-2">
+                <a href="#<%= link.downcase %>" onclick="handleClick(this)" class="toggle-link inline-block p-4 border-b-2 border-transparent rounded-t-lg  hover:border-gray-300 dark:hover:text-gray-300"
+                   aria-current="page">
+                    <%= link %>
+                </a>
+            </li>
+        <% end %>
+    </ul>
+</div>
+
+<script>
+  function handleClick(element) {
+    // Remove active class from all links
+    var links = document.querySelectorAll('.toggle-link');
+    links.forEach(function(link) {
+      link.classList.remove('active', 'text-blue-600', 'border-blue-600', 'dark:text-blue-500', 'dark:border-blue-500');
+      console.log(link.classList);
+    });
+
+    // Apply active class to the clicked link
+    element.classList.add('active', 'text-blue-600', 'border-blue-600', 'dark:text-blue-500', 'dark:border-blue-500');
+  }
+</script>

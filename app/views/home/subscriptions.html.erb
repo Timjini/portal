@@ -1,0 +1,41 @@
+<%if current_user.role == 'admin' && !@subscriptions.nil?%>
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left ">
+        <thead class="text-xs uppercase ">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    User's Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Email / Username
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Role
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @subscriptions.each do |account|%>
+            <tr class="border-b ">
+                <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+                    <%=account.full_name%>
+                </th>
+                <td class="px-6 py-4">
+                    <%= account.email %> / <%= account.username %>
+                </td>
+                <td class="px-6 py-4">
+                    <%= account.role%>
+                </td>
+                <td class="px-6 py-4 flex flex-row gap-1">
+                       <div class="bg-green-400 h-4 w-4 rounded-full"></div> <span>Active</span>
+                </td>
+            </tr>
+            <%end%>
+        </tbody>
+    </table>
+</div>
+
+<%end%>

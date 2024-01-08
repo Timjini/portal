@@ -1,0 +1,129 @@
+<% if current_user.role == 'admin' && !@levels.nil? %>
+<div class="">
+   <h3 class="text-lg font-bold py-3">Create KPI's</h3>
+   <a onclick="addKpi();" class=" flex flex-row mx-auto gap-2">
+   <span class="material-symbols-outlined">
+   add_circle
+   </span>
+   <span> Add a new KPI</span>
+   </a>
+</div>
+<div class="relative overflow-x-auto general_card">
+   <table class="w-full text-sm text-left " style="padding:0;margin:0;">
+      <thead class="text-xs uppercase table_header">
+         <tr>
+            <th scope="col" class="px-6 py-3">
+               Level
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Check List
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Level
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Category
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Action
+            </th>
+         </tr>
+      </thead>
+      <tbody>
+         <% @levels.each do |level| %>
+         <tr class="border-b border-gray-400">
+            <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+               <%=level.title%>
+            </th>
+            <td class="px-6 py-4">
+               <% level.check_lists.each do |checklist| %>
+               <li style="list-style:none;" class="flex flex-row gap-2">
+                  <span class="material-symbols-outlined">
+                  check_circle
+                  </span>
+                  <div>
+                     <%= checklist.title %>
+                  </div>
+               </li>
+               <% end %>
+            </td>
+            <td class="px-6 py-4">
+               <%=level.degree%>
+            </td>
+            <td class="px-6 py-4">
+               <%=level.category%>
+            </td>
+            <td class="px-6 py-4 flex flex-row gap-4">
+               <!-- hidden until edit is implemented -->
+               <a href="kpis/<%=level.id%>/edit" class="">
+               <span class="material-symbols-outlined" >
+               edit
+               </span>
+               </a>
+               <turbo-frame id="level-frame">
+               <button  class="material-symbols-outlined delete-level-button"  data-level-id="<%= level.id %>">
+                <span class="material-symbols-outlined">
+                delete
+                </span>
+               </button>
+               </turbo-frame>
+            </td>
+         </tr>
+         <%end%>
+      </tbody>
+   </table>
+</div>
+<%end%>
+
+<script>
+document.addEventListener('turbo:load', () => {
+  const deleteLevelButtons = document.querySelectorAll('.delete-level-button');
+
+  deleteLevelButtons.forEach(button => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+
+      const levelId = button.getAttribute('data-level-id');
+
+      const confirmation = await Swal.fire({
+        title: "Are you sure?",
+        text: button.getAttribute('data-confirm') || "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      });
+
+      if (confirmation.isConfirmed) {
+        try {
+          const res = await fetch(`/kpis/${levelId}`, { method: 'DELETE' });
+
+          if (res.ok) {
+            Turbo.visit(`kpis`, { action: 'replace' });
+            Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: 'Level deleted successfully!',
+              });
+            window.location.reload();
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops!',
+              text: 'Level deletion failed. Please try again.',
+            });
+          }
+        } catch (error) {
+          console.error('Error during delete:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'An error occurred. Please try again later.',
+          });
+        }
+      }
+    });
+  });
+});
+</script>

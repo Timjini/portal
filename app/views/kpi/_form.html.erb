@@ -1,0 +1,6 @@
+<%= form_with(model: @level, url: edit_kpi_path(@level), method: :patch, local: true) do |form| %>
+  <div class="flex flex-row">
+    <label for="last_name" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Last Name</label>
+    <%=  form.text_field :title,id:"lastName", placeholder: "Smith", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>
+  </div>
+<% end %>
