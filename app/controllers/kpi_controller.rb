@@ -58,6 +58,6 @@ class KpiController < ApplicationController
     private
 
     def level_params
-        params.require(:kpi).permit(:title, :degree)
+        params.require(:kpi).permit(:title, :degree, :category)
     end
 end

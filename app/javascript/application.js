@@ -288,3 +288,24 @@ function addKpi() {
 
 document.addEventListener('turbo:load', addKpi);
 
+
+
+// Password view
+
+document.addEventListener('turbo:load', () => {
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.querySelector('.eye-icon');
+    console.log(passwordInput);
+
+  if (passwordInput && eyeIcon) {
+    eyeIcon.addEventListener('click', () => {
+        console.log("clicked")
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    });
+  }
+  });
+  
