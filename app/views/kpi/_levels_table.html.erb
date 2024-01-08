@@ -1,13 +1,5 @@
 <% if current_user.role == 'admin' && !@levels.nil? %>
-<div class="">
-   <h3 class="text-lg font-bold py-3">Create KPI's</h3>
-   <a onclick="addKpi();" class=" flex flex-row mx-auto gap-2">
-   <span class="material-symbols-outlined">
-   add_circle
-   </span>
-   <span> Add a new KPI</span>
-   </a>
-</div>
+<%= render 'kpi/add_kpi'%>
 <div class="relative overflow-x-auto general_card">
    <table class="w-full text-sm text-left " style="padding:0;margin:0;">
       <thead class="text-xs uppercase table_header">
@@ -105,8 +97,8 @@ document.addEventListener('turbo:load', () => {
               icon: 'success',
               title: 'Success!',
               text: 'Level deleted successfully!',
+              timer: 1500
               });
-            window.location.reload();
           } else {
             Swal.fire({
               icon: 'error',

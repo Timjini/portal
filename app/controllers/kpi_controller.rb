@@ -21,17 +21,12 @@ class KpiController < ApplicationController
             checklist_items.each do |item|
                 CheckList.create!(title: item, level_id: @level.id)
             end
-
-            flash[:success] = "Level created!"
-
             respond_to do |format|
                 # format.html { redirect_to kpis_path }
                 format.json { render json: { status: 'success', message: 'Level created!' } }
             end
             
-        else
-            flash[:alert] = "Oops, something went wrong!"
-           
+        else           
             respond_to do |format|
                 format.html { render 'new' }
                 format.json { render json: { status: 'error', message: 'Oops, something went wrong!' } }
@@ -57,13 +52,18 @@ class KpiController < ApplicationController
         end
 
         @level = Level.find(params[:id])
-        @level.update(title: params[:title], degree: params[:degree].to_i, category: params[:category].to_i)
+        @level.title = params[:title]
+        @level.degree = params[:degree].to_i
+        @level.category = params[:category].to_i
 
-        if @level.update
-            flash[:success] = "Level updated!"
-            render json: { success: true }
+        @level.save!
+
+        if @level.save
+            respond_to do |format|
+                # format.html { redirect_to kpis_path }
+                format.json { render json: { status: 'success', message: 'Level created!' , redirect_url: '/kpis'  } }
+            end
         else
-            flash[:alert] = "Oops, something went wrong!"
             render json: { success: false }
         end
 
@@ -80,10 +80,8 @@ class KpiController < ApplicationController
         @level = Level.find(params[:id])
         # destroy level
         if @level.destroy
-            flash[:success] = "Level deleted!"
             render json: { success: true }
         else
-            flash[:alert] = "Oops, something went wrong!"
             render json: { success: false }
         end
     end
