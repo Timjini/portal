@@ -22,6 +22,8 @@ module Portal
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.perform_deliveries = true
 
+    config.assets.compile = true
+
 
 
     # production
