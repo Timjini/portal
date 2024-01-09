@@ -34,83 +34,83 @@ document.addEventListener('turbo:load', function () {
 
 
 
-document.addEventListener('turbo:load',function() {
-    const searchInput = document.getElementById('user-search');
-    console.log(searchInput);
-    const userIdInput = document.getElementById('user-id');
-    const suggestionsContainer = document.getElementById('suggestions-container');
+// document.addEventListener('turbo:load',function() {
+//     const searchInput = document.getElementById('user-search');
+//     console.log(searchInput);
+//     const userIdInput = document.getElementById('user-id');
+//     const suggestionsContainer = document.getElementById('suggestions-container');
 
-    searchInput.addEventListener('input', function() {
-        const term = searchInput.value;
+//     searchInput.addEventListener('input', function() {
+//         const term = searchInput.value;
 
-        // Clear suggestions if the search term is empty
-        if (term === '') {
-            suggestionsContainer.innerHTML = '';
-            return;
-        }
+//         // Clear suggestions if the search term is empty
+//         if (term === '') {
+//             suggestionsContainer.innerHTML = '';
+//             return;
+//         }
 
-        // Make an AJAX request to the autocomplete endpoint
-        fetch(`/athlete_users/autocomplete?term=${term}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                // Clear previous results
-                suggestionsContainer.innerHTML = '';
+//         // Make an AJAX request to the autocomplete endpoint
+//         fetch(`/athlete_users/autocomplete?term=${term}`)
+//             .then(response => response.json())
+//             .then(data => {
+//                 console.log(data);
+//                 // Clear previous results
+//                 suggestionsContainer.innerHTML = '';
 
-                // Display autocomplete suggestions
-                if (data.length > 0) {
-                    data.forEach(user => {
-                        const suggestionDiv = document.createElement('div');
-                        suggestionDiv.classList.add('suggestions-box');
-                        suggestionDiv.textContent = `${user.first_name} - ${user.last_name}`;
-                        suggestionDiv.setAttribute('data-user-id', user.id);
-                        suggestionDiv.addEventListener('click', function() {
-                            // Set the selected user's information inside the search box
-                            searchInput.value = `${user.first_name} - ${user.last_name}`;
-                            // Set the selected user's ID to the hidden input field
-                            userIdInput.value = user.id;
+//                 // Display autocomplete suggestions
+//                 if (data.length > 0) {
+//                     data.forEach(user => {
+//                         const suggestionDiv = document.createElement('div');
+//                         suggestionDiv.classList.add('suggestions-box');
+//                         suggestionDiv.textContent = `${user.first_name} - ${user.last_name}`;
+//                         suggestionDiv.setAttribute('data-user-id', user.id);
+//                         suggestionDiv.addEventListener('click', function() {
+//                             // Set the selected user's information inside the search box
+//                             searchInput.value = `${user.first_name} - ${user.last_name}`;
+//                             // Set the selected user's ID to the hidden input field
+//                             userIdInput.value = user.id;
 
-                            if (user.id !== null) {
-                                const userId = user.id;
-                                fetch(`/users/${userId}`)
-                                    .then(response => response.json())
-                                    .then(userData => {
-                                        console.log(userData);
-                                        const usernameInput = document.getElementById('user-username');
-                                        // const userEmail = document.getElementById('user-email');
-                                        const userFirstName = document.getElementById('user-firstName');
-                                        const userLastName = document.getElementById('user-lastName');
+//                             if (user.id !== null) {
+//                                 const userId = user.id;
+//                                 fetch(`/users/${userId}`)
+//                                     .then(response => response.json())
+//                                     .then(userData => {
+//                                         console.log(userData);
+//                                         const usernameInput = document.getElementById('user-username');
+//                                         // const userEmail = document.getElementById('user-email');
+//                                         const userFirstName = document.getElementById('user-firstName');
+//                                         const userLastName = document.getElementById('user-lastName');
 
-                                        // usernameInput.placeholder = userData.username;
-                                        // usernameInput.value = userData.username;
-                                        // userEmail.placeholder = userData.email;
-                                        // userEmail.value = userData.email;
-                                        // userFirstName.placeholder = userData.first_name;
-                                        // userFirstName.value = userData.first_name;
-                                        // userLastName.placeholder = userData.last_name;
-                                        // userLastName.value = userData.last_name;
-                                    })
-                                    .catch(error => {
-                                        console.error('Error:', error);
-                                    });
-                            }
-                            // Clear the suggestions container after selecting a user
-                            suggestionsContainer.innerHTML = '';
-                        });
-                        suggestionsContainer.appendChild(suggestionDiv);
-                    });
-                } else {
-                    // If there are no suggestions, display a message
-                    const noResultsDiv = document.createElement('div');
-                    noResultsDiv.textContent = 'No matching users found.';
-                    suggestionsContainer.appendChild(noResultsDiv);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
-});
+//                                         // usernameInput.placeholder = userData.username;
+//                                         // usernameInput.value = userData.username;
+//                                         // userEmail.placeholder = userData.email;
+//                                         // userEmail.value = userData.email;
+//                                         // userFirstName.placeholder = userData.first_name;
+//                                         // userFirstName.value = userData.first_name;
+//                                         // userLastName.placeholder = userData.last_name;
+//                                         // userLastName.value = userData.last_name;
+//                                     })
+//                                     .catch(error => {
+//                                         console.error('Error:', error);
+//                                     });
+//                             }
+//                             // Clear the suggestions container after selecting a user
+//                             suggestionsContainer.innerHTML = '';
+//                         });
+//                         suggestionsContainer.appendChild(suggestionDiv);
+//                     });
+//                 } else {
+//                     // If there are no suggestions, display a message
+//                     const noResultsDiv = document.createElement('div');
+//                     noResultsDiv.textContent = 'No matching users found.';
+//                     suggestionsContainer.appendChild(noResultsDiv);
+//                 }
+//             })
+//             .catch(error => {
+//                 console.error('Error:', error);
+//             });
+//     });
+// });
 
 
   // Add the checked function
