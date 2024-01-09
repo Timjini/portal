@@ -6,7 +6,7 @@ Rails.application.configure do
   # white list 
   config.hosts << /[a-z0-9]+\.c9users\.io/
   config.hosts << /[a-z0-9]+\.c9\.io/
-  config.hosts << "chambersforsport.net"
+  # config.hosts << "chambersforsport.net"
   config.hosts << "chambersforsport.com"
   config.hosts << "club.chambersforsport.com"
 

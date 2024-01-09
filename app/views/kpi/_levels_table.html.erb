@@ -2,9 +2,12 @@
 <%= render 'kpi/add_kpi'%>
 <div class="relative overflow-x-auto general_card">
    <table class="w-full text-sm text-left " style="padding:0;margin:0;">
+   <div class="py-2" style="max-width:200px;">
+   <input type="text" class=" w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " id="kpiSearchInput" placeholder="Search...">
+   </div>
       <thead class="text-xs uppercase table_header">
          <tr>
-            <th scope="col" class="px-6 py-3">
+            <th scope="col" class="px-6 py-3" >
                Level
             </th>
             <th scope="col" class="px-6 py-3">
@@ -64,12 +67,30 @@
          <%end%>
       </tbody>
    </table>
+   <div class="flex mx-auto">
+   <%= will_paginate @levels, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %>
+   </div>
 </div>
 <%end%>
 
 <script>
 document.addEventListener('turbo:load', () => {
   const deleteLevelButtons = document.querySelectorAll('.delete-level-button');
+
+  const searchInput = document.getElementById('kpiSearchInput');
+  const tableRows = document.querySelectorAll('.border-b');
+
+  // Event listener for the search input
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+
+    tableRows.forEach(row => {
+      const rowData = row.innerText.toLowerCase();
+
+      // If the row contains the search term, display it; otherwise, hide it
+      row.style.display = rowData.includes(searchTerm) ? 'table-row' : 'none';
+    });
+  });
 
   deleteLevelButtons.forEach(button => {
     button.addEventListener('click', async (event) => {
