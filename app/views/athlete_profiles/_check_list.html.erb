@@ -1,24 +1,22 @@
-
-<turbo-frame id="checkbox-frame-<%=level.id%>">
-<%list = level.check_lists%>
-<% if !@checklist_items_completed.nil? %>
-  <% level.check_lists.each do |checklist| %>
-    <div class="flex items-center mb-4">
-      <input checked data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4 <%= @status[level.id] %>">
-      <label for="checklist-<%= checklist.id %>" class="ml-2 text-sm font-medium "><%= checklist.title %></label>
-    </div>
-  <% end %>
-  <%else%>
-  <% level.check_lists.each do |checklist| %>
-    <div class="flex items-center mb-4">
-      <input data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4 <%= @status[level.id] %>">
-      <label for="checklist-<%= checklist.id %>" class="ml-2 text-sm font-medium "><%= checklist.title %></label>
-    </div>
-  <% end %>
-<%end%>
-
-  <div class="add-kpi-form">
-                                <form class="mt-2 mb-3 add-kpi-form">
+<turbo-frame id="checkbox-frame-<%= level.id %>">
+  <% list = level.check_lists %>
+  
+  <% if current_user.role != 'admin' && current_user.role != 'coach' %> 
+    <% level.check_lists.each do |checklist| %>
+      <div class="flex items-center mb-4">
+        <input <%= checklist.checked_user_item(@athlete.user_id) %> data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4" disabled>
+        <label for="checklist-<%= checklist.id %>" class="ml-2 text-sm font-medium"><%= checklist.title %></label>
+      </div>
+    <% end %>
+  <% else %>
+    <% level.check_lists.each do |checklist| %>
+      <div class="flex items-center mb-4">
+        <input <%= checklist.checked_user_item(@athlete.user_id) %> data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4">
+        <label for="checklist-<%= checklist.id %>" class="ml-2 text-sm font-medium"><%= checklist.title %></label>
+      </div>
+    <% end %>
+    <div class="add-kpi-form">
+      <form class="mt-2 mb-3 add-kpi-form">
                                 <label for="chat" class="sr-only">Your message</label>
                                 <div class="flex items-center  py-2 rounded-lg ">
                                     <textarea id="chat" rows="1" class="block mx-4 p-2.5 w-full text-sm  rounded-lg border bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 <%=@status[level.id]%>" placeholder="Your message..."<%=@status[level.id]%>></textarea>
@@ -29,9 +27,11 @@
                                         <span class="sr-only">Send message</span>
                                     </button>
                                 </div>
-                                </form>
-                            </div>
+      </form>
+    </div>
+  <% end %>
 </turbo-frame>
+
 
 
 

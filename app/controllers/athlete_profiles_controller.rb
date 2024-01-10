@@ -35,25 +35,23 @@ class AthleteProfilesController < ApplicationController
       end
     end
 
-          user_level = UserLevel.find_by(user_id: @athlete.user_id)
-
-        @checklist_items_completed = UserChecklist.where(user_id: @athlete.user_id, user_level_id: UserLevel.where(user_id: @athlete.user_id, status: 'completed').pluck(:id), completed: true)
+    user_level = UserLevel.where(user_id: @athlete.user_id)
+    @checklist_items_completed = UserChecklist.where(user_id: @athlete.user_id, user_level_id: UserLevel.where(user_id: @athlete.user_id, status: 'completed').pluck(:id), completed: true)
 
 
     # Count completed items for the user in all in-progress levels
-            checklist_items = UserChecklist.where(user_id: @athlete.user_id, user_level_id: UserLevel.where(user_id: @athlete.user_id, status: 'in_progress').pluck(:id), completed: true).count
-            puts "#{checklist_items}----------------------------"     
 
-            if checklist_items.present? && user_level.present?
-            level_degree = CheckList.where(level_id: user_level.level_id).count
-            end
-            
-            if checklist_items == level_degree && level_degree.present? && user_level.present?
-              user_level.update(status: 'completed')
-              puts"excuted =============================="
-            else
-              #user_level.update(status: 'in_progress')
-            end
+    user_level.each do |user_level|
+      checklist_items = UserChecklist.where(user_id: @athlete.user_id, user_level_id: user_level.id, completed: true).count
+      level_degree = CheckList.where(level_id: user_level.level_id).count
+
+      if checklist_items == level_degree
+        user_level.update(status: 'completed')
+      else
+        user_level.update(status: 'in_progress')
+      end
+    end
+
 
     respond_to do |format|
       format.html # Your regular HTML response
@@ -168,17 +166,6 @@ class AthleteProfilesController < ApplicationController
             puts "NO =============="
             UserChecklist.create(check_list_id: checklist_id, user_id: user_id, completed: completed, user_level_id: user_level.id,title: check_list.title)
           end
-
-          # # Count completed items for the user in all in-progress levels
-          #   checklist_items = UserChecklist.where(user_id: user_id, user_level_id: UserLevel.where(user_id: user_id, status: 'in_progress').pluck(:id), completed: true).count
-
-          #   if checklist_items == CheckList.where(level_id: user_level.level_id).count
-          #     user_level.update(status: 'completed')
-          #   else
-          #     user_level.update(status: 'in_progress')
-          #   end
-
-
 
           respond_to do |format|
             format.turbo_stream

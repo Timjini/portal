@@ -71,7 +71,7 @@
         </a>
         <!-- ATHLETE USER ITEMS -->
         <%elsif current_user.role == 'athlete'%>
-            <a href="users/<%=current_user.id%>" class="flex gap-2 nav_item">
+            <a href="/athlete_profiles/<%=current_user.athlete_profile.id%>" class="flex gap-2 nav_item">
                <span class="material-symbols-outlined">
                 account_circle
                 </span>
