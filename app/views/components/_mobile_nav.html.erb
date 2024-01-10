@@ -1,9 +1,18 @@
 <div class="mobile_navigation">
                 <div class="flex flex-row gap-5 justify-center content-center">
-                            <div><span class="material-symbols-outlined icon_span" onclick="something();">menu</span></div>
-                            <div><span class="material-symbols-outlined icon_span">notifications</span></div>
-                            <div><span class="material-symbols-outlined icon_span">chat</span></div>
+                            <a id="toggleThemeBtn" type="button" class="theme-btn relative inline-flex items-center">
+                                <span class="material-symbols-outlined theme_icon icon_span">
+                                    light_mode
+                                </span>
+                            </a>
+
+                            <%=render 'notifications/top_bar_notifications'%>
+
+                            <div></div>
+                            <div class="hidden"><a class="material-symbols-outlined icon_span">chat</a></div>
+                            <a href="/users/<%=current_user.id%>" class="relative inline-flex items-center">
                             <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 object-cover rounded-full")%>
+                            </a>
                 </div>
 </div>
 

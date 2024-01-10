@@ -38,8 +38,8 @@ body, h1 {margin: 0;padding: 0; height:100%;background-color: var(--bg);}
 .main_screen {display: grid;grid-template-columns: 1fr 5fr 2fr;grid-template-rows: 1fr;height:100vh;color : var(--text);background-color: var(--bg);}
 a{cursor: pointer;}
 a:hover{opacity: 0.9;}
-.icon_span{background-color: var(--accent);color: var(--text);padding:5px;border-radius: 50%;}
-.icon_span:hover{opacity:0.9;}
+.icon_span{color: var(--text);padding:5px;border-radius: 50%;}
+.icon_span:hover{background-color: var(--accent);border-radius: 50%;color: var(--text);opacity: 0.9;}
 .sport_item:hover{background-color: var(--accent);border-radius: 10px;}
 .nav_item{padding:10px;}
 .nav_item:hover{background-color: var(--accent);border-radius: 5px;color:var(--text);padding:10px;}
@@ -148,6 +148,8 @@ a:hover{opacity: 0.9;}
     background-color: var(--static-color);
 }
 
+.notifications-container{background-color: var(--accent);color:var(--text);}
+.noty-container:hover{background-color: var(--secondary);}
 
 /* MOBILE AND TABLET VIEWS */
 @media screen and (max-width: 1100px) {
