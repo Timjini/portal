@@ -7,8 +7,8 @@
 
    /* THEME PREFERENCES */
    :root[data-theme="light"] {
-    --bg: #E6E5E5;
-    --text: #1D0C0C;
+    --bg: #f0f0fc;
+    --text: #05061B;
     --primary:#AC312C;
     --secondary: #DBF0F0;
     --accent: #bbccdd;
@@ -602,3 +602,6 @@ article{
 .table_header{border:1px solid #c0c0c0;border-radius:10px;background-color:var(--text);color:var(--bg)}
 .drawerForm{height: 90dvh;}
 .check_list_container{display:flex;flex-direction: row; flex-wrap: wrap;}
+
+/* User Profile */
+
