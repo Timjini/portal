@@ -1,30 +1,36 @@
 
-<turbo-frame id="dropdownNotificationFrame">
 
-<button data-turbo-frame="dropdownNotificationFrame" data-action="click->notifications#toggleDropdown" id="dropdownNotificationButton" data-dropdown-toggle="dropdownNotification" class="relative inline-flex items-center" type="button">  <span class="material-symbols-outlined icon_span">notifications</span>
-  <% if !@notifications.nil? %>
-    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold bg-orange-700 rounded-full -top-2 -end-2 dark:border-gray-900">
-      <%= @notifications.count %>
+<button id="dropdownNotificationButton" class="relative inline-flex items-center" type="button">
+ <span class="material-symbols-outlined icon_span">notifications</span>
+ <%if !@notifications.blank?%>
+    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold  bg-orange-700  rounded-full -top-2 -end-2 dark:border-gray-900">
+                                    <%= @notifications.count %>
     </div>
-  <% end %>
+    <%else%>
+  
+  <%end%>
+
+
+
 </button>
 
 <!-- Dropdown menu -->
-<div id="dropdownNotification" class="z-20 hidden w-full max-w-sm divide-y divide-gray-100 rounded-lg notifications-container" aria-labelledby="dropdownNotificationButton" data-turbo-frame="dropdownNotificationFrame">  <div class="block px-4 py-2 font-medium text-center  rounded-t-lg ">
+<div id="dropdownNotification" class="z-20 hidden w-full max-w-sm divide-y divide-gray-100 rounded-lg notifications-container" >
+  <div class="block px-4 py-2 font-medium text-center  rounded-t-lg ">
       Notifications
   </div>
   <%if !@displayed_notifications.nil?%>
-  <%@displayed_notifications.each do |notification|%>
-  <div class="divide-y divide-gray-100 dark:divide-gray-500">
-    <a href="#" class="flex px-4 py-3 noty-container">
-      <div class="w-full ps-3">
-          <div class=" text-sm mb-1.5 "><%=notification.body%></div>
-          <div class="text-xs text-blue-600 dark:text-blue-500"><%=notification.updated_at%></div>
-      </div>
-    </a>
-  </div>
+    <%@displayed_notifications.each do |notification|%>
+    <div class="divide-y divide-gray-100 dark:divide-gray-500">
+      <a href="#" class="flex px-4 py-3 noty-container" id="<%=notification.notifiable_id%>">
+        <div class="w-full ps-3">
+            <div class=" text-sm mb-1.5 "><%=notification.body%></div>
+            <div class="text-xs text-blue-600 dark:text-blue-500"><%=notification.updated_at%></div>
+        </div>
+      </a>
+    </div>
 
-  <%end%>
+    <%end%>
   <%else%>
   <div class="divide-y divide-gray-100 dark:divide-gray-500">
     <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -46,4 +52,18 @@
   </a>
 </div>
 
-</turbo-frame>
+<script>
+document.addEventListener("turbo:load", function() {
+
+    const dropdownButton = document.getElementById("dropdownNotificationButton");
+    const dropdownMenu = document.getElementById("dropdownNotification");
+
+    console.log(dropdownButton)
+
+    dropdownButton.addEventListener("click", function() {
+      console.log("clicked")
+        dropdownMenu.classList.toggle("hidden");        
+    });
+  });
+
+</script>
