@@ -24,6 +24,8 @@ module Portal
 
     config.assets.compile = true
 
+    
+
 
 
     # production

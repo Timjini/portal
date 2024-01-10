@@ -4,8 +4,11 @@
   <% if current_user.role != 'admin' && current_user.role != 'coach' %> 
     <% level.check_lists.each do |checklist| %>
       <div class="flex items-center mb-4">
-        <input <%= checklist.checked_user_item(@athlete.user_id) %> data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4" disabled>
+      <div class="tooltip">
+       <input <%= checklist.checked_user_item(@athlete.user_id) %> data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4" disabled>
         <label for="checklist-<%= checklist.id %>" class="ml-2 text-sm font-medium"><%= checklist.title %></label>
+        <span class="tooltiptext">Checked when approved !</span>
+      </div>
       </div>
     <% end %>
   <% else %>
