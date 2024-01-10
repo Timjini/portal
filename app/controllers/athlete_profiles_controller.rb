@@ -35,6 +35,26 @@ class AthleteProfilesController < ApplicationController
       end
     end
 
+          user_level = UserLevel.find_by(user_id: @athlete.user_id)
+
+        @checklist_items_completed = UserChecklist.where(user_id: @athlete.user_id, user_level_id: UserLevel.where(user_id: @athlete.user_id, status: 'completed').pluck(:id), completed: true)
+
+
+    # Count completed items for the user in all in-progress levels
+            checklist_items = UserChecklist.where(user_id: @athlete.user_id, user_level_id: UserLevel.where(user_id: @athlete.user_id, status: 'in_progress').pluck(:id), completed: true).count
+            puts "#{checklist_items}----------------------------"     
+
+            if checklist_items.present? && user_level.present?
+            level_degree = CheckList.where(level_id: user_level.level_id).count
+            end
+            
+            if checklist_items == level_degree && level_degree.present? && user_level.present?
+              user_level.update(status: 'completed')
+              puts"excuted =============================="
+            else
+              #user_level.update(status: 'in_progress')
+            end
+
     respond_to do |format|
       format.html # Your regular HTML response
       format.turbo_stream # Turbo Streams response for Turbo Frames
@@ -115,17 +135,18 @@ class AthleteProfilesController < ApplicationController
 
     # Routes for Users Checked items 
     def checked_items
-
       #needed data to update the checklist
       checklist_id = params[:checklist_item][:checklist_id]
       user_id = params[:checklist_item][:user_id]
       completed = params[:checklist_item][:completed]
 
+      athlete_profile_id = AthleteProfile.find_by(user_id: user_id)
+
       # needed variable to check the level of the user
       user_level = UserLevel.find_by(user_id: user_id)
       check_list = CheckList.find_by(id: checklist_id)
 
-      puts "#{user_level.inspect}-------------------------"
+
 
         if check_list.nil?
             render json: { status: 'error', message: 'Checklist not found!' }
@@ -141,13 +162,22 @@ class AthleteProfilesController < ApplicationController
           end
 
           if user_checklist.present?
-            user_checklist.update(completed: completed)
+            puts "YES =============="
+            #user_checklist.update(completed: completed)
           else
+            puts "NO =============="
             UserChecklist.create(check_list_id: checklist_id, user_id: user_id, completed: completed, user_level_id: user_level.id,title: check_list.title)
           end
 
-          # if next_level_check == checklist_items
-          #   user_level.update(status: 'completed')
+          # # Count completed items for the user in all in-progress levels
+          #   checklist_items = UserChecklist.where(user_id: user_id, user_level_id: UserLevel.where(user_id: user_id, status: 'in_progress').pluck(:id), completed: true).count
+
+          #   if checklist_items == CheckList.where(level_id: user_level.level_id).count
+          #     user_level.update(status: 'completed')
+          #   else
+          #     user_level.update(status: 'in_progress')
+          #   end
+
 
 
           respond_to do |format|
@@ -155,8 +185,6 @@ class AthleteProfilesController < ApplicationController
           end
 
           render json: { status: 'success', message: 'Checklist updated!' }
-
-        
     end
 
 
