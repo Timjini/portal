@@ -1,14 +1,19 @@
  <!-- RIGHT SIDEBAR -->
         <div class="r_sidebar  flex flex-col gap-10 px-10">
                 <div class="navigation flex flex-row pt-4 gap-5 justify-left content-center">
-                            <a id="toggleThemeBtn" type="button" class="theme-btn">
+                            <a id="toggleThemeBtn" type="button" class="theme-btn relative inline-flex items-center">
                                 <span class="material-symbols-outlined theme_icon icon_span">
                                     light_mode
                                 </span>
                             </a>
-                            <div><a class="material-symbols-outlined icon_span">notifications</a></div>
-                            <div><a class="material-symbols-outlined icon_span">chat</a></div>
-                            <a href="/users/<%=current_user.id%>">
+
+                            <%=render 'notifications/top_bar_notifications'%>
+
+
+
+                            <div></div>
+                            <div class="hidden"><a class="material-symbols-outlined icon_span">chat</a></div>
+                            <a href="/users/<%=current_user.id%>" class="relative inline-flex items-center">
                             <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 object-cover rounded-full")%>
                             </a>
                 </div>

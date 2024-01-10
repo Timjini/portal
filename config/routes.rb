@@ -49,6 +49,10 @@ end
   post 'create_child_user', on: :collection, to: 'accounts#create_child_user'
   end
 
+  resources :notifications, only: [:index, :show, :update] do
+    post 'set_viewed', on: :collection 
+  end
+
   #QR Code generation
   resources :qr_codes, only: [:new, :create, :index, :show]
   get 'qr_code_generation', to: 'qr_codes#index'
