@@ -6,7 +6,7 @@ Rails.application.configure do
   # white list 
   config.hosts << /[a-z0-9]+\.c9users\.io/
   config.hosts << /[a-z0-9]+\.c9\.io/
-  config.hosts << "chambersforsport.net"
+  # config.hosts << "chambersforsport.net"
   config.hosts << "chambersforsport.com"
   config.hosts << "club.chambersforsport.com"
 
@@ -24,6 +24,8 @@ Rails.application.configure do
 
   # Enable server timing
   config.server_timing = true
+
+  config.assets.compile = true
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
@@ -70,6 +72,8 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Mailcatcher
   # config.action_mailer.delivery_method = :smtp

@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
       
          
-  
+  has_many :comments
   has_one_attached :avatar
   has_one :athlete_profile , dependent: :destroy
   has_many :qr_codes

@@ -55,7 +55,7 @@ class AccountsController < ApplicationController
     end
 
     def all_accounts
-        @accounts = User.all
+        @accounts = User.all.paginate(page: params[:page], per_page: 10)
     end
 
     private

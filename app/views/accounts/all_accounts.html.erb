@@ -4,6 +4,9 @@
 <%= render 'accounts/add_user'%>
 <div class="relative overflow-x-auto general_card ">
     <table class="w-full text-sm text-left  p-5" style="padding:0;margin:0;">
+    <div class="py-2" style="max-width:200px;">
+   <input type="text" class=" w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " id="userSearchInput" placeholder="Search...">
+   </div>
         <thead class="text-xs uppercase table_header" >
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -48,6 +51,7 @@
             <%end%>
         </tbody>
     </table>
+            <%= will_paginate @accounts, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %>
 </div>
 
 <%end%>
@@ -55,6 +59,21 @@
 <script>
 document.addEventListener('turbo:load', () => {
   const deleteUserButtons = document.querySelectorAll('.delete-user-button');
+
+   const searchInput = document.getElementById('userSearchInput');
+  const tableRows = document.querySelectorAll('.border-b');
+
+  // Event listener for the search input
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+
+    tableRows.forEach(row => {
+      const rowData = row.innerText.toLowerCase();
+
+      // If the row contains the search term, display it; otherwise, hide it
+      row.style.display = rowData.includes(searchTerm) ? 'table-row' : 'none';
+    });
+  });
 
   deleteUserButtons.forEach(button => {
     button.addEventListener('click', async (event) => {

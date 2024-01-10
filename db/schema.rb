@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_20_102826) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_10_110643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,17 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_20_102826) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["level_id"], name: "index_check_lists_on_level_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text "body"
+    t.string "commentable_type", null: false
+    t.bigint "commentable_id", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "levels", force: :cascade do |t|
@@ -134,6 +145,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_20_102826) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "athlete_profiles", "users"
   add_foreign_key "check_lists", "levels"
+  add_foreign_key "comments", "users"
   add_foreign_key "qr_codes", "users"
   add_foreign_key "user_checklists", "check_lists"
   add_foreign_key "user_checklists", "user_levels"

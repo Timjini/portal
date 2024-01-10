@@ -60,4 +60,9 @@ class AthleteProfile < ApplicationRecord
     user = User.find(self.user_id)
     user.user_checklists
   end
+
+  def athlete_level
+    user = User.find(self.user_id)
+    user.user_levels
+  end
 end
