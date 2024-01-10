@@ -1,8 +1,8 @@
+
 <turbo-frame id="checkbox-frame-<%=level.id%>">
   <% level.check_lists.each do |checklist| %>
-    
     <div class="flex items-center mb-4">
-      <input <%= checklist.checked_user_item(@athlete.user_id) %> data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4 " >
+      <input <%= checklist.checked_user_item(@athlete.user_id) %> data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4 " <%=@status[level.id]%>>
       <label for="checklist-<%= checklist.id %>" class="ml-2 text-sm font-medium "><%= checklist.title %></label>
     </div>
   <% end %>
