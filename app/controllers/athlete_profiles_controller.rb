@@ -47,6 +47,7 @@ class AthleteProfilesController < ApplicationController
 
       if checklist_items == level_degree
         user_level.update(status: 'completed')
+        # inform the user that the level is completed by email and notification
       else
         user_level.update(status: 'in_progress')
       end
