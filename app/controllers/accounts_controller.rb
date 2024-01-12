@@ -55,7 +55,11 @@ class AccountsController < ApplicationController
     end
 
     def all_accounts
+        if params[:role].present?
+        @accounts = User.where(role: params[:role]).paginate(page: params[:page], per_page: 10)
+      else
         @accounts = User.all.paginate(page: params[:page], per_page: 10)
+      end
     end
 
     private

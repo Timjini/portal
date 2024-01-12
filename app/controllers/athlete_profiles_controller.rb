@@ -23,7 +23,7 @@ class AthleteProfilesController < ApplicationController
 
     @status = {}
 
-    if @athlete_level.blank?
+    if @athlete_level.blank? 
       # If athlete_level is nil or blank, enable the first level and disable the rest
       @status[@levels.first] = 'enabled'
       puts "#{@status[@levels.first]}================"

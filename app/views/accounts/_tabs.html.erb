@@ -1,16 +1,24 @@
 
 
 <ul class="flex flex-wrap text-sm font-medium text-center border-b border-gray-200 0">
-    <li class="me-2">
-        <a href="#" aria-current="page" class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active ">All Users</a>
-    </li>
-    <li class="me-2">
-        <a href="#" class="inline-block p-4 rounded-t-lg tab-item">Athlete's Parents</a>
-    </li>
-    <li class="me-2">
-        <a href="#" class="inline-block p-4 rounded-t-lg ">Junior Athletes</a>
-    </li>
-    <li class="me-2">
-        <a href="#" class="inline-block p-4 rounded-t-lg ">Athletes</a>
-    </li>
+  <li class="me-2">
+    <%= link_to "/accounts/all_accounts", class: "inline-block p-4 #{'active'  if params[:role] == nil} rounded-t-lg" do %>
+      All Users
+    <% end %>
+  </li>
+  <li class="me-2">
+    <%= link_to "/accounts/all_accounts?role=parent_user", class: "inline-block p-4 #{'active' if params[:role] == 'parent_user'} rounded-t-lg" do %>
+      Athlete's Parents
+    <% end %>
+  </li>
+  <li class="me-2">
+    <%= link_to "/accounts/all_accounts?role=child_user", class: "inline-block p-4 #{'active' if params[:role] == 'child_user'} rounded-t-lg" do %>
+      Junior Athletes
+    <% end %>
+  </li>
+  <li class="me-2">
+    <%= link_to "/accounts/all_accounts?role=athlete", class: "inline-block p-4 #{'active' if params[:role] == 'athlete'} rounded-t-lg" do %>
+      Athletes
+    <% end %>
+  </li>
 </ul>
