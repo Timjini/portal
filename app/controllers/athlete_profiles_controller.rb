@@ -42,20 +42,20 @@ class AthleteProfilesController < ApplicationController
 
     # Count completed items for the user in all in-progress levels
 
-    user_level.each do |user_level|
-      checklist_items = UserChecklist.where(user_id: @athlete.user_id, user_level_id: user_level.id, completed: true).count
-      level_degree = CheckList.where(level_id: user_level.level_id).count
+    # user_level.each do |user_level|
+    #   checklist_items = UserChecklist.where(user_id: @athlete.user_id, user_level_id: user_level.id, completed: true).count
+    #   level_degree = CheckList.where(level_id: user_level.level_id).count
 
-      if checklist_items == level_degree
-        user_level.update(status: 'completed')
-        # inform the user that the level is completed by email and notification
-        message = "Congratulations! You have completed the level #{user_level.level.degree}!"
-        category = 'level'
-        general_notification(@user, category, message)
-      else
-        user_level.update(status: 'in_progress')
-      end
-    end
+    #   if checklist_items == level_degree
+    #     user_level.update(status: 'completed')
+    #     # inform the user that the level is completed by email and notification
+    #     message = "Congratulations! You have completed the level #{user_level.level.degree}!"
+    #     category = 'level'
+    #     general_notification(@user, category, message)
+    #   else
+    #     user_level.update(status: 'in_progress')
+    #   end
+    # end
 
 
     respond_to do |format|
@@ -138,10 +138,13 @@ class AthleteProfilesController < ApplicationController
 
     # Routes for Users Checked items 
     def checked_items
+
+      
       #needed data to update the checklist
       checklist_id = params[:checklist_item][:checklist_id]
       user_id = params[:checklist_item][:user_id]
       completed = params[:checklist_item][:completed]
+      @user = User.find(user_id)
 
       athlete_profile_id = AthleteProfile.find_by(user_id: user_id)
 
@@ -171,6 +174,22 @@ class AthleteProfilesController < ApplicationController
             puts "NO =============="
             UserChecklist.create(check_list_id: checklist_id, user_id: user_id, completed: completed, user_level_id: user_level.id,title: check_list.title)
           end
+
+           user_levels = UserLevel.where(user_id: user_id)
+           user_levels.each do |user_level|
+          checklist_items = UserChecklist.where(user_id: user_id, user_level_id: user_level.id, completed: true).count
+          level_degree = CheckList.where(level_id: user_level.level_id).count
+
+          if checklist_items == level_degree
+            user_level.update(status: 'completed')
+            # inform the user that the level is completed by email and notification
+            message = "Congratulations! You have completed the level #{user_level.level.degree}!"
+            category = 'level'
+            general_notification(@user, category, message)
+          else
+            user_level.update(status: 'in_progress')
+          end
+        end
 
           respond_to do |format|
             format.turbo_stream
