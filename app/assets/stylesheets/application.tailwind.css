@@ -635,3 +635,8 @@ article{
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+
+/* Tabs  */
+
+.tab-item:hover{background-color: var(--secondary);}

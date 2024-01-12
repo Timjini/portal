@@ -2,6 +2,7 @@
 <%if current_user.role == 'admin'%>
 <%=render 'components/back_button'%>
 <%= render 'accounts/add_user'%>
+<%= render 'accounts/tabs'%>
 <div class="relative overflow-x-auto general_card ">
     <table class="w-full text-sm text-left  p-5" style="padding:0;margin:0;">
     <div class="py-2" style="max-width:200px;">
@@ -27,9 +28,15 @@
             <% @accounts.each do |account|%>
                 <tr class="border-b border-gray-400">
                     <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
-                    <a href="/users/<%=account.id%>">
+                    <%if account.role == 'child_user' || account.role =='athlete'%>
+                    <a href="/athlete_profiles/<%=account.athlete_profile.id%>">
                         <%=account.full_name%>
                     </a>
+                    <%else%>
+                    <a href="/users/<%=account.id%>">
+                     <%=account.full_name%>
+                     </a>
+                    <%end%>
                     </th>
                     <td class="px-6 py-4">
                         <%= account.email %> / <%= account.username %>

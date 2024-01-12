@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_10_180656) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_11_130356) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_10_180656) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "answers", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.bigint "question_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
   create_table "athlete_profiles", force: :cascade do |t|
@@ -110,6 +120,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_10_180656) do
     t.index ["user_id"], name: "index_qr_codes_on_user_id"
   end
 
+  create_table "questionnaires", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_questionnaires_on_user_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "content"
+    t.string "question_type"
+    t.bigint "questionnaire_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "options", default: [], array: true
+    t.integer "position"
+    t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
+  end
+
   create_table "user_checklists", force: :cascade do |t|
     t.bigint "user_level_id", null: false
     t.bigint "check_list_id", null: false
@@ -154,10 +183,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_10_180656) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "answers", "questions"
+  add_foreign_key "answers", "users"
   add_foreign_key "athlete_profiles", "users"
   add_foreign_key "check_lists", "levels"
   add_foreign_key "comments", "users"
   add_foreign_key "qr_codes", "users"
+  add_foreign_key "questionnaires", "users"
+  add_foreign_key "questions", "questionnaires"
   add_foreign_key "user_checklists", "check_lists"
   add_foreign_key "user_checklists", "user_levels"
   add_foreign_key "user_checklists", "users"

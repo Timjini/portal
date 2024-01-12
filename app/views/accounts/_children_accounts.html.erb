@@ -11,7 +11,7 @@
                     <% if !@accounts.nil? && %>
                         <%@accounts.each do |account|%>
                         <% if !account.athlete_profile.nil? %>
-                            <a href="<%=account.athlete_profile_url%>" class="child_card">
+                            <div class="child_card">
                                 <%= image_tag(account.avatar_thumbnail, class: "child_image") %>
                                 <div>
                                     <div class="px-5 flex flex-col gap-1">
@@ -21,7 +21,14 @@
                                         <span><strong>Password:</strong> <%=account.child_password%></span>
                                     </div>
                                 </div>
-                            </a>
+                                <div class="px-5 flex flex-col gap-1">
+                                    <a class="btn mb-4 text-center" href="<%=account.athlete_profile_url%>">Profile</a>
+                                    <% @questionnaire = Question.includes(:answers).where(answers: { user_id: account.id }) %>
+                                    <%if @questionnaire.blank?%>
+                                    <a class=" text-center btnSecondary" href="/questionnaires?user_id=<%=account.id%>">Questionnaire</a>
+                                    <%end%>
+                                </div>
+                            </div>
                         <%end%>
                         <%end%>
                     <%end%>

@@ -53,6 +53,10 @@ end
     post 'set_viewed', on: :collection 
   end
 
+  resources :questionnaires, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+
+    resources :answers, only: [:create]
+
   #QR Code generation
   resources :qr_codes, only: [:new, :create, :index, :show]
   get 'qr_code_generation', to: 'qr_codes#index'

@@ -3,3 +3,8 @@
 
 <%= render 'dashboard/dashbord_hero'%>
 <%= render 'dashboard/spot_light'%>
+
+ <% @questionnaire = Question.includes(:answers).where(answers: { user_id: current_user.id }) %>
+    <%if @questionnaire.blank?%>
+    <a class=" text-center btn" href="/questionnaires?user_id=<%=current_user.id%>">Please Fill The Registration Questionnaire</a>
+<%end%>

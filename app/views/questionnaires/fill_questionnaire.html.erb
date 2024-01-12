@@ -1,0 +1,102 @@
+<form id="questionnaire-form">
+  <% @questions.each do |q| %>
+    <div class="relative overflow-x-auto general_card">
+      <span><strong><%= q.position %>.</strong> <%= q.content %> </span>
+      <div class="pt-4" id="answers-<%= q.id %>">
+        <% if !q.options.blank? %>
+          <% q.options.each do |option| %>
+            <div class="flex items-center mb-4">
+              <input id="<%= q.id %>" type="radio" value="<%= option %>" name="<%= q.id %>" class="w-4 h-4 border-gray-300 mr-2">
+              <label for="<%= q.id %>" class="ms-2 text-sm font-medium"><%= option %></label>
+                <input type="hidden" name="user_id" value="<%=current_user.id%>" />
+            </div>
+          <% end %>
+        <% else %>
+          <textarea type="text" name="<%= q.id %>" id="<%= q.id %>" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Write your title here..."></textarea>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <button type="button" onclick="createAnswer()">Confirm</button>
+</form>
+
+
+
+<script>
+  // function createAnswer() {
+  //   console.log("createAnswer")
+  //   // Create an array to store answers
+  //   var answers = [];
+
+  //   // Loop through questions
+  //   <% @questions.each do |q| %>
+  //     var answerValue;
+
+  //     // Check if it's a radio type question
+  //     <% if q.question_type == 'radio' %>
+  //       // Get the selected radio button value
+  //       var radioButtons = document.getElementsByName('default-radio-<%= q.id %>');
+  //       for (var i = 0; i < radioButtons.length; i++) {
+  //         if (radioButtons[i].checked) {
+  //           answerValue = radioButtons[i].value;
+  //           break;
+  //         }
+  //       }
+  //     <% else %>
+  //       // Get the text area value
+  //       answerValue = document.getElementById('<%= q.id %>').value;
+  //     <% end %>
+
+  //     // Push the answer to the array
+  //     answers.push({
+  //       question_id: <%= q.id %>,
+  //       content: answerValue
+  //     });
+  //   <% end %>
+
+  //   // Send a POST request to your server
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open('POST', '/answers', true);
+  //   xhr.setRequestHeader('Content-Type', 'application/json');
+  //   xhr.onreadystatechange = function () {
+  //     if (xhr.readyState == 4 && xhr.status == 200) {
+  //       // Handle success, if needed
+  //       console.log(xhr.responseText);
+  //     } else if (xhr.readyState == 4 && xhr.status != 200) {
+  //       // Handle error, if needed
+  //       console.error(xhr.responseText);
+  //     }
+  //   };
+  //   xhr.send(JSON.stringify({ answers: answers }));
+  // }
+
+function createAnswer() {
+    var answers = [];
+
+    <% @questions.each do |q| %>
+      var questionId = <%= q.id %>;
+      var selectedOption = document.querySelector('input[name="' + questionId + '"]:checked');
+      var content = selectedOption ? selectedOption.value : null;
+      var userId = <%= current_user.id %>;
+
+      answers.push({ question_id: questionId, content: content , user_id: userId});
+    <% end %>
+
+    // Send a POST request to your server
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/answers', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          console.log('Answers created successfully');
+        } else {
+          console.error('Error creating answers');
+        }
+      }
+    };
+
+    xhr.send(JSON.stringify({ answers: answers }));
+  }
+
+</script>
