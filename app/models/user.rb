@@ -116,6 +116,23 @@ class User < ApplicationRecord
     end
   end
 
+  def current_level
+    user_level = UserLevel.where(user_id: self.id, status: "completed").count
+
+    case user_level
+    when 0..5
+      return "Beginner"
+    when 6..10
+      return "Intermediate"
+    when 11..15
+      return "Advanced"
+    when 16..20
+      return "Elite"
+    when 21..25
+      return "Pro"
+    end
+  end
+
 
 
 end

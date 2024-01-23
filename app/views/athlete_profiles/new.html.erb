@@ -105,10 +105,14 @@ onDocumentReady(function() {
                             <p class="mt-5 font-light">Tap next if athlete not registered</p>
                         <div class="mt-20">
                              <div class="mt-10 form-fields">
-                                <div>
+                                <%
+=begin%>
+ <div>
                                     <label for="weight" class="block m-2 text-sm font-medium ">Power Of Ten</label>    
                                     <%= form.text_field :power_of_ten ,placeholder: "Power of ten", id:"height", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  "%>
-                                </div>
+                                </div> 
+<%
+=end%>
                                 <div>
                                     <label for="weight" class="block m-2 text-sm font-medium ">Athlete's Level</label>    
                                     <%= select_tag :level, options_for_select(AthleteProfile.levels.map { |key, value| [AthleteProfile.human_attribute_name("level.#{key}"), value] }, @athlete.level.to_i), class: 'inputWidth m-2 rounded  border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5' %>
