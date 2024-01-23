@@ -15,7 +15,7 @@ class AthleteProfilesController < ApplicationController
 
 
   def show
-    @levels = Level.all.order(:degree)
+    @levels = Level.all.order(:degree,:category)
     @athlete = AthleteProfile.find(params[:id])
     @user = User.find_by(id: @athlete.user_id)
 

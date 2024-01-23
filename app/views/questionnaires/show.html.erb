@@ -1,0 +1,28 @@
+<%=render 'components/back_button'%>
+
+<div class="profile-container">
+<%= image_tag(@user.avatar_thumbnail, class:"w-12 h-12 object-cover rounded-full")%>
+<div>
+<span>Username:</span><h2 class="text-xl"><%=@user.username%></h2>
+</div>
+</div>
+<div class="mb-5 flex flex-col">
+  <% @answers.each do |a| %>
+  <div class="mb-6">
+    <div class="">
+     <%=a.question.position%> - <%= a.question.content %>
+    </div>
+    <div>
+      <%= a.content %>
+      <% if a.content == "Yes" && a.question.position < 11 %>
+        <span class="material-symbols-outlined text-red-500 animate-ping">
+          local_hospital
+        </span>
+      <% end %>
+    </div>
+    </div>
+  <% end %>
+</div>
+
+</li>
+</ul>
