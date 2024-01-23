@@ -53,7 +53,10 @@ end
     post 'set_viewed', on: :collection 
   end
 
-  resources :questionnaires, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :questionnaires, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    get 'reports', on: :collection
+  end
+
 
     resources :answers, only: [:create]
 

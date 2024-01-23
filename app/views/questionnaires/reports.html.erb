@@ -1,0 +1,81 @@
+<%=render 'components/back_button'%>
+
+
+<% if !@reports.empty? %>
+        <div class="relative overflow-x-auto general_card">
+   <table class="w-full text-sm text-left " style="padding:0;margin:0;">
+   <div class="py-2" style="max-width:200px;">
+   <input type="text" class=" w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " id="kpiSearchInput" placeholder="Search...">
+   </div>
+      <thead class="text-xs uppercase table_header">
+         <tr>
+            <th scope="col" class="px-6 py-3" >
+               &nbsp;
+            </th>
+            <th scope="col" class="px-6 py-3" >
+               Athlete Information
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Check List
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Level
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Category
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Action
+            </th>
+         </tr>
+      </thead>
+      <tbody>
+         <% @reports.each do |report| %>
+         <tr class="border-b border-gray-400">
+            <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+               <%= image_tag(report.avatar_thumbnail, class:"w-10 h-10 object-cover rounded-full")%>
+            </th>
+            <td class="px-6 py-4">
+               <li style="list-style:none;" class="flex flex-row gap-2">
+                  <div>
+                     <%=report.username%><br/>
+                     <%=report.email%>
+                  </div>
+               </li>
+            </td>
+            <td class="px-6 py-4">
+                here
+            </td>
+            <td class="px-6 py-4">
+            here
+            </td>
+            <td class="px-6 py-4">
+            here
+            </td>
+            <td class="px-6 py-4 flex flex-row gap-4">
+               <!-- hidden until edit is implemented -->
+               <a href="/questionnaires/<%=report.id%>" class="">
+               <span class="material-symbols-outlined" >
+               visibility
+               </span>
+               </a>
+               <turbo-frame id="level-frame">
+               <button  class="material-symbols-outlined delete-level-button"  data-level-id="">
+                <span class="material-symbols-outlined">
+                delete
+                </span>
+               </button>
+               </turbo-frame>
+            </td>
+         </tr>
+         <%end%>
+      </tbody>
+   </table>
+   <div class="flex mx-auto">
+    <%= will_paginate @reports, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %> 
+
+   </div>
+</div>
+
+<%end%> 
+

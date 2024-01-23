@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :qr_codes
   has_many :user_checklists, dependent: :destroy
   has_many :user_levels, dependent: :destroy
+  has_many :answers , dependent: :destroy
 
   has_many :notifications, as: :notifiable, dependent: :destroy
   

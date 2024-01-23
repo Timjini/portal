@@ -37,11 +37,11 @@
                <label for="degree" class="block mb-2 text-sm font-medium ">Level's Stage</label>
                <select id="degree" class=" w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                   <option selected>Choose a Level</option>
-                  <option value="0">1</option>
-                  <option value="1">2</option>
-                  <option value="2">3</option>
-                  <option value="3">4</option>
-                  <option value="4">5</option>
+                  <option value="0">beginner</option>
+                  <option value="1">intermediate</option>
+                  <option value="2">advanced</option>
+                  <option value="3">expert</option>
+                  <option value="4">master</option>
                </select>
             </div>
          </div>
@@ -99,8 +99,11 @@
    
    // Add degree to data
    const degreeSelect = document.getElementById('degree');
+   const categorySelect = document.getElementById('category');
    const selectedDegree = degreeSelect.value;
+   const selectedCategory = categorySelect.value;
    data.append('degree', selectedDegree);
+   data.append('category', selectedCategory);
    
    console.log(data);
    try {
