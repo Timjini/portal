@@ -27,7 +27,8 @@ module Portal
 
     config.assets.compile = true
 
-    
+    config.assets.enabled = true
+
 
 
 
