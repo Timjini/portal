@@ -7,8 +7,8 @@
                             <div class="profile-container">
                                 <div>
                                 <%= image_tag(@athlete.user.avatar_thumbnail, class:"w-24 h-24 object-cover rounded-full")%>
-                                <span class="<%=@athlete.user.current_level%> ml-3 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                                    <%=@athlete.user.current_level%>
+                                <span class="<%=@athlete.user.level%> ml-3 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                                    <%=@athlete.user.level%>
                                 </span>
                                <%= render 'athlete_profiles/player_score'%>
                                 </div>

@@ -2,9 +2,9 @@
 <%= render 'kpi/add_kpi'%>
 <div class="relative overflow-x-auto general_card">
    <table class="w-full text-sm text-left " style="padding:0;margin:0;">
-   <div class="py-2" style="max-width:200px;">
-   <input type="text" class=" w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " id="kpiSearchInput" placeholder="Search...">
-   </div>
+      <div class="py-2" style="max-width:200px;">
+         <input type="text" class=" w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " id="kpiSearchInput" placeholder="Search...">
+      </div>
       <thead class="text-xs uppercase table_header">
          <tr>
             <th scope="col" class="px-6 py-3" >
@@ -30,7 +30,7 @@
             <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
                <%=level.degree%>
             </th>
-            <td class="px-6 py-4">
+            <td class="px-6 py-4 overflow-auto">
                <% level.check_lists.each do |checklist| %>
                <li style="list-style:none;" class="flex flex-row gap-2">
                   <span class="material-symbols-outlined">
@@ -43,10 +43,10 @@
                <% end %>
             </td>
             <td class="px-6 py-4">
-               <%=level.degree%>
+               <%=level.step%>
             </td>
             <td class="px-6 py-4">
-               <%=level.category%>
+               <%=level.category.humanize%>
             </td>
             <td class="px-6 py-4 flex flex-row gap-4">
                <!-- hidden until edit is implemented -->

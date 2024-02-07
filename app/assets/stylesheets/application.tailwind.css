@@ -649,8 +649,8 @@ article{
 .agility{background-color: #f3e8ff;color:#6b21a8;text-transform: lowercase!important}
 
 /* Levels colors */
-.Beginner{background-color: #f3f4f6;color:#1f2937;border:1px solid #d1d5db;}
-.Intermediate{background-color:#dbeafe ;color:#1e40af;border:1px solid #93c5fd;}
-.Advanced{background-color:#ede9fe ;color:#6b21a8;border:1px solid #d8b4fe;}
+.development{background-color: #f3f4f6;color:#1f2937;border:1px solid #d1d5db;}
+.intermediate{background-color:#dbeafe ;color:#1e40af;border:1px solid #93c5fd;}
+.advanced{background-color:#ede9fe ;color:#6b21a8;border:1px solid #d8b4fe;}
 .Elite{background-color:#ffe4e6 ;color:#9f1239;border:1px solid #fda4af;}
 .Pro{background-color:#fef3c7 ;color:#92400e;border:1px solid #fcd34d;}

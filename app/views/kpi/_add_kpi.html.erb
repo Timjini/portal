@@ -26,7 +26,7 @@
                <label for="degree" class="block mb-2 text-sm font-medium ">Group</label>
                <select id="degree" class=" w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                   <option selected>Choose a Group</option>
-                  <option value="0">beginner</option>
+                  <option value="0">development</option>
                   <option value="1">intermediate</option>
                   <option value="2">advanced</option>
                </select>
@@ -36,11 +36,11 @@
                <label for="level" class="block mb-2 text-sm font-medium ">Level</label>
                <select id="level" class=" w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                   <option selected>Choose a Level</option>
-                  <option value="0">1</option>
-                  <option value="1">2</option>
-                  <option value="2">3</option>
-                  <option value="3">4</option>
-                  <option value="4">5</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
                </select>
             </div>
          </div>
@@ -111,10 +111,13 @@
    // Add degree to data
    const degreeSelect = document.getElementById('degree');
    const categorySelect = document.getElementById('category');
+   const levelSelect = document.getElementById('level');
    const selectedDegree = degreeSelect.value;
    const selectedCategory = categorySelect.value;
+   const selectedLevel = levelSelect.value;
    data.append('degree', selectedDegree);
    data.append('category', selectedCategory);
+   data.append('level', selectedLevel);
    
    console.log(data);
    try {

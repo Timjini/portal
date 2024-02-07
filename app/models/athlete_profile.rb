@@ -65,4 +65,8 @@ class AthleteProfile < ApplicationRecord
     user = User.find(self.user_id)
     user.user_levels
   end
+
+  def default_level
+    self.level = 0
+  end
 end
