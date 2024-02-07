@@ -1,0 +1,72 @@
+
+<% if current_user.role == 'admin' && !@taster_session_bookings.nil? %>
+<div class="">
+   <h3 class="text-lg font-bold py-3">Taster Sessions</h3>
+</div>
+<div class="relative overflow-x-auto general_card">
+   <table class="w-full text-sm text-left " style="padding:0;margin:0;">
+      <div class="py-2" style="max-width:200px;">
+         <input type="text" class=" w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " id="tasterSearchInput" placeholder="Search...">
+      </div>
+      <thead class="text-xs uppercase table_header">
+         <tr>
+            <th scope="col" class="px-6 py-3" >
+               Taster Session Date
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Athlete Type
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Athlete Info
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Medical Info
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Action
+            </th>
+         </tr>
+      </thead>
+      <tbody>
+         <% @taster_session_bookings.each do |session| %>
+         <tr class="border-b border-gray-400">
+            <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+               <%=session.taster_session_date%>
+            </th>
+            <td class="px-6 py-4">
+                <%=session.role.humanize%>
+            </td>
+            <td class="px-6 py-4">
+            <div class="flex flex-col">
+               <div>
+               <%=session.full_name_by_role%>
+               </div>
+               <div>
+               <%=session.email%>
+               </div>
+               <div>
+               <span class="text-gray-600">
+                phone: <%=session.phone%>
+               </span>
+               </div>
+            </div>
+            </td>
+            <td class="px-6 py-4">
+               <%=session.health_issues%>
+            </td>
+            <td class="px-6 py-4 flex flex-row gap-4">
+              <button  class="material-symbols-outlined delete-level-button"  data-level-id="<%= session.id %>">
+                <span class="material-symbols-outlined">
+                delete
+                </span>
+               </button>
+            </td>
+         </tr>
+         <%end%>
+      </tbody>
+   </table>
+   <div class="flex mx-auto">
+   <%= will_paginate @taster_session_bookings, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %>
+   </div>
+</div>
+<%end%>
