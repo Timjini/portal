@@ -22,7 +22,29 @@
    <turbo-frame id="modal-frame">
       <form class="space-y-6 p-4 flex flex-col" id="kpi-form" style="min-height:70vh;">
          <div class="flex flex-row gap-4">
+           <div>
+               <label for="degree" class="block mb-2 text-sm font-medium ">Group</label>
+               <select id="degree" class=" w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                  <option selected>Choose a Group</option>
+                  <option value="0">beginner</option>
+                  <option value="1">intermediate</option>
+                  <option value="2">advanced</option>
+               </select>
+            </div>
             <div>
+            <!-- Title will be this level value-->
+               <label for="level" class="block mb-2 text-sm font-medium ">Level</label>
+               <select id="level" class=" w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                  <option selected>Choose a Level</option>
+                  <option value="0">1</option>
+                  <option value="1">2</option>
+                  <option value="2">3</option>
+                  <option value="3">4</option>
+                  <option value="4">5</option>
+               </select>
+            </div>
+         </div>
+           <div class="w-36">
                <label for="category" class="block mb-2 text-sm font-medium ">Level's Category</label>
                <select id="category" class=" w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                   <option selected>Choose a Category</option>
@@ -33,26 +55,15 @@
                   <option value="4">AGILITY</option>
                </select>
             </div>
-            <div>
-               <label for="degree" class="block mb-2 text-sm font-medium ">Level's Stage</label>
-               <select id="degree" class=" w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                  <option selected>Choose a Level</option>
-                  <option value="0">beginner</option>
-                  <option value="1">intermediate</option>
-                  <option value="2">advanced</option>
-                  <option value="3">expert</option>
-                  <option value="4">master</option>
-               </select>
-            </div>
-         </div>
-         <div>
+         <!-- Level title will be the level category-->
+         <div class="hidden">
             <label for="title" class="block mb-2 text-sm font-medium">Level's Title</label>
             <textarea type="text" name="title" id="title" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Write your title here..."></textarea>
 
          </div>
          <div id="checklist-container">
             <div class="checklist-item pb-2">
-               <label for="username" class="block mb-2 text-sm font-medium">Check List Item(s)</label>
+               <label for="username" class="block mb-2 text-sm font-medium">description(s)</label>
                <textarea type="text" name="checklist[]" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Write your check list item here..." required></textarea>
             </div>
          </div>

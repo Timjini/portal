@@ -57,8 +57,9 @@ end
     get 'reports', on: :collection
   end
 
+  resources :taster_session_bookings, only: [:index] 
 
-    resources :answers, only: [:create]
+  resources :answers, only: [:create]
 
   #QR Code generation
   resources :qr_codes, only: [:new, :create, :index, :show]
@@ -85,5 +86,13 @@ end
   put '/update_user/:id', to: "users#update_user", as: 'update_user'
   delete '/delete_user/:id', to: "users#delete_user"
 
+
+  #  API ROUTES 
+
+  namespace :api do
+    namespace :v1 do
+      resources :taster_session_bookings , only: [:create]
+    end
+  end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_11_130356) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_06_140502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -139,6 +139,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_130356) do
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
+  create_table "taster_session_bookings", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "athlete_full_name"
+    t.string "email"
+    t.string "phone"
+    t.string "role"
+    t.date "birth_date"
+    t.date "taster_session_date"
+    t.text "health_issues"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_taster_session_bookings_on_user_id"
+  end
+
   create_table "user_checklists", force: :cascade do |t|
     t.bigint "user_level_id", null: false
     t.bigint "check_list_id", null: false
@@ -191,6 +207,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_130356) do
   add_foreign_key "qr_codes", "users"
   add_foreign_key "questionnaires", "users"
   add_foreign_key "questions", "questionnaires"
+  add_foreign_key "taster_session_bookings", "users"
   add_foreign_key "user_checklists", "check_lists"
   add_foreign_key "user_checklists", "user_levels"
   add_foreign_key "user_checklists", "users"

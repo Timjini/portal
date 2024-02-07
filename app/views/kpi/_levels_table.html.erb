@@ -8,7 +8,7 @@
       <thead class="text-xs uppercase table_header">
          <tr>
             <th scope="col" class="px-6 py-3" >
-               Level
+               Group
             </th>
             <th scope="col" class="px-6 py-3">
                Check List
@@ -28,7 +28,7 @@
          <% @levels.each do |level| %>
          <tr class="border-b border-gray-400">
             <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
-               <%=level.title%>
+               <%=level.degree%>
             </th>
             <td class="px-6 py-4">
                <% level.check_lists.each do |checklist| %>

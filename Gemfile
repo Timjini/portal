@@ -99,3 +99,5 @@ gem "devise", "~> 4.9"
 gem 'will_paginate'
 
 gem 'byebug', group: :development
+
+gem 'rack-cors'
