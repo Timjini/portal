@@ -19,7 +19,6 @@ class KpiController < ApplicationController
         @level = Level.new(title: title , degree: degree, category: category , step: step)
        
         if @level.save
-
             checklist_items.each do |item|
                 CheckList.create!(title: item, level_id: @level.id)
             end

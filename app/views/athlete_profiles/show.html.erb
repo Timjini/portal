@@ -7,13 +7,18 @@
                             <div class="profile-container">
                                 <div>
                                 <%= image_tag(@athlete.user.avatar_thumbnail, class:"w-24 h-24 object-cover rounded-full")%>
+                                <% if @athlete.user.answers.any?(&:has_health_issue)%>
+                                    <span class="material-symbols-outlined text-red-500 animate-ping">
+                                        local_hospital
+                                    </span>
+                                <%end%>
                                 <span class="<%=@athlete.user.level%> ml-3 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
                                     <%=@athlete.user.level%>
                                 </span>
                                <%= render 'athlete_profiles/player_score'%>
                                 </div>
                                 <div>
-                                    <div class="px-5 flex flex-col gap-1 w-56">
+                                    <div class="px-5 flex flex-col gap-1 w-48">
                                         <h3 class="font-bold text-xl"> <%=@athlete.user.full_name%>: </h3>
                                         <span class=""> <strong>Age :</strong><%=@athlete.user.age%></span>
                                         <span> <strong>Username:</strong> <%=@athlete.user.username%></span>
@@ -21,7 +26,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="px-5 flex flex-col gap-1 w-56">
+                                    <div class="px-5 flex flex-col gap-1 w-48">
                                         <h3 class="font-bold text-xl"> Info: </h3>
                                         <span class="font-bold "> <%=@athlete.user.full_name%> </span>
                                         <span class=""> <strong>Height :</strong><%=@athlete.height%></span>

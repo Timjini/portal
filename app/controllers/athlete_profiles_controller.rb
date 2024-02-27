@@ -15,7 +15,7 @@ class AthleteProfilesController < ApplicationController
 
 
   def show
-    @levels = Level.all.order(:degree,:category)
+    @levels = Level.all.order(:degree,:step)
     @athlete = AthleteProfile.find(params[:id])
     @user = User.find_by(id: @athlete.user_id)
 
@@ -23,7 +23,7 @@ class AthleteProfilesController < ApplicationController
 
     @status = {}
 
-    if @athlete_level.blank? 
+    if @athlete_level.blank?  && @levels.present?
       # If athlete_level is nil or blank, enable the first level and disable the rest
       @status[@levels.first] = 'enabled'
       puts "#{@status[@levels.first]}================"
@@ -139,17 +139,15 @@ class AthleteProfilesController < ApplicationController
     # Routes for Users Checked items 
     def checked_items
 
-      
       #needed data to update the checklist
       checklist_id = params[:checklist_item][:checklist_id]
       user_id = params[:checklist_item][:user_id]
       completed = params[:checklist_item][:completed]
       @user = User.find(user_id)
-
-      athlete_profile_id = AthleteProfile.find_by(user_id: user_id)
+      athlete_profile = AthleteProfile.find_by(user_id: user_id)
 
       # needed variable to check the level of the user
-      user_level = UserLevel.find_by(user_id: user_id)
+      # user_level = UserLevel.find_by(user_id: user_id)
       check_list = CheckList.find_by(id: checklist_id)
 
 
@@ -164,32 +162,34 @@ class AthleteProfilesController < ApplicationController
 
 
           if user_level.nil?
-            user_level = UserLevel.create(user_id: user_id, level_id: check_list.level_id, status: 'in_progress')
+            user_level = UserLevel.create(user_id: user_id, level_id: check_list.level_id, status: 'in_progress', degree: check_list.level.degree)
           end
 
           if user_checklist.present?
             puts "YES =============="
-            #user_checklist.update(completed: completed)
+            user_checklist.update(completed: completed)
           else
             puts "NO =============="
             UserChecklist.create(check_list_id: checklist_id, user_id: user_id, completed: completed, user_level_id: user_level.id,title: check_list.title)
           end
 
-           user_levels = UserLevel.where(user_id: user_id)
-           user_levels.each do |user_level|
-          checklist_items = UserChecklist.where(user_id: user_id, user_level_id: user_level.id, completed: true).count
-          level_degree = CheckList.where(level_id: user_level.level_id).count
+           user_levels = UserLevel.where(user_id: user_id, degree: check_list.level.degree)
+            checklist_items = UserChecklist.where(user_id: user_id, user_level_id: user_levels.pluck(:id), completed: true).count
 
-          if checklist_items == level_degree
-            user_level.update(status: 'completed')
-            # inform the user that the level is completed by email and notification
-            message = "Congratulations! You have completed the level #{user_level.level.degree}!"
-            category = 'level'
-            general_notification(@user, category, message)
-          else
-            user_level.update(status: 'in_progress')
-          end
-        end
+            level_degree = CheckList.joins(:level).where(levels: { degree: user_levels.pluck(:degree) }).count
+
+            if checklist_items == level_degree
+              user_levels.update_all(status: 'completed') 
+              athlete_profile.update(level: user_levels.first.level.degree) # Assuming you want to update athlete_profile with the degree of the first matching user level
+              puts "Updated #{athlete_profile} =========="
+              # Inform the user that the level is completed by email and notification
+              message = "Congratulations! You have completed the level #{user_levels.first.level.degree}!"
+              category = 'level'
+              general_notification(@user, category, message)
+            else
+              user_levels.update_all(status: 'in_progress')
+              athlete_profile.update(level: user_levels.first.level.degree) # Assuming you want to update athlete_profile with the degree of the first matching user level
+            end
 
           respond_to do |format|
             format.turbo_stream

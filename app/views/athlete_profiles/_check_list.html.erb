@@ -1,6 +1,5 @@
 <turbo-frame id="checkbox-frame-<%= level.id %>">
   <% list = level.check_lists %>
-  
   <% if current_user.role != 'admin' && current_user.role != 'coach' %> 
     <% level.check_lists.each do |checklist| %>
       <div class="flex items-center mb-4">

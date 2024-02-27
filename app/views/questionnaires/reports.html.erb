@@ -16,7 +16,7 @@
                Athlete Information
             </th>
             <th scope="col" class="px-6 py-3">
-               Health Issues
+               Medical Condition
             </th>
             <th scope="col" class="px-6 py-3">
                Level
@@ -44,10 +44,16 @@
                </li>
             </td>
             <td class="px-6 py-4">
-                <%=report.answers.any?(&:has_health_issue)%>
+                <% if report.answers.any?(&:has_health_issue)%>
+                <span class="material-symbols-outlined text-red-500 animate-ping">
+                     local_hospital
+                  </span>
+               <%else%>
+               <span> None </span>
+               <%end%>
             </td>
             <td class="px-6 py-4">
-            here
+               <%=report.level%>
             </td>
             <td class="px-6 py-4">
             here
