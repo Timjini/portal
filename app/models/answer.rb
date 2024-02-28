@@ -10,4 +10,6 @@ class Answer < ApplicationRecord
 
 
 
+
+
 end

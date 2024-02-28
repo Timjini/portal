@@ -133,4 +133,15 @@ class User < ApplicationRecord
     end
   end
 
+  def participation
+    # participating in event question number 16
+    answer = Answer.find_by(user_id: self.id, question_id: 16)
+    
+    if answer.nil?
+     "NO"
+    else
+    answer.content    
+    end
+  end
+
 end
