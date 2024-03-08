@@ -1,9 +1,9 @@
 module AthleteProfilesHelper
 
-    def create_athlete_profile(user_id)
+    def create_athlete_profile(user_id , dob)
         profile = AthleteProfile.find_by(user_id: user_id)
         if profile.nil?
-            @athlete_profile = AthleteProfile.create(user_id: user_id,level: 0)
+            @athlete_profile = AthleteProfile.create(user_id: user_id,level: 0, dob: dob)
         else
             return profile
         end

@@ -49,25 +49,63 @@ document.addEventListener("DOMContentLoaded", function() {
     const password = document.getElementById('password');
     const passwordConfirmInput = document.getElementById('passwordConfirm');
     const nextBtn = document.getElementById('next');
+    const dobInput = document.getElementById('dob');
 
-    // Function to check if all fields are filled
-    function checkFields() {
-        if (email.value.trim() !== '' && firstName.value.trim() !== '' && lastName.value.trim() !== '' 
-            && password.value.trim() !== '' && passwordConfirmInput.value.trim() !== '' ) {
-            nextBtn.classList.remove('no-visibility');
-        } else {
-            nextBtn.classList.add('no-visibility');
+    // Function to calculate age
+    function calculateAge(dob) {
+        const dobValue = new Date(dob);
+        const today = new Date();
+        const age = today.getFullYear() - dobValue.getFullYear();
+        return age;
+    }
+
+    // Function to check if the user is under 18 and show an alert
+    function checkAge() {
+        const dobValue = dobInput.value;
+        const age = dobValue ? calculateAge(dobValue) : 0;
+
+        if (age < 18) {
+            alert('You must be at least 18 years old to proceed.');
         }
     }
 
-    // Call the checkFields function whenever the user interacts with the fields
-    email.addEventListener('input', checkFields);
-    firstName.addEventListener('input', checkFields);
-    lastName.addEventListener('input', checkFields);
+    // Function to check if any fields are empty and enable/disable the next button
+    function checkFields() {
+        const dobValue = dobInput.value;
+        const age = dobValue ? calculateAge(dobValue) : 0;
+
+        if (
+            email.value.trim() !== '' &&
+            firstName.value.trim() !== '' &&
+            lastName.value.trim() !== '' &&
+            password.value.trim() !== '' &&
+            passwordConfirmInput.value.trim() !== '' &&
+            age >= 18
+        ) {
+            // Enable the next button
+            nextBtn.removeAttribute('disabled');
+        } else {
+            // Disable the next button
+            nextBtn.setAttribute('disabled', 'true');
+        }
+    }
+
+    // Use the 'change' event instead of 'input' for better control
+    email.addEventListener('change', checkFields);
+    firstName.addEventListener('change', checkFields);
+    lastName.addEventListener('change', checkFields);
+    password.addEventListener('change', checkFields);
+    passwordConfirmInput.addEventListener('change', checkFields);
+
+    dobInput.addEventListener('input', function() {
+        checkFields();
+        checkAge();
+    });
 
     // Call checkFields once to initialize the button visibility
     checkFields();
 });
+
 
 
 function handleClick(element) {
@@ -203,6 +241,10 @@ function handleClick(element) {
                                                 </div>
                                                 <div class="select-none text-gray-700">an Athlete</div>
                                             </label>
+                                        </div>
+                                        <div class="flex  flex-col mt-2">
+                                            <label class="block m-2 text-sm font-medium text-gray-500 dark:text-white"> Athlete's Date of Birth</label>
+                                            <%=form.date_field :dob , id:'dob' ,value:"2018-12-31" ,class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
                                         </div>
                                     </div>
                                 </div>

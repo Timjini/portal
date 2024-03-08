@@ -18,20 +18,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user.phone = params[:user][:phone]
     @user.address = params[:user][:address]
     @user.avatar = params[:user][:avatar]
-    @user.save
+
+    if params[:user][:dob]
+      dob = Date.parse(params[:user][:dob])
+      age = (Date.today - dob).to_i / 365
+
+      if age < 18 
+        flash[:alert] = "Parental guidances needed to create an account."
+        return 
+      else 
+        @user.save
+      end
+    end
 
     if @user.persisted?
-
-      if @user.role == "athlete" 
-        create_athlete_profile(@user.id)
-        puts "Athlete Profile created**************************"
-      end
-
-      sign_in(@user)  # Manually sign in the user
-      UserMailer.welcome_email(@user).deliver_now
-
-      flash[:success] = "Athlete Profile created!"
-      redirect_to root_path
+      handle_successful_creation
     else
       flash[:alert] = "Oops, something went wrong!"
       render 'new'
@@ -44,5 +45,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
   def user_params
     params.require(:user).permit(:email,:phone , :username, :first_name, :last_name, :address, :city , :avatar , :password, :password_confirmation , :role)
+  end
+
+  def handle_successful_creation
+    if @user.role == "athlete"
+      create_athlete_profile(@user.id , params[:user][:dob])
+      puts "Athlete Profile created**************************"
+    end
+
+    sign_in(@user)  # Manually sign in the user
+    UserMailer.welcome_email(@user).deliver_now
+
+    flash[:success] = "Athlete Profile created!"
+    redirect_to root_path
   end
 end

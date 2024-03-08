@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable
 
       
+  attr_accessor :dob
          
   has_many :comments
   has_one_attached :avatar
@@ -18,6 +19,7 @@ class User < ApplicationRecord
   
   validates_uniqueness_of :username
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :password, presence: true
   # validates :username, length: { minimum: 3, maximum: 20 }
 
   # searchkick text_middle: %i[username email first_name last_name]
