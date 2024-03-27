@@ -8,19 +8,37 @@
     <div class="relative overflow-x-auto general_card">
       <span><strong><%= q.position %>.</strong> <%= q.content %> </span>
       <div class="pt-4" id="answers-<%= q.id %>">
-        <% if !q.options.blank? %>
-          <% q.options.each do |option| %>
-            <span id="empty-content-<%= q.id %>" class="text-red-500 hidden span-alert">field required</span>
-            <div class="flex items-center mb-4">
-              <input id="<%= q.id %>" type="radio" value="<%= option %>" name="<%= q.id %>" class="w-4 h-4 border-gray-300 mr-2">
-              <label for="<%= q.id %>" class="ms-2 text-sm font-medium"><%= option %></label>
+        <% case  q.question_type %>
+        <%when 'multiple'%>
+         <% q.options.each do |option| %>
+              <span id="empty-content-<%= q.id %>" class="text-red-500 hidden span-alert">field required</span>
+              <div class="flex items-center mb-4">
+                <input id="<%= q.id %>" type="checkbox" value="<%= option %>" name="<%= q.id %>" class="w-4 h-4 border-gray-300 mr-2">
+                <label for="<%= q.id %>" class="ms-2 text-sm font-medium"><%= option %></label>
+                  <input type="hidden" name="user_id" value="<%=current_user.id%>" />
+              </div>
+          <%end%>
+        <%when'radio'%>
+              <% q.options.each do |option| %>
+              <span id="empty-content-<%= q.id %>" class="text-red-500 hidden span-alert">field required</span>
+              <div class="flex items-center mb-4">
+                <input id="<%= q.id %>" type="radio" value="<%= option %>" name="<%= q.id %>" class="w-4 h-4 border-gray-300 mr-2">
+                <label for="<%= q.id %>" class="ms-2 text-sm font-medium"><%= option %></label>
                 <input type="hidden" name="user_id" value="<%=current_user.id%>" />
-            </div>
-          <% end %>
-        <% else %>
-          <textarea type="text" name="<%= q.id %>" id="<%= q.id %>" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Write your title here..."></textarea>
-          <span id="empty-content-<%= q.id %>" class="hidden text-red-500 hidden span-alert">field required</span>
-        <% end %>
+              </div>
+          <%end%>
+          <div class="hidden">
+              <% if q.id < 11 %>
+              <label class="ms-2 text-sm font-medium"> please outline below. </label>
+               <textarea class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"> </textarea>
+              <%end%>
+          </div>
+        <%when 'text'%>
+              <div>
+                <textarea type="text" name="<%= q.id %>" id="<%= q.id %>" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Write your title here..."></textarea>
+                <span id="empty-content-<%= q.id %>" class="hidden text-red-500 hidden span-alert">field required</span>
+              </div>
+        <%end%>
       </div>
     </div>
   <% end %>

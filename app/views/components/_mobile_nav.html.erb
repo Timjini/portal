@@ -1,25 +1,91 @@
-<div class="mobile_navigation">
-                <div class="flex flex-row gap-5 justify-center content-center">
-                            <a id="toggleThemeBtn" type="button" class="theme-btn relative inline-flex items-center">
-                                <span class="material-symbols-outlined theme_icon icon_span">
-                                    light_mode
-                                </span>
-                            </a>
-
-
-                            <div></div>
-                            <div class="hidden"><a class="material-symbols-outlined icon_span">chat</a></div>
-                            <a href="/users/<%=current_user.id%>" class="relative inline-flex items-center">
-                            <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 object-cover rounded-full")%>
-                            </a>
-                </div>
+<div class="mobile_navigation" style="padding:20px;">
+    <div class="flex flex-row  flex-wrap justify-center items-center gap-4">
+     <%if current_user.role == 'admin'%>
+        <a class="flex gap-2 nav_item" href="/">
+            <span class="material-symbols-outlined">
+            home
+            </span>
+        </a>
+        <a href="/accounts/all_accounts" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+                manage_accounts
+            </span>
+        </a>
+        <a href="/subscriptions" class="flex gap-2 nav_item hidden">
+            <span class="material-symbols-outlined">
+            wallet
+            </span>
+        </a>
+        <a href="/kpis" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+            data_exploration
+            </span>
+        </a>
+         <a href="/questionnaires/reports" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+            description
+            </span>
+        </a>
+        <a href="/taster_session_bookings" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+            sprint
+            </span>
+        </a>
+        <%elsif current_user.role =='coach'%>
+        <a class="flex gap-2 nav_item" href="/">
+            <span class="material-symbols-outlined">
+            home
+            </span>
+        </a>
+         <a href="/users/<%=current_user.id%>" class="hidden flex gap-2 nav_item">
+            <%= image_tag(current_user.avatar_thumbnail, class:"h-8 w-8 object-cover rounded-full")%>
+        </a>
+        <%elsif current_user.role =='parent_user'%>
+        <a class="flex gap-2 nav_item" href="/">
+            <span class="material-symbols-outlined">
+            home
+            </span>
+        </a>
+        <a href="/accounts" class="flex gap-2 nav_item">
+                <span class="material-symbols-outlined">
+                supervised_user_circle
+                </span>
+                Child Profile
+            </a>
+            <a href="#" class="flex gap-2 nav_item hidden">
+               <span class="material-symbols-outlined">
+                credit_card
+                </span>
+                Subscription
+            </a>
+             <a href="/users/<%=current_user.id%>" class=" flex gap-2 nav_item">
+            <%= image_tag(current_user.avatar_thumbnail, class:"h-8 w-8 object-cover rounded-full")%>
+        </a>
+        <%elsif current_user.role == 'child_user'%>
+        <a class="flex gap-2 nav_item" href="/">
+            <span class="material-symbols-outlined">
+            home
+            </span>
+        </a>
+         <a href="/athlete_profiles/<%=current_user.athlete_profile.id%>" class="flex gap-2 nav_item">
+               <span class="material-symbols-outlined">
+                bar_chart
+                </span>
+                Progress
+            </a>
+        <%elsif current_user.role == 'athlete'%>
+        <a class="flex gap-2 nav_item" href="/">
+            <span class="material-symbols-outlined">
+            home
+            </span>
+        </a>
+         <a href="/athlete_profiles/<%=current_user.athlete_profile.id%>" class="flex gap-2 nav_item">
+               <span class="material-symbols-outlined">
+                account_circle
+                </span>
+                Profile
+            </a>
+        <%else%>
+        <%end%>
+    </div>
 </div>
-
-<script>
-function something(){
-    const sidebar = document.querySelector(".main_screen");
-    
-    // sidebar.classList.toggle("show-sidebar");
-    sidebar.style.display = "flex";
-}
-</script>

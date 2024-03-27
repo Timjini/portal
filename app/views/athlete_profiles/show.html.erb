@@ -2,10 +2,10 @@
 
                 <div class="w-120 ">
                     <div class="py-2">
-                        <h3 class="text-lg font-bold py-3">Athlete's Profile</h3>
+                        <h3 class="text-md py-3">Athlete's Profile</h3>
                     </div>
                             <div class="profile-container">
-                                <div>
+                                <div class="w-24">
                                 <%= image_tag(@athlete.user.avatar_thumbnail, class:"w-24 h-24 object-cover rounded-full")%>
                                 <% if @athlete.user.answers.any?(&:has_health_issue)%>
                                     <span class="material-symbols-outlined text-red-500 animate-ping">
@@ -17,34 +17,28 @@
                                 </span>
                                <%= render 'athlete_profiles/player_score'%>
                                 </div>
-                                <div>
                                     <div class="px-5 flex flex-col gap-1 w-48">
-                                        <h3 class="font-bold text-xl"> <%=@athlete.user.full_name%>: </h3>
-                                        <span class=""> <strong>Age :</strong><%=@athlete.user.age%></span>
-                                        <span> <strong>Username:</strong> <%=@athlete.user.username%></span>
-                                        <span><strong>School Name:</strong> London School of Economics</span>
+                                        <span class="font-bold text-lg"> Contact Info: </span>
+                                        <span class=""> <%=@athlete.user.full_name%> </span>
+                                        <span > <strong class=" text-sm">Age :</strong class=" text-sm" ><%=@athlete.user.age%></span>
+                                        <span> <strong class=" text-sm">Username:</strong class=" text-sm" > <%=@athlete.user.username%></span>
+                                        <span><strong class=" text-sm">School Name:</strong class=" text-sm" > <%=@athlete.school_name%></span>
                                     </div>
-                                </div>
-                                <div>
                                     <div class="px-5 flex flex-col gap-1 w-48">
-                                        <h3 class="font-bold text-xl"> Info: </h3>
-                                        <span class="font-bold "> <%=@athlete.user.full_name%> </span>
-                                        <span class=""> <strong>Height :</strong><%=@athlete.height%></span>
-                                        <span> <strong>Weight:</strong> <%=@athlete.weight%></span>
-                                        <span> <strong>Power Of ten:</strong> <%=@athlete.power_of_ten%></span>
-                                        <span class=""> <strong>Level:</strong> <%=@athlete.level%> </span>
+                                        <span class="font-bold text-lg"> Info: </span>
+                                        <span class=""> <strong class=" text-sm" >Height :</strong class=" text-sm" ><%=@athlete.height%>cm</span>
+                                        <span> <strong class=" text-sm" >Weight:</strong class=" text-sm" > <%=@athlete.weight%>Kg</span>
+                                        <span> <strong class=" text-sm" >Power Of ten:</strong class=" text-sm" > <%=@athlete.power_of_ten%></span>
+                                        <span class=""> <strong class=" text-sm" >Level:</strong class=" text-sm" > <%=@athlete.level%> </span>
                                     </div>
-                                </div>
-                                <div>
                                     <div class="px-5 flex flex-col gap-1 w-56">
-                                        <h3 class="font-bold text-xl"> PB's: </h3>
-                                        <span class=""> <strong>60m:</strong></span>
-                                        <span class=""> <strong>100m :</strong></span>
-                                        <span> <strong>200m:</strong></span>
-                                        <span> <strong>VJ:</strong></span>
-                                        <span> <strong>HJ:</strong></span>
+                                        <span class="font-bold text-lg"> PB's: </span>
+                                        <span class=""> <strong class=" text-sm" >60m:</strong class=" text-sm" ></span>
+                                        <span class=""> <strong class=" text-sm" >100m :</strong class=" text-sm" ></span>
+                                        <span> <strong class=" text-sm" >200m:</strong class=" text-sm" ></span>
+                                        <span> <strong class=" text-sm" >VJ:</strong class=" text-sm" ></span>
+                                        <span> <strong class=" text-sm" >HJ:</strong class=" text-sm" ></span>
                                     </div>
-                                </div>
                             </div>
                 </div>
 

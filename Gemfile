@@ -101,3 +101,5 @@ gem 'will_paginate'
 gem 'byebug', group: :development
 
 gem 'rack-cors'
+
+gem 'guard-livereload', '~> 2.5', require: false
