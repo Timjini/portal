@@ -7,9 +7,12 @@ class AthleteProfilesController < ApplicationController
 
     def index
       if params[:level].present?
-        @athletes = AthleteProfile.includes(:user).where(level: params[:level])
+        @users = User.where(role: ['child_user','athlete'])
+        # @athletes = AthleteProfile.includes(:user).where(level: params[:level])
+        @athletes = AthleteProfile.where(user_id: @users.ids).where(level: params[:level])
       else
-        @athletes = AthleteProfile.includes(:user).all
+        @users = User.where(role: ['child_user','athlete'])
+        @athletes = AthleteProfile..where(user_id: @users.ids)
       end
     end
 
