@@ -86,15 +86,7 @@ a:hover{opacity: 0.9;}
 .warning-box{background-color: var(--primary);color:var(--secondary);font-weight: 500;}
 .kpi-bar{background-color: var(--primary);color:var(--secondary);}
 
-/*.shadow:before {
-  content:"";
-  position: absolute;
-  inset: -5px;
-  transform: translate(5px,3px);
-  z-index: -1;
-  /* background: var(--special-color); */
-  filter: blur(10px);
-}/*/
+
 
 /* LEFT SIDEBAR */
 .link{color:var(--primary); text-decoration: none; cursor: pointer;font-weight: 300;}
