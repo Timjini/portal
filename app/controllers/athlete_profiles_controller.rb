@@ -12,7 +12,7 @@ class AthleteProfilesController < ApplicationController
         @athletes = AthleteProfile.where(user_id: @users.ids).where(level: params[:level])
       else
         @users = User.where(role: ['child_user','athlete'])
-        @athletes = AthleteProfile..where(user_id: @users.ids)
+        @athletes = AthleteProfile.where(user_id: @users.ids)
       end
     end
 
