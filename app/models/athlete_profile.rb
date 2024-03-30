@@ -69,4 +69,11 @@ class AthleteProfile < ApplicationRecord
   def default_level
     self.level = 0
   end
+
+  def user_illness 
+    q = Question.where(id: 1..10).pluck(:illness_tag)
+
+
+
+  end
 end

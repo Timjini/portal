@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_27_032313) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_27_094657) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -138,6 +138,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_032313) do
     t.datetime "updated_at", null: false
     t.text "options", default: [], array: true
     t.integer "position"
+    t.string "illness_tag"
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
