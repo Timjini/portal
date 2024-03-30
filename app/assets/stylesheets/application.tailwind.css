@@ -15,7 +15,7 @@
     --static-color: rgba(253, 253, 253, 0.03);
     --shadow: rgba(99, 99, 99, 0.5) 0px 2px 8px 0px;
     --hover: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    --special-color: conic-gradient(from 90deg at 40% -25%, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700);
+    /* --special-color: conic-gradient(from 90deg at 40% -25%, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700); */
     --logo: url('./cfs-dark.png');
 }
 
@@ -28,7 +28,7 @@
     --static-color: rgba(253, 253, 253, 0.03);
     --shadow : rgba(231, 231, 231, 0.3) 0px 2px 8px 0px;
     --hover : rgba(231, 231, 231, 0.35) 0px 5px 15px;
-    --special-color: conic-gradient(from 90deg at 40% -25%, #49fb35 , #33f71e, #28fc10, #19e203, #15c002);
+    /* --special-color: conic-gradient(from 90deg at 40% -25%, #49fb35 , #33f71e, #28fc10, #19e203, #15c002); */
     --logo: url('./cfs-light.png');
 
 }
@@ -86,7 +86,7 @@ a:hover{opacity: 0.9;}
 .warning-box{background-color: var(--primary);color:var(--secondary);font-weight: 500;}
 .kpi-bar{background-color: var(--primary);color:var(--secondary);}
 
-.shadow:before {
+/*.shadow:before {
   content:"";
   position: absolute;
   inset: -5px;
@@ -94,9 +94,11 @@ a:hover{opacity: 0.9;}
   z-index: -1;
   /* background: var(--special-color); */
   filter: blur(10px);
-}
-.link{color:var(--primary); text-decoration: none; cursor: pointer;font-weight: 300;}
+}/*/
+
 /* LEFT SIDEBAR */
+.link{color:var(--primary); text-decoration: none; cursor: pointer;font-weight: 300;}
+
 .l_sidebar{max-height: 100vh;}
 
 .show-sidebar{display:grid !important;}
