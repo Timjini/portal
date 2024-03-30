@@ -73,7 +73,11 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = true
+
+  RAILS_SERVE_STATIC_FILES= true
+
 
   # Mailcatcher
   # config.action_mailer.delivery_method = :smtp
