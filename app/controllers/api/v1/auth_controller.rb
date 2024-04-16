@@ -2,6 +2,8 @@ class Api::V1::AuthController < Api::V1::BaseController
     # before_action :authenticate_user!
 	skip_before_action :verify_authenticity_token 
 
+	include AthleteProfilesHelper
+
     def login
 		user = User.where('lower(email) = ?', params[:user][:email].downcase).first
 		if(user.nil?)
@@ -37,7 +39,8 @@ class Api::V1::AuthController < Api::V1::BaseController
 
 		# if params[:user][:dob].present?
 		# 	dob = Date.parse(params[:user][:dob])
-		# 	age = (Date.today - dob).to_i / 365
+		# 	formatted_dob = dob.strftime("%a, %d %b %Y")
+		# 	age = (Date.today - formatted_dob).to_i / 365
 
 		# 	if age < 18 
 		# 	result = api_error(status: 401, errors: ['Parental guidance needed to create an account.'])
@@ -50,17 +53,21 @@ class Api::V1::AuthController < Api::V1::BaseController
 		# 	return
   		# end
 
+
 		user.auth_token = JsonWebToken.encode({ user_id: user.id })
 
 		if user.save
+			handle_successful_creation(user)
 			userData = ActiveModelSerializers::SerializableResource.new(user, each_serializer: Api::V1::UsersSerializer)
 			result = { type: 'Success', data: userData, message: ['Account created successfully.'], status: 200 }
 			render json: result
+			return
 		else
 			result = api_error(status: 400, errors: user.errors.full_messages)
-			render json: result
+			return  result
 		end
 	end
+
 
 
 	private
@@ -68,5 +75,14 @@ class Api::V1::AuthController < Api::V1::BaseController
 	def user_params
 		params.require(:user).permit(:email, :username, :first_name, :last_name, :role, :password, :phone, :address, :avatar ,:dob)
 	end
+
+	def handle_successful_creation(user)
+		if user.role == "athlete"
+			create_athlete_profile(user.id , params[:user][:dob])
+			puts "Athlete Profile created**************************"
+		end
+
+		UserMailer.welcome_email(user).deliver_now
+  	end
 end
         
