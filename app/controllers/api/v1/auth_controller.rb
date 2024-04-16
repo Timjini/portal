@@ -1,5 +1,6 @@
 class Api::V1::AuthController < Api::V1::BaseController
     # before_action :authenticate_user!
+	before_action :authenticate_request! , only: [:check_token]
 	skip_before_action :verify_authenticity_token 
 
 	include AthleteProfilesHelper
@@ -14,7 +15,8 @@ class Api::V1::AuthController < Api::V1::BaseController
 		else
 			if user && user.valid_password?(params[:user][:password])
 				result = "Login"
-					user.auth_token = JsonWebToken.encode({ user_id: user.id })
+					tokenExpire = Date.today + 365.days
+					user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: tokenExpire.to_time.to_i })
 					userData = ActiveModelSerializers::SerializableResource.new(user, each_serializer: Api::V1::UsersSerializer);
 					result = {type: 'Success', data: userData, message: ["User singin successfully."],status: 200}
 					render json: result
@@ -53,8 +55,8 @@ class Api::V1::AuthController < Api::V1::BaseController
 		# 	return
   		# end
 
-
-		user.auth_token = JsonWebToken.encode({ user_id: user.id })
+		tokenExpire = Date.today + 365.days
+		user.auth_token = JsonWebToken.encode({ user_id: user.id ,  exp: tokenExpire.to_time.to_i  })
 
 		if user.save
 			handle_successful_creation(user)
@@ -66,6 +68,12 @@ class Api::V1::AuthController < Api::V1::BaseController
 			result = api_error(status: 400, errors: user.errors.full_messages)
 			return  result
 		end
+	end
+
+	def check_token
+		puts "=====================#{@current_user}"
+		render json: @current_user
+		return 
 	end
 
 

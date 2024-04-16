@@ -10,4 +10,19 @@ class JsonWebToken
   rescue JWT::ExpiredSignature, JWT::VerificationError => e
     nil
   end
+
+   def self.valid_payload(payload)
+    if expired(payload)
+        puts"============Invalid token"
+      return false
+    else
+      return true
+      puts "============ valid token"
+    end
+  end
+
+   # Validates if the token is expired by exp parameter
+  def self.expired(payload)
+    Time.at(payload['exp']) < Time.now
+  end
 end

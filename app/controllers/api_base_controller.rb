@@ -1,3 +1,5 @@
 class ApiBaseController < ActionController::Base
-    # require 'jsonwebtoken'
+   require 'json_web_token'
+   before_action :authenticate_request!
+    
 end
