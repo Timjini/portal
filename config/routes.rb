@@ -92,6 +92,11 @@ end
   namespace :api do
     namespace :v1 do
       resources :taster_session_bookings , only: [:create]
+      
+      #auth routes
+      resources :auth do
+        post 'login' , on: :collection, to: 'auth#login'
+      end
     end
   end
 

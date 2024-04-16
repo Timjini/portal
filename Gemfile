@@ -41,6 +41,9 @@ gem 'rqrcode'
 # sendgrid
 gem 'sendgrid-ruby'
 
+gem 'active_model_serializers', '~> 0.10.2'
+
+
 
 gem "image_processing", "~> 1.2"
 gem 'aws-sdk-s3', '~> 1.136', require: false
@@ -103,3 +106,5 @@ gem 'byebug', group: :development
 gem 'rack-cors'
 
 gem 'guard-livereload', '~> 2.5', require: false
+gem 'jwt'
+

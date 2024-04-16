@@ -24,6 +24,10 @@ class User < ApplicationRecord
 
   # searchkick text_middle: %i[username email first_name last_name]
 
+  def generate_jwt
+    JsonWebToken.encode({ user_id: id })
+  end
+
    enum role: {
     'athlete' => 'athlete',
     'parent_user' => 'parent_user',
