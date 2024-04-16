@@ -96,6 +96,7 @@ end
       #auth routes
       resources :auth do
         post 'login' , on: :collection, to: 'auth#login'
+        post 'sign-up' , on: :collection, to: 'auth#sign_up'
       end
     end
   end
