@@ -1,6 +1,5 @@
 class Api::V1::AuthController < Api::V1::BaseController
-    # before_action :authenticate_user!
-	before_action :authenticate_request! , only: [:check_token]
+	before_action :authenticate_user! , only: [:check_token]
 	skip_before_action :verify_authenticity_token 
 
 	include AthleteProfilesHelper

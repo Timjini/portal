@@ -1,9 +1,9 @@
 class Api::V1::BaseController < ApiBaseController
     protect_from_forgery with: :null_session
-    before_action :authenticate_request!
+    before_action :authenticate_user!
     protected
     # 
-    def authenticate_request!
+    def authenticate_user!
         my_payload = payload
         puts"===========#{payload}"
         if !payload || !JsonWebToken.valid_payload(payload)
