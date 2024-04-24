@@ -4,6 +4,7 @@
                     <div class="py-2">
                         <h3 class="text-md py-3">Athlete's Profile</h3>
                     </div>
+                    <%= @athlete.user_illness.inspect%>
                             <div class="profile-container">
                                 <div class="w-24">
                                 <%= image_tag(@athlete.user.avatar_thumbnail, class:"w-24 h-24 object-cover rounded-full")%>

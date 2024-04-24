@@ -71,9 +71,23 @@ class AthleteProfile < ApplicationRecord
   end
 
   def user_illness 
-    q = Question.where(id: 1..10).pluck(:illness_tag)
 
+    ilnesses_list = {
+      "Osgood Schlatter Disease" => 1,
+      "Arthritis" => 2,
+      "high blood pressure" => 3,
+      "low blood pressure" => 4,
+      "pain in their chest" => 5,
+      "heart condition" => 6,
+      "usage of drugs or medication" =>7
+    }
 
-
+    questions = Question.where(id: 1..10)
+    answers = Answer.where(user_id: self.user_id, question_id: questions.pluck(:id))
+    answers.each {|a| 
+    if a.content == "Yes" 
+      return a.question.content
+    end
+    }
   end
 end

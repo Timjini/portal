@@ -1,4 +1,5 @@
 class Api::V1::BaseController < ApiBaseController
+    require 'json_web_token'
     protect_from_forgery with: :null_session
     before_action :authenticate_user!
     protected
@@ -28,7 +29,6 @@ class Api::V1::BaseController < ApiBaseController
     rescue
         nil
     end
-    
 
     # Sets the @current_user with the user_id from payload
     def load_current_user!
