@@ -1,10 +1,12 @@
 class Api::V1::AuthController < Api::V1::BaseController
+	require 'json_web_token'
 	before_action :authenticate_user! , only: [:check_token]
 	skip_before_action :verify_authenticity_token 
 
 	include AthleteProfilesHelper
 
     def login
+		puts "#{params}===========>?"
 		user = User.where('lower(email) = ?', params[:user][:email].downcase).first
 		if(user.nil?)
 			return api_error(status: 404, errors: ["Sorry we didn't find you on CFS."])

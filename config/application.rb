@@ -29,8 +29,8 @@ module Portal
 
     config.assets.enabled = true
 
-
-
+    #load paths
+    config.autoload_paths << Rails.root.join('lib')
 
     # production
     # config.action_controller.default_url_options = { host: 'chambersforsport.net' }
