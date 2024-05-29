@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :time_slots
   # devise_for :users
 
   devise_for :users, controllers: {

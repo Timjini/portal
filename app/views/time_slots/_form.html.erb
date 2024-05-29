@@ -1,0 +1,43 @@
+<% label_style = "block mb-2 text-sm font-medium"%>
+<% input_style="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5" %>
+<%= form_with(model: time_slot) do |form| %>
+  <div class="w-120">
+
+  <% if time_slot.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>
+
+      <ul>
+        <% time_slot.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :date, style: "display: block" %>
+    <%= form.date_field :date , class: input_style %>
+  </div>
+
+  <div>
+    <%= form.label :start_time, style: "display: block" %>
+    <%= form.time_field :start_time , class: input_style %>
+  </div>
+
+  <div>
+    <%= form.label :end_time, style: "display: block" %>
+    <%= form.time_field :end_time , class: input_style %>
+  </div>
+
+  <div>
+    <%= form.label :group_type, style: "display: block" %>
+        <%= form.select :group_type, TimeSlot.group_types.keys.map { |group_type| [group_type.titleize, group_type] }, {}, class: input_style %>
+
+  </div>
+
+  <div>
+    <%= form.submit "Save Time slot", class: " mt-10 confirm-btn" %>
+  </div>
+  </div>
+<% end %>

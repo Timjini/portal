@@ -17,7 +17,7 @@
           <%= form.text_field :email, class: input_style, placeholder: "Full Name", value: @user.email %>
           <%= form.date_field :dob, id: 'dob', value: @user.dob, class: input_style%>
           <%= form.text_field :username, class: input_style, placeholder: "Full Name", value: @user.username %>
-          <%= form.text_field :school_name, class: input_style, placeholder: "School Name", value: @profile.school_name || "London School of Economics" %>
+          <%= form.text_field :school_name, class: input_style, placeholder: "School Name", value: @profile&.school_name %>
         </div>
       </div>
       <% if !current_user.role == 'coach'%>
