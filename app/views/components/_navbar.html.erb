@@ -48,6 +48,33 @@
 
         <!-- COACH USER ITEMS -->
         <%elsif current_user.role =='coach'%>
+        <a href="/accounts/all_accounts" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+                manage_accounts
+            </span>
+            All accounts
+        </a>
+        <a href="/kpis" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+            data_exploration
+            </span>
+            KPI's
+        </a>
+        
+        <a href="/coach_calendar" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+            data_exploration
+            </span>
+            Calendar
+        </a>
+
+         <a href="/time_slots" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+            data_exploration
+            </span>
+            Time Slots
+        </a>
+        
 
         
 
