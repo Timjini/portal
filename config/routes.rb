@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   resources :time_slots
+   resources :coach_calendar do 
+     get 'data' , on: :collection, to: 'coach_calendar#calendar_data'
+   end
   # devise_for :users
 
   devise_for :users, controllers: {

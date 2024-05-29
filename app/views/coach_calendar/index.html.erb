@@ -1,0 +1,43 @@
+     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
+
+  <div id="calendar" class="">
+  </div>
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      if (!calendarEl) {
+        console.error("Calendar element not found.");
+        return;
+      }
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: '/coach_calendar/data',
+        eventDidMount: function(info) {
+          console.log('Event mounted:', info.event.title);
+        },
+        loading: function(isLoading) {
+          if (isLoading) {
+            console.log('Calendar is loading...');
+          } else {
+            console.log('Calendar has finished loading.');
+          }
+        },
+        eventSources: [
+          {
+            url: '/coach_calendar/data',
+            method: 'GET',
+            failure: function() {
+              console.error('Failed to fetch events.');
+            },
+            color: 'green', 
+          }
+        ],
+        eventTimeFormat: { // Format for displaying event time
+          hour: 'numeric',
+          minute: '2-digit',
+          meridiem: false // 24-hour format
+        }
+      });
+      calendar.render();
+    });
+  </script>
