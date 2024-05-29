@@ -20,12 +20,36 @@ class UsersController < ApplicationController
 
     def edit_user
         @user = User.find(params[:id])
-       
+        @profile = @user.athlete_profile
     end
 
     def update_user
+        puts "params: #{params}====================="
+
         @user = User.find(params[:id])
-        @user.update(user_params)
+        
+        @user.email = params[:user][:email]
+        @user.username = params[:user][:username].downcase
+        @user.first_name = params[:user][:first_name]
+        @user.last_name = params[:user][:last_name]
+        @user.role = params[:user][:role]
+        @user.phone = params[:user][:phone]
+        @user.address = params[:user][:address]
+        @user.avatar = params[:user][:avatar]
+
+        @user.save 
+
+        @profile = @user.athlete_profile
+
+        if @profile.nil?
+            @profile = AthleteProfile.create(user_id: @user.id, level: 0, dob: params[:athlete_profile][:dob])
+        end
+
+        @profile.height = params[:athlete_profile][:height]
+        @profile.weight = params[:athlete_profile][:weight]
+        @profile.save 
+
+
         respond_to do |format|
             format.html { render :show }
             format.json { render json: @user }

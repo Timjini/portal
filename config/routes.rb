@@ -82,8 +82,8 @@ end
   get '/subscriptions', to: "home#subscriptions"
 
   # Edit user
-  get '/edit_user/:id', to: "users#edit_user", as: 'edit_user'
-  put '/update_user/:id', to: "users#update_user", as: 'update_user'
+  get 'users/edit_user/:id', to: "users#edit_user", as: 'edit_user'
+  patch 'users/update_user/:id', to: "users#update_user", as: 'update_user'
   delete '/delete_user/:id', to: "users#delete_user"
 
 
