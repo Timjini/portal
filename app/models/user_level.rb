@@ -10,6 +10,18 @@ class UserLevel < ApplicationRecord
     level.degree
   end
 
+  def progress
+    # Assuming self.count returns the count value
+    count = self.count.to_f
+    total = 125.0
+
+    # Calculate the percentage
+    percentage = (count / total) * 100
+
+    return percentage
+  end
+ 
+
   # set status to completed
 
   enum status: { not_started: 'not_started', in_progress: 'in_progress', completed: 'completed' }

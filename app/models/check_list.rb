@@ -12,4 +12,10 @@ class CheckList < ApplicationRecord
       return false
     end
   end
+
+  def check_list_level 
+    level = self.level.degree
+    return level if level
+  end
+
 end
