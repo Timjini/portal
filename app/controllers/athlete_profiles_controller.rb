@@ -18,10 +18,17 @@ class AthleteProfilesController < ApplicationController
 
 
   def show
+    puts "=============== #{params.inspect}"
+
+    @levels = nil 
+
+    if params[:level].present?
+     @levels = Level.where(degree: params[:level])
+    else
     @levels = Level.all.order(:degree,:step)
+    end
     @athlete = AthleteProfile.find(params[:id])
     @user = User.find_by(id: @athlete.user_id)
-
     @levels_count = UserLevel.where(user_id: @user.id).count
     total = 125
     @percentage = (@levels_count / total)

@@ -1,5 +1,5 @@
 
-<%if current_user.role == 'admin'%>
+<%if current_user.role == 'admin' || current_user.role == 'coach'%>
 <%=render 'components/back_button'%>
 <%= render 'accounts/add_user'%>
 <%= render 'accounts/tabs'%>
