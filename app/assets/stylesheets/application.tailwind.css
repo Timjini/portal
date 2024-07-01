@@ -97,7 +97,7 @@ a:hover{opacity: 0.9;}
 
 
 /* MAIN DASHBOARD */
-.dashboard{border-radius: 2%;background-color:var(--static-color);margin-top:10px;margin-bottom: 10px;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;overflow-y: auto;}
+.dashboard{border-radius: 2%;background-color:var(--static-color);margin-top:10px;margin-bottom: 10px;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;overflow-y: auto; max-height: 120vh;}
 .dashboard_hero{
     background-image: linear-gradient(rgba(221, 197, 197, 0.5), rgba(0, 0, 0, 0.5)),url('./dash.jpg');
     height:250px;

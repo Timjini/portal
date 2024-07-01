@@ -7,12 +7,12 @@
 
   <p>
     <strong>Start time:</strong>
-    <%= time_slot.start_time %>
+    <%= time_slot.start_time.strftime("%H:%M") %>
   </p>
 
   <p>
     <strong>End time:</strong>
-    <%= time_slot.end_time %>
+    <%= time_slot.end_time.strftime("%H:%M") %>
   </p>
 
   <p>
