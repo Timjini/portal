@@ -43,6 +43,8 @@ gem 'sendgrid-ruby'
 
 gem 'active_model_serializers', '~> 0.10.2'
 
+gem 'dotenv', '~> 2.1', '>= 2.1.1'
+
 
 
 gem "image_processing", "~> 1.2"
