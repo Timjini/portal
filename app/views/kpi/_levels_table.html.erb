@@ -11,13 +11,13 @@
                Group
             </th>
             <th scope="col" class="px-6 py-3">
-               Check List
-            </th>
-            <th scope="col" class="px-6 py-3">
                Level
             </th>
             <th scope="col" class="px-6 py-3">
                Category
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Check List
             </th>
             <th scope="col" class="px-6 py-3">
                Action
@@ -30,6 +30,12 @@
             <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
                <%=level.degree%>
             </th>
+            <td class="px-6 py-4">
+               <%=level.step%>
+            </td>
+            <td class="px-6 py-4">
+               <%=level.category.humanize%>
+            </td>
             <td class="px-6 py-4 overflow-auto">
                <% level.check_lists.each do |checklist| %>
                <li style="list-style:none;" class="flex flex-row gap-2">
@@ -41,12 +47,6 @@
                   </div>
                </li>
                <% end %>
-            </td>
-            <td class="px-6 py-4">
-               <%=level.step%>
-            </td>
-            <td class="px-6 py-4">
-               <%=level.category.humanize%>
             </td>
             <td class="px-6 py-4 flex flex-row gap-4">
                <!-- hidden until edit is implemented -->

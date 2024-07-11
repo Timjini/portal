@@ -1,5 +1,5 @@
 
-<%if current_user.role == 'admin'%>
+<%if current_user.role == 'admin' || current_user.role == 'coach'%>
 <%=render 'components/back_button'%>
 <%= render 'accounts/add_user'%>
 <%= render 'accounts/tabs'%>
@@ -45,9 +45,16 @@
                         <%= account.role%>
                     </td>
                     <td class="px-6 py-4">
-                        <a class="material-symbols-outlined" href="/edit_user/<%=account.id%>">
+                        <a class="material-symbols-outlined" href="/users/edit_user/<%=account.id%>">
                             edit
                         </a>
+                        <%if account.role == 'coach'%>
+                        <a class="material-symbols-outlined" href="/coach_calendar/<%=account.id%>">
+                          <span class="material-symbols-outlined">
+                          calendar_month
+                          </span>
+                        </a>
+                        <%end%>
                         <turbo-frame id="user-frame">
                         <a class="material-symbols-outlined delete-user-button" data-user-id="<%= account.id %>">
                             delete

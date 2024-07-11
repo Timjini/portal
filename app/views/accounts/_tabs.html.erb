@@ -7,6 +7,11 @@
     <% end %>
   </li>
   <li class="me-2">
+    <%= link_to "/accounts/all_accounts?role=coach", class: "inline-block p-4 #{'active'  if params[:role] == 'coach'} rounded-t-lg" do %>
+      Coaches
+    <% end %>
+  </li>
+  <li class="me-2">
     <%= link_to "/accounts/all_accounts?role=parent_user", class: "inline-block p-4 #{'active' if params[:role] == 'parent_user'} rounded-t-lg" do %>
       Athlete's Parents
     <% end %>

@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :time_slots
+   resources :coach_calendar, only: [:index, :create, :update, :destroy, :show] do 
+    get 'data/:user_id', on: :collection, to: 'coach_calendar#calendar_data'
+    get 'coach_calendar/:user_id', on: :collection , to: 'coach_calendars#show'
+  end
   # devise_for :users
 
   devise_for :users, controllers: {
@@ -82,8 +87,8 @@ end
   get '/subscriptions', to: "home#subscriptions"
 
   # Edit user
-  get '/edit_user/:id', to: "users#edit_user", as: 'edit_user'
-  put '/update_user/:id', to: "users#update_user", as: 'update_user'
+  get 'users/edit_user/:id', to: "users#edit_user", as: 'edit_user'
+  patch 'users/update_user/:id', to: "users#update_user", as: 'update_user'
   delete '/delete_user/:id', to: "users#delete_user"
 
 

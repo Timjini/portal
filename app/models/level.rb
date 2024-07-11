@@ -5,7 +5,7 @@ class Level < ApplicationRecord
 
 
   enum degree: { development: 0, intermediate: 1, advanced: 2 }
-  enum category: { information_management: 0, technical_ability: 1, physical_strength: 2, condition: 3, agility:4}
+  enum category: { information_management: 0, technical_ability: 1, physical_strength: 2, condition: 3, performance_time:4}
 
 
 end

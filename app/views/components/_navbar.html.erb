@@ -48,7 +48,26 @@
 
         <!-- COACH USER ITEMS -->
         <%elsif current_user.role =='coach'%>
+        <a href="/accounts/all_accounts" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+                manage_accounts
+            </span>
+            All accounts
+        </a>
+        
+        <a href="/coach_calendar/<%=current_user.id%>" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+            calendar_month
+            </span>
+            Calendar
+        </a>
 
+         <a href="/time_slots" class="flex gap-2 nav_item">
+            <span class="material-symbols-outlined">
+            work_history
+            </span>
+            Time Slots
+        </a>
         
 
         <!-- PARENT USER ITEMS -->

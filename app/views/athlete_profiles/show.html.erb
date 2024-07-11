@@ -1,3 +1,21 @@
+<style>
+.progress {
+  height: 20px;
+  width: 100%;
+  background-color: #c0c0c0;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  height: 100%;
+  text-align: center;
+  line-height: 10px;
+  color: green;
+  background-color: #007bff;
+}
+
+</style>
                   <%= render 'components/back_button'%>
 
                 <div class="w-120 ">
@@ -8,9 +26,20 @@
                                 <div class="w-24">
                                 <%= image_tag(@athlete.user.avatar_thumbnail, class:"w-24 h-24 object-cover rounded-full")%>
                                 <% if @athlete.user.answers.any?(&:has_health_issue)%>
+                                <div class="tooltip">
                                     <span class="material-symbols-outlined text-red-500 animate-ping">
                                         local_hospital
                                     </span>
+                                    <span class="tooltiptext">
+                                      <ul>
+                                      <%@athlete.user_illness.each do |illness| %>
+                                      <li>
+                                        <%= illness %>
+                                      </li>
+                                      <%end%>
+                                      </ul>
+                                    </span>
+                                </div>
                                 <%end%>
                                 <span class="<%=@athlete.user.level%> ml-3 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
                                     <%=@athlete.user.level%>
@@ -41,5 +70,9 @@
                                     </div>
                             </div>
                 </div>
+<%= render 'athlete_profiles/level_tab'%>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: <%= @percentage %>%;" aria-valuenow="<%= @percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
 
 <%= render 'athlete_profiles/athlete_data'%>

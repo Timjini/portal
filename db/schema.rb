@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_16_145258) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_29_042254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,6 +79,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_16_145258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["level_id"], name: "index_check_lists_on_level_id"
+  end
+
+  create_table "coach_calendars", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_coach_calendars_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -158,6 +165,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_16_145258) do
     t.index ["user_id"], name: "index_taster_session_bookings_on_user_id"
   end
 
+  create_table "time_slots", force: :cascade do |t|
+    t.bigint "coach_calendar_id", null: false
+    t.date "date"
+    t.time "start_time"
+    t.time "end_time"
+    t.string "group_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coach_calendar_id"], name: "index_time_slots_on_coach_calendar_id"
+  end
+
   create_table "user_checklists", force: :cascade do |t|
     t.bigint "user_level_id", null: false
     t.bigint "check_list_id", null: false
@@ -210,11 +228,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_16_145258) do
   add_foreign_key "answers", "users"
   add_foreign_key "athlete_profiles", "users"
   add_foreign_key "check_lists", "levels"
+  add_foreign_key "coach_calendars", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "qr_codes", "users"
   add_foreign_key "questionnaires", "users"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "taster_session_bookings", "users"
+  add_foreign_key "time_slots", "coach_calendars"
   add_foreign_key "user_checklists", "check_lists"
   add_foreign_key "user_checklists", "user_levels"
   add_foreign_key "user_checklists", "users"

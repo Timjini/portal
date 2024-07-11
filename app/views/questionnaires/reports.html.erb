@@ -44,6 +44,11 @@
                </li>
             </td>
             <td class="px-6 py-4">
+               <%report.athlete_profile.user_illness.each do |illness|%>
+                  <ul>
+                     <li><%=illness%></li>
+                  </ul>
+               <%end%>
                 <% if report.answers.any?(&:has_health_issue)%>
                 <span class="material-symbols-outlined text-red-500 animate-ping">
                      local_hospital

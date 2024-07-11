@@ -1,0 +1,23 @@
+<ul class="flex flex-wrap text-sm font-medium text-center border-b border-gray-200">
+ <li class="me-2">
+    <%= link_to athlete_profile_path(@athlete, level: nil ), class: "inline-block p-4 #{'active' if params[:level] == 'development'} rounded-t-lg" do %>
+      All
+    <% end %>
+  </li>
+  <li class="me-2">
+    <%= link_to athlete_profile_path(@athlete, level: 'development'), class: "inline-block p-4 #{'active' if params[:level] == 'development'} rounded-t-lg" do %>
+      Development
+    <% end %>
+  </li>
+  <li class="me-2">
+    <%= link_to athlete_profile_path(@athlete, level: 'intermediate'), class: "inline-block p-4 #{'active' if params[:level] == 'intermediate'} rounded-t-lg" do %>
+      Intermediate
+    <% end %>
+  </li>
+  <li class="me-2">
+    <%= link_to athlete_profile_path(@athlete, level: 'advanced'), class: "inline-block p-4 #{'active' if params[:level] == 'advanced'} rounded-t-lg" do %>
+      Advanced
+    <% end %>
+  </li>
+</ul>
+

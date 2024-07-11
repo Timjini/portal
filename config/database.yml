@@ -7,9 +7,12 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV['DB_NAME'] %>
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  # database: <%= ENV['DB_NAME'] %>
+  # username: '<%= ENV['DB_USER'] %>'
+  # password: <%= ENV['DB_PASSWORD'] %>
+  database: 'db'
+  username: 'db'
+  password: 'db'
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -21,8 +24,8 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: <%= ENV['DB_NAME'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
   pool: 5
-  username: <%= ENV['DB_USER_PROD'] %>
-  password: <%= ENV['DB_PASSWORD_PROD'] %>
-  host: localhost
+  username: <%= ENV['DATABASE_USER'] %>
+  password:  <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>

@@ -4,6 +4,10 @@ class JsonWebToken
     JWT.encode(payload, Rails.application.credentials.secret_key_base)
   end
 
+  # def self.encode(token)
+  #   encode = JWT::Encode(token)
+  # end
+
   def self.decode(token)
     decoded = JWT.decode(token, Rails.application.credentials.secret_key_base)[0]
     HashWithIndifferentAccess.new(decoded)

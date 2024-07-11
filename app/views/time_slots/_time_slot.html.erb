@@ -1,0 +1,23 @@
+<div id="<%= dom_id time_slot %>" class="flex flex-col gap-2 my-10 bg-gray-100 rounded-2xl shadow-soft-lg p-4">
+
+  <p>
+    <strong>Date:</strong>
+    <%= time_slot.date %>
+  </p>
+
+  <p>
+    <strong>Start time:</strong>
+    <%= time_slot.start_time.strftime("%H:%M") %>
+  </p>
+
+  <p>
+    <strong>End time:</strong>
+    <%= time_slot.end_time.strftime("%H:%M") %>
+  </p>
+
+  <p>
+    <strong>Group type:</strong>
+    <%= time_slot.group_type %>
+  </p>
+
+</div>

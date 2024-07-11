@@ -1,7 +1,9 @@
+
 <turbo-frame id="checkbox-frame-<%= level.id %>">
   <% list = level.check_lists %>
   <% if current_user.role != 'admin' && current_user.role != 'coach' %> 
     <% level.check_lists.each do |checklist| %>
+    <%= checklist.check_list_level.inspect%>
       <div class="flex items-center mb-4">
       <div class="tooltip">
        <input <%= checklist.checked_user_item(@athlete.user_id) %> data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4" disabled>
