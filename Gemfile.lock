@@ -409,8 +409,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise (~> 4.9)
-  dotenv (~> 2.1, >= 2.1.1)
-  dotenv-rails
+  dotenv-rails (~> 2.1, >= 2.1.1)
   elasticsearch
   error_highlight (>= 0.4.0)
   esbuild-rails

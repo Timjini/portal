@@ -1,5 +1,6 @@
 require_relative "boot"
 require "rails/all"
+require 'dotenv-rails'
 require 'sendgrid-ruby'
 include SendGrid
 
