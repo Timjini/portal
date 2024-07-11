@@ -42,9 +42,6 @@ gem 'rqrcode'
 gem 'sendgrid-ruby'
 
 gem 'active_model_serializers', '~> 0.10.2'
-
-gem 'dotenv', '~> 2.1', '>= 2.1.1'
-
 # gem 'tailwindcss-rails', '~> 2.3'
 
 
@@ -75,7 +72,6 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
-  gem 'dotenv-rails', require: false  # Remove this line if present
 end
 
 group :development do
