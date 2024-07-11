@@ -1,5 +1,5 @@
 require_relative "boot"
-
+# require 'dotenv/load'
 require "rails/all"
 require 'sendgrid-ruby'
 include SendGrid
@@ -28,7 +28,7 @@ module Portal
 
     config.assets.enabled = true
 
-    require 'dotenv/load' if (ENV['RUBY_ENV'] == "development" || ENV['RUBY_ENV'] == "test")
+    # require 'dotenv/load' if (ENV['RUBY_ENV'] == "development" || ENV['RUBY_ENV'] == "test")
 
     #load paths
     config.autoload_paths << Rails.root.join('lib')
