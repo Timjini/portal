@@ -12,6 +12,8 @@ Rails.application.configure do
   config.hosts << "chambersforsport.net"
   config.hosts << "chambersforsport.com"
   config.hosts << "club.chambersforsport.com"
+  config.hosts << "cfs-portal.onrender.com"
+   config.hosts << "onrender.com"
 
   # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 
