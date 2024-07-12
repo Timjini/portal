@@ -54,7 +54,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
 
     sign_in(@user)  # Manually sign in the user
-    UserMailer.welcome_email(@user).deliver_now
+    	begin 
+			UserMailer.welcome_email(user).deliver_now
+			rescue Exception => e
+				puts "Error sending welcome email"
+			end
 
     flash[:success] = "Athlete Profile created!"
     redirect_to root_path

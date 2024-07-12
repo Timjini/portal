@@ -76,8 +76,11 @@ class Api::V1::AuthController < Api::V1::BaseController
 			create_athlete_profile(user.id , params[:user][:dob])
 			puts "Athlete Profile created**************************"
 		end
-
-		UserMailer.welcome_email(user).deliver_now
+			begin 
+			UserMailer.welcome_email(user).deliver_now
+			rescue Exception => e
+				puts "Error sending welcome email"
+			end
   	end
 end
         
