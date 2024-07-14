@@ -16,28 +16,44 @@
   <% end %>
 
   <div>
-    <%= form.label :date, style: "display: block" %>
-    <%= form.date_field :date , class: input_style %>
+    <%= form.label :date, style: label_style %>
+    <%= form.date_field :date, class: input_style %>
   </div>
 
   <div>
-    <%= form.label :start_time, style: "display: block" %>
-    <%= form.time_field :start_time , class: input_style %>
+    <%= form.label :start_time, style: label_style %>
+    <%= form.time_field :start_time, class: input_style %>
   </div>
 
   <div>
-    <%= form.label :end_time, style: "display: block" %>
-    <%= form.time_field :end_time , class: input_style %>
+    <%= form.label :end_time, style: label_style %>
+    <%= form.time_field :end_time, class: input_style %>
   </div>
 
   <div>
-    <%= form.label :group_type, style: "display: block" %>
-        <%= form.select :group_type, TimeSlot.group_types.keys.map { |group_type| [group_type.titleize, group_type] }, {}, class: input_style %>
-
+    <%= form.label :group_type, style: label_style %>
+    <%= form.select :group_type, TimeSlot.group_types.keys.map { |group_type| [group_type.titleize, group_type] }, {}, class: input_style %>
   </div>
 
   <div>
-    <%= form.submit "Save Time slot", class: " mt-10 confirm-btn" %>
+    <%= form.label :recurrence_rule, "Recurrence Rule (optional)", style: label_style %>
+    <%= form.select :recurrence_rule, options_for_select([['Daily', :day], ['Weekly', :week], ['Monthly', :month]], selected: time_slot.recurrence_rule), {}, class: input_style %>
+  </div>
+
+  <div>
+    <%= form.label :recurrence_end, "Recurrence End Date (if applicable)", style: label_style %>
+    <%= form.datetime_select :recurrence_end, default: time_slot.recurrence_end, class: input_style %>
+  </div>
+
+  <% if time_slot.recurrence_rule.present? %>
+    <div>
+      <%= form.label :apply_to_all, "Apply to all occurrences", style: label_style %>
+      <%= form.check_box :apply_to_all, {}, '1', '0' %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit "Save Time slot", class: "mt-10 confirm-btn" %>
   </div>
   </div>
 <% end %>
