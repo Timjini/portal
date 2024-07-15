@@ -1,59 +1,72 @@
 <% label_style = "block mb-2 text-sm font-medium"%>
-<% input_style="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5" %>
+<% input_style="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5" %>
 <%= form_with(model: time_slot) do |form| %>
-  <div class="w-120">
+  <div class="w-120 mb-2">
 
-  <% if time_slot.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>
+    <% if time_slot.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>
 
-      <ul>
-        <% time_slot.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% time_slot.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="flex flex-row gap-2">
+      <div>
+        <%= form.label :event_date, style: label_style %>
+        <%= form.date_field :date, class: input_style %>
+      </div>
     </div>
-  <% end %>
 
-  <div>
-    <%= form.label :date, style: label_style %>
-    <%= form.date_field :date, class: input_style %>
-  </div>
+    <div class="flex flex-row gap-2">
+      <div>
+        <%= form.label :start_time, style: label_style %>
+        <%= form.time_field :start_time, class: input_style %>
+      </div>
 
-  <div>
-    <%= form.label :start_time, style: label_style %>
-    <%= form.time_field :start_time, class: input_style %>
-  </div>
+      <div>
+        <%= form.label :end_time, style: label_style %>
+        <%= form.time_field :end_time, class: input_style %>
+      </div>
+    </div>
+    <div class="flex flex-row gap-2">
+      <div>
+        <%= form.label :group_type, style: label_style %>
+        <%= form.select :group_type, TimeSlot.group_types.keys.map { |group_type| [group_type.titleize, group_type] }, {}, class: input_style %>
+      </div>
+      <div>
+        <%= form.label :slot_type, style: label_style %>
+        <%= form.select :slot_type, TimeSlot.slot_types.keys.map { |slot_type| [slot_type.titleize, slot_type] }, {}, class: input_style %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :end_time, style: label_style %>
-    <%= form.time_field :end_time, class: input_style %>
-  </div>
+    <div class="flex flex-row gap-2">
+      <div>
+        <%= form.label :recurrence_rule, "Recurrence Rule (optional)", style: label_style %>
+        <%= form.select :recurrence_rule, options_for_select([['N/A', :none], ['Daily', :day], ['Weekly', :week], ['Monthly', :month]], selected: time_slot.recurrence_rule), {}, class: input_style, data: { behavior: 'recurrence-rule' } %>
+      </div>
 
-  <div>
-    <%= form.label :group_type, style: label_style %>
-    <%= form.select :group_type, TimeSlot.group_types.keys.map { |group_type| [group_type.titleize, group_type] }, {}, class: input_style %>
-  </div>
+      <div id="recurrence-end-container">
+        <%= form.label :recurrence_end, "Recurrence End Date", style: label_style %>
+        <%= form.date_field :recurrence_end, default: time_slot.recurrence_end, class: input_style %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :recurrence_rule, "Recurrence Rule (optional)", style: label_style %>
-    <%= form.select :recurrence_rule, options_for_select([['Daily', :day], ['Weekly', :week], ['Monthly', :month]], selected: time_slot.recurrence_rule), {}, class: input_style %>
-  </div>
+    
 
-  <div>
-    <%= form.label :recurrence_end, "Recurrence End Date (if applicable)", style: label_style %>
-    <%= form.datetime_select :recurrence_end, default: time_slot.recurrence_end, class: input_style %>
-  </div>
+    <% if time_slot.recurrence_rule.present? %>
+      <div>
+        <%= form.label :apply_to_all, "Apply to all occurrences", style: label_style %>
+        <%= form.check_box :apply_to_all, {}, '1', '0' %>
+      </div>
+    <% end %>
 
-  <% if time_slot.recurrence_rule.present? %>
     <div>
-      <%= form.label :apply_to_all, "Apply to all occurrences", style: label_style %>
-      <%= form.check_box :apply_to_all, {}, '1', '0' %>
+      <%= form.submit "Save Time slot", class: "mt-10 confirm-btn" %>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.submit "Save Time slot", class: "mt-10 confirm-btn" %>
-  </div>
   </div>
 <% end %>

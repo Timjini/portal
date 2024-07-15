@@ -68,6 +68,6 @@ class TimeSlotsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def time_slot_params
-      params.require(:time_slot).permit(:coach_calendar_id, :date, :start_time, :end_time, :group_type, :recurrence_rule, :recurrence_end)
+      params.require(:time_slot).permit(:coach_calendar_id, :date, :start_time, :end_time, :group_type,:slot_type, :recurrence_rule, :recurrence_end)
     end
 end
