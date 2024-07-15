@@ -6,9 +6,6 @@
 .fc-scroller {
     margin-top: -80px;
 }
-.fc .fc-scrollgrid-liquid {
-    height: 80%;
-}
 </style>
 <div class="flex flex-col">
   <p style="color: green"><%= notice %></p>
@@ -23,8 +20,6 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-
-    var userId = <%=params[:id]%>
     
     if (!calendarEl) {
       console.error("Calendar element not found.");
@@ -37,7 +32,7 @@
         minute: '2-digit',
         meridiem: false
       },
-      events: `/coach_calendar/data/${userId}`,
+      events: `/coach_calendar/data`,
       eventDidMount: function(info) {
         console.log('Event mounted:', info.event.title);
       },
