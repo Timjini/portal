@@ -47,7 +47,7 @@
     <div class="flex flex-row gap-2">
       <div>
         <%= form.label :recurrence_rule, "Recurrence Rule (optional)", style: label_style %>
-        <%= form.select :recurrence_rule, options_for_select([['N/A', :none], ['Daily', :day], ['Weekly', :week], ['Monthly', :month]], selected: time_slot.recurrence_rule), {}, class: input_style, data: { behavior: 'recurrence-rule' } %>
+        <%= form.select :recurrence_rule, options_for_select([['N/A', :none], ['Daily', :day], ['Weekly', :week]], selected: time_slot.recurrence_rule), {}, class: input_style, data: { behavior: 'recurrence-rule' } %>
       </div>
 
       <div id="recurrence-end-container">

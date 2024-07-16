@@ -3,27 +3,33 @@ require "recurrence"
 
 module TimeSlotsHelper
   def create_recurrent_timeslots(time_slot, recurrence_rule, recurrence_end)
+    begin
     recurrence_end = DateTime.parse(recurrence_end) if recurrence_end.present?
     if recurrence_rule != 'none'
       day = time_slot.date
-      formatted_day = day.strftime('%A').downcase
-      recurrence_rule = { every: recurrence_rule.to_sym, on: formatted_day ,  until: recurrence_end }.compact
-      recurrence = Recurrence.new(recurrence_rule)
-      
-      recurrence.events.each do |event_date|
-        TimeSlot.create(
-          start_time: event_date,
-          end_time: event_date + (time_slot.end_time - time_slot.start_time),
-          coach_calendar_id: time_slot.coach_calendar_id,
-          recurrence_rule: time_slot.recurrence_rule,
-          recurrence_end: time_slot.recurrence_end
-        )
-      end
-
+      formatted_day = day.strftime('%A').downcase.to_sym
+      recurrence_rule_hash = { every: recurrence_rule.to_sym, on: formatted_day ,  until: recurrence_end }.compact
+      recurrence = Recurrence.new(recurrence_rule_hash)
+        recurrence.events.each do |event_date|
+          TimeSlot.create(
+            date: event_date,
+            start_time: time_slot.start_time,
+            end_time: time_slot.end_time,
+            coach_calendar_id: time_slot.coach_calendar_id,
+            recurrence_rule: time_slot.recurrence_rule,
+            recurrence_end: time_slot.recurrence_end,
+            group_type: time_slot.group_type,
+            slot_type: time_slot.slot_type,
+          )
+        end
       redirect_to time_slots_path, notice: 'Recurrent timeslots were successfully created.'
     else 
       save_time_slot(time_slot)
     end
+    rescue  => e
+        puts " =>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ERROR: #{e.message}"
+        raise e
+      end
   end
 
    def save_time_slot(time_slot)
