@@ -109,3 +109,4 @@ gem 'guard-livereload', '~> 2.5', require: false
 gem 'jwt'
 
 gem 'tailwindcss-rails'
+gem 'recurrence', '~> 1.3'

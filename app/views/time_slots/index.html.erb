@@ -1,17 +1,59 @@
-<div class="flex flex-col gap-10 my-10">
-
-<p style="color: green"><%= notice %></p>
-
-<h1 class="font-extrabold text-2xl  text-gray-800">Time slots</h1>
-
-<div id="time_slots">
-  <% @time_slots.each do |time_slot| %>
-    <%= render time_slot %>
-    <p>
-      <%= link_to "Show this time slot", time_slot %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New time slot", new_time_slot_path ,class: "confirm-btn" %>
+<div class=" general_card">
+   <div>
+      <p style="color: green"><%= notice %></p>
+      <h1 class="font-extrabold text-2xl  text-gray-800">Time slots</h1>
+   </div>
+  <table class="w-full text-sm text-left " style="padding:0;margin:0;">
+      <div class="py-2" style="max-width:200px;">
+         <input type="text" class=" w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " id="kpiSearchInput" placeholder="Search...">
+      </div>
+      <thead class="text-xs uppercase table_header">
+         <tr>
+            <th scope="col" class="px-6 py-3" >
+               Date
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Start time
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Group type
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Recurrence
+            </th>
+            <th scope="col" class="px-6 py-3">
+               Action
+            </th>
+         </tr>
+      </thead>
+      <tbody>
+         <% @time_slots.each do |time_slot| %>
+         <tr class="border-b border-gray-400">
+            <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+               <%=time_slot.date%>
+            </th>
+            <td class="px-6 py-4">
+               <%=time_slot.start_time.strftime("%H:%M")%>
+            </td>
+            <td class="px-6 py-4">
+               <%=time_slot.group_type%>
+            </td>
+            <td class="px-6 py-4 overflow-auto">
+               <%= time_slot.recurrence_rule %>
+            </td>
+            <td class="px-6 py-4 flex flex-row gap-4">
+               <!-- hidden until edit is implemented -->
+               <a href="time_slots/<%=time_slot.id%>/edit" class="">
+               <span class="material-symbols-outlined" >
+               edit
+               </span>
+               </a>
+               <%= button_to time_slot, method: :delete, data: { confirm: 'Are you sure?' }, class: '' do %>
+                  <span class="material-symbols-outlined delete-user-button">delete</span>
+               <% end %>
+            </td>
+         </tr>
+         <%end%>
+      </tbody>
+  </table>
 </div>

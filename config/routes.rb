@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resources :time_slots
    resources :coach_calendar, only: [:index, :create, :update, :destroy, :show] do 
     get 'data/:user_id', on: :collection, to: 'coach_calendar#calendar_data'
+    get 'data', on: :collection, to: 'coach_calendar#all_calendars'
     get 'coach_calendar/:user_id', on: :collection , to: 'coach_calendars#show'
+    get 'coach_calendar', on: :collection , to: 'coach_calendars#index'
   end
   # devise_for :users
 
