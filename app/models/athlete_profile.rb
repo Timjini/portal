@@ -18,7 +18,7 @@ class AthleteProfile < ApplicationRecord
       # avatar.variant(resize: "150x150!").processed
       image
     else
-      "/assets/user.png"
+      "https://imgur.com/a/SqiBbyF"
     end
   end
 
