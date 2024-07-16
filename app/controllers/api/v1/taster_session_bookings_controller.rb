@@ -2,10 +2,23 @@ class Api::V1::TasterSessionBookingsController < ApplicationController
     skip_forgery_protection only: [:create]
     before_action :authenticate_user! ,except: [:create , :new]
 
-include UserHelper
+    include UserHelper
 
     def create
-        puts "#{params.inspect}"
+
+        user = User.find_by(email:params[:email])
+
+        if user 
+            render json: { error: "User already exists" }, status: 409
+            return
+        end
+
+        duplicate_booking = TasterSessionBooking.find_by(email: params[:email], )
+
+        if duplicate_booking
+            render json: { error: "Booking already exists" }, status: 409
+            return
+        end
 
         session = TasterSessionBooking.new
 

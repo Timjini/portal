@@ -12,7 +12,7 @@ include AthleteProfilesHelper
             user.role = role
             user.save
 
-            create_athlete_profile(user.id)
+            create_athlete_profile(user.id, child_dob)
         else
             parent = User.new
             parent.email = parent_email
