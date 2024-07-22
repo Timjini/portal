@@ -83,74 +83,82 @@
    </turbo-frame>
 </div>
 <script>
-   function toggleDrawer(drawerId) {
-     const drawer = document.getElementById(drawerId);
-     drawer.classList.toggle('translate-x-full');
-   }
-   
-   function addTask() {
-     console.log('add task');
-   const checklistContainer = document.getElementById('checklist-container');
-   const newItem = document.createElement('div');
-   newItem.classList.add('checklist-item');
-   
-   newItem.innerHTML = `
-     <textarea type="text" name="checklist[]" row="4" class=" mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="You can even add more :)" required></textarea>
-   `;
-   
-   checklistContainer.appendChild(newItem);
-   }
-   
-   const form = document.getElementById('kpi-form');
-   
-   form.addEventListener('submit', async event => {
-   event.preventDefault();
-   
-   const data = new FormData(form);
-   
-   // Add degree to data
-   const degreeSelect = document.getElementById('degree');
-   const categorySelect = document.getElementById('category');
-   const levelSelect = document.getElementById('level');
-   const selectedDegree = degreeSelect.value;
-   const selectedCategory = categorySelect.value;
-   const selectedLevel = levelSelect.value;
-   data.append('degree', selectedDegree);
-   data.append('category', selectedCategory);
-   data.append('level', selectedLevel);
-   
-   console.log(data);
-   try {
-     const res = await fetch(
-       '/kpis_create',
-       {
-         method: 'POST',
-         body: data,
-       },
-     );
-   
-     const resData = await res.json();
-     
-     if (resData.status === 'success') {
+  // Function to toggle drawer visibility
+  function toggleDrawer(drawerId) {
+    const drawer = document.getElementById(drawerId);
+    drawer.classList.toggle('translate-x-full');
+  }
+
+  // Function to add a new task to the checklist
+  function addTask() {
+    console.log('add task');
+    const checklistContainer = document.getElementById('checklist-container');
+    const newItem = document.createElement('div');
+    newItem.classList.add('checklist-item');
+    
+    newItem.innerHTML = `
+      <textarea name="checklist[]" row="4" class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="You can even add more :)" required></textarea>
+    `;
+    
+    checklistContainer.appendChild(newItem);
+  }
+
+  // Function to handle form submission
+  async function handleFormSubmission(event) {
+    event.preventDefault();
+
+    const form = document.getElementById('kpi-form');
+    const data = new FormData(form);
+
+    // Add degree, category, and level to form data
+    const degreeSelect = document.getElementById('degree');
+    const categorySelect = document.getElementById('category');
+    const levelSelect = document.getElementById('level');
+    const selectedDegree = degreeSelect.value;
+    const selectedCategory = categorySelect.value;
+    const selectedLevel = levelSelect.value;
+    data.append('degree', selectedDegree);
+    data.append('category', selectedCategory);
+    data.append('level', selectedLevel);
+
+    console.log(data);
+
+    try {
+      const res = await fetch('/kpis_create', {
+        method: 'POST',
+        body: data,
+      });
+
+      const resData = await res.json();
+      
+      if (resData.status === 'success') {
         Swal.fire({
           icon: 'success',
           title: 'Success!',
           text: 'Level created successfully!',
         }).then((result) => {
-          // Check if the user clicked the "OK" button
           if (result.isConfirmed) {
-            // Reload the window
             window.location.reload();
           }
         });
       }
-     } catch (err) {
-        Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
-    });
-     }
-   });
-   
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
+  }
+
+  // Listen for Turbo events to reinitialize JavaScript
+  document.addEventListener('turbo:load', () => {
+    // Attach event listener for form submission
+    const form = document.getElementById('kpi-form');
+    if (form) {
+      form.addEventListener('submit', handleFormSubmission);
+    }
+
+    // Optionally, you can initialize other elements or reattach event listeners here
+  });
 </script>

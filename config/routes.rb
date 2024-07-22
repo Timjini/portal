@@ -45,6 +45,7 @@ end
   resources :athlete_profiles, only: [:new, :create, :index ,:show ,:edit, :update]
   # get '/athlete_users/:id' , to: 'athlete_profiles#athlete_users'
   get 'athlete_users/autocomplete', to: 'athlete_profiles#autocomplete'
+  get 'users' , to: 'users#index'
   get 'users/:id' , to: 'users#show'
   get'goals_rewards_achievements', to: 'dashboard#goals_rewards_achievements'
   post '/checklist_items', to: 'athlete_profiles#checked_items'

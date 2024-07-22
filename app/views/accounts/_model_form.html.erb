@@ -60,11 +60,11 @@
                                             <input type="text" name="school_name" id="school_name" class="bg-gray-50  border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="school name" style="color:gray;">
                                         </div>
                                         <div>
-                                            <label for="height" class="block mb-2 text-sm font-medium ">Child's Height (optional)</label>
+                                            <label for="height" class="block mb-2 text-sm font-medium ">Child's Height CM (optional)</label>
                                             <input type="number" name="height" id="height" class="bg-gray-50  border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="enter height in cm" style="color:gray;">
                                         </div>
                                         <div>
-                                            <label for="wieght" class="block mb-2 text-sm font-medium ">Child's Weight (optional)</label>
+                                            <label for="wieght" class="block mb-2 text-sm font-medium ">Child's Weight KG (optional)</label>
                                             <input type="number" name="weight" id="weight" class="bg-gray-50  border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="enter weight in kg" style="color:gray;">
                                         </div>
                                         <div>
@@ -79,9 +79,10 @@
         </div> 
     </div>
 
+<!-- Ensure that this script is included in the relevant view or layout -->
 <script>
   // JavaScript function to show the modal
-function addChildModal() {
+  function addChildModal() {
     var modal = document.getElementById("myModal");
     var closeBtn = document.getElementsByClassName("close")[0];
   
@@ -101,33 +102,35 @@ function addChildModal() {
     };
   }
 
+  document.addEventListener('turbo:load', () => {
+    // Initialize modal functionality
+    addChildModal();
 
-const form = document.getElementById('account-form');
+    const form = document.getElementById('account-form');
 
-form.addEventListener('submit', async event => {
-  event.preventDefault();
+    if (form) {
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
 
-  const data = new FormData(form);
+        const data = new FormData(form);
 
-  try {
-    const res = await fetch(
-      'accounts/create_child_user',
-      {
-        method: 'POST',
-        body: data,
-      },
-    );
+        try {
+          const res = await fetch('accounts/create_child_user', {
+            method: 'POST',
+            body: data,
+          });
 
-    const resData = await res.json();
+          const resData = await res.json();
 
-    console.log(resData);
+          console.log(resData);
 
-    if (resData.status === 'success') {
-      window.location.href = '/accounts';
+          if (resData.status === 'success') {
+            window.location.href = '/accounts';
+          }
+        } catch (err) {
+          console.error('Error:', err);
+        }
+      });
     }
-    } catch (err) {
-    console.error('Error:', err);
-    }
-});
-
+  });
 </script>
