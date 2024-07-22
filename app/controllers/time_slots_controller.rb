@@ -22,9 +22,23 @@ class TimeSlotsController < ApplicationController
 
   # POST /time_slots or /time_slots.json
   def create
+    user_ids = params[:time_slot][:user_ids].split(',')
     @time_slot = TimeSlot.new(time_slot_params)
-    @calendar = CoachCalendar.where(user_id: current_user.id).first_or_create
-    @time_slot.coach_calendar_id = @calendar.id
+
+    existing_calendars = CoachCalendar.where(user_id: user_ids).to_a
+
+    existing_user_ids = existing_calendars.map(&:user_id).uniq
+    integers_array = []
+    user_ids.each { |user_id| integers_array << user_id.to_i }
+    missing_user_ids = integers_array - existing_user_ids
+    
+    missing_calendars = missing_user_ids.map do |user_id|
+      CoachCalendar.create(user_id: user_id)
+    end
+
+    all_calendars = existing_calendars + missing_calendars
+
+    @time_slot.coach_calendar_ids = all_calendars.map(&:id)
 
     if params[:time_slot][:recurrence_rule].present?
       create_recurrent_timeslots(@time_slot, params[:time_slot][:recurrence_rule], params[:time_slot][:recurrence_end])
@@ -32,6 +46,8 @@ class TimeSlotsController < ApplicationController
       save_time_slot(@time_slot)
     end
   end
+
+
 
   # PATCH/PUT /time_slots/1 or /time_slots/1.json
   def update
@@ -68,6 +84,6 @@ class TimeSlotsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def time_slot_params
-      params.require(:time_slot).permit(:coach_calendar_id, :date, :start_time, :end_time, :group_type,:slot_type, :recurrence_rule, :recurrence_end)
+      params.require(:time_slot).permit(:coach_calendar_ids, :date, :start_time, :end_time,:slot_type, :recurrence_rule, :recurrence_end,group_types: [], user_ids: [])
     end
 end

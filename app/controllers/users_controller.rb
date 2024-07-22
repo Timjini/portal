@@ -5,6 +5,11 @@ class UsersController < ApplicationController
 
     def index
         @levels = Level.all
+         @users = if params[:query].present?
+               User.search_by_name_username_email(params[:query])
+             else
+               User.all
+             end
     end
 
     def show
@@ -68,6 +73,10 @@ class UsersController < ApplicationController
 
     def athlete_profile_params
     params.require(:athlete_profile).permit(:height, :weight, :dob, :level)
+    end
+
+    def search_users(query)
+        User.where('name ILIKE ? OR username ILIKE ? OR email ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
     end
 
 end

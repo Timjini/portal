@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_14_232738) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_21_232414) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -166,17 +166,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_14_232738) do
   end
 
   create_table "time_slots", force: :cascade do |t|
-    t.bigint "coach_calendar_id", null: false
     t.date "date"
     t.time "start_time"
     t.time "end_time"
-    t.string "group_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "recurrence_rule"
     t.datetime "recurrence_end"
     t.string "slot_type", default: "CoachTimeSlot"
-    t.index ["coach_calendar_id"], name: "index_time_slots_on_coach_calendar_id"
+    t.text "coach_calendar_ids", default: [], array: true
+    t.text "group_types", default: [], array: true
   end
 
   create_table "user_checklists", force: :cascade do |t|
@@ -237,7 +236,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_14_232738) do
   add_foreign_key "questionnaires", "users"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "taster_session_bookings", "users"
-  add_foreign_key "time_slots", "coach_calendars"
   add_foreign_key "user_checklists", "check_lists"
   add_foreign_key "user_checklists", "user_levels"
   add_foreign_key "user_checklists", "users"

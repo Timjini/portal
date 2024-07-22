@@ -17,6 +17,11 @@
 
     <div class="flex flex-row gap-2">
       <div>
+      <%= render partial: 'users/results', locals: { users: @users } %>
+      </div>
+    </div>
+    <div class="flex flex-row gap-2">
+      <div>
         <%= form.label :event_date, style: label_style %>
         <%= form.date_field :date, class: input_style %>
       </div>
@@ -35,8 +40,10 @@
     </div>
     <div class="flex flex-row gap-2">
       <div>
-        <%= form.label :group_type, style: label_style %>
-        <%= form.select :group_type, TimeSlot.group_types.keys.map { |group_type| [group_type.titleize, group_type] }, {}, class: input_style %>
+        <%= form.label :group_types, "Group Types" %>
+        <% group_types = ['development', 'intermediate', 'advanced'] %>
+        <%= form.collection_check_boxes(:group_types, group_types, :to_s, :titleize) %>
+      </div>
       </div>
       <div>
         <%= form.label :slot_type, style: label_style %>

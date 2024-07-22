@@ -15,10 +15,10 @@ module TimeSlotsHelper
             date: event_date,
             start_time: time_slot.start_time,
             end_time: time_slot.end_time,
-            coach_calendar_id: time_slot.coach_calendar_id,
+            coach_calendar_ids: time_slot.coach_calendar_ids,
             recurrence_rule: time_slot.recurrence_rule,
             recurrence_end: time_slot.recurrence_end,
-            group_type: time_slot.group_type,
+            group_types: time_slot.group_types,
             slot_type: time_slot.slot_type,
           )
         end
@@ -46,8 +46,8 @@ module TimeSlotsHelper
 
   def update_recurrent_timeslots(original_time_slot, time_slot_params)
     timeslots = Timeslot.where(
-      "coach_calendar_id = ? AND start_time >= ? AND recurrence_rule = ?",
-      original_time_slot.coach_calendar_id,
+      "coach_calendar_ids = ? AND start_time >= ? AND recurrence_rule = ?",
+      original_time_slot.coach_calendar_ids,
       original_time_slot.start_time,
       original_time_slot.recurrence_rule
     )
