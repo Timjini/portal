@@ -18,22 +18,46 @@
   <div id="calendar" class=""></div>
 </div>
 <script>
-  document.addEventListener('turbo:load', () =>  {
-    var calendarEl = document.getElementById('calendar');
-    
-    if (!calendarEl) {
-      console.error("Calendar element not found.");
-      return;
-    }
+document.addEventListener('turbo:load', async () => {
+  var calendarEl = document.getElementById('calendar');
+
+  if (!calendarEl) {
+    console.error("Calendar element not found.");
+    return;
+  }
+
+  try {
+    // Fetch event data from the API
+    let response = await fetch('/coach_calendar/data');
+    let events = await response.json();
+    console.log(JSON.stringify(events));
+
+    // Initialize FullCalendar
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
+      initialView: 'timeGridWeek',
       eventTimeFormat: { 
         hour: 'numeric',
         minute: '2-digit',
         meridiem: false
       },
-      events: `/coach_calendar/data`,
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      events: events, 
       eventDidMount: function(info) {
+        // Check if the event has a URL
+        if (info.event.extendedProps.url) {
+          // Create a link element
+          const link = document.createElement('a');
+          link.href = info.event.extendedProps.url;
+          link.className = 'fc-event-link';
+          link.target = '_blank'; 
+          link.innerHTML = info.el.innerHTML; 
+          info.el.innerHTML = ''; 
+          info.el.appendChild(link); 
+        }
         console.log('Event mounted:', info.event.title);
       },
       loading: function(isLoading) {
@@ -44,7 +68,15 @@
         }
       }
     });
+
+    // Render the calendar
     calendar.render();
-  });
+  } catch (error) {
+    console.error('Error fetching events:', error);
+  }
+});
+
+
+
 </script>
 
