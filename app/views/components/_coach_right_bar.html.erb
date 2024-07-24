@@ -6,8 +6,10 @@
                                 </span>
                             </a>
                             
-                            <div><a class="material-symbols-outlined icon_span">notifications</a></div>
-                            <div><a class="material-symbols-outlined icon_span">chat</a></div>
-                            <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 rounded-full")%>
+                                                        <%=render 'notifications/top_bar_notifications'%>
+
+                             <a href="/users/<%=current_user.id%>" class="relative inline-flex items-center">
+                            <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 object-cover rounded-full")%>
+                            </a>
     </div>
 </div>
