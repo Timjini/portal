@@ -28,4 +28,40 @@ class TimeSlot < ApplicationRecord
     end
   end
 
+  def url 
+    "/time_slots/#{self.id}"
+  end
+
+  def coach_names
+    calendars = CoachCalendar.where(id:self.coach_calendar_ids)
+    if !calendars.nil?
+      coach_names = calendars.map { |calendar| calendar.user.full_name }
+      coach_names.join(', ')
+      else
+        "No coach assigned"
+    end
+  end
+
+  def coach_data
+    calendars = CoachCalendar.where(id: self.coach_calendar_ids).uniq
+
+    return [] if calendars.nil? || calendars.empty?
+
+    unique_coaches = {}
+
+    calendars.each do |calendar|
+      coach = calendar.user
+      unique_coaches[coach.id] = {
+        id: coach.id,
+        name: coach.full_name,
+        color: coach.color,
+        image: coach.avatar,
+        url: "/users/#{coach.id}"
+      }
+    end
+
+    unique_coaches.values
+  end
+
+
 end

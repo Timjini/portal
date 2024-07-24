@@ -1,8 +1,10 @@
+require 'securerandom'
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
+  before_create :assign_unique_color
 
       
   attr_accessor :dob
@@ -147,6 +149,19 @@ class User < ApplicationRecord
      "NO"
     else
     answer.content    
+    end
+  end
+
+  def assign_unique_color
+    existing_colors = User.pluck(:color)
+    self.color = generate_unique_color(existing_colors)
+  end
+
+  def generate_unique_color(existing_colors)
+    loop do
+      color = SecureRandom.hex(3) 
+      color = "##{color}"         
+      break color unless existing_colors.include?(color)
     end
   end
 
