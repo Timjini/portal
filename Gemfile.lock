@@ -160,12 +160,12 @@ GEM
       logger
     faraday-net_http (3.1.0)
       net-http
-    ffi (1.17.0-aarch64-linux)
-    ffi (1.17.0-arm-linux)
+    ffi (1.17.0-aarch64-linux-gnu)
+    ffi (1.17.0-arm-linux-gnu)
     ffi (1.17.0-arm64-darwin)
-    ffi (1.17.0-x86-linux)
+    ffi (1.17.0-x86-linux-gnu)
     ffi (1.17.0-x86_64-darwin)
-    ffi (1.17.0-x86_64-linux)
+    ffi (1.17.0-x86_64-linux-gnu)
     formatador (1.1.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
