@@ -1,4 +1,9 @@
         <style>
+        @media (min-width: 1100px) {
+            .hamburger-button {
+                display: none;
+            }
+        }
         /* Basic styles for hamburger menu */
         .hamburger-menu {
             position: fixed;
@@ -30,7 +35,7 @@
             display: block;
             width: 25px;
             height: 3px;
-            background: black;
+            background: #242424;
             margin: 5px 0;
             transition: all 0.3s;
         }
@@ -47,123 +52,128 @@
             transform: rotate(-45deg) translateY(-8px);
         }
     </style>
-    <!-- Hamburger Menu Button -->
-    <div class="hamburger-button" onclick="toggleMenu()">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
 
     <!-- Hamburger Menu -->
-    <div class="hamburger-menu" id="hamburgerMenu">
-        <div class="mobile_navigation" style="padding:20px;">
-            <div class="flex flex-col flex-wrap justify-center items-center gap-4">
-                <% if current_user.role == 'admin' %>
-                    <a class="flex gap-2 nav_item" href="/">
-                        <span class="material-symbols-outlined">home</span> 
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="/accounts/all_accounts" class="flex gap-2 nav_item">
-                        <span class="material-symbols-outlined">manage_accounts</span>
-                        <span>All Users</span>
-                    </a>
-                    <a href="/subscriptions" class="flex gap-2 nav_item hidden">
-                        <span class="material-symbols-outlined">wallet</span>
-                        <span>Subscriptions</span>
-                    </a>
-                    <a href="/kpis" class="flex gap-2 nav_item">
-                        <span class="material-symbols-outlined">data_exploration</span>
-                        <span>Kpis</span>
-                    </a>
-                    <a href="/questionnaires/reports" class="flex gap-2 nav_item">
-                        <span class="material-symbols-outlined">description</span>
-                        <span>Reports</span>
-                    </a>
-                    <a href="/taster_session_bookings" class="flex gap-2 nav_item">
-                        <span class="material-symbols-outlined">sprint</span>
-                        <span>Taster bookings</span>
-                    </a>
-                     <div  class="flex gap-2 nav_item mt-auto">
-                        <span class="material-symbols-outlined">
-                        logout
-                        </span>
-                        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
-                    </div>
-                <% elsif current_user.role == 'coach' %>
-                    <a class="flex gap-2 nav_item" href="/">
-                        <span class="material-symbols-outlined">home</span>
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="/accounts/all_accounts" class="flex gap-2 nav_item">
-                        <span class="material-symbols-outlined">manage_accounts</span>
-                        <span>All Users</span>
-                    </a>
-                    <a href="/users/<%= current_user.id %>" class="flex gap-2 nav_item">
-                        <%= image_tag(current_user.avatar_thumbnail, class: "h-8 w-8 object-cover rounded-full") %>
-                    </a>
-                     <div  class="flex gap-2 nav_item mt-auto">
-                        <span class="material-symbols-outlined">
-                        logout
-                        </span>
-                        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
-                    </div>
-                <% elsif current_user.role == 'parent_user' %>
-                    <a class="flex gap-2 nav_item" href="/">
-                        <span class="material-symbols-outlined">home</span>
-                    </a>
-                    <a href="/accounts" class="flex gap-2 nav_item">
-                        <span class="material-symbols-outlined">supervised_user_circle</span>
-                        Child Profile
-                    </a>
-                    <a href="#" class="flex gap-2 nav_item hidden">
-                        <span class="material-symbols-outlined">credit_card</span>
-                        Subscription
-                    </a>
-                    <a href="/users/<%= current_user.id %>" class="flex gap-2 nav_item">
-                        <%= image_tag(current_user.avatar_thumbnail, class: "h-8 w-8 object-cover rounded-full") %>
-                    </a>
-                     <div  class="flex gap-2 nav_item mt-auto">
-                        <span class="material-symbols-outlined">
-                        logout
-                        </span>
-                        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
-                    </div>
-                <% elsif current_user.role == 'child_user' %>
-                    <a class="flex gap-2 nav_item" href="/">
-                        <span class="material-symbols-outlined">home</span>
-                    </a>
-                    <a href="/athlete_profiles/<%= current_user.athlete_profile.id %>" class="flex gap-2 nav_item">
-                        <span class="material-symbols-outlined">bar_chart</span>
-                        Progress
-                    </a>
-                     <div  class="flex gap-2 nav_item mt-auto">
-                        <span class="material-symbols-outlined">
-                        logout
-                        </span>
-                        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
-                    </div>
-                <% elsif current_user.role == 'athlete' %>
-                    <a class="flex gap-2 nav_item" href="/">
-                        <span class="material-symbols-outlined">home</span>
-                    </a>
-                    <a href="/athlete_profiles/<%= current_user.athlete_profile.id %>" class="flex gap-2 nav_item">
-                        <span class="material-symbols-outlined">account_circle</span>
-                        Profile
-                    </a>
+    <div class="flex flex-col flex-wrap  align-center gap-4">
+        <div>
+           <%= image_tag("cfs-dark.png", alt: "Logo", class: "w-16 h-20 object-contain block xl:hidden ") %>
+        </div>
+        <!-- Hamburger Menu Button -->
+        <div class="hamburger-button mt-8 mx-4" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="hamburger-menu" id="hamburgerMenu">
+            <div class="mobile_navigation" style="padding:20px;">
+                <div class="flex flex-col flex-wrap justify-center items-center gap-4">
+                    <% if current_user.role == 'admin' %>
+                        <a class="flex gap-2 nav_item" href="/">
+                            <span class="material-symbols-outlined">home</span> 
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="/accounts/all_accounts" class="flex gap-2 nav_item">
+                            <span class="material-symbols-outlined">manage_accounts</span>
+                            <span>All Users</span>
+                        </a>
+                        <a href="/subscriptions" class="flex gap-2 nav_item hidden">
+                            <span class="material-symbols-outlined">wallet</span>
+                            <span>Subscriptions</span>
+                        </a>
+                        <a href="/kpis" class="flex gap-2 nav_item">
+                            <span class="material-symbols-outlined">data_exploration</span>
+                            <span>Kpis</span>
+                        </a>
+                        <a href="/questionnaires/reports" class="flex gap-2 nav_item">
+                            <span class="material-symbols-outlined">description</span>
+                            <span>Reports</span>
+                        </a>
+                        <a href="/taster_session_bookings" class="flex gap-2 nav_item">
+                            <span class="material-symbols-outlined">sprint</span>
+                            <span>Taster bookings</span>
+                        </a>
+                        <div  class="flex gap-2 nav_item mt-auto">
+                            <span class="material-symbols-outlined">
+                            logout
+                            </span>
+                            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
+                        </div>
+                    <% elsif current_user.role == 'coach' %>
+                        <a class="flex gap-2 nav_item" href="/">
+                            <span class="material-symbols-outlined">home</span>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="/accounts/all_accounts" class="flex gap-2 nav_item">
+                            <span class="material-symbols-outlined">manage_accounts</span>
+                            <span>All Users</span>
+                        </a>
+                        <a href="/users/<%= current_user.id %>" class="flex gap-2 nav_item">
+                            <%= image_tag(current_user.avatar_thumbnail, class: "h-8 w-8 object-cover rounded-full") %>
+                        </a>
+                        <div  class="flex gap-2 nav_item mt-auto">
+                            <span class="material-symbols-outlined">
+                            logout
+                            </span>
+                            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
+                        </div>
+                    <% elsif current_user.role == 'parent_user' %>
+                        <a class="flex gap-2 nav_item" href="/">
+                            <span class="material-symbols-outlined">home</span>
+                        </a>
+                        <a href="/accounts" class="flex gap-2 nav_item">
+                            <span class="material-symbols-outlined">supervised_user_circle</span>
+                            Child Profile
+                        </a>
+                        <a href="#" class="flex gap-2 nav_item hidden">
+                            <span class="material-symbols-outlined">credit_card</span>
+                            Subscription
+                        </a>
+                        <a href="/users/<%= current_user.id %>" class="flex gap-2 nav_item">
+                            <%= image_tag(current_user.avatar_thumbnail, class: "h-8 w-8 object-cover rounded-full") %>
+                        </a>
+                        <div  class="flex gap-2 nav_item mt-auto">
+                            <span class="material-symbols-outlined">
+                            logout
+                            </span>
+                            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
+                        </div>
+                    <% elsif current_user.role == 'child_user' %>
+                        <a class="flex gap-2 nav_item" href="/">
+                            <span class="material-symbols-outlined">home</span>
+                        </a>
+                        <a href="/athlete_profiles/<%= current_user.athlete_profile.id %>" class="flex gap-2 nav_item">
+                            <span class="material-symbols-outlined">bar_chart</span>
+                            Progress
+                        </a>
+                        <div  class="flex gap-2 nav_item mt-auto">
+                            <span class="material-symbols-outlined">
+                            logout
+                            </span>
+                            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
+                        </div>
+                    <% elsif current_user.role == 'athlete' %>
+                        <a class="flex gap-2 nav_item" href="/">
+                            <span class="material-symbols-outlined">home</span>
+                        </a>
+                        <a href="/athlete_profiles/<%= current_user.athlete_profile.id %>" class="flex gap-2 nav_item">
+                            <span class="material-symbols-outlined">account_circle</span>
+                            Profile
+                        </a>
+                        <div  class="flex gap-2 nav_item mt-auto">
+                            <span class="material-symbols-outlined">
+                            logout
+                            </span>
+                            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
+                        </div>
+                    <% else %>
                     <div  class="flex gap-2 nav_item mt-auto">
                         <span class="material-symbols-outlined">
                         logout
                         </span>
                         <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
                     </div>
-                <% else %>
-                <div  class="flex gap-2 nav_item mt-auto">
-                    <span class="material-symbols-outlined">
-                    logout
-                    </span>
-                    <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "" %>
+                    <% end %>
                 </div>
-                <% end %>
             </div>
         </div>
     </div>
