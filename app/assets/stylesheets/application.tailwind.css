@@ -107,7 +107,7 @@ a:hover{opacity: 0.9;}
     position: relative;
     border-radius: 20px;
 }
-.dashboard_logo{height:120px;margin-bottom: 20px;background-image: var(--logo);background-repeat: no-repeat;background-size: contain;position: relative;margin-left:20px;}
+.dashboard_logo{height:120px!important;margin-bottom: 20px;background-image: var(--logo);background-repeat: no-repeat;background-size: contain;position: relative;margin-left:20px;}
 .content{
     text-align: left;
     position: absolute;
@@ -665,6 +665,7 @@ article{
 }
 
 @media (min-width: 1100px) {
+  /* .dashboard_logo{display: none !important;} */
   .hamburger-button {
       display: none;
   }
