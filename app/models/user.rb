@@ -44,7 +44,7 @@ class User < ApplicationRecord
       # avatar.variant(resize: "150x150!").processed
       avatar
     else
-      "https://imgur.com/a/SqiBbyF"
+      'user.png'
     end
   end
 

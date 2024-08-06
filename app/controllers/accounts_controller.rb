@@ -62,6 +62,9 @@ class AccountsController < ApplicationController
       end
     end
 
+    def add_child
+    end
+
     private
 
     def account_params

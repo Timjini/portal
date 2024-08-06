@@ -54,6 +54,7 @@ end
   #Accounts
   resources :accounts, only: [:new, :create, :index ,:show ,:edit, :update] do
   get 'all_accounts', on: :collection, to: 'accounts#all_accounts'
+  get 'add_child', on: :collection, to: 'accounts#add_child'
   post 'create_child_user', on: :collection, to: 'accounts#create_child_user'
   end
 

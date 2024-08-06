@@ -110,3 +110,4 @@ gem 'jwt'
 
 gem 'tailwindcss-rails'
 gem 'recurrence', '~> 1.3'
+gem 'mailersend-ruby', '~> 1.6'
