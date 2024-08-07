@@ -11,9 +11,9 @@ include AthleteProfilesHelper
             user.last_name = last_name
             user.phone = phone
             user.role = role
-            user.save
-
-            create_athlete_profile(user.id, child_dob)
+            if user.save
+              create_athlete_profile(user.id, child_dob)
+            end
         else
             parent = User.new
             parent.email = parent_email
@@ -34,10 +34,11 @@ include AthleteProfilesHelper
             child.last_name = child_last_name
             child.role = "child_user"
             child.parent_id = parent.id
-            child.save
 
             # Uncomment the following line if you want to call create_athlete_child_profile
-            create_athlete_child_profile(child.id, child_dob, "school name", "password", nil, nil)
+            if child.save
+              create_athlete_child_profile(child.id, child_dob, "school name", "password", nil, nil)
+            end
         end
     end
 
