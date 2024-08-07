@@ -2,6 +2,7 @@ module UserHelper
 include AthleteProfilesHelper
 
     def create_user(email, first_name, last_name, phone, role, child_dob, athlete_dob, parent_email, parent_first_name, parent_last_name, parent_phone,child_name)
+
         if role == 'athlete'
             user = User.new
             user.email = email
