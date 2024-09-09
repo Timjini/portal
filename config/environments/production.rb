@@ -101,16 +101,14 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # # Send Grid Setup 
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
-    domain: 'chambersforsport.com',
-    address: 'smtp.sendgrid.net',
-    port: 587,
-    authentication:  :plain,
-    enable_starttls_auto: true
+    :address   => 'smtp.mailersend.net',
+    :port      => 587,
+    :user_name => 'info@chambersforsport.com',
+    :password  => ENV['MAILERSEND_API_TOKEN'],
+    :starttls => true
   }
-
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
