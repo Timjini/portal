@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_24_155108) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_01_203931) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -179,6 +179,41 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_155108) do
     t.string "title"
   end
 
+  create_table "training_bookings", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "training_package_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "athlete_full_name"
+    t.string "email"
+    t.string "phone"
+    t.text "address"
+    t.string "role"
+    t.date "birth_date"
+    t.text "health_issues"
+    t.string "training_package_name"
+    t.string "approval_status", default: "pending"
+    t.string "payment_status", default: "pending"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["training_package_id"], name: "index_training_bookings_on_training_package_id"
+    t.index ["user_id"], name: "index_training_bookings_on_user_id"
+  end
+
+  create_table "training_packages", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.text "features"
+    t.decimal "price", precision: 10, scale: 2
+    t.integer "duration_in_days"
+    t.string "package_type", default: "group_training"
+    t.string "training_type", default: "group_training"
+    t.string "duration", default: "month"
+    t.string "status", default: "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_checklists", force: :cascade do |t|
     t.bigint "user_level_id", null: false
     t.bigint "check_list_id", null: false
@@ -238,6 +273,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_155108) do
   add_foreign_key "questionnaires", "users"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "taster_session_bookings", "users"
+  add_foreign_key "training_bookings", "training_packages"
+  add_foreign_key "training_bookings", "users"
   add_foreign_key "user_checklists", "check_lists"
   add_foreign_key "user_checklists", "user_levels"
   add_foreign_key "user_checklists", "users"

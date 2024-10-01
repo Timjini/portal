@@ -1,0 +1,3 @@
+class TrainingPackage < ApplicationRecord
+  
+end

@@ -111,4 +111,11 @@ end
     end
   end
 
+  namespace :api do
+    namespace :v2 do
+      resources :training_packages , only: [:index]
+      resources :training_bookings , only: [:index, :create]
+    end
+  end
+
 end
