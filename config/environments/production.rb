@@ -11,6 +11,8 @@ Rails.application.configure do
   config.hosts << /[a-z0-9]+\.c9\.io/
   config.hosts << "chambersforsport.net"
   config.hosts << "chambersforsport.com"
+  config.hosts << '51.68.199.136'
+  config.hosts << 'portal.chambersforsport.com'
   config.hosts << "club.chambersforsport.com"
   config.hosts << "cfs-portal.onrender.com"
    config.hosts << "onrender.com"
