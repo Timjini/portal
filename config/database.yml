@@ -7,12 +7,10 @@ default: &default
 
 development:
   <<: *default
-  # database: <%= ENV['DB_NAME'] %>
-  # username: '<%= ENV['DB_USER'] %>'
-  # password: <%= ENV['DB_PASSWORD'] %>
-  database: 'portal_development'
-  username: 'smartupnetwork'
-  password: '150150'
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
