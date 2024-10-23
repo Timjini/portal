@@ -10,6 +10,7 @@ development:
   database: <%= ENV['DB_NAME'] %>
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
+  host: postgres
 
 
 # Warning: The database defined as "test" will be erased and
