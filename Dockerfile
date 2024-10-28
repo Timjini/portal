@@ -3,9 +3,15 @@
 # Use the official Ruby image as the base image
 FROM ruby:3.1.2
 
-# Install dependencies for PostgreSQL and other gems
-RUN apt-get update -qq && apt-get install -y nodejs npm && \
-    npm install -g yarn
+# Install curl for Node.js installation
+RUN apt-get update -qq && apt-get install -y curl
+
+# Install Node.js from NodeSource
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
+
+# Install Yarn
+RUN npm install -g yarn
 
 # Set the working directory
 WORKDIR /usr/src/app
