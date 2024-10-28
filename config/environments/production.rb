@@ -14,7 +14,7 @@ Rails.application.configure do
   config.hosts << '51.68.199.136'
   config.hosts << 'portal.chambersforsport.com'
   config.hosts << "club.chambersforsport.com"
-  config.hosts << "cfs-portal.onrender.com"
+  config.hosts << "portal.chambersforsport.com"
    config.hosts << "onrender.com"
    config.hosts << "localhost:3000"
 
