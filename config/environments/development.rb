@@ -46,11 +46,14 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  #config.active_storage.service = :local
-  config.active_storage.service = :cloudflare
+  config.active_storage.service = :local
+  # config.active_storage.service = :cloudflare
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.logger = Logger.new(STDOUT)
+  config.action_mailer.logger.level = Logger::DEBUG
 
   config.action_mailer.perform_caching = false
 
@@ -78,23 +81,21 @@ Rails.application.configure do
   # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
   config.public_file_server.enabled = true
 
-  RAILS_SERVE_STATIC_FILES= true
-
-
   # Mailcatcher
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = { :address => '127.0.0.1', :port => 1025 }
   # config.action_mailer.raise_delivery_errors = false
 
-    # Send Grid Setup 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address   => 'smtp.mailersend.net',
-    :port      => 587,
-    :user_name => 'info@chambersforsport.com',
-    :password  => ENV['MAILERSEND_API_TOKEN'],
-    :starttls => true
-  }
+    # trapmail Setup 
+   config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      user_name: ENV['MAILTRAP_USERNAME'],
+      password: ENV['MAILTRAP_PASSWORD'],
+      address: 'sandbox.smtp.mailtrap.io',
+      host: 'sandbox.smtp.mailtrap.io',
+      port: '2525',
+      authentication: :login
+    }
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

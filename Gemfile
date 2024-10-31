@@ -113,3 +113,7 @@ gem 'recurrence', '~> 1.3'
 # gem 'mailersend-ruby', '~> 2.0.3'
 gem 'ffi', '~> 1.9', '>= 1.9.10'
 gem 'rubocop', '~> 1.67'
+
+gem 'mailcatcher', '~> 0.10.0'
+
+gem 'mailtrap', '~> 0.1.0'

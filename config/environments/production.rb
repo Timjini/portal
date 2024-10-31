@@ -105,14 +105,26 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # # Send Grid Setup 
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   :address   => 'smtp.mailersend.net',
+  #   :port      => 587,
+  #   :user_name => 'info@chambersforsport.com',
+  #   :password  => ENV['MAILERSEND_API_TOKEN'],
+  #   :starttls => true
+  # }
+  # Trap Email
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address   => 'smtp.mailersend.net',
-    :port      => 587,
-    :user_name => 'info@chambersforsport.com',
-    :password  => ENV['MAILERSEND_API_TOKEN'],
-    :starttls => true
-  }
+    config.action_mailer.smtp_settings = {
+      user_name: ENV['MAILTRAP_USERNAME'],
+      password: ENV['MAILTRAP_PASSWORD'],
+      address: 'sandbox.smtp.mailtrap.io',
+      host: 'sandbox.smtp.mailtrap.io',
+      port: '2525',
+      authentication: :login
+    }
+
+  
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [

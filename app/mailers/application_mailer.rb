@@ -1,4 +1,6 @@
+# frozen_string_literal: true
+
 class ApplicationMailer < ActionMailer::Base
-  default from: "dwain.chambers@chambersforsport.com"
-  layout "mailer"
+  default from: 'info@devminds.cloud'
+  layout 'mailer'
 end

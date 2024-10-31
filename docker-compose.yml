@@ -4,7 +4,8 @@ services:
   app:
     build: .
     command: >
-      bash -c "RAILS_ENV=${RAILS_ENV} bundle exec rails db:migrate &&
+      bash -c "rm -f /usr/src/app/tmp/pids/server.pid &&
+                RAILS_ENV=${RAILS_ENV} bundle exec rails db:migrate &&
                 RAILS_ENV=${RAILS_ENV} bundle exec rails db:seed &&
                 RAILS_ENV=${RAILS_ENV} bundle exec rails assets:precompile &&
                 RAILS_ENV=${RAILS_ENV} bundle exec rails server -b 0.0.0.0"
