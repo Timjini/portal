@@ -173,39 +173,44 @@ end
 #
 ## db/seeds.rb
 
+packges = TrainingPackage.all
+
+if packges.empty?
 # Group Training Packages
-TrainingPackage.create!(
-  name: '1 session a week',
-  description: '1 training session per week, billed monthly.',
-  features: '["Access to group training", "Weekly guidance and support"]',
-  price: 38.00,
-  duration_in_days: 30,  # Assuming 1 month = 30 days
-  package_type: 'group_training',
-  training_type: 'group_training',
-  duration: 'month',
-  status: 'active'
-)
+  TrainingPackage.create!(
+    name: '1 session a week',
+    description: '1 training session per week, billed monthly.',
+    features: '["Access to group training", "Weekly guidance and support"]',
+    price: 38.00,
+    duration_in_days: 30,  # Assuming 1 month = 30 days
+    package_type: 'group_training',
+    training_type: 'group_training',
+    duration: 'month',
+    status: 'active'
+  )
 
-TrainingPackage.create!(
-  name: '2 sessions a week',
-  description: '2 training sessions per week, billed monthly.',
-  features: '["Access to group training", "Weekly guidance and support"]',
-  price: 81.00,
-  duration_in_days: 30,
-  package_type: 'group_training',
-  training_type: 'group_training',
-  duration: 'month',
-  status: 'active'
-)
+  TrainingPackage.create!(
+    name: '2 sessions a week',
+    description: '2 training sessions per week, billed monthly.',
+    features: '["Access to group training", "Weekly guidance and support"]',
+    price: 81.00,
+    duration_in_days: 30,
+    package_type: 'group_training',
+    training_type: 'group_training',
+    duration: 'month',
+    status: 'active'
+  )
 
-TrainingPackage.create!(
-  name: '3 sessions a week',
-  description: '3 training sessions per week, billed monthly.',
-  features: '["Access to group training", "Weekly guidance and support"]',
-  price: 124.00,
-  duration_in_days: 30,
-  package_type: 'group_training',
-  training_type: 'group_training',
-  duration: 'month',
-  status: 'active'
-)
+  TrainingPackage.create!(
+    name: '3 sessions a week',
+    description: '3 training sessions per week, billed monthly.',
+    features: '["Access to group training", "Weekly guidance and support"]',
+    price: 124.00,
+    duration_in_days: 30,
+    package_type: 'group_training',
+    training_type: 'group_training',
+    duration: 'month',
+    status: 'active'
+  )
+
+end
