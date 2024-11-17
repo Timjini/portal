@@ -12,6 +12,7 @@ one:
   dcpa_discount: 9.99
   extras: MyString
   event_type: MyString
+  status: active
 
 two:
   title: MyString
@@ -25,3 +26,4 @@ two:
   dcpa_discount: 9.99
   extras: MyString
   event_type: MyString
+  status: active

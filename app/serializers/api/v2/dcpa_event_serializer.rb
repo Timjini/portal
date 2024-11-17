@@ -2,7 +2,7 @@
 
 class Api::V2::DcpaEventSerializer < ActiveModel::Serializer # rubocop:disable Style/Documentation
   attributes :id, :title, :coach, :dates, :start_time_formated, :end_time_formated, :location, :ages_available, :price,
-             :dcpa_discount, :extras, :event_type, :status, :dcpa_price, :image_thumbnail
+             :dcpa_discount, :extras, :event_type, :status, :dcpa_price, :image_url
 
   # Use humanized event type
   def event_type
@@ -23,11 +23,9 @@ class Api::V2::DcpaEventSerializer < ActiveModel::Serializer # rubocop:disable S
     (object.price - (object.price * object.dcpa_discount / 100)).round(2)
   end
 
-  def image_thumbnail
-    if object.image.attached?
-      Rails.application.routes.url_helpers.rails_blob_path(object.image, only_path: true)
-    else
-      'image_holder.png'
-    end
+  def image_url
+    return nil unless object.image.attached? && object.persisted?
+
+    Rails.application.routes.url_helpers.rails_blob_url(object.image, only_path: true)
   end
 end

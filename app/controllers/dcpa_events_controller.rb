@@ -67,6 +67,6 @@ class DcpaEventsController < ApplicationController # rubocop:disable Style/Docum
   # Only allow a list of trusted parameters through.
   def dcpa_event_params
     params.require(:dcpa_event).permit(:title, :coach, :time_start, :time_end, :location, :ages_available, :price,
-                                       :dcpa_discount, :image, :extras, :event_type, dates: [])
+                                       :dcpa_discount, :status, :image, :extras, :event_type, dates: [])
   end
 end
