@@ -3,7 +3,7 @@
 class DcpaEvent < ApplicationRecord # rubocop:disable Style/Documentation
   before_save :strip_default_date
   has_one_attached :image
-  EVENT_TYPES = %w[holiday_camp].freeze
+  EVENT_TYPES = %w[holiday_camp running_event].freeze
   STATUS = %w[draft active inactive].freeze
 
   validates :title, :coach, :location, :time_start, :time_end, :price, presence: true
@@ -42,5 +42,4 @@ class DcpaEvent < ApplicationRecord # rubocop:disable Style/Documentation
 
     errors.add(:time_end, 'must be after the start time')
   end
-
 end
