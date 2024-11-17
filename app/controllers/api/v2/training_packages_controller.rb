@@ -2,7 +2,7 @@
 
 module Api
   module V2
-    class TrainingPackageController < Api::V1::BaseController # rubocop:disable Style/Documentation
+    class TrainingPackageController < Api::V2::BaseController # rubocop:disable Style/Documentation
       skip_before_action :authenticate_user!
 
       def index
