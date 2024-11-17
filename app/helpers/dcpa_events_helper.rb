@@ -1,0 +1,2 @@
+module DcpaEventsHelper
+end

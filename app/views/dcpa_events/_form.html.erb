@@ -1,0 +1,130 @@
+<%= form_with(model: dcpa_event, class: "contents") do |form| %>
+  <% if dcpa_event.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(dcpa_event.errors.count, "error") %> prohibited this dcpa_event from being saved:</h2>
+
+      <ul>
+        <% dcpa_event.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+        <%= image_tag(dcpa_event.image_thumbnail, class: "h-36 object-cover") %>
+    
+        <%= form.file_field :image, class: "mt-2" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :coach %>
+    <%= form.text_field :coach, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+<div class="my-5">
+  <%= form.label :dates, "Dates" %>
+  <div id="dates-fields">
+    <!-- Iterate over existing dates to create individual date fields -->
+    <% dcpa_event.dates.each_with_index do |date, index| %>
+      <%= form.date_field :dates, 
+        value: date.present? ? date.strftime("%Y-%m-%d") : Date.today.strftime("%Y-%m-%d"), 
+        class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", 
+        id: "dates-picker-#{index}", 
+        name: "dcpa_event[dates][]" %>
+    <% end %>
+    <!-- Add a blank field if no dates exist -->
+    <% if dcpa_event.dates.empty? %>
+      <%= form.date_field :dates, 
+        value: Date.today.strftime("%Y-%m-%d"), 
+        class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", 
+        id: "dates-picker-0", 
+        name: "dcpa_event[dates][]" %>
+    <% end %>
+  </div>
+  <button type="button" id="add-date" class="mt-2 bg-blue-500 text-white px-3 py-2 rounded-md">
+    Add Date
+  </button>
+</div>
+
+
+
+
+  <div class="my-5">
+    <%= form.label :time_start %>
+    <%= form.time_field :time_start, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :time_end %>
+    <%= form.time_field :time_end, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :location %>
+    <%= form.text_field :location, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :ages_available %>
+    <%= form.text_field :ages_available, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :price %>
+    <%= form.text_field :price, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :dcpa_discount %>
+    <%= form.text_field :dcpa_discount, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :extras %>
+    <%= form.text_field :extras, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :event_type %>
+    <%= form.select :event_type, DcpaEvent::EVENT_TYPES.map { |type| [type.humanize, type] }, { include_blank: 'Please select' }, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+
+  <div class="my-5">
+    <%= form.label :status %>
+    <%= form.select :event_type, DcpaEvent::STATUS.map { |type| [type.humanize, type] }, { include_blank: 'Please select' }, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
+<script>
+ document.addEventListener("DOMContentLoaded", () => {
+  let dateIndex = 1;
+
+  document.getElementById("add-date").addEventListener("click", () => {
+    const datesFieldsContainer = document.getElementById("dates-fields");
+
+    const newDateField = document.createElement("input");
+    newDateField.type = "date";
+    newDateField.name = "dcpa_event[dates][]";
+    newDateField.id = `dates-picker-${dateIndex}`;
+    newDateField.className = "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full";
+
+    datesFieldsContainer.appendChild(newDateField);
+
+    if (typeof flatpickr !== "undefined") {
+      flatpickr(`#dates-picker-${dateIndex}`);
+    }
+
+    dateIndex++;
+  });
+});
+</script>

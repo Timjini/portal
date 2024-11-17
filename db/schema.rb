@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_01_203931) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_17_104236) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -97,6 +97,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_01_203931) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "dcpa_events", force: :cascade do |t|
+    t.string "title"
+    t.string "coach"
+    t.date "dates", default: [], array: true
+    t.time "time_start"
+    t.time "time_end"
+    t.string "location"
+    t.string "ages_available"
+    t.decimal "price"
+    t.decimal "dcpa_discount"
+    t.string "extras"
+    t.string "event_type"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "levels", force: :cascade do |t|

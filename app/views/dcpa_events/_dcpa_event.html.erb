@@ -1,0 +1,64 @@
+<div id="<%= dom_id dcpa_event %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Title:</strong>
+    <%= dcpa_event.title %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Coach:</strong>
+    <%= dcpa_event.coach %>
+  </p>
+
+  <strong>Dates:</strong>
+  <ul>
+    <% if @dcpa_event && @dcpa_event.dates.present? %>
+      <% @dcpa_event.dates.each do |date| %>
+        <li><%= date %></li>
+      <% end %>
+    <% else %>
+      <li>No dates available</li>
+    <% end %>
+  </ul>
+
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Time start:</strong>
+    <%= dcpa_event.time_start.strftime('%H:%M') if dcpa_event.time_start %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Time end:</strong>
+    <%= dcpa_event.time_end.strftime('%H:%M') if dcpa_event.time_end %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Location:</strong>
+    <%= dcpa_event.location %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Ages available:</strong>
+    <%= dcpa_event.ages_available %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Price:</strong>
+    <%= dcpa_event.price %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Dcpa discount:</strong>
+    <%= dcpa_event.dcpa_discount %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Extras:</strong>
+    <%= dcpa_event.extras %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Event type:</strong>
+    <%= dcpa_event.event_type %>
+  </p>
+
+</div>
