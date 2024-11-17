@@ -1,14 +1,9 @@
-# frozen_string_literal: true
+class Api::V2::TrainingPackagesController < Api::V1::BaseController
+# skip authentication
+ skip_before_action :authenticate_user!
 
-module Api
-  module V2
-    class TrainingPackageController < ApplicationController # rubocop:disable Style/Documentation
-      skip_before_action :authenticate_user!
-
-      def index
-        @training_packages = TrainingPackage.where(status: 'active')
-        render json: @training_packages, status: :ok
-      end
-    end
+  def index
+    @training_packages = TrainingPackage.where(status: 'active')
+    render json: @training_packages, status: :ok
   end
 end
