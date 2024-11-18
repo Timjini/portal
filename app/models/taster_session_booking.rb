@@ -1,10 +1,9 @@
-class TasterSessionBooking < ApplicationRecord
+# frozen_string_literal: true
 
-    def full_name_by_role
-        if self.role == "athlete"
-            return "#{self.first_name} #{self.last_name}"
-        else
-            return self.athlete_full_name
-        end
-    end
+class TasterSessionBooking < ApplicationRecord
+  def full_name_by_role
+    return "#{first_name} #{last_name}" if role == 'athlete'
+
+    athlete_full_name
+  end
 end

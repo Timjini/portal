@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class AddDegreeToLevel < ActiveRecord::Migration[7.1]
   def change
-    add_column :levels, :degree, :integer , default: 0
+    add_column :levels, :degree, :integer, default: 0
   end
 end

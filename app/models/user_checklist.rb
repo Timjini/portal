@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserChecklist < ApplicationRecord
   belongs_to :user_level, optional: true
   belongs_to :check_list, optional: true

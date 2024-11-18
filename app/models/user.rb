@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -6,20 +8,19 @@ class User < ApplicationRecord
          :recoverable, :rememberable
   before_create :assign_unique_color
 
-      
   attr_accessor :dob
-         
+
   has_many :comments
   has_one_attached :avatar
-  has_one :athlete_profile , dependent: :destroy
+  has_one :athlete_profile, dependent: :destroy
   has_many :qr_codes
   has_many :user_checklists, dependent: :destroy
   has_many :user_levels, dependent: :destroy
-  has_many :answers , dependent: :destroy
+  has_many :answers, dependent: :destroy
 
   has_many :notifications, as: :notifiable, dependent: :destroy
-  
-  validates_uniqueness_of :username
+
+  validates :username, uniqueness: true
   # # validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   # validates :password, presence: true
   # validates :username, length: { minimum: 3, maximum: 20 }
@@ -30,14 +31,13 @@ class User < ApplicationRecord
     JsonWebToken.encode({ user_id: id })
   end
 
-   enum role: {
+  enum :role, {
     'athlete' => 'athlete',
     'parent_user' => 'parent_user',
     'child_user' => 'child_user',
     'coach' => 'coach',
     'admin' => 'admin'
   }
-
 
   def avatar_thumbnail
     if avatar.attached?
@@ -57,12 +57,12 @@ class User < ApplicationRecord
   # end
 
   def age
-    profile = AthleteProfile.find_by(user_id: self.id)
-    
-    if profile && profile.dob
+    profile = AthleteProfile.find_by(user_id: id)
+
+    if profile&.dob
       dob = profile.dob
-      current_date = Date.today
-      age = current_date.year - dob.year - ((current_date.month > dob.month || (current_date.month == dob.month && current_date.day >= dob.day)) ? 0 : 1)
+      current_date = Time.zone.today
+      age = current_date.year - dob.year - (current_date.month > dob.month || (current_date.month == dob.month && current_date.day >= dob.day) ? 0 : 1)
       return age
     end
 
@@ -71,84 +71,73 @@ class User < ApplicationRecord
   end
 
   def height
-    h = AthleteProfile.find_by(user_id: self.id)
-    if h.nil?
-       return "---"
-    else
-      h.height
-    end
+    h = AthleteProfile.find_by(user_id: id)
+    return '---' if h.nil?
+
+    h.height
   end
 
   def weight
-    w = AthleteProfile.find_by(user_id: self.id)
-    if w.nil?
-       return "---"
-    else
-      w.weight
-    end
+    w = AthleteProfile.find_by(user_id: id)
+    return '---' if w.nil?
+
+    w.weight
   end
 
   def power_of_ten
-    p = AthleteProfile.find_by(user_id: self.id)
-    if p.nil?
-      return "---"
-    else
-      p.power_of_ten
-    end
+    p = AthleteProfile.find_by(user_id: id)
+    return '---' if p.nil?
+
+    p.power_of_ten
   end
 
-  
   def level
-    l = AthleteProfile.find_by(user_id: self.id)
-    if l.nil?
-      return "---"
-    else
-      l.level
-    end
+    l = AthleteProfile.find_by(user_id: id)
+    return '---' if l.nil?
+
+    l.level
   end
 
   def child_password
-    p = AthleteProfile.find_by(user_id: self.id)
-    if p.nil?
-      return "---"
-    else
-      p.child_password
-    end
+    p = AthleteProfile.find_by(user_id: id)
+    return '---' if p.nil?
+
+    p.child_password
   end
 
   def athlete_profile_url
-    if self.athlete_profile
-      "/athlete_profiles/#{self.athlete_profile.id}"
+    if athlete_profile
+      "/athlete_profiles/#{athlete_profile.id}"
     else
-      ""
+      ''
     end
   end
 
   def current_level
-    user_level = UserLevel.where(user_id: self.id, status: "completed").count
+    user_level = UserLevel.where(user_id: id, status: 'completed').count
 
     case user_level
     when 0..5
-      return "Beginner"
+      'Beginner'
     when 6..10
-      return "Intermediate"
+      'Intermediate'
     when 11..15
-      return "Advanced"
+      'Advanced'
     when 16..20
-      return "Elite"
+      'Elite'
     when 21..25
-      return "Pro"
+      'Pro'
     end
   end
 
   def participation
     # participating in event question number 16
-    answer = Answer.find_by(user_id: self.id, question_id: 16)
-    
+    answer = Answer.find_by(user_id: id, question_id: 16)
+
     if answer.nil?
-     "NO"
+      'NO'
     else
-    answer.content    
+      answer.content
     end
   end
 
@@ -159,10 +148,9 @@ class User < ApplicationRecord
 
   def generate_unique_color(existing_colors)
     loop do
-      color = SecureRandom.hex(3) 
-      color = "##{color}"         
+      color = SecureRandom.hex(3)
+      color = "##{color}"
       break color unless existing_colors.include?(color)
     end
   end
-
 end

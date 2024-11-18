@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
+Rails.application.routes.draw do
   resources :dcpa_events
   resources :time_slots
   resources :coach_calendar, only: %i[index create update destroy show] do
