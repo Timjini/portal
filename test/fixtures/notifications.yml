@@ -5,11 +5,9 @@ one:
   viewed: false
   notifiable: one
   notifiable_type: Notifiable
-  type: 
 
 two:
   body: MyText
   viewed: false
   notifiable: two
   notifiable_type: Notifiable
-  type: 

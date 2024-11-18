@@ -24,6 +24,7 @@ class AthleteProfilesController < ApplicationController
     @percentage = result[:percentage]
     @status = result[:status]
     @checklist_items_completed = result[:checklist_items_completed]
+    @athlete_level = @athlete.athlete_level.where(status: "completed")
 
     respond_to do |format|
       format.html
