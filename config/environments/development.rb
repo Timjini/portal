@@ -1,17 +1,18 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # white list 
+  # white list
   config.hosts << /[a-z0-9]+\.c9users\.io/
   config.hosts << /[a-z0-9]+\.c9\.io/
   # config.hosts << "chambersforsport.net"
-  config.hosts << "chambersforsport.com"
-  config.hosts << "club.chambersforsport.com"
-  config.hosts << "cfs-portal.onrender.com"
-   config.hosts << "onrender.com"
-
+  config.hosts << 'chambersforsport.com'
+  config.hosts << 'club.chambersforsport.com'
+  config.hosts << 'cfs-portal.onrender.com'
+  config.hosts << 'onrender.com'
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
@@ -31,13 +32,13 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -52,7 +53,7 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.logger = Logger.new(STDOUT)
+  config.action_mailer.logger = Logger.new($stdout)
   config.action_mailer.logger.level = Logger::DEBUG
 
   config.action_mailer.perform_caching = false
@@ -86,16 +87,16 @@ Rails.application.configure do
   # config.action_mailer.smtp_settings = { :address => '127.0.0.1', :port => 1025 }
   # config.action_mailer.raise_delivery_errors = false
 
-    # trapmail Setup 
-   config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      user_name: ENV['MAILTRAP_USERNAME'],
-      password: ENV['MAILTRAP_PASSWORD'],
-      address: 'sandbox.smtp.mailtrap.io',
-      host: 'sandbox.smtp.mailtrap.io',
-      port: '2525',
-      authentication: :login
-    }
+  # trapmail Setup
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name: ENV.fetch('MAILTRAP_USERNAME', nil),
+    password: ENV.fetch('MAILTRAP_PASSWORD', nil),
+    address: 'sandbox.smtp.mailtrap.io',
+    host: 'sandbox.smtp.mailtrap.io',
+    port: '2525',
+    authentication: :login
+  }
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

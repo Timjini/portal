@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_17_104236) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_18_132039) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -229,6 +229,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_17_104236) do
     t.string "status", default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "extra", default: {}, null: false
+    t.index ["extra"], name: "index_training_packages_on_extra", using: :gin
   end
 
   create_table "user_checklists", force: :cascade do |t|

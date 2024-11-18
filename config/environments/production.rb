@@ -1,4 +1,6 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -6,17 +8,17 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
-    # white list 
+  # white list
   config.hosts << /[a-z0-9]+\.c9users\.io/
   config.hosts << /[a-z0-9]+\.c9\.io/
-  config.hosts << "chambersforsport.net"
-  config.hosts << "chambersforsport.com"
+  config.hosts << 'chambersforsport.net'
+  config.hosts << 'chambersforsport.com'
   config.hosts << '51.68.199.136'
   config.hosts << 'portal.chambersforsport.com'
-  config.hosts << "club.chambersforsport.com"
-  config.hosts << "portal.chambersforsport.com"
-   config.hosts << "onrender.com"
-   config.hosts << "localhost:3000"
+  config.hosts << 'club.chambersforsport.com'
+  config.hosts << 'portal.chambersforsport.com'
+  config.hosts << 'onrender.com'
+  config.hosts << 'localhost:3000'
 
   # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 
@@ -54,7 +56,6 @@ Rails.application.configure do
   # config.active_storage.service = :local
   config.active_storage.service = :cloudflare
 
-
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"
@@ -68,17 +69,17 @@ Rails.application.configure do
   config.force_ssl = true
 
   # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new(STDOUT)
-    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
-    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+  config.logger = ActiveSupport::Logger.new($stdout)
+                                       .tap  { |logger| logger.formatter = Logger::Formatter.new }
+                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Info include generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -104,7 +105,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # # Send Grid Setup 
+  # # Send Grid Setup
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
   #   :address   => 'smtp.mailersend.net',
@@ -115,16 +116,14 @@ Rails.application.configure do
   # }
   # Trap Email
   config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      user_name: ENV['MAILTRAP_USERNAME'],
-      password: ENV['MAILTRAP_PASSWORD'],
-      address: 'live.smtp.mailtrap.io',
-      host: 'live.smtp.mailtrap.io',
-      port: '587',
-      authentication: :login
-    }
-
-  
+  config.action_mailer.smtp_settings = {
+    user_name: ENV.fetch('MAILTRAP_USERNAME', nil),
+    password: ENV.fetch('MAILTRAP_PASSWORD', nil),
+    address: 'live.smtp.mailtrap.io',
+    host: 'live.smtp.mailtrap.io',
+    port: '587',
+    authentication: :login
+  }
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
@@ -133,5 +132,5 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-  config.require_master_key = true 
+  config.require_master_key = true
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class DcpaEventsController < ApplicationController # rubocop:disable Style/Documentation
-  before_action :set_dcpa_event, only: %i[ show edit update destroy ]
+class DcpaEventsController < ApplicationController
+  before_action :set_dcpa_event, only: %i[show edit update destroy]
 
   # GET /dcpa_events or /dcpa_events.json
   def index

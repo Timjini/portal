@@ -1,10 +1,10 @@
 
 
-<% level = @athlete_level.count  || "0"%>
+<% level = @athlete_level&.count  || "0"%>
 <% if @athlete_level.present?%>
  <div class="flex items-center">
 
-<%level_count = @athlete_level.count / 5%>
+<%level_count = @athlete_level&.count / 5%>
   <div class="flex items-center">
   <% (level_count % 5).times do |i| %>
     <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">

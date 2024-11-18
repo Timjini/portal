@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DcpaEvent < ApplicationRecord # rubocop:disable Style/Documentation
+class DcpaEvent < ApplicationRecord
   before_save :strip_default_date
   has_one_attached :image
   EVENT_TYPES = %w[holiday_camp running_event].freeze
