@@ -14,7 +14,7 @@ class AthleteChecklistStatusService
     percentage = calculate_percentage(levels_count)
 
     status = determine_level_status(levels)
-    puts "=========================> levels #{levels}  ,,,,, #{status}"
+    Rails.logger.debug { "=========================> levels #{levels}  ,,,,, #{status}" }
     checklist_items_completed = completed_checklist_items
 
     {

@@ -1,67 +1,79 @@
-<div id="<%= dom_id dcpa_event %>">
-  <div>
-      <%= image_tag dcpa_event.image_thumbnail, class: " h-36" %>
-  </div>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Title:</strong>
-    <%= dcpa_event.title %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Coach:</strong>
-    <%= dcpa_event.coach %>
-  </p>
-
-  <strong>Dates:</strong>
-  <ul>
-    <% if @dcpa_event && @dcpa_event.dates.present? %>
-      <% @dcpa_event.dates.each do |date| %>
-        <li><%= date %></li>
-      <% end %>
-    <% else %>
-      <li>No dates available</li>
-    <% end %>
-  </ul>
-
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Time start:</strong>
-    <%= dcpa_event.time_start.strftime('%H:%M') if dcpa_event.time_start %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Time end:</strong>
-    <%= dcpa_event.time_end.strftime('%H:%M') if dcpa_event.time_end %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Location:</strong>
-    <%= dcpa_event.location %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Ages available:</strong>
-    <%= dcpa_event.ages_available %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Price:</strong>
-    <%= dcpa_event.price %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Dcpa discount:</strong>
-    <%= dcpa_event.dcpa_discount %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Extras:</strong>
-    <%= dcpa_event.extras %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Event type:</strong>
-    <%= dcpa_event.event_type %>
-  </p>
-
+<div class="">
+  <h3 class="text-lg font-bold py-3">DCPA Event Details</h3>
+</div>
+<div class="relative overflow-x-auto general_card">
+  <table class="w-full text-sm text-left" style="padding:0;margin:0;">
+    <thead class="text-xs uppercase table_header">
+      <tr>
+        <th scope="col" class="px-6 py-3">Field</th>
+        <th scope="col" class="px-6 py-3">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Image</td>
+        <td class="px-6 py-4">
+          <%= image_tag dcpa_event.image_thumbnail, class: "h-36" %>
+        </td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Title</td>
+        <td class="px-6 py-4"><%= dcpa_event.title %></td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Coach</td>
+        <td class="px-6 py-4"><%= dcpa_event.coach %></td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Dates</td>
+        <td class="px-6 py-4">
+          <% if @dcpa_event && @dcpa_event.dates.present? %>
+            <ul>
+              <% @dcpa_event.dates.each do |date| %>
+                <li><%= date %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <span>No dates available</span>
+          <% end %>
+        </td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Time Start</td>
+        <td class="px-6 py-4">
+          <%= dcpa_event.time_start.strftime('%H:%M') if dcpa_event.time_start %>
+        </td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Time End</td>
+        <td class="px-6 py-4">
+          <%= dcpa_event.time_end.strftime('%H:%M') if dcpa_event.time_end %>
+        </td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Location</td>
+        <td class="px-6 py-4"><%= dcpa_event.location %></td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Ages Available</td>
+        <td class="px-6 py-4"><%= dcpa_event.ages_available %></td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Price</td>
+        <td class="px-6 py-4"><%= dcpa_event.price %></td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">DCPA Discount</td>
+        <td class="px-6 py-4"><%= dcpa_event.dcpa_discount %></td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Extras</td>
+        <td class="px-6 py-4"><%= dcpa_event.extras %></td>
+      </tr>
+      <tr class="border-b border-gray-400">
+        <td class="px-6 py-4 font-medium whitespace-nowrap">Event Type</td>
+        <td class="px-6 py-4"><%= dcpa_event.event_type %></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
