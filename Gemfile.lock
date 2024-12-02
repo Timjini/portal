@@ -156,6 +156,8 @@ GEM
     erubi (1.13.0)
     esbuild-rails (0.1.4)
       rails (>= 6.0.0)
+    et-orbi (1.2.11)
+      tzinfo
     eventmachine (1.2.7)
     faraday (2.12.0)
       faraday-net_http (>= 2.0, < 3.4)
@@ -167,6 +169,9 @@ GEM
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-darwin)
     formatador (1.1.0)
+    fugit (1.11.1)
+      et-orbi (~> 1, >= 1.2.11)
+      raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
     guard (2.18.1)
@@ -270,6 +275,7 @@ GEM
     public_suffix (6.0.1)
     puma (6.4.3)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.8.1)
     rack (2.2.10)
     rack-cors (2.0.2)
@@ -373,6 +379,15 @@ GEM
     sendgrid-ruby (6.7.0)
       ruby_http_client (~> 3.4)
     shellany (0.0.1)
+    sidekiq (7.3.6)
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
+    sidekiq-cron (1.12.0)
+      fugit (~> 1.8)
+      globalid (>= 1.0.1)
+      sidekiq (>= 6)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -455,6 +470,8 @@ DEPENDENCIES
   searchkick
   selenium-webdriver
   sendgrid-ruby
+  sidekiq (~> 7.1, >= 7.1.2)
+  sidekiq-cron (~> 1.2)
   sprockets-rails
   stimulus-rails
   tailwindcss-rails

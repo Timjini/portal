@@ -1,29 +1,29 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  coach: MyString
-  dates: 2024-11-17
-  time_start: 2024-11-17 10:42:36
-  time_end: 2024-11-17 10:42:36
-  location: MyString
-  ages_available: MyString
-  price: 9.99
-  dcpa_discount: 9.99
-  extras: MyString
-  event_type: MyString
-  status: active
+# one:
+#   title: MyString
+#   coach: MyString
+#   dates: 2024-11-17
+#   time_start: 2024-11-17 10:42:36
+#   time_end: 2024-11-17 10:42:36
+#   location: MyString
+#   ages_available: MyString
+#   price: 9.99
+#   dcpa_discount: 9.99
+#   extras: MyString
+#   event_type: MyString
+#   status: active
 
-two:
-  title: MyString
-  coach: MyString
-  dates: 2024-11-17
-  time_start: 2024-11-17 10:42:36
-  time_end: 2024-11-17 10:42:36
-  location: MyString
-  ages_available: MyString
-  price: 9.99
-  dcpa_discount: 9.99
-  extras: MyString
-  event_type: MyString
-  status: active
+# two:
+#   title: MyString
+#   coach: MyString
+#   dates: 2024-11-17
+#   time_start: 2024-11-17 10:42:36
+#   time_end: 2024-11-17 10:42:36
+#   location: MyString
+#   ages_available: MyString
+#   price: 9.99
+#   dcpa_discount: 9.99
+#   extras: MyString
+#   event_type: MyString
+#   status: active
