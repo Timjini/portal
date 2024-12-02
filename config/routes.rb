@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
+require 'sidekiq/web'
+
+Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
+
   resources :dcpa_events
   resources :time_slots
   resources :coach_calendar, only: %i[index create update destroy show] do

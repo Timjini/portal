@@ -1,5 +1,5 @@
-class SearchController < ApplicationController
+# frozen_string_literal: true
 
-    def index 
-    end
+class SearchController < ApplicationController
+  def index; end
 end

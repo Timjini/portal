@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCoachCalendars < ActiveRecord::Migration[7.1]
   def change
     create_table :coach_calendars do |t|

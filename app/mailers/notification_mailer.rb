@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/mailers/notification_mailer.rb
 class NotificationMailer < ApplicationMailer
   def notification_email(user_email, category, message)

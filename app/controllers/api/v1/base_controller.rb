@@ -1,52 +1,52 @@
-class Api::V1::BaseController < ApiBaseController
-    require 'json_web_token'
-    protect_from_forgery with: :null_session
-    before_action :authenticate_user!
-    protected
-    # 
-    def authenticate_user!
-        my_payload = payload
-        puts"===========#{payload}"
-        if !payload || !JsonWebToken.valid_payload(payload)
-        return invalid_authentication
-        end
-        
+# frozen_string_literal: true
+
+module Api
+  module V1
+    class BaseController < ApiBaseController
+      require 'json_web_token'
+      protect_from_forgery with: :null_session
+      before_action :authenticate_user!
+
+      protected
+
+      def authenticate_user!
+        payload
+        Rails.logger.debug { "===========#{payload}" }
+        return invalid_authentication if !payload || !JsonWebToken.valid_payload(payload)
+
         load_current_user!
         invalid_authentication unless @current_user
-    end
+      end
 
-    def invalid_authentication
-        render json: {error: 'Invalid Request'}, status: :unauthorized
-    end
+      def invalid_authentication
+        render json: { error: 'Invalid Request' }, status: :unauthorized
+      end
 
-    private
-    # Deconstructs the Authorization header and decodes the JWT token.
-    def payload
+      private
+
+      # Deconstructs the Authorization header and decodes the JWT token.
+      def payload
         auth_header = request.headers['Authorization']
-        token = auth_header.split(' ').last
-        decoded_token = JsonWebToken.decode(token)
-        return decoded_token
-    rescue
+        token = auth_header.split.last
+        JsonWebToken.decode(token)
+      rescue StandardError
         nil
-    end
+      end
 
-    # Sets the @current_user with the user_id from payload
-    def load_current_user!
+      # Sets the @current_user with the user_id from payload
+      def load_current_user!
         # puts"Loading current user: #{payload}"
-        if request.headers['Authorization'].present?
-            token = request.headers['Authorization'].split(' ').last
-            payload = JsonWebToken.decode(token)
-            puts"#{payload}=============="
-            if payload.present?
-            id = payload['user_id']
-            @current_user = User.find_by(id: id)
-            puts "#{@current_user.inspect}"
-            else
-            return false
-            end
-        else
-            return false
-        end
-    end
+        return false if request.headers['Authorization'].blank?
 
+        token = request.headers['Authorization'].split.last
+        payload = JsonWebToken.decode(token)
+        Rails.logger.debug { "#{payload}==============" }
+        return false if payload.blank?
+
+        id = payload['user_id']
+        @current_user = User.find_by(id: id)
+        Rails.logger.debug @current_user.inspect
+      end
+    end
+  end
 end

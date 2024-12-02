@@ -1,96 +1,59 @@
+# frozen_string_literal: true
+
 class KpiController < ApplicationController
-    skip_forgery_protection only: [:create, :destroy , :update]
+  skip_forgery_protection only: %i[create destroy update]
+  before_action :authenticate_user!
 
-    before_action :authenticate_user!
+  def index
+    service = KpiService.new(params)
+    @levels = service.fetch_levels(params[:page], 5)
+  end
 
-    def index 
-        @levels = Level.all.paginate(page: params[:page], per_page: 5).order(:degree)
+  def edit
+    service = KpiService.new(params)
+    data = service.fetch_level_with_checklists
+    @level = data[:level]
+    @check_list = data[:checklists]
+  end
+
+  def create # rubocop:disable Metrics/MethodLength
+    service = KpiService.new(params)
+    result = service.create_level
+
+    if result[:success]
+      respond_to do |format|
+        format.json { render json: { status: 'success', message: 'Level created!' } }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: { status: 'error', message: result[:errors].join(', ') } }
+      end
     end
+  end
 
-    def create
-        puts "params: #{params.inspect}"
+  def update # rubocop:disable Metrics/MethodLength
+    service = KpiService.new(params)
+    result = service.update_level
 
-        title = params[:title]
-        degree = params[:degree].to_i
-        checklist_items = params[:checklist]
-        category = params[:category].to_i
-        step = params[:level].to_i
-
-        @level = Level.new(title: title , degree: degree, category: category , step: step)
-       
-        if @level.save
-            checklist_items.each do |item|
-                CheckList.create!(title: item, level_id: @level.id)
-            end
-            respond_to do |format|
-                # format.html { redirect_to kpis_path }
-                format.json { render json: { status: 'success', message: 'Level created!' } }
-            end
-            
-        else           
-            respond_to do |format|
-                format.html { render 'new' }
-                format.json { render json: { status: 'error', message: 'Oops, something went wrong!' } }
-            end
-
+    if result[:success]
+      respond_to do |format|
+        format.json do
+          render json: { status: 'success', message: 'Level updated!', redirect_url: '/kpis' }
         end
+      end
+    else
+      render json: { status: 'error', message: result[:errors].join(', ') }
     end
+  end
 
-    def edit
-        @level = Level.find(params[:id])
-        @check_list = CheckList.where(level_id: @level.id)
+  def destroy
+    service = KpiService.new(params)
+    result = service.destroy_level
+
+    if result[:success]
+      render json: { success: true }
+    else
+      render json: { success: false, message: result[:errors].join(', ') }
     end
-
-
-    def update
-        checklist_data_json = params[:checklist_data]
-        checklist_data = JSON.parse(checklist_data_json)
-        puts "Checklist data: #{checklist_data.inspect}"
-
-        checklist_data.each do |item|
-            checklist_item = CheckList.find(item['id'])
-            checklist_item.update(title: item['title'])
-        end
-
-        @level = Level.find(params[:id])
-        @level.title = params[:title]
-        @level.degree = params[:degree].to_i
-        @level.category = params[:category].to_i
-
-        @level.save!
-
-        if @level.save
-            respond_to do |format|
-                # format.html { redirect_to kpis_path }
-                format.json { render json: { status: 'success', message: 'Level created!' , redirect_url: '/kpis'  } }
-            end
-        else
-            render json: { success: false }
-        end
-
-        # @level = Level.find(params[:id])
-
-        # if @level.update(level_params)
-        #     redirect_to @level, notice: 'Level was successfully updated.'
-        # else
-        #     render :edit
-        # end
-    end
-
-    def destroy
-        @level = Level.find(params[:id])
-        # destroy level
-        if @level.destroy
-            render json: { success: true }
-        else
-            render json: { success: false }
-        end
-    end
-
-
-
-
-    private
-
-
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTasterSessionBookings < ActiveRecord::Migration[7.1]
   def change
     create_table :taster_session_bookings do |t|
@@ -11,7 +13,6 @@ class CreateTasterSessionBookings < ActiveRecord::Migration[7.1]
       t.date :birth_date
       t.date :taster_session_date
       t.text :health_issues
-
 
       t.timestamps
     end

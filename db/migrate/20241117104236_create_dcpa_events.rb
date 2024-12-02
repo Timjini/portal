@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class CreateDcpaEvents < ActiveRecord::Migration[7.1] # rubocop:disable Style/Documentation
-  def change # rubocop:disable Metrics/MethodLength
+class CreateDcpaEvents < ActiveRecord::Migration[7.1]
+  def change
     create_table :dcpa_events do |t|
       t.string :title
       t.string :coach

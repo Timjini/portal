@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserLevel < ApplicationRecord
   belongs_to :user
   belongs_to :level
@@ -6,9 +8,7 @@ class UserLevel < ApplicationRecord
 
   attr_accessor :level_degree
 
-  def level_degree
-    level.degree
-  end
+  delegate :degree, to: :level, prefix: true
 
   def progress
     # Assuming self.count returns the count value
@@ -16,14 +16,11 @@ class UserLevel < ApplicationRecord
     total = 125.0
 
     # Calculate the percentage
-    percentage = (count / total) * 100
-
-    return percentage
+    (count / total) * 100
   end
- 
 
   # set status to completed
 
-  enum status: { not_started: 'not_started', in_progress: 'in_progress', completed: 'completed' }
+  enum :status, { not_started: 'not_started', in_progress: 'in_progress', completed: 'completed' }
   validates :status, presence: true, inclusion: { in: %w[not_started in_progress completed] }
 end

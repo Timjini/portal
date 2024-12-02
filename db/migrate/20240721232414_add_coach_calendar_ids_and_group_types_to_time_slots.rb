@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddCoachCalendarIdsAndGroupTypesToTimeSlots < ActiveRecord::Migration[7.1]
   def change
     add_column :time_slots, :coach_calendar_ids, :text, array: true, default: []
