@@ -63,4 +63,14 @@ class KpiService
       { success: false, errors: level.errors.full_messages }
     end
   end
+
+  def bulk_delete_levels
+    level_ids = @params
+    destroy_levels = Level.where(id: level_ids.split(",")).destroy_all
+    if destroy_levels
+      { success: true }
+    else
+      { success: false, errors: destroy_levels.errors.full_messages }
+    end
+  end
 end
