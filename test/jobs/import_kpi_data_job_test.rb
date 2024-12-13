@@ -14,8 +14,7 @@ class ImportKpiDataJobTest < ActiveJob::TestCase
     # Stubbing KpiService.new to return the mock object
     KpiService.stub :new, @kpi_service_mock do
       # Expecting the `create_level` method to be called with a Hash argument
-      row_hash = { 'level' => '1', 'step' => '1', 'title' => 'Sample Title', 'degree' => '1', 'category' => '1' }
-      
+
       # Expect create_level to be called with a hash as argument
       @kpi_service_mock.expect :create_level, { success: true, level: OpenStruct.new(title: 'Sample Title') }, [Hash]
 

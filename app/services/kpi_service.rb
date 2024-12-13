@@ -66,7 +66,7 @@ class KpiService
 
   def bulk_delete_levels
     level_ids = @params
-    destroy_levels = Level.where(id: level_ids.split(",")).destroy_all
+    destroy_levels = Level.where(id: level_ids.split(',')).destroy_all
     if destroy_levels
       { success: true }
     else

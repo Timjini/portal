@@ -63,7 +63,7 @@ class KpiController < ApplicationController
     sleep 6
 
     if level_ids.empty?
-      puts "------------------>No level"
+      puts '------------------>No level'
       # respond_to do |format|
       #   format.turbo_stream do
       #     render turbo_stream: turbo_stream.replace("bulk-delete", partial: "kpis/delete_error", locals: { errors: ["Please select at least one level to delete."] })
@@ -75,13 +75,14 @@ class KpiController < ApplicationController
     result = service.bulk_delete_levels
     if result[:success]
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("bulk-delete", partial: "kpis/delete_success") }
-        format.html { redirect_to kpis_path, notice: "Levels deleted successfully." }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace('bulk-delete', partial: 'kpis/delete_success') }
+        format.html { redirect_to kpis_path, notice: 'Levels deleted successfully.' }
       end
     else
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("bulk-delete", partial: "kpis/delete_error", locals: { errors: result[:errors] })
+          render turbo_stream: turbo_stream.replace('bulk-delete', partial: 'kpis/delete_error',
+                                                                   locals: { errors: result[:errors] })
         end
         format.html { redirect_to kpis_path, alert: "Failed to delete: #{result[:errors].join(', ')}" }
       end
