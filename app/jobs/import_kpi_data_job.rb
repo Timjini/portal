@@ -12,7 +12,7 @@ class ImportKpiDataJob < ApplicationJob
   private
 
   def process_kpi_data(row) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    level = row['level']
+    row['level']
     step = row['step'].to_i
     title = row['title']
     degree = row['degree'].to_i
