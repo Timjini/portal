@@ -1,13 +1,13 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  body: MyText
-  viewed: false
-  notifiable: one
-  notifiable_type: Notifiable
+# one:
+#   body: MyText
+#   viewed: false
+#   notifiable: one
+#   notifiable_type: Notifiable
 
-two:
-  body: MyText
-  viewed: false
-  notifiable: two
-  notifiable_type: Notifiable
+# two:
+#   body: MyText
+#   viewed: false
+#   notifiable: two
+#   notifiable_type: Notifiable

@@ -1,0 +1,10 @@
+:concurrency: 5
+:queues:
+  - default
+  - mailers
+  - critical
+
+scheduled:  
+  test_job:
+    cron: "1 * * * *"
+    class: "TestJob"

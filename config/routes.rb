@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
+
   resources :dcpa_events
   resources :time_slots
   resources :coach_calendar, only: %i[index create update destroy show] do
@@ -48,6 +52,7 @@ Rails.application.routes.draw do
   get 'users/:id', to: 'users#show'
   get 'goals_rewards_achievements', to: 'dashboard#goals_rewards_achievements'
   post '/checklist_items', to: 'athlete_profiles#checked_items'
+  post '/kpi_csv_upload', to: 'dashboard#kpi_csv_upload'
 
   # Accounts
   resources :accounts, only: %i[new create index show edit update] do
@@ -80,6 +85,7 @@ Rails.application.routes.draw do
   delete '/kpis/:id', to: 'kpi#destroy'
   get 'kpis/:id/edit', to: 'kpi#edit', as: 'edit_kpi'
   patch '/kpis/:id/edit', to: 'kpi#update', as: 'update_kpi'
+  post '/kpis/bulk_delete', to: 'kpi#bulk_delete', as: 'bulk_delete'
 
   get '/dashboard', to: 'dashboard#index'
   get '/subscriptions', to: 'home#subscriptions'
