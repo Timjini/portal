@@ -14,7 +14,6 @@ class AthleteChecklistStatusService
     percentage = calculate_percentage(levels_count)
 
     status = determine_level_status(levels)
-    Rails.logger.debug { "=========================> levels #{levels}  ,,,,, #{status}" }
     checklist_items_completed = completed_checklist_items
 
     {
@@ -30,11 +29,10 @@ class AthleteChecklistStatusService
   private
 
   def fetch_levels
-    if @params[:level].present?
-      Level.where(degree: @params[:level])
-    else
-      Level.order(:degree, :step)
-    end
+    permitted_params = %w[title degree category step]
+    hash = @params.to_unsafe_h 
+    cleaned_params = hash.slice(*permitted_params).compact
+    Level.where(cleaned_params).order(:degree, :step)
   end
 
   def calculate_percentage(levels_count)

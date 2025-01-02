@@ -13,8 +13,10 @@ class KpiService
     title = @params[:title]
     degree = @params[:degree].to_i
     checklist_items = @params[:checklist]
-    category = @params[:category].to_i
+    category = @params[:category]
     step = @params[:level].to_i
+
+    puts "all params#{@params}"
 
     level = Level.new(title: title, degree: degree, category: category, step: step)
 

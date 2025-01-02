@@ -15,6 +15,7 @@ class AthleteProfilesController < ApplicationController
   end
 
   def show # rubocop:disable Metrics/MethodLength
+    puts "athlete params: #{params}"
     service = CheckListService.new(params)
     result = service.show_athlete_status
 

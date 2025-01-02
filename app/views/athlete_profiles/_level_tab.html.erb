@@ -1,23 +1,35 @@
+<style>
+  .active {
+    color: blue;
+  }
+</style>
+
+<!-- Degree Selection -->
 <ul class="flex flex-wrap text-sm font-medium text-center border-b border-gray-200">
- <li class="me-2">
-    <%= link_to athlete_profile_path(@athlete, level: nil ), class: "inline-block p-4 #{'active' if params[:level] == 'development'} rounded-t-lg" do %>
+  <!-- 'All' option link -->
+  <li class="me-2">
+    <%= link_to athlete_profile_path(@athlete, degree: nil), class: "inline-block p-4 #{'active' if params[:degree].nil?} rounded-t-lg" do %>
       All
     <% end %>
   </li>
-  <li class="me-2">
-    <%= link_to athlete_profile_path(@athlete, level: 'development'), class: "inline-block p-4 #{'active' if params[:level] == 'development'} rounded-t-lg" do %>
-      Development
-    <% end %>
-  </li>
-  <li class="me-2">
-    <%= link_to athlete_profile_path(@athlete, level: 'intermediate'), class: "inline-block p-4 #{'active' if params[:level] == 'intermediate'} rounded-t-lg" do %>
-      Intermediate
-    <% end %>
-  </li>
-  <li class="me-2">
-    <%= link_to athlete_profile_path(@athlete, level: 'advanced'), class: "inline-block p-4 #{'active' if params[:level] == 'advanced'} rounded-t-lg" do %>
-      Advanced
-    <% end %>
-  </li>
+
+  <!-- Dynamically generate degree links -->
+  <% @levels.degrees.each do |degree| %>
+    <li class="me-2">
+      <%= link_to athlete_profile_path(@athlete, degree: degree[0], step: 1), class: "inline-block p-4 #{'active' if params[:degree] == degree[0]} rounded-t-lg" do %>
+        <%= degree[0].capitalize %>
+      <% end %>
+    </li>
+  <% end %>
 </ul>
 
+<!-- Step Selection Based on Degree -->
+<% if params[:degree].present? %>
+  <div class="flex flex-wrap gap-4 mt-4">
+    <% (1..5).each do |step| %> <!-- Assuming steps range from 1 to 5 -->
+      <%= link_to athlete_profile_path(@athlete, degree: params[:degree], step: step), class: "inline-block p-4 #{'active' if params[:step].to_i == step} rounded-t-lg" do %>
+        Step <%= step %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
