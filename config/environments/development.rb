@@ -89,13 +89,22 @@ Rails.application.configure do
 
   # trapmail Setup
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    user_name: ENV.fetch('MAILTRAP_USERNAME', nil),
-    password: ENV.fetch('MAILTRAP_PASSWORD', nil),
-    address: 'sandbox.smtp.mailtrap.io',
-    host: 'sandbox.smtp.mailtrap.io',
-    port: '2525',
-    authentication: :login
+  # config.action_mailer.smtp_settings = {
+  #   user_name: ENV.fetch('MAILTRAP_USERNAME', nil),
+  #   password: ENV.fetch('MAILTRAP_PASSWORD', nil),
+  #   address: 'sandbox.smtp.mailtrap.io',
+  #   host: 'sandbox.smtp.mailtrap.io',
+  #   port: '2525',
+  #   authentication: :login
+  # }
+  ActionMailer:\:Base.smtp_settings = {
+    :user_name => ENV.fetch('SEND_GRID_KEY', nil),
+    :password => ENV.fetch('SEND_GRID_SECRET', nil),
+    :domain => 'chambersforsport.com',
+    :address => 'smtp.sendgrid.net',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
   }
 
   # Raises error for missing translations.
