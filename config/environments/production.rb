@@ -117,7 +117,7 @@ Rails.application.configure do
   # Trap Email
   config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-    user_name: ENV['SEND_GRID_KEY'],
+    user_name: 'apikey',
     password: ENV['SEND_GRID_SECRET'],
     domain: 'chambersforsport.com',
     address: 'smtp.sendgrid.net',

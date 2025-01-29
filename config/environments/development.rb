@@ -99,7 +99,7 @@ Rails.application.configure do
   # }
 
   config.action_mailer.smtp_settings = {
-  user_name: ENV['SEND_GRID_KEY'],
+  user_name: 'apikey',
   password: ENV['SEND_GRID_SECRET'],
   domain: 'chambersforsport.com',
   address: 'smtp.sendgrid.net',
