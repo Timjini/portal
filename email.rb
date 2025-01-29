@@ -9,7 +9,7 @@ subject = 'testing emails'
 content = Content.new(type: 'text/plain', value: 'and easy to do anywhere, even with Ruby')
 mail = Mail.new(from, subject, to, content)
 
-sg = SendGrid::API.new(api_key: ENV.fetch('NEW_SENDGRID_PASSWORD', nil))
+sg = SendGrid::API.new(api_key: ENV.fetch('SEND_GRID_SECRET', nil))
 response = sg.client.mail._('send').post(request_body: mail.to_json)
 puts response.status_code
 puts response.body

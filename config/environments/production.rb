@@ -116,14 +116,18 @@ Rails.application.configure do
   # }
   # Trap Email
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    user_name: ENV.fetch('MAILTRAP_USERNAME', nil),
-    password: ENV.fetch('MAILTRAP_PASSWORD', nil),
-    address: 'live.smtp.mailtrap.io',
-    host: 'live.smtp.mailtrap.io',
-    port: '587',
-    authentication: :login
+    config.action_mailer.smtp_settings = {
+    user_name: ENV['SEND_GRID_KEY'],
+    password: ENV['SEND_GRID_SECRET'],
+    domain: 'chambersforsport.com',
+    address: 'smtp.sendgrid.net',
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true
   }
+
+    config.action_mailer.default_url_options = { host: 'chambersforsport.com', port: 3000 }
+
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
