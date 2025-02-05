@@ -5,6 +5,7 @@ require 'open-uri'
 
 class DashboardController < ApplicationController
   before_action :authenticate_user!
+  include OnboardingHelper
 
   def index
     # Parent Account
@@ -12,8 +13,10 @@ class DashboardController < ApplicationController
     @notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User', viewed: false)
     @displayed_notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User',
                                                   viewed: false).last(5)
-
-    # Child Account
+    if !check_onboarding(current_user) 
+      redirect_back_or_to onboarding_index_path
+    end
+    # Child Account$
 
     # Athlete Account
 

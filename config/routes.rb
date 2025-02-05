@@ -38,11 +38,12 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get 'up' => 'rails/health#show', as: :rails_health_check
 
+  # Onboarding Routes
+  resources :onboarding
   # # Defines the root path route ("/")
   #  authenticated :user do
   #   root to: 'dashboard#index', as: :user_root
   # end
-
   post '/send_email_test', to: 'home#send_email_test'
 
   resources :athlete_profiles, only: %i[new create index show edit update]
@@ -95,7 +96,8 @@ Rails.application.routes.draw do
   patch 'users/update_user/:id', to: 'users#update_user', as: 'update_user'
   delete '/delete_user/:id', to: 'users#delete_user'
 
-  #  API ROUTES
+
+  #  API ROUTES----------------------------------------------------------------
 
   namespace :api do
     namespace :v1 do
