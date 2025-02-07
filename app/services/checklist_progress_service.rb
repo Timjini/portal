@@ -46,7 +46,7 @@ class ChecklistProgressService
     completed_items = UserChecklist.where(user_id: @user_id, user_level_id: user_levels.pluck(:id),
                                           completed: true).count
     total_items = CheckList.joins(:level).where(levels: { degree: user_levels.pluck(:degree) }).count
-
+    puts "user_levels:#{user_levels.inspect},completed_items:#{completed_items} , total_items:#{total_items}"
     new_status = completed_items == total_items ? 'completed' : 'in_progress'
     user_levels.update_all(status: new_status)
     @athlete_profile.update(level: user_levels.first.level.degree)

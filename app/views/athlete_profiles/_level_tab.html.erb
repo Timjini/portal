@@ -25,10 +25,10 @@
 
 <!-- Step Selection Based on Degree -->
 <% if params[:degree].present? %>
-  <div class="flex flex-wrap gap-4 mt-4">
+  <div class="flex border-b border-gray-200  flex-wrap gap-4 mt-4">
     <% (1..5).each do |step| %> <!-- Assuming steps range from 1 to 5 -->
       <%= link_to athlete_profile_path(@athlete, degree: params[:degree], step: step), class: "inline-block p-4 #{'active' if params[:step].to_i == step} rounded-t-lg" do %>
-        Step <%= step %>
+        Level <%= step %>
       <% end %>
     <% end %>
   </div>

@@ -19,7 +19,7 @@ h2.inactive button {
                         <h2 id="accordion-collapse-heading-<%=level.id%>" class="<%if current_user.role != "coach" && current_user.role != "admin" && @athlete.level != level.degree %> inactive <%end%>">
                             <span class="<%=level.category%> text-xs font-medium me-2 px-2.5 py-0.5 rounded "><%=level.category.humanize%></span>
                             <button type="button" class="border flex items-center justify-between w-full p-5 font-medium text-left rounded-t-xl " data-accordion-target="#accordion-collapse-body-<%=level.id%>" aria-expanded="true" aria-controls="accordion-collapse-body-<%=level.id%>">
-                                <span class="" style="font-size:1.2rem;"><%= level.degree%></span>
+                                <span class="font-sans uppercase" style=""><%= level.degree%></span>
                                 <%if current_user.role != "coach" && current_user.role != "admin" && @athlete.level != level.degree %> 
                                 <span class="material-symbols-outlined">
                                 lock
