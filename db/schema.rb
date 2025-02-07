@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_18_132039) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_07_102944) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -166,6 +166,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_18_132039) do
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "coach_id", null: false
+    t.text "comment", null: false
+    t.string "reviewable_type", null: false
+    t.bigint "reviewable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coach_id"], name: "index_reviews_on_coach_id"
+    t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
   create_table "taster_session_bookings", force: :cascade do |t|
     t.bigint "user_id"
     t.string "first_name"
@@ -291,6 +304,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_18_132039) do
   add_foreign_key "qr_codes", "users"
   add_foreign_key "questionnaires", "users"
   add_foreign_key "questions", "questionnaires"
+  add_foreign_key "reviews", "users"
+  add_foreign_key "reviews", "users", column: "coach_id"
   add_foreign_key "taster_session_bookings", "users"
   add_foreign_key "training_bookings", "training_packages"
   add_foreign_key "training_bookings", "users"
