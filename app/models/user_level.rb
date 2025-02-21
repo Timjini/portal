@@ -5,6 +5,7 @@ class UserLevel < ApplicationRecord
   belongs_to :level
   # has_many :check_lists, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :reviews, as: :reviewable, dependent: :destroy
 
   attr_accessor :level_degree
 
