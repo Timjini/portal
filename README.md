@@ -1,4 +1,4 @@
-# MyRailsApp
+# Chambers For Sport Academy - UK
 
 ## Overview
 MyRailsApp is a Dockerized Ruby on Rails application designed for athlete onboarding, KPI tracking, coaching schedules, and event management. It includes a scoring service, form handling, and supports multiple websites. The app leverages Stripe for payments and SendGrid for email notifications.
@@ -18,7 +18,7 @@ MyRailsApp is a Dockerized Ruby on Rails application designed for athlete onboar
 - **Storage & Background Jobs**:
   - Active Storage for handling media.
   - R2 Cloudflare Bucket for media storage.
-  - JWT gem for authentication.
+  - JWT/Devise gem for authentication.
   - Sidekiq for job processing.
 - **UI & Styling**: Built with Tailwind CSS for modern design.
 
@@ -64,12 +64,6 @@ CLOUDFLARE_R2_ACCESS_KEY=your_r2_access_key
 CLOUDFLARE_R2_SECRET_KEY=your_r2_secret_key
 ```
 
-## API Documentation
-API responses are structured using serializers. Example endpoints:
-- `POST /api/v1/athletes` - Create an athlete
-- `GET /api/v1/coaches/schedules` - Fetch coaching schedules
-- `POST /api/v1/scoring` - Submit a scoring entry
-
 ## Testing
 Run tests using RSpec:
 ```sh
@@ -91,10 +85,4 @@ bundle exec rubocop
 
 ### Schedules Screen
 ![Schedules](./schedules-screen.png)
-
-## License
-This project is licensed under the MIT License.
-
----
-Feel free to contribute and submit issues on GitHub!
 
