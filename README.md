@@ -31,11 +31,7 @@ MyRailsApp is a Dockerized Ruby on Rails application designed for athlete onboar
 
 ### Installation
 1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-repo/myrailsapp.git
-   cd myrailsapp
-   ```
-2. Copy the environment file:
+ Copy the environment file:
    ```sh
    cp .env.example .env
    ```
