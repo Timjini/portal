@@ -1,7 +1,7 @@
 # Chambers For Sport Academy - UK
 
 ## Overview
-MyRailsApp is a Dockerized Ruby on Rails application designed for athlete onboarding, KPI tracking, coaching schedules, and event management. It includes a scoring service, form handling, and supports multiple websites. The app leverages Stripe for payments and SendGrid for email notifications.
+The CFS Portal is a Dockerized Ruby on Rails application designed for athlete onboarding, KPI tracking, coaching schedules, and event management. It includes a scoring service, form handling, and supports multiple websites. The app leverages Stripe for payments and SendGrid for email notifications.
 
 ## Features
 - **Athlete Management**: Onboarding and KPI tracking for athletes.
