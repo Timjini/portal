@@ -1,4 +1,3 @@
-<%=@reviews.inspect%>
 <turbo-frame id="checkbox-frame-<%= level.id %>">
     <% list = level.check_lists %>
     <% if current_user.role != 'admin' && current_user.role != 'coach' %>

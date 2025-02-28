@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   #   root to: 'dashboard#index', as: :user_root
   # end
 
+  get 'onboarding', to: 'onboarding#index'
   post '/send_email_test', to: 'home#send_email_test'
 
   resources :athlete_profiles, only: %i[new create index show edit update]

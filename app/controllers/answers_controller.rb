@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
       answer.save!
     end
 
-    render json: { status: 'success', message: 'Answers created successfully', url: '/' }
+    render json: { status: 'success', message: 'Answers created successfully'}
   rescue StandardError => e
     render json: { status: 'error', message: e.message }, status: :unprocessable_entity
   end
