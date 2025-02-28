@@ -103,11 +103,7 @@ function createAnswer() {
           showConfirmButton: true,
           confirmButtonText: "OK"
         }).then((result) => {
-          console.log("xhr, data", xhr.body)
-          console.log("result here====>,",result)
-          if (result.isConfirmed) {
             window.location.href = '/';
-          }
         });
       } else {
         Swal.fire({
