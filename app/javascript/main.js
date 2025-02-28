@@ -1,5 +1,3 @@
-
-
 // function toggleDropdown(dropdownId) {
 //     console.log("clicked")
 //     const dropdown = document.getElementById(dropdownId);

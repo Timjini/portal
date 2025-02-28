@@ -5,9 +5,12 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
+.env
 /.bundle
 
 # Ignore all environment files (except templates).
+# config file 
+!/config/environments/*.rb
 /.env*
 !/.env*.erb
 
@@ -40,3 +43,4 @@
 /node_modules
 
 /config/credentials/production.key
+sendgrid.env

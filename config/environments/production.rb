@@ -1,10 +1,26 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
   config.enable_reloading = false
+
+  # white list
+  config.hosts << /[a-z0-9]+\.c9users\.io/
+  config.hosts << /[a-z0-9]+\.c9\.io/
+  config.hosts << 'chambersforsport.net'
+  config.hosts << 'chambersforsport.com'
+  config.hosts << '51.68.199.136'
+  config.hosts << 'portal.chambersforsport.com'
+  config.hosts << 'club.chambersforsport.com'
+  config.hosts << 'portal.chambersforsport.com'
+  config.hosts << 'onrender.com'
+  config.hosts << 'localhost:3000'
+
+  # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -37,7 +53,8 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  # config.active_storage.service = :local
+  config.active_storage.service = :cloudflare
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -46,23 +63,23 @@ Rails.application.configure do
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
-  # config.assume_ssl = true
+  config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
 
   # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new(STDOUT)
-    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
-    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+  config.logger = ActiveSupport::Logger.new($stdout)
+                                       .tap  { |logger| logger.formatter = Logger::Formatter.new }
+                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Info include generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -80,12 +97,37 @@ Rails.application.configure do
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
+  config.assets.compile = true
 
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # # Send Grid Setup
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   :address   => 'smtp.mailersend.net',
+  #   :port      => 587,
+  #   :user_name => 'info@chambersforsport.com',
+  #   :password  => ENV['MAILERSEND_API_TOKEN'],
+  #   :starttls => true
+  # }
+  # Trap Email
+  config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+    user_name: 'apikey',
+    password: ENV['SEND_GRID_SECRET'],
+    domain: 'chambersforsport.com',
+    address: 'smtp.sendgrid.net',
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+
+    config.action_mailer.default_url_options = { host: 'chambersforsport.com', port: 3000 }
+
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
@@ -94,5 +136,5 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-  config.require_master_key = true 
+  config.require_master_key = true
 end

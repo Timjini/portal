@@ -1,6 +1,10 @@
-require_relative "boot"
+# frozen_string_literal: true
 
-require "rails/all"
+require_relative 'boot'
+require 'rails/all'
+require 'dotenv/load'
+require 'sendgrid-ruby'
+include SendGrid
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -14,7 +18,28 @@ module Portal
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_lib(ignore: %w[assets tasks])
+
+    # config.action_controller.default_url_options = { host: 'chambersforsport.net', protocol: 'https' }
+    config.action_mailer.default_url_options = { host: 'club.chambersforsport.com', protocol: 'https' }
+    # config.action_mailer.default_url_options = { host: 'chambersforsport.net' }
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.perform_deliveries = true
+
+    config.assets.compile = true
+
+    config.assets.enabled = true
+
+    # require 'dotenv/load' if (ENV['RUBY_ENV'] == "development" || ENV['RUBY_ENV'] == "test")
+
+    # load paths
+    config.autoload_paths << Rails.root.join('lib')
+
+    # production
+    # config.action_controller.default_url_options = { host: 'chambersforsport.net' }
+
+    # development
+    # config.action_controller.default_url_options = { host: 'localhost:3000' }
 
     # Configuration for the application, engines, and railties goes here.
     #

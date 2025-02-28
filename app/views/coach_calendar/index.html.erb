@@ -1,0 +1,94 @@
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
+<style>
+.fc-dayGridMonth-view {
+    margin-top: -40px;
+}
+.fc-scroller {
+    margin-top: -80px;
+}
+
+ .fc-event-time  .fc-event-title fc-sticky {
+    font-size: 0.7rem!important;
+  }
+
+</style>
+<div class="flex flex-col">
+  <p style="color: green"><%= notice %></p>
+  <button onclick="location.reload();" class="confirm-btn">
+    <span class="material-symbols-outlined">
+    sync
+    </span> refresh calendar 
+  </button>
+  <h1 class="font-extrabold text-2xl text-gray-800">Coach Calendar</h1>
+  <div id="calendar" class=""></div>
+</div>
+<script>
+document.addEventListener('turbo:load', async () => {
+  var calendarEl = document.getElementById('calendar');
+
+  if (!calendarEl) {
+    console.error("Calendar element not found.");
+    return;
+  }
+
+  try {
+    // Fetch event data from the API
+    let response = await fetch('/coach_calendar/data');
+    let events = await response.json();
+    console.log(JSON.stringify(events));
+
+    // Initialize FullCalendar
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'timeGridWeek',
+      eventTimeFormat: { 
+        hour: 'numeric',
+        minute: '2-digit',
+        meridiem: false
+      },
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      events: events, 
+      eventDidMount: function(info) {
+        // Check if the event has a URL
+        if (info.event.extendedProps.url) {
+          // Create a link element
+          const link = document.createElement('a');
+          link.href = info.event.extendedProps.url;
+          link.className = 'fc-event-link';
+          link.target = '_blank'; 
+          link.innerHTML = info.el.innerHTML; 
+          info.el.innerHTML = ''; 
+          info.el.appendChild(link); 
+        }
+
+        if (info.event.extendedProps.coach) {
+          const titleContainer = info.el.querySelector('.fc-event-title');
+          if (titleContainer) {
+            titleContainer.textContent = info.event.extendedProps.coach;
+          }
+        }
+        console.log('Event mounted:', info);
+      },
+      loading: function(isLoading) {
+        if (isLoading) {
+          console.log('Calendar is loading...');
+        } else {
+          console.log('Calendar has finished loading.');
+        }
+      }
+    });
+
+    // Render the calendar
+    calendar.render();
+  } catch (error) {
+    console.error('Error fetching events:', error);
+  }
+});
+
+
+
+</script>
+

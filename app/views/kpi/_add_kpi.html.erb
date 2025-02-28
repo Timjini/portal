@@ -1,0 +1,164 @@
+<!-- HTML -->
+<div class="">
+   <h3 class="text-lg font-bold py-3">Create A KPI</h3>
+   <a onclick="toggleDrawer('add-kpi-form')" class=" flex flex-row mx-auto gap-2">
+   <span class="material-symbols-outlined">
+   add_circle
+   </span>
+   <span> Add a new KPI</span>
+   </a>
+</div>
+<!-- drawer component -->
+<div id="add-kpi-form" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full drawer" tabindex="-1" aria-labelledby="drawer-right-label">
+   <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-base font-semibold ">
+      Add KPI
+   </h5>
+   <button type="button" onclick="toggleDrawer('add-kpi-form')" aria-controls="add-kpi-form" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white" >
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+      </svg>
+      <span class="sr-only">Close menu</span>
+   </button>
+   <turbo-frame id="modal-frame">
+      <form class="space-y-6 p-4 flex flex-col" id="kpi-form" style="min-height:70vh;">
+         <div class="flex flex-row gap-4">
+           <div>
+               <label for="degree" class="block mb-2 text-sm font-medium ">Group</label>
+               <select id="degree" class=" w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                  <option selected>Choose a Group</option>
+                  <option value="0">development</option>
+                  <option value="1">intermediate</option>
+                  <option value="2">advanced</option>
+               </select>
+            </div>
+            <div>
+            <!-- Title will be this level value-->
+               <label for="level" class="block mb-2 text-sm font-medium ">Level</label>
+               <select id="level" class=" w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                  <option selected>Choose a Level</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+               </select>
+            </div>
+         </div>
+           <div class="w-36">
+               <label for="category" class="block mb-2 text-sm font-medium ">Level's Category</label>
+               <select id="category" class=" w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                  <option selected>Choose a Category</option>
+                  <option value="0">INFORMATION MANAGEMENT</option>
+                  <option value="1">TECHNICAL ABILTY</option>
+                  <option value="2">PHYSICAL STRENGTH</option>
+                  <option value="3">COORDINATION</option>
+                  <option value="4">PERFORMANCE TIME</option>
+               </select>
+            </div>
+         <!-- Level title will be the level category-->
+         <div class="hidden">
+            <label for="title" class="block mb-2 text-sm font-medium">Level's Title</label>
+            <textarea type="text" name="title" id="title" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Write your title here..."></textarea>
+
+         </div>
+         <div id="checklist-container">
+            <div class="checklist-item pb-2">
+               <label for="username" class="block mb-2 text-sm font-medium">description/Item(s)</label>
+               <textarea type="text" name="checklist[]" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Write your check list item here..." required></textarea>
+            </div>
+         </div>
+         <a class="flex flex-col hover:bg-gray-300" onclick="addTask()">
+            <span class="mx-auto">click here Add another item </span>
+            <span class="material-symbols-outlined mx-auto hover:text-green-500"  >
+            add_circle
+            </span>
+         </a>
+         <div class=" grid grid-cols-2 gap-10"> 
+            <button type="submit" class="btn">Create Kpi Level</button>
+            <button type="button" onclick="toggleDrawer('add-kpi-form')" aria-controls="add-kpi-form" class="btnSecondary">
+              Cancel
+            </button>
+        </div>
+      </form>
+   </turbo-frame>
+</div>
+<script>
+  // Function to toggle drawer visibility
+  function toggleDrawer(drawerId) {
+    const drawer = document.getElementById(drawerId);
+    drawer.classList.toggle('translate-x-full');
+  }
+
+  // Function to add a new task to the checklist
+  function addTask() {
+    console.log('add task');
+    const checklistContainer = document.getElementById('checklist-container');
+    const newItem = document.createElement('div');
+    newItem.classList.add('checklist-item');
+    
+    newItem.innerHTML = `
+      <textarea name="checklist[]" row="4" class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="You can even add more :)" required></textarea>
+    `;
+    
+    checklistContainer.appendChild(newItem);
+  }
+
+  // Function to handle form submission
+  async function handleFormSubmission(event) {
+    event.preventDefault();
+
+    const form = document.getElementById('kpi-form');
+    const data = new FormData(form);
+
+    // Add degree, category, and level to form data
+    const degreeSelect = document.getElementById('degree');
+    const categorySelect = document.getElementById('category');
+    const levelSelect = document.getElementById('level');
+    const selectedDegree = degreeSelect.value;
+    const selectedCategory = categorySelect.value;
+    const selectedLevel = levelSelect.value;
+    data.append('degree', selectedDegree);
+    data.append('category', selectedCategory);
+    data.append('level', selectedLevel);
+
+    console.log(data);
+
+    try {
+      const res = await fetch('/kpis_create', {
+        method: 'POST',
+        body: data,
+      });
+
+      const resData = await res.json();
+      
+      if (resData.status === 'success') {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Level created successfully!',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
+  }
+
+  // Listen for Turbo events to reinitialize JavaScript
+  document.addEventListener('turbo:load', () => {
+    // Attach event listener for form submission
+    const form = document.getElementById('kpi-form');
+    if (form) {
+      form.addEventListener('submit', handleFormSubmission);
+    }
+
+    // Optionally, you can initialize other elements or reattach event listeners here
+  });
+</script>

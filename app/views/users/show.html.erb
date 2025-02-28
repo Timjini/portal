@@ -1,0 +1,44 @@
+           <style>
+           .user_link{
+               color: blue;
+               font-weight: 600;
+               text-decoration: none;
+           }
+           </style>
+            <%= render 'components/back_button'%>
+                <div class="w-120 ">
+                    <div class="py-2">
+                        <h3 class="text-lg font-bold py-3">user's Profile</h3>
+                    </div>
+                            <div class="profile-container">
+                                <div>
+                                <%= image_tag(@user.avatar_thumbnail, class:"w-24 h-24 object-cover rounded-full")%>
+                                
+                                </div>
+                                <div>
+                                    <div class="px-5 flex flex-col gap-1 w-56">
+                                        <span class="font-bold ">Full name : <%=@user.full_name%> </span>
+                                        <span> <strong>Username:</strong> <%=@user.username%></span>
+                                        <span><strong> Role: </strong> <%=@user.role%></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="px-5 flex flex-col gap-1 w-56">
+                                        <span> <strong>Email:</strong><%=@user.email%></span>
+                                        <span> <strong>Phone:</strong><%=@user.phone%></span>
+                                        <span> <strong>Address:</strong> <%=@user.address%></span>
+                                    </div>
+                                </div>
+                                <div>
+                                     <div class="px-5 flex flex-col gap-1 w-56">
+                                     <% if @user.role == 'parent_user'%>
+                                        <h3 class="font-bold text-xl"> Children: </h3>
+                                        <% children = User.where(parent_id: @user.id)%>
+                                        <%children.each do |child|%>
+                                        <a href="/athlete_profiles/<%=child.athlete_profile.id%>" class="user_link"><%=child.full_name%></a>
+                                        <%end%>
+                                    <%end%>
+                                    </div>
+                                </div>
+                            </div>
+                </div>

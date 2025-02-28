@@ -1,0 +1,48 @@
+<% input_style="w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %>
+<%= form_with model: @user, url: update_user_path(@user), local: true do |form| %>
+  <div class="w-120">
+    <div class="py-2">
+      <h3 class="text-lg font-bold py-3">Athlete's Profile</h3>
+    </div>
+    <div class="profile-container flex gap-5">
+      <div>
+        <%= image_tag(@user.avatar_thumbnail, class: "w-24 h-24 object-cover rounded-full") %>
+    
+        <%= form.file_field :avatar, class: "mt-2" %>
+      </div>
+      <div class="flex flex-row flex-wrap">
+        <div class="px-5 flex flex-col gap-1 w-56">
+          <label for="email" class="block m-2 text-sm font-medium">First Name</label>    
+          <%= form.text_field :first_name, class: input_style, placeholder: "Alex", value: @user.first_name %>
+          <label for="email" class="block m-2 text-sm font-medium">Last Name</label>
+          <%= form.text_field :last_name, class: input_style, placeholder: "Brown", value: @user.last_name %>
+          <label for="email" class="block m-2 text-sm font-medium">Email</label>
+          <%= form.text_field :email, class: input_style, placeholder: "alexb13@gmail.com", value: @user.email %>
+        </div>
+        <div class="px-5 flex flex-col gap-1 w-56">
+          <label for="email" class="block m-2 text-sm font-medium">Date of Birth</label>
+          <%= form.date_field :dob, id: 'dob', value: @user.dob, class: input_style%>
+          <label for="email" class="block m-2 text-sm font-medium">User Name</label>
+          <%= form.text_field :username, class: input_style, placeholder: "Dob", value: @user.username %>
+          <label for="email" class="block m-2 text-sm font-medium">School Name</label>
+          <%= form.text_field :school_name, class: input_style, placeholder: "School Name", value: @profile&.school_name %>
+        </div>
+      </div>
+      <% if !current_user.role == 'coach'%>
+      <div>
+        <div class="px-5 flex flex-col gap-1 w-56">
+          <%= form.fields_for :athlete_profile do |profile_fields| %>
+            <label for="email" class="block m-2 text-sm font-medium">Height in cm</label>
+            <%= profile_fields.text_field :height, class: input_style , placeholder: "Height (cm)", value: @profile.height %>
+            <label for="email" class="block m-2 text-sm font-medium">Weight in Kg</label>
+            <%= profile_fields.text_field :weight, class: input_style , placeholder: "Weight (kg)", value: @profile.weight %>
+          <% end %>
+        </div>
+      </div>
+      <%end%>
+      <div class="px-5 flex flex-col gap-1 w-56">
+        <%= form.submit "Save", class: "confirm-btn" %>
+      </div>
+    </div>
+  </div>
+<% end %>

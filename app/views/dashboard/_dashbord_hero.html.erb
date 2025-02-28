@@ -1,0 +1,21 @@
+<style>
+/* Hide the DashboardLogo by default */
+.DashboardLogo {
+    display: none;
+}
+
+/* Show the DashboardLogo only on small devices (e.g., up to 768px wide) */
+@media (max-width: 768px) {
+    .DashboardLogo {
+        display: block;
+        z-index: 10; /* Apply any additional styles you need here */
+    }
+}
+
+</style>
+<div class="dashboard_hero" style="min-height:300px;">
+                <div class="content">
+                    <h2> Dashboard </h2>
+                    <span> Welcome, <%=current_user.full_name %></span>
+                </div>
+</div>

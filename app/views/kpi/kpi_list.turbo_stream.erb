@@ -1,0 +1,42 @@
+<%= turbo_stream.update "kpi_list" do %>
+<% @levels.each do |level| %>
+            <tr class="border-b border-gray-400">
+                <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+                    <%=level.degree%>
+                </th>
+                <td class="px-6 py-4">
+                    <%=level.step%>
+                </td>
+                <td class="px-6 py-4">
+                    <%=level.category.humanize%>
+                </td>
+                <td class="px-6 py-4 overflow-auto">
+                    <% level.check_lists.each do |checklist| %>
+                    <li style="list-style:none;" class="flex flex-row gap-2">
+                        <span class="material-symbols-outlined">
+                            check_circle
+                        </span>
+                        <div>
+                            <%= checklist.title %>
+                        </div>
+                    </li>
+                    <% end %>
+                </td>
+                <td class="px-6 py-4 flex flex-row gap-4">
+                    <!-- hidden until edit is implemented -->
+                    <a href="kpis/<%=level.id%>/edit" class="">
+                        <span class="material-symbols-outlined">
+                            edit
+                        </span>
+                    </a>
+                    <turbo-frame id="level-frame">
+                        <button class="material-symbols-outlined delete-level-button" data-level-id="<%= level.id %>">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </button>
+                    </turbo-frame>
+                </td>
+            </tr>
+<%end%>
+<% end %>

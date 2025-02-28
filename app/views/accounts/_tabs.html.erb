@@ -1,0 +1,29 @@
+
+
+<ul class="flex flex-wrap text-sm font-medium text-center border-b border-gray-200 0">
+  <li class="me-2">
+    <%= link_to "/accounts/all_accounts", class: "inline-block p-4 #{'active'  if params[:role] == nil} rounded-t-lg" do %>
+      All Users
+    <% end %>
+  </li>
+  <li class="me-2">
+    <%= link_to "/accounts/all_accounts?role=coach", class: "inline-block p-4 #{'active'  if params[:role] == 'coach'} rounded-t-lg" do %>
+      Coaches
+    <% end %>
+  </li>
+  <li class="me-2">
+    <%= link_to "/accounts/all_accounts?role=parent_user", class: "inline-block p-4 #{'active' if params[:role] == 'parent_user'} rounded-t-lg" do %>
+      Athlete's Parents
+    <% end %>
+  </li>
+  <li class="me-2">
+    <%= link_to "/accounts/all_accounts?role=child_user", class: "inline-block p-4 #{'active' if params[:role] == 'child_user'} rounded-t-lg" do %>
+      Junior Athletes
+    <% end %>
+  </li>
+  <li class="me-2">
+    <%= link_to "/accounts/all_accounts?role=athlete", class: "inline-block p-4 #{'active' if params[:role] == 'athlete'} rounded-t-lg" do %>
+      Athletes
+    <% end %>
+  </li>
+</ul>

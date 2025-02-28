@@ -1,0 +1,45 @@
+   <style>
+   h2.inactive {
+    background-color: #f2f2f2; /* Light gray background */
+    color: #999999; /* Light gray text color */
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+}
+
+/* Additional styling for the button when inactive */
+h2.inactive button {
+    border-color: #dddddd; /* Light gray border color */
+}
+   </style>
+    <turbo-frame id="accordion-frame">
+        <div id="accordion-collapse" data-accordion="collapse" class="">
+    
+                    <!-- LEVEL -->
+                    <% @levels.each do |level|%>
+                    <div class="mb-4">
+                        <h2 id="accordion-collapse-heading-<%=level.id%>" class="<%if current_user.role != "coach" && current_user.role != "admin" && @athlete.level != level.degree %> inactive <%end%>">
+                            <span class="<%=level.category%> text-xs font-medium me-2 px-2.5 py-0.5 rounded "><%=level.category.humanize%></span>
+                            <button type="button" class="border flex items-center justify-between w-full p-5 font-medium text-left rounded-t-xl " data-accordion-target="#accordion-collapse-body-<%=level.id%>" aria-expanded="true" aria-controls="accordion-collapse-body-<%=level.id%>">
+                                <span class="font-sans uppercase" style=""><%= level.degree%></span>
+                                <%if current_user.role != "coach" && current_user.role != "admin" && @athlete.level != level.degree %> 
+                                <span class="material-symbols-outlined">
+                                lock
+                                </span>
+                                <%else%>
+                                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                                </svg>
+                                <%end%>
+                            </button>
+                        </h2>
+                        <div id="accordion-collapse-body-<%=level.id%>" class="hidden" aria-labelledby="accordion-collapse-heading-<%=level.id%>">
+                            <div class="p-5 border border-b-0 ">
+                        <%= render 'athlete_profiles/check_list' , level: level %>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                    <%end%>
+                    
+        </div>
+    </turbo-frame>

@@ -1,0 +1,40 @@
+<!-- users/_results.html.erb -->
+
+<!-- Options -->
+<% users = User.where(role: 'coach') %>
+<select id="selectElement" class="py-2 text-sm" multiple>
+  <% users.each do |user| %>
+    <option value="<%= user.id %>"><%= user.full_name %></option>
+  <% end %>
+</select>
+<input type="hidden" id="selectedIds" name="time_slot[user_ids]" value="">
+
+<!-- Include SlimSelect library -->
+<script src="https://cdn.jsdelivr.net/npm/slim-select@latest/dist/slimselect.min.js" defer></script>
+<script>
+document.addEventListener('turbo:load', () => {
+  // Initialize SlimSelect for the dropdown
+  const slimSelect = new SlimSelect({
+    select: '#selectElement',
+    settings: {
+      showSearch: true,
+      searchText: 'No Coaches Available',
+      searchPlaceholder: 'Search for the good stuff!',
+      searchHighlight: true
+    }
+  });
+
+  // Function to update hidden field with selected values
+  const updateHiddenField = () => {
+    const selectedValues = slimSelect.getSelected();
+    console.log(selectedValues);
+    document.getElementById('selectedIds').value = selectedValues.join(',');
+  };
+
+  // Add event listener to update hidden field on change
+  document.querySelector('#selectElement').addEventListener('change', updateHiddenField);
+
+  // Initialize hidden field with current select values
+  updateHiddenField();
+});
+</script>

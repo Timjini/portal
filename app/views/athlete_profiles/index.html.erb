@@ -1,51 +1,48 @@
 
 
 <div class="w-full px-6 py-6 mx-auto">
-  <div class="mb-10">
-    <a href="/">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-    </a>
-  </div>
+  <%= render 'components/back_button'%>
 <% enum_hash = {0 => "development", 1 => "intermediate", 2 => "advance"} %>
-    <div class="w-full max-w-md p-4 dark:bg-transparent dark:bg-gradient-to-tl dark:from-gray-900 dark:to-slate-800 shadow-soft-xl border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 ">
+    <div class="w-full max-w-md p-4  shadow-soft-xl rounded-lg shadow sm:p-8 ">
         <div class="flex items-center justify-between mb-4">
         <% if params[:level].present?%>
-            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
+            <h5 class="text-xl font-bold leading-none  ">
             <%= enum_hash[params[:level].to_i].capitalize %> Group
             </h5>
             <%else%>
-            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
+            <h5 class="text-xl font-bold leading-none ">
             All Groups
             </h5>
         <%end%>
-            <a href="/athletes" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+            <a href="/athletes" class="hidden text-sm font-medium text-blue-600 hover:underline ">
                 View all
             </a>
     </div>
     <div class="flow-root">
-            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+            <ul role="list" class="divide-y ">
             <% if @athletes.present?%>
             <%@athletes.each do |atl|%>
                 <li class="py-3 sm:py-4">
                     <div class="flex items-center space-x-4">
                         <div class="flex-shrink-0">
-                            <%= image_tag (atl.image_thumbnail) , class:"w-8 h-8 rounded-full"%>
+                            <%= image_tag (atl.user.avatar_thumbnail) , class:"w-8 h-8 rounded-full"%>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                <%= link_to atl.athlete_full_name, athlete_profile_path(atl) %>
+                            <p class="text-sm font-medium  truncate ">
+                                <%= link_to atl.user.full_name, athlete_profile_path(atl) %>
                             </p>
-                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                            <%= atl.email%>
+                            <p class="text-sm text-gray-500 truncate ">
+                            <%= atl.user.email%>
                             </p>
                         </div>
-                        <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            <a href="athlete_profiles/<%=atl.id%>/edit" >
+                        <div class="inline-flex items-center text-base font-semibold  ">
+                            <a href="athlete_profiles/<%=atl.id%>/edit" class="hidden" >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                                 </svg>
+                            </a>
+                            <a href="/athlete_profiles/<%=atl.id%>" class="link">
+                                View
                             </a>
                         </div>
                     </div>
@@ -53,13 +50,13 @@
             <%end%>
             <%else%>
                 <li class="mt-auto pt-2 flex items-center justify-center">
-                <div class="text-base font-semibold text-gray-900 dark:text-white">
+                <div class="text-base font-semibold  ">
                     <span> There are no athletes at this level </span>
                 </div>
             </li>
             <%end%>
             <li class="mt-auto pt-1 flex items-center justify-center">
-                <div class="text-base font-semibold text-gray-900 dark:text-white">
+                <div class="text-base font-semibold  ">
                     <a href="/athlete_profiles/new" >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />

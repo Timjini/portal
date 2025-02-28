@@ -1,3 +1,9 @@
+<style>
+.toggle-section {
+    overflow-y: auto;
+}
+
+</style>
 <script defer>
 function onDocumentReady(callback) {
     if (document.readyState === 'loading') {
@@ -42,32 +48,70 @@ document.addEventListener("DOMContentLoaded", function() {
     })
 });
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     const email = document.getElementById('email');
-//     const firstName = document.getElementById('firstName');
-//     const lastName = document.getElementById('lastName');
-//     const password = document.getElementById('password');
-//     const passwordConfirmInput = document.getElementById('passwordConfirm');
-//     const nextBtn = document.getElementById('next');
+document.addEventListener("DOMContentLoaded", function() {
+    const email = document.getElementById('email');
+    const firstName = document.getElementById('firstName');
+    const lastName = document.getElementById('lastName');
+    const password = document.getElementById('password');
+    const passwordConfirmInput = document.getElementById('passwordConfirm');
+    const nextBtn = document.getElementById('next');
+    const dobInput = document.getElementById('dob');
 
-//     // Function to check if all fields are filled
-//     function checkFields() {
-//         if (email.value.trim() !== '' && firstName.value.trim() !== '' && lastName.value.trim() !== '' 
-//             && password.value.trim() !== '' && passwordConfirmInput.value.trim() !== '' ) {
-//             nextBtn.classList.remove('no-visibility');
-//         } else {
-//             nextBtn.classList.add('no-visibility');
-//         }
-//     }
+    // Function to calculate age
+    function calculateAge(dob) {
+        const dobValue = new Date(dob);
+        const today = new Date();
+        const age = today.getFullYear() - dobValue.getFullYear();
+        return age;
+    }
 
-//     // Call the checkFields function whenever the user interacts with the fields
-//     email.addEventListener('input', checkFields);
-//     firstName.addEventListener('input', checkFields);
-//     lastName.addEventListener('input', checkFields);
+    // Function to check if the user is under 18 and show an alert
+    function checkAge() {
+        const dobValue = dobInput.value;
+        const age = dobValue ? calculateAge(dobValue) : 0;
 
-//     // Call checkFields once to initialize the button visibility
-//     checkFields();
-// });
+        if (age < 18) {
+            alert('You must be at least 18 years old to proceed.');
+        }
+    }
+
+    // Function to check if any fields are empty and enable/disable the next button
+    function checkFields() {
+        const dobValue = dobInput.value;
+        const age = dobValue ? calculateAge(dobValue) : 0;
+
+        if (
+            email.value.trim() !== '' &&
+            firstName.value.trim() !== '' &&
+            lastName.value.trim() !== '' &&
+            password.value.trim() !== '' &&
+            passwordConfirmInput.value.trim() !== '' &&
+            age >= 18
+        ) {
+            // Enable the next button
+            nextBtn.removeAttribute('disabled');
+        } else {
+            // Disable the next button
+            nextBtn.setAttribute('disabled', 'true');
+        }
+    }
+
+    // Use the 'change' event instead of 'input' for better control
+    email.addEventListener('change', checkFields);
+    firstName.addEventListener('change', checkFields);
+    lastName.addEventListener('change', checkFields);
+    password.addEventListener('change', checkFields);
+    passwordConfirmInput.addEventListener('change', checkFields);
+
+    dobInput.addEventListener('input', function() {
+        checkFields();
+        checkAge();
+    });
+
+    // Call checkFields once to initialize the button visibility
+    checkFields();
+});
+
 
 
 function handleClick(element) {
@@ -86,7 +130,7 @@ function handleClick(element) {
 
 <% @links =  ["Step1", "Step2"] %>
  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |form| %>
-    <main class="sign-up-form ">
+    <main class="sign-up-form">
         <section id="<%=@links.first.downcase%>" class="toggle-section bg-slate-50 dark:bg-transparent dark:bg-gradient-to-tl dark:from-gray-900 dark:to-slate-800 shadow-soft-xl rounded-2xl bg-clip-border " style="display:flex;">
                 <input type="hidden" id="user-id" value="user.id" class="here">
                 <article class=" p-10 flex flex-col justify-between rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
@@ -120,31 +164,40 @@ function handleClick(element) {
                                     <div class="mx-auto w-48 text-gray-500 text-xs text-center mt-1">Click to add profile picture</div>
                                         <%= form.file_field :avatar, class: "hidden", id: "avatarInput", data: { avatar_target: "input" } %>
                                 </div>           
-                                <div class="mt-2 ">
-                                    <label for="email" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Email</label>    
-                                    <%= form.email_field :email,id:"email", placeholder:"email@example.com", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+                                <div class="form-fields">
+                                    <div>
+                                        <label for="email" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Email</label>    
+                                        <%= form.email_field :email,id:"email", placeholder:"email@example.com", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>
+                                    </div>
+                                    <div>
+                                        <label for="username" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Username</label>    
+                                        <%= form.text_field :username,id:"username", placeholder:"Nathan10", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>
+                                    </div>
                                 </div>
                                 <div class="form-fields">
                                     <div class="">
                                         <label for="first_name" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">First Name</label>
-                                        <%= form.text_field :first_name,id:"firstName", placeholder: "John", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>          
+                                        <%= form.text_field :first_name,id:"firstName", placeholder: "John", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>          
                                     </div>
                                     <div class="">
                                         <label for="last_name" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Last Name</label>
-                                        <%= form.text_field :last_name,id:"lastName", placeholder: "Smith", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>    
+                                        <%= form.text_field :last_name,id:"lastName", placeholder: "Smith", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>    
                                     </div>
                                 </div>
                                 <div class="form-fields">
                                     <div class="">
                                      <label for="password" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Password</label>
-                                     <%= form.password_field :password,id:"password", placeholder: "******", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>          
+                                     <%= form.password_field :password,id:"password", placeholder: "******", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>          
                                     </div>
                                     <div class="">
                                     <label for="confrim_password" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Confirm Password</label>
-                                     <%=form.password_field :password_confirmation,id:"passwordConfirm" , placeholder:"******", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+                                     <%=form.password_field :password_confirmation,id:"passwordConfirm" , placeholder:"******", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>
                                     </div>
                                 </div>
-                                <div class="mt-16 flex justify-between inset-x-0 bottom-0">
+                                <div>
+                                    <a href="/users/sign_in" class="inline mr-3 pb-1 border-b-2 border-blue-200 hover:border-blue-700 m-2 text-sm font-medium text-gray-400 hover:text-blue-300 dark:text-white">I already have an account.</a>
+                                </div>
+                                <div class="mt-8 flex justify-between inset-x-0 bottom-0">
                                     <a href="#<%=@links.first.downcase%>" onclick="handleClick(this)" class="toggle-link no-visibility">
                                     <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
                                     Back
@@ -152,7 +205,7 @@ function handleClick(element) {
                                     </a>
 
                                     <a href="#<%=@links.second.downcase%>" id="next" onclick="handleClick(this)" class="toggle-link">
-                                        <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
+                                        <span class="p-3 px-12 border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
                                         Next
                                         </span>
                                     </a> 
@@ -164,7 +217,7 @@ function handleClick(element) {
                 <article class=" p-10 flex flex-col h-screen justify-between rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
                                 <div class=" mt-2 mb-10">
                                     <h2 class="mt-5 mb-24 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10 text-center"> Personal Information</h2>
-                                    <div class="flex flex-row">
+                                    <div class="flex flex-col">
                                         <div class="mx-1">
                                             <label for="phone" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Phone</label>
                                             <%= form.text_field :phone,id:"user-phone", placeholder: "+44 ", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>          
@@ -181,7 +234,7 @@ function handleClick(element) {
                                             <label
                                                 class="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm mr-4">
                                                 <div class="text-teal-600 mr-3">
-                                                <%= form.radio_button :role, 'athlete_parent', id: "parent_role", class:"form-radio focus:outline-none focus:shadow-outline" %>
+                                                <%= form.radio_button :role, 'parent_user', id: "parent_role", class:"form-radio focus:outline-none focus:shadow-outline" %>
                                                 </div>
                                                 <div class="select-none text-gray-700">a Parent of an Athlete(s)</div>
                                             </label>
@@ -195,11 +248,15 @@ function handleClick(element) {
                                                 <div class="select-none text-gray-700">an Athlete</div>
                                             </label>
                                         </div>
+                                        <div class="flex  flex-col mt-2">
+                                            <label class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Date of Birth</label>
+                                            <%=form.date_field :dob , id:'dob' ,value:"2018-12-31" ,class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex justify-between">
                                     <a href="#<%=@links.first.downcase%>" onclick="handleClick(this)" class="toggle-link" style="margin-top:15px;">
-                                    <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
+                                    <span class="p-3 px-12 border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
                                     Back
                                     </span>
                                     </a>
@@ -210,4 +267,4 @@ function handleClick(element) {
                 </article>
         </section>
     </main>
-    <%end%>
+<%end%>
