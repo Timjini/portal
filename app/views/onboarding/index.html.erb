@@ -1,0 +1,36 @@
+<style>
+.onboardingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index:999;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: white;
+    color: black;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+</style>
+
+<div class="onboardingScreen bg-red-500">
+    <div class="close-btn" onclick="document.querySelector('.onboardingScreen').style.display='none'">X</div>
+    <h1>Again</h1>
+</div>

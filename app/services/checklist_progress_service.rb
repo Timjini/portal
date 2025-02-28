@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-
-# app/services/checklist_progress_service.rb
 class ChecklistProgressService
   def initialize(params)
     @checklist_id = params[:checklist_item][:checklist_id]

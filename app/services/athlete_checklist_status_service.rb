@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-
-# app/services/athlete_checklist_status_service.rb
 class AthleteChecklistStatusService
   def initialize(params)
     @params = params

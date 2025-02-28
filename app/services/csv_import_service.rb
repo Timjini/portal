@@ -29,7 +29,6 @@ class CsvImportService
   end
 
   def process_rows(row)
-    # Default implementation raises an error if not overridden
     raise NotImplementedError, 'You must implement the `process_rows` method in the subclass or pass a block'
   end
 end

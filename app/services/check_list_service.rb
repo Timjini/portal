@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-
-# app/services/check_list_service.rb
 class CheckListService
   def initialize(params)
     @params = params

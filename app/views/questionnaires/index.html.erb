@@ -99,13 +99,11 @@ function createAnswer() {
         Swal.fire({
           icon: 'success',
           title: 'Success!',
-          text: 'Level deleted successfully!',
+          text: 'Thank you!',
+          showConfirmButton: true,
+          confirmButtonText: "OK"
         }).then((result) => {
-          // Check if the user clicked the "OK" button
-          if (result.isConfirmed) {
-            // Redirect to the home page
             window.location.href = '/';
-          }
         });
       } else {
         Swal.fire({

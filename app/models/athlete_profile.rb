@@ -91,6 +91,6 @@ class AthleteProfile < ApplicationRecord
       end
     end
 
-    illness_tags.presence || nil
+    illness_tags.presence || []
   end
 end
