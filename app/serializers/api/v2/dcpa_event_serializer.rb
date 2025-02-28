@@ -6,17 +6,14 @@ module Api
       attributes :id, :title, :coach, :dates, :start_time_formated, :end_time_formated, :location, :ages_available, :price,
                  :dcpa_discount, :extras, :event_type, :status, :dcpa_price, :image_url
 
-      # Use humanized event type
       def event_type
         object.event_type.humanize
       end
 
-      # Format the start time as HH:MM
       def start_time_formated
         object.time_start.strftime('%H:%M') if object.time_start.present?
       end
 
-      # Format the end time as HH:MM
       def end_time_formated
         object.time_end.strftime('%H:%M') if object.time_end.present?
       end

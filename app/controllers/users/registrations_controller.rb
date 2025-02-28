@@ -54,7 +54,6 @@ module Users
     def handle_successful_creation
       if @user.role == 'athlete'
         create_athlete_profile(@user.id, params[:user][:dob])
-        Rails.logger.debug 'Athlete Profile created**************************'
       end
 
       sign_in(@user) # Manually sign in the user

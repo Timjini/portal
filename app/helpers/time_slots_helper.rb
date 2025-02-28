@@ -52,7 +52,6 @@ module TimeSlotsHelper
       original_time_slot.recurrence_rule
     )
 
-    # Update each timeslot with the new parameters
     timeslots.each do |timeslot|
       timeslot.update(time_slot_params)
     end

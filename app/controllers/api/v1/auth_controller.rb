@@ -10,7 +10,6 @@ module Api
       include AthleteProfilesHelper
 
       def login
-        Rails.logger.debug { "#{params}===========>?" }
         user = User.where('lower(email) = ?', params[:user][:email].downcase).first
         if user.nil?
           api_error(status: 404, errors: ["Sorry we didn't find you on CFS."])
@@ -60,7 +59,6 @@ module Api
       end
 
       def check_token
-        Rails.logger.debug { "=====================#{@current_user}" }
         render json: @current_user
         nil
       end
@@ -74,7 +72,6 @@ module Api
       def handle_successful_creation(user)
         if user.role == 'athlete'
           create_athlete_profile(user.id, params[:user][:dob])
-          Rails.logger.debug 'Athlete Profile created**************************'
         end
         begin
           UserMailer.welcome_email(user).deliver_now

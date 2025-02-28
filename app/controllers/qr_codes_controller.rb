@@ -17,14 +17,11 @@ class QrCodesController < ApplicationController
     @qr_code = QrCode.new(qr_code_params)
     qr = RQRCode::QRCode.new(@qr_code.data, size: 10, level: :h)
 
-    # Generate the QR code image and attach it using Active Storage
     @qr_code.image.attach(io: StringIO.new(qr.as_png.resize(300, 300).to_s), filename: 'qr_code.png',
                           content_type: 'image/png')
 
     if @qr_code.save
-      # Handle successful creation
     else
-      # Handle validation errors or other failure cases
     end
   end
 

@@ -11,7 +11,6 @@ module Api
 
       def authenticate_user!
         payload
-        Rails.logger.debug { "===========#{payload}" }
         return invalid_authentication if !payload || !JsonWebToken.valid_payload(payload)
 
         load_current_user!
@@ -24,7 +23,6 @@ module Api
 
       private
 
-      # Deconstructs the Authorization header and decodes the JWT token.
       def payload
         auth_header = request.headers['Authorization']
         token = auth_header.split.last
@@ -33,7 +31,6 @@ module Api
         nil
       end
 
-      # Sets the @current_user with the user_id from payload
       def load_current_user!
         # puts"Loading current user: #{payload}"
         return false if request.headers['Authorization'].blank?

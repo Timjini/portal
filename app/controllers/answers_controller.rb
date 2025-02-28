@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-
-# app/controllers/answers_controller.rb
 class AnswersController < ApplicationController
   skip_forgery_protection only: [:create]
 

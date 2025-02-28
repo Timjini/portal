@@ -63,7 +63,6 @@ class KpiController < ApplicationController
     sleep 6
 
     if level_ids.empty?
-      puts '------------------>No level'
       # respond_to do |format|
       #   format.turbo_stream do
       #     render turbo_stream: turbo_stream.replace("bulk-delete", partial: "kpis/delete_error", locals: { errors: ["Please select at least one level to delete."] })
