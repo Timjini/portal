@@ -29,49 +29,6 @@ MyRailsApp is a Dockerized Ruby on Rails application designed for athlete onboar
 - PostgreSQL
 - Redis for Sidekiq
 
-### Installation
-1. Clone the repository:
- Copy the environment file:
-   ```sh
-   cp .env.example .env
-   ```
-3. Build and start the Docker containers:
-   ```sh
-   docker-compose up --build
-   ```
-4. Run database migrations:
-   ```sh
-   docker-compose run web rails db:create db:migrate db:seed
-   ```
-5. Start Sidekiq for background jobs:
-   ```sh
-   docker-compose run web bundle exec sidekiq
-   ```
-
-## Environment Variables
-Ensure you configure the following environment variables:
-```env
-DATABASE_URL=postgres://user:password@db/myrailsapp
-REDIS_URL=redis://redis:6379/1
-STRIPE_SECRET_KEY=your_stripe_secret
-SENDGRID_API_KEY=your_sendgrid_key
-JWT_SECRET=your_jwt_secret
-CLOUDFLARE_R2_ACCESS_KEY=your_r2_access_key
-CLOUDFLARE_R2_SECRET_KEY=your_r2_secret_key
-```
-
-## Testing
-Run tests using RSpec:
-```sh
-docker-compose run web bundle exec rspec
-```
-
-## Code Quality
-Ensure your code follows best practices with:
-```sh
-bundle exec rubocop
-```
-
 ## Screenshots
 ### Dashboard
 ![Dashboard](./dashboard-image.png)
