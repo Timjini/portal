@@ -10,11 +10,15 @@
 <!-- Degree Selection -->
 <ul class="flex flex-wrap text-sm font-medium text-center border-b border-gray-200">
   <!-- 'All' option link -->
-  <li class="me-2">
+  <%
+=begin%>
+ <li class="me-2">
     <%= link_to athlete_profile_path(@athlete, degree: nil), class: "inline-block p-4 #{'active' if params[:degree].nil?} rounded-t-lg" do %>
       All
     <% end %>
-  </li>
+  </li> 
+<%
+=end%>
 
   <!-- Dynamically generate degree links -->
   <% @levels.degrees.each do |degree| %>

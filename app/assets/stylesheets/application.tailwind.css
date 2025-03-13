@@ -210,7 +210,7 @@ a:hover{opacity: 0.9;}
     gap:20px;
     /* align-items:center; */
     border-radius: 10px;
-    padding:40px;
+    padding:10px;
     background-color: var(--static-color);
     color:var(--text);
     box-shadow: var(--shadow);
@@ -218,7 +218,7 @@ a:hover{opacity: 0.9;}
   }
 
   .modal {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -226,7 +226,7 @@ a:hover{opacity: 0.9;}
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Overlay background color */
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
 
@@ -256,7 +256,6 @@ a:hover{opacity: 0.9;}
     padding-right:20px;
   }
   
-  /* Style the eye icon when password is visible */
   .password-visible .toggle-password {
     color: #007bff;
   }
@@ -338,12 +337,10 @@ a:hover{opacity: 0.9;}
     padding-right:20px;
   }
   
-  /* Style the eye icon when password is visible */
   .password-visible .toggle-password {
     color: #007bff;
   }
   
-  /* Seach box Styling */
 
   .searchbox {
     display: flex;
@@ -604,15 +601,12 @@ article{
 
 /* User Profile */
 
-
-/* Tooltip container */
 .tooltip {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  border-bottom: 1px dotted black;
 }
 
-/* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 190px;
@@ -623,12 +617,10 @@ article{
   border-radius: 6px;
   margin-left:5px;
  
-  /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
@@ -670,7 +662,6 @@ article{
       display: none;
   }
 }
-/* Basic styles for hamburger menu */
 .hamburger-menu {
   position: fixed;
   top: 0;
@@ -717,3 +708,12 @@ article{
 .hamburger-button.active .bar:nth-child(3) {
   transform: rotate(-45deg) translateY(-8px);
 }
+
+h2.inactive {
+  background-color: #f2f2f2;
+  color: #999999;
+  cursor: not-allowed;
+  }
+  h2.inactive button {
+  border-color: #dddddd;
+  }
