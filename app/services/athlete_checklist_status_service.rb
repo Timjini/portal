@@ -6,7 +6,7 @@ class AthleteChecklistStatusService
     @user = User.find_by(id: @athlete.user_id)
   end
 
-  def call
+  def call # rubocop:disable Metrics/MethodLength
     levels = fetch_levels
     levels_count = UserLevel.where(user_id: @user.id).count
     percentage = calculate_percentage(levels_count)
@@ -28,9 +28,9 @@ class AthleteChecklistStatusService
 
   def fetch_levels
     permitted_params = %w[title degree category step]
-    hash = @params.to_unsafe_h 
+    hash = @params.to_unsafe_h
     cleaned_params = hash.slice(*permitted_params).compact
-    Level.where(cleaned_params).order(:degree, :step)
+    Level.where(cleaned_params).order(:degree, :step, :category)
   end
 
   def calculate_percentage(levels_count)
@@ -38,7 +38,7 @@ class AthleteChecklistStatusService
     (levels_count / total) * 100
   end
 
-  def determine_level_status(levels)
+  def determine_level_status(levels) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     athlete_level = @athlete.athlete_level.where(status: 'completed')
     status = {}
 
