@@ -19,6 +19,7 @@ services:
       REDIS_URL: redis://redis:6379/0
       SEND_GRID_KEY: ${SEND_GRID_KEY}
       SEND_GRID_SECRET: ${SEND_GRID_SECRET}
+      SENTRY_KEY: ${SENTRY_KEY}
     depends_on:
       - postgres
       - redis
