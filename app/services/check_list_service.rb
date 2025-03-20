@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CheckListService
   def initialize(params)
     @params = params

@@ -19,10 +19,6 @@ class QrCodesController < ApplicationController
 
     @qr_code.image.attach(io: StringIO.new(qr.as_png.resize(300, 300).to_s), filename: 'qr_code.png',
                           content_type: 'image/png')
-
-    if @qr_code.save
-    else
-    end
   end
 
   def scanner; end

@@ -17,7 +17,7 @@ class DashboardController < ApplicationController
 
   def kpi_csv_upload
     csv_file = params[:file]
-    unless csv_file.present?
+    if csv_file.blank?
       render json: { error: 'No file uploaded' }, status: :bad_request
       return
     end

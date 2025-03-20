@@ -19,12 +19,12 @@ class AthleteProfilesController < ApplicationController
     result = service.show_athlete_status
     @athlete = result[:athlete]
     @levels = result[:levels]
-    puts "#{@levels.inspect}"
+    Rails.logger.debug @levels.inspect.to_s
     @user = result[:user]
     @percentage = result[:percentage]
     @status = result[:status]
     @checklist_items_completed = result[:checklist_items_completed]
-    @athlete_level = UserChecklist.where(completed:true, user_id:@athlete.user_id)
+    @athlete_level = UserChecklist.where(completed: true, user_id: @athlete.user_id)
 
     respond_to do |format|
       format.html

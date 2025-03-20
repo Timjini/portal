@@ -52,9 +52,7 @@ module Users
     end
 
     def handle_successful_creation
-      if @user.role == 'athlete'
-        create_athlete_profile(@user.id, params[:user][:dob])
-      end
+      create_athlete_profile(@user.id, params[:user][:dob]) if @user.role == 'athlete'
 
       sign_in(@user) # Manually sign in the user
       begin
