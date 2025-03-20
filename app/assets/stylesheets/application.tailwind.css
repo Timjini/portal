@@ -261,6 +261,10 @@ a:hover{opacity: 0.9;}
   .password-visible .toggle-password {
     color: #007bff;
   }
+
+  .inputDiv{
+    width: 12rem;
+  }
   
   /* mobile view */
   
@@ -315,6 +319,10 @@ a:hover{opacity: 0.9;}
   
     .search-form{
       min-width: 300px !important;
+    }
+
+    .inputDiv{
+      width: 100vw;
     }
   }
   
