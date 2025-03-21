@@ -116,9 +116,9 @@ Rails.application.configure do
   # }
   # Trap Email
   config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
+  config.action_mailer.smtp_settings = {
     user_name: 'apikey',
-    password: ENV['SEND_GRID_SECRET'],
+    password: ENV.fetch('SEND_GRID_SECRET', nil),
     domain: 'chambersforsport.com',
     address: 'smtp.sendgrid.net',
     port: 587,
@@ -126,8 +126,7 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-    config.action_mailer.default_url_options = { host: 'chambersforsport.com', port: 3000 }
-
+  config.action_mailer.default_url_options = { host: 'chambersforsport.com', port: 3000 }
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [

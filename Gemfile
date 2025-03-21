@@ -71,15 +71,15 @@ gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 gem 'sidekiq', '~> 7.1', '>= 7.1.2'
 gem 'sidekiq-cron', '~> 1.2'
 
-gem 'sentry-ruby'
 gem 'sentry-rails'
+gem 'sentry-ruby'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
-  gem 'rspec-rails'
   gem 'factory_bot_rails'
-  gem 'faker'    
+  gem 'faker'
+  gem 'rspec-rails'
 end
 
 group :development do

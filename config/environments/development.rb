@@ -99,18 +99,16 @@ Rails.application.configure do
   # }
 
   config.action_mailer.smtp_settings = {
-  user_name: 'apikey',
-  password: ENV['SEND_GRID_SECRET'],
-  domain: 'chambersforsport.com',
-  address: 'smtp.sendgrid.net',
-  port: 587,
-  authentication: :plain,
-  enable_starttls_auto: true
-}
+    user_name: 'apikey',
+    password: ENV.fetch('SEND_GRID_SECRET', nil),
+    domain: 'chambersforsport.com',
+    address: 'smtp.sendgrid.net',
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-
-
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AnswersController < ApplicationController
   skip_forgery_protection only: [:create]
 
@@ -11,7 +12,7 @@ class AnswersController < ApplicationController
       answer.save!
     end
 
-    render json: { status: 'success', message: 'Answers created successfully'}
+    render json: { status: 'success', message: 'Answers created successfully' }
   rescue StandardError => e
     render json: { status: 'error', message: e.message }, status: :unprocessable_entity
   end

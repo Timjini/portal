@@ -5,13 +5,13 @@
       <h3 class="text-lg font-bold py-3">Athlete's Profile</h3>
     </div>
     <div class="profile-container flex gap-5">
-      <div>
+      <div class="p-4">
         <%= image_tag(@user.avatar_thumbnail, class: "w-24 h-24 object-cover rounded-full") %>
     
         <%= form.file_field :avatar, class: "mt-2" %>
       </div>
       <div class="flex flex-row flex-wrap">
-        <div class="px-5 flex flex-col gap-1 w-56">
+        <div class="px-5 flex flex-col gap-1 w-full">
           <label for="email" class="block m-2 text-sm font-medium">First Name</label>    
           <%= form.text_field :first_name, class: input_style, placeholder: "Alex", value: @user.first_name %>
           <label for="email" class="block m-2 text-sm font-medium">Last Name</label>
@@ -19,7 +19,7 @@
           <label for="email" class="block m-2 text-sm font-medium">Email</label>
           <%= form.text_field :email, class: input_style, placeholder: "alexb13@gmail.com", value: @user.email %>
         </div>
-        <div class="px-5 flex flex-col gap-1 w-56">
+        <div class="px-5 flex flex-col gap-1 w-full">
           <label for="email" class="block m-2 text-sm font-medium">Date of Birth</label>
           <%= form.date_field :dob, id: 'dob', value: @user.dob, class: input_style%>
           <label for="email" class="block m-2 text-sm font-medium">User Name</label>

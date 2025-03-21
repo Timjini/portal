@@ -19,11 +19,9 @@ class JsonWebToken
 
   def self.valid_payload(payload)
     if expired(payload)
-      Rails.logger.debug '============Invalid token'
       false
     else
       return true
-      Rails.logger.debug '============ valid token'
     end
   end
 

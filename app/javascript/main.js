@@ -1,28 +1,45 @@
-// function toggleDropdown(dropdownId) {
-//     console.log("clicked")
-//     const dropdown = document.getElementById(dropdownId);
-//     dropdown.classList.toggle('opacity-0');
-//     dropdown.classList.toggle('opacity-100');
-//     dropdown.classList.toggle('pointer-events-none');
-//   }
+console.log(' main JS loaded')
 
-//   function closeSidebar() {
-//    const sidebar = document.getElementById('default-sidebar');
-//    sidebar.classList.add('-translate-x-full');
-// }
+function addChildModal() {
+  var modal = document.getElementById('myModal')
+  var closeBtn = document.getElementsByClassName('close')[0]
+  modal.style.display = 'block'
+  closeBtn.onclick = function () {
+    modal.style.display = 'none'
+  }
+  window.onclick = function (event) {
+    if (event.target === modal) {
+      modal.style.display = 'none'
+    }
+  }
+}
+document.addEventListener('turbo:load', () => {
+  addChildModal()
 
-// function toggleSidebar() {
-//    const sidebar = document.getElementById('default-sidebar');
-//    sidebar.classList.toggle('-translate-x-full');
-// }
+  const form = document.getElementById('account-form')
 
-// // Close sidebar when clicking outside of it
-// document.body.addEventListener('click', (event) => {
-//    const sidebar = document.getElementById('default-sidebar');
-//    const button = document.querySelector('[data-drawer-toggle="default-sidebar"]');
+  if (form) {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
 
-//    // Check if the click target is outside of the sidebar and button
-//    if (!sidebar.contains(event.target) && !button.contains(event.target)) {
-//       closeSidebar();
-//    }
-// });
+      const data = new FormData(form)
+
+      try {
+        const res = await fetch('accounts/create_child_user', {
+          method: 'POST',
+          body: data
+        })
+
+        const resData = await res.json()
+
+        console.log(resData)
+
+        if (resData.status === 'success') {
+          window.location.href = '/accounts'
+        }
+      } catch (err) {
+        console.error('Error:', err)
+      }
+    })
+  }
+})

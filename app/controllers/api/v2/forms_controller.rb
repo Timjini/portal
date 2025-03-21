@@ -4,39 +4,37 @@ module Api
   module V2
     class FormsController < Api::V1::BaseController
       skip_forgery_protection only: [:create]
-      before_action :set_form, only: [:show, :destroy]
+      before_action :set_form, only: %i[show destroy]
       skip_before_action :authenticate_user!
 
       def index
-        begin
-          forms = Form.where(title: params[:title], status: "new")
-          puts "========> forms #{forms.inspect}"
+        forms = Form.where(title: params[:title], status: 'new')
+        Rails.logger.debug { "========> forms #{forms.inspect}" }
 
-          if forms.empty?
-            return render json: { status: 'error', message: "No entries found" }, status: :not_found
-          end
+        return render json: { status: 'error', message: 'No entries found' }, status: :not_found if forms.empty?
 
-           render json: forms, each_serializer: Api::V2::FormSerializer, status: :ok
-        rescue StandardError => e
-          render json: { status: 'error', message: "Something went wrong: #{e.message}" }, status: :internal_server_error
-        end
+        render json: forms, each_serializer: Api::V2::FormSerializer, status: :ok
+      rescue StandardError => e
+        render json: { status: 'error', message: "Something went wrong: #{e.message}" },
+               status: :internal_server_error
       end
 
       def show
         render json: { status: 'success', data: @form }, status: :ok
       rescue ActiveRecord::RecordNotFound
-        render json: { status: 'error', message: "Form not found" }, status: :not_found
+        render json: { status: 'error', message: 'Form not found' }, status: :not_found
       end
 
       def create
         form = Form.new(form_params)
         if form.save
-          begin 
+          begin
             FormMailer.contact_form_submission(form).deliver_now
           rescue StandardError => e
-            puts "----->issues#{e.message}"
+            Rails.logger.debug { "----->issues#{e.message}" }
           end
-          render json: { status: 'success', data: Api::V2::FormSerializer.new(form).serializable_hash }, status: :created
+          render json: { status: 'success', data: Api::V2::FormSerializer.new(form).serializable_hash },
+                 status: :created
         else
           render json: { status: 'error', message: form.errors.full_messages }, status: :unprocessable_entity
         end
@@ -46,7 +44,7 @@ module Api
 
       def destroy
         @form.destroy
-        render json: { status: 'success', message: "Form deleted successfully" }, status: :ok
+        render json: { status: 'success', message: 'Form deleted successfully' }, status: :ok
       rescue StandardError => e
         render json: { status: 'error', message: "Something went wrong: #{e.message}" }, status: :internal_server_error
       end
@@ -56,7 +54,7 @@ module Api
       def set_form
         @form = Form.find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        render json: { status: 'error', message: "Form not found" }, status: :not_found
+        render json: { status: 'error', message: 'Form not found' }, status: :not_found
       end
 
       def form_params

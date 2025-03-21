@@ -70,9 +70,7 @@ module Api
       end
 
       def handle_successful_creation(user)
-        if user.role == 'athlete'
-          create_athlete_profile(user.id, params[:user][:dob])
-        end
+        create_athlete_profile(user.id, params[:user][:dob]) if user.role == 'athlete'
         begin
           UserMailer.welcome_email(user).deliver_now
         rescue Exception

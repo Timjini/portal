@@ -13,19 +13,17 @@
                <label for="email" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Email or Username</label>    
                <%= f.text_field :username,id:"email", placeholder:"email@example.com", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
             </div>
-            <turbo-frame id="password-visibility-frame">
-            <div class="">
-               <label for="password" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Password</label>
-               <div class="relative">
-                  <%= f.password_field :password, id: "password", placeholder: "******", class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", data: { controller: "password-visibility" } %>
-                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer eye-icon" data-action="click->password-visibility#toggleVisibility">
-                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-500 dark:text-white">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 17.121a9 9 0 01-12.677-12.677M2 12a10 10 0 0120 0m-7-2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                     </svg>
+               <div class="" data-controller="visibility">
+                  <label for="password" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Password</label>
+                  <div class="relative">
+                     <%= f.password_field :password, id: "password", placeholder: "******", class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", data: { visibility_target: "password" }  %>
+                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer eye-icon" data-action="click->visibility#toggleVisibility">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-500 dark:text-white">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 17.121a9 9 0 01-12.677-12.677M2 12a10 10 0 0120 0m-7-2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                     </div>
                   </div>
                </div>
-            </div>
-            </turbo-frame id="password-frame"> 
             <div class="remember">
                <% if devise_mapping.rememberable? %>
                <div class="flex items-center px-3 rounded-2xl">
