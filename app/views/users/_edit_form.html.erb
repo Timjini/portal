@@ -12,6 +12,8 @@
       </div>
       <div class="flex flex-row flex-wrap">
         <div class="px-5 flex flex-col gap-1 w-full">
+          <label for="email" class="block m-2 text-sm font-medium">email</label>
+          <%= form.text_field :email, class: input_style, value: @user.email %>
           <label for="email" class="block m-2 text-sm font-medium">User Name</label>
           <%= form.text_field :username, class: input_style, placeholder: "Dob", value: @user.username %>
           <label for="email" class="block m-2 text-sm font-medium">First Name</label>    
