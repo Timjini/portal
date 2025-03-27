@@ -1,0 +1,11 @@
+<turbo-stream action="append" target="reviews_list_#{@review.reviewable_id}">
+  <template>
+    <%= render @review %>
+  </template>
+</turbo-stream>
+
+<turbo-stream action="replace" target="review_form_<%= @review.reviewable_id %>">
+  <template>
+    <%= render "athlete_profiles/reviews/form", level: @review.reviewable, athlete: Athlete.find(@review.user_id), status: nil %>
+  </template>
+</turbo-stream>
