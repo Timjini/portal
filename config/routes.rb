@@ -55,6 +55,8 @@ Rails.application.routes.draw do
   post '/checklist_items', to: 'athlete_profiles#checked_items'
   post '/kpi_csv_upload', to: 'dashboard#kpi_csv_upload'
 
+  resources :reviews
+
   # Accounts
   resources :accounts, only: %i[new create index show edit update] do
     get 'all_accounts', on: :collection, to: 'accounts#all_accounts'
