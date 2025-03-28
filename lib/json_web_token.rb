@@ -18,11 +18,9 @@ class JsonWebToken
   end
 
   def self.valid_payload(payload)
-    if expired(payload)
-      false
-    else
-      return true
-    end
+    return true unless expired(payload)
+
+    false
   end
 
   # Validates if the token is expired by exp parameter

@@ -17,8 +17,8 @@
         <label for="checklist-<%= checklist.id %>" class="ml-2 text-sm font-medium"><%= checklist.title %></label>
     </div>
     <% end %>
-    <div id="reviews_list_<%= level.id %>">
-        <%= render 'athlete_profiles/reviews/review', reviews: @reviews %>
+    <div id="reviews_<%= level.id %>">
+    <%= render 'athlete_profiles/reviews/review', level: level, athlete: @athlete %>
     </div>
     <%=render 'athlete_profiles/reviews/form', status: @status , level:level, athlete: @athlete %>
     <% end %>

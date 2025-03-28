@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "review_form" do %>
+<%= turbo_frame_tag "review_form_#{level.id}"  do %>
     <%= form_with url: "/reviews", method: :post, class: 'mt-2 mb-3', scope: :reviews do |form| %>
     <%= form.hidden_field :reviewable_id, value: level.id %>
     <%= form.hidden_field :reviewable_type, value: level.class.name %>
@@ -10,7 +10,7 @@
         <%= form.text_area :comment, 
                 id: "review", 
                 rows: 1, 
-                class: "block mx-4 p-2.5 w-full text-sm rounded-lg border bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 #{@status[level.id]}",
+                class: "block mx-4 p-2.5 w-full text-sm rounded-lg border bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 ",
                 placeholder: "Your message..."
             %>
 

@@ -26,7 +26,7 @@ class AthleteProfilesController < ApplicationController
     @checklist_items_completed = result[:checklist_items_completed]
     @athlete_level = UserChecklist.where(completed: true, user_id: @athlete.user_id)
 
-    @reviews = Review.where(user_id: @athlete.user_id)
+    # @reviews = Review.where(user_id: @athlete.user_id)
 
     respond_to do |format|
       format.html
