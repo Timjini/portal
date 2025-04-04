@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "cropperjs/dist/cropper.css";
+
 
 
 /* Sign In Styling */
@@ -726,4 +728,15 @@ h2.inactive {
   }
   h2.inactive button {
   border-color: #dddddd;
+  }
+
+  /* IMAGE CROPPER */
+
+  .cropper-container {
+    position: relative;
+    overflow: hidden;
+  }
+  .cropper-crop-box,
+  .cropper-view-box {
+    position: absolute;
   }

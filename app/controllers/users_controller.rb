@@ -28,55 +28,70 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @profile = @user.athlete_profile
   end
-
-  def update_user
+#TODO before release
+  def update_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     @user = User.find(params[:id])
-
-    if @user.update(user_params)
-      @profile = @user.athlete_profile || AthleteProfile.new(user: @user)
-
-      if @profile.update(athlete_profile_params)
-        respond_to do |format|
-          format.html { redirect_to @user, notice: 'User and profile were successfully updated.' }
-          format.json { render :show, status: :ok, location: @user }
-        end
-      else
-        respond_to do |format|
-          format.html { render :edit }
-          format.json { render json: @profile.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-      respond_to do |format|
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    @profile = @user.athlete_profile || AthleteProfile.new(user: @user)
+    begin
+      p athlete_profile_params
+      @profile.update(params[:height])
+    rescue StandardError => e
+      put "error here, #{e}"
     end
+
+    # respond_to do |format|
+    #   if @user.update(user_params)
+    #     format.turbo_stream do
+    #       render turbo_stream: [
+    #         turbo_stream.replace('flash', partial: 'shared/flash', locals: { notice: 'Profile updated successfully' }),
+    #         turbo_stream.replace(@user, partial: 'users/form', locals: { user: @user })
+    #       ]
+    #     end
+    #     format.html { redirect_to @user, notice: 'User and profile were successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
+    #   else
+    #     format.turbo_stream do
+    #       render turbo_stream: turbo_stream.replace('flash', partial: 'shared/flash',
+    #                                                          locals: { alert: 'Error updating profile' })
+    #     end
+    #     format.html { render :edit }
+    #   end
+    # end
   end
 
   def delete_user
     @user = User.find(params[:id])
 
     if @user.destroy
-      flash[:notice] = 'User deleted successfully'
+      flash[:notice] = 'User deleted successfully' # rubocop:disable Rails/I18nLocaleTexts
       render json: { success: true }
     else
-      flash[:alert] = 'User not deleted'
+      flash[:alert] = 'User not deleted' # rubocop:disable Rails/I18nLocaleTexts
       render json: { success: false }
     end
   end
 
   private
 
-  def user_params
-    params.require(:user).permit(:email, :username, :first_name, :last_name, :role, :phone, :address, :avatar)
+  def search_users(query)
+    User.where('name ILIKE ? OR username ILIKE ? OR email ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
+  end
+
+  def user_params # rubocop:disable Metrics/MethodLength
+    params.require(:user).permit(:email,
+                                 :username,
+                                 :first_name,
+                                 :last_name,
+                                 :role,
+                                 :phone,
+                                 :address,
+                                 :avatar,
+                                 :dob,
+                                 :school_name,
+                                 athlete_profile_attributes: %i[id height weight level])
   end
 
   def athlete_profile_params
     params.require(:athlete_profile).permit(:height, :weight, :dob, :level)
   end
 
-  def search_users(query)
-    User.where('name ILIKE ? OR username ILIKE ? OR email ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
-  end
 end

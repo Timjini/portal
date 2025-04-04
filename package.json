@@ -4,8 +4,11 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/turbo-rails": "^7.1.0",
+    "@panzoom/panzoom": "^4.6.0",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
+    "cropperjs": "^2.0.0",
+    "dotenv": "^16.4.7",
     "esbuild": "^0.14.11",
     "postcss": "^8.4.31",
     "sweetalert2": "^11.10.1",
@@ -14,11 +17,12 @@
     "yarn": "^1.22.19"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --define:GOOGLE_API_KEY='\"${GOOGLE_API_KEY}\"'",
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
   },
   "devDependencies": {
     "@prettier/plugin-ruby": "^4.0.4",
+    "dotenv-cli": "^8.0.0",
     "prettier": "^3.2.5"
   }
 }

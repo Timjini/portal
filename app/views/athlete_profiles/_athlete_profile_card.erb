@@ -1,73 +1,79 @@
-<div class="">
-    <div class="grid grid-cols-2 gap-4 p-4">
-        <div class="p-4">
-            <h3 class="text-md py-3">Athlete's Profile</h3>
-            <%= image_tag(@athlete.user.avatar_thumbnail, class:"w-24 h-24 object-cover rounded-full")%>
-            <% if @athlete.user.answers.any?(&:has_health_issue)%>
-            <div class="tooltip">
-                <span class="material-symbols-outlined text-red-500 animate-ping">
-                    local_hospital
-                </span>
-                <span class="tooltiptext">
-                    <ul>
-                        <%@athlete.user_illness.each do |illness| %>
-                        <li>
-                            <%= illness %>
-                        </li>
-                        <%end%>
-                    </ul>
-                </span>
-            </div>
-            <%end%>
-            <span class="<%=@athlete.user.level%> text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                <%=@athlete.user.level%>
+<div class="p-4 rounded-lg">
+   <div class="flex flex-row gap-8 flex-wrap">
+      <div class="w-48">
+         <h3 class="text-md">Athlete's Profile</h3>
+         <%= image_tag(@athlete.user.avatar_thumbnail, class:"w-24 h-24 object-cover rounded-full")%>
+         <% if @athlete.user.answers.any?(&:has_health_issue)%>
+         <div class="tooltip">
+            <span class="material-symbols-outlined text-red-500 animate-ping">
+            local_hospital
             </span>
-            <%= render 'athlete_profiles/player_score'%>
-        </div>
-        <div class="px-5 flex flex-col gap-1 bg-purple-400 border rounded-lg p-2">
-            <span class="font-bold text-sm"> Contact Info: </span>
-            <div>
-                <strong class="text-xs">Name :</strong><span class="text-xs"><%=@athlete.user.full_name%></span>
-            </div>
-            <div>
-                <strong class=" text-xs">Age :</strong><span class="text-xs"><%=@athlete.user.age%></span>
-            </div>
-            <div>
-                <strong class=" text-xs">Username :</strong><span class="text-xs"><%=@athlete.user.username%></span>
-            </div>
-            <div>
-                <strong class=" text-xs">School Name :</strong><span class="text-xs"> <%=@athlete.school_name%></span>
-            </div>
-        </div>
-        <div class="px-5 flex flex-col gap-1 border rounded-lg p-2">
-            <span class="font-bold text-sm"> Info: </span>
-            <div>
-                <strong class="text-xs">Height :</strong><span class="text-xs"><%=@athlete.height%>cm</span>
-            </div>
-            <div>
-                <strong class=" text-xs">Weight :</strong><span class="text-xs"><%=@athlete.weight%>Kg</span>
-            </div>
-            <div>
-                <strong class=" text-xs">Power Of ten :</strong><span class="text-xs"><%=@athlete.power_of_ten%></span>
-            </div>
-            <div>
-                <strong class=" text-xs">Level :</strong><span class="text-xs"> <%=@athlete.level%></span>
-            </div>
-        </div>
-        <div class="px-5 flex flex-col gap-1 border rounded-lg p-2">
-            <span class="font-bold text-sm"> PB's: </span>
-            <div>
-                <strong class="text-xs">60m :</strong><span class="text-xs"></span>
-            </div>
-            <div>
-                <strong class=" text-xs">100m :</strong><span class="text-xs"></span>
-            </div>
-            <div>
-                <strong class=" text-xs">200m :</strong><span class="text-xs"></span>
-            </div>
-            <div>
-                <span> <strong class=" text-xs">VJ:</strong class=" text-xs"></span> |  <span> <strong class=" text-xs">HJ:</strong class="text-xs"></span>
-            </div>
-        </div>
-    </div>
+            <span class="tooltiptext">
+               <ul>
+                  <%@athlete.user_illness.each do |illness| %>
+                  <li>
+                     <%= illness %>
+                  </li>
+                  <%end%>
+               </ul>
+            </span>
+         </div>
+         <%end%>
+         <span class="<%=@athlete.user.level%> text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+         <%=@athlete.user.level%>
+         </span>
+         <%= render 'athlete_profiles/player_score'%>
+      </div>
+      <div class="w-48">
+         <div>
+            <span class="font-bold text-md"> Contact Info: </span>
+         </div>
+         <div>
+            <strong class=" text-xs">Age :</strong><span class="text-xs"><%=@athlete.user.age%></span>
+         </div>
+         <div>
+            <strong class=" text-xs">Username :</strong><span class="text-xs"><%=@athlete.user.username%></span>
+         </div>
+         <div>
+            <strong class=" text-xs">School Name :</strong><span class="text-xs"> <%=@athlete.school_name%></span>
+         </div>
+         <div>
+            <strong class=" text-xs">Address :</strong><span class="text-xs"> <%=@athlete.user.address%></span>
+         </div>
+      </div>
+      <div class="w-48">
+         <div>
+            <span class="font-bold text-md"> Contact Info: </span>
+         </div>
+         <div>
+            <strong class="text-xs">Height :</strong><span class="text-xs"><%=@athlete.height%>cm</span>
+         </div>
+         <div>
+            <strong class=" text-xs">Weight :</strong><span class="text-xs"><%=@athlete.weight%>Kg</span>
+         </div>
+         <div>
+            <strong class=" text-xs">Power Of ten :</strong><span class="text-xs"><%=@athlete.power_of_ten%></span>
+         </div>
+         <div>
+            <strong class=" text-xs">Level :</strong><span class="text-xs"> <%=@athlete.level%></span>
+         </div>
+      </div>
+      <div class="w-48">
+      <div>
+            <span class="font-bold text-md"> PB's: </span>
+         </div>
+         <div>
+            <strong class="text-xs">60m :</strong><span class="text-xs"></span>
+         </div>
+         <div>
+            <strong class=" text-xs">100m :</strong><span class="text-xs"></span>
+         </div>
+         <div>
+            <strong class=" text-xs">200m :</strong><span class="text-xs"></span>
+         </div>
+         <div>
+            <span> <strong class=" text-xs">VJ:</strong class=" text-xs"></span> |  <span> <strong class=" text-xs">HJ:</strong class="text-xs"></span>
+         </div>
+      </div>
+   </div>
 </div>
