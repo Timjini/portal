@@ -18,6 +18,7 @@ services:
       SEND_GRID_KEY: ${SEND_GRID_KEY}
       SEND_GRID_SECRET: ${SEND_GRID_SECRET}
       SENTRY_KEY: ${SENTRY_KEY}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
     depends_on:
       - postgres
       - redis

@@ -1,48 +1,89 @@
-<% input_style="w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %>
+<% input_style = "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" %>
 <%= form_with model: @user, url: update_user_path(@user), local: true do |form| %>
-  <div class="w-120 p-4">
-    <div class="py-2">
-      <h3 class="text-lg font-bold py-3">Athlete's Profile</h3>
+<div class="max-w-4xl mx-auto p-6 general_card rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">ATHLETE'S PROFILE</h2>
+
+    <div class="flex flex-col md:flex-row gap-8">
+        <!-- Avatar Section -->
+        <div class="mb-5 text-center" data-controller="avatar">
+            <div class="mx-auto w-28 h-28 mb-2 border rounded-full relative bg-gray-100 mb-4 shadow-inset">
+                <div data-loading-indicator-target="loadingIndicator" class="loading-indicator hidden">
+                    <div role="status">
+                        <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+                        </svg>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <%= image_tag(@user.avatar_thumbnail, 
+                    class: "w-28 h-28 object-cover rounded-full border-4 border-white shadow-md",
+                    id: "avatar-preview",
+                    data: { avatar_target: "preview" })%>
+            </div>
+
+            <label for="avatarInput" type="button" class="cursor-pointer inline-flex justify-between items-center focus:outline-none border py-2 px-4 rounded-lg shadow-sm text-left text-gray-600 bg-white hover:bg-gray-100 font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" class="inline-flex flex-shrink-0 w-6 h-6 -mt-1 mr-1" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+                    <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"></path>
+                    <circle cx="12" cy="13" r="3"></circle>
+                </svg>
+                Browse Photo
+            </label>
+
+            <div class="mx-auto w-48 text-gray-500 text-xs text-center mt-1">Click to add/edit profile picture</div>
+            <%= form.file_field :avatar, class: "hidden", id: "avatarInput", data: { avatar_target: "input" } %>
+        </div>
+
+        <!-- Form Fields -->
+        <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <%= form.text_field :email, class: input_style, value: @user.email %>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <%= form.text_field :username, class: input_style, value: @user.username %>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                    <%= form.text_field :first_name, class: input_style, value: @user.first_name %>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <%= form.text_field :last_name, class: input_style, value: @user.last_name %>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                    <%= form.date_field :dob, class: input_style, value: @user.dob %>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">School Name</label>
+                    <%= form.text_field :school_name, class: input_style, value: @profile&.school_name %>
+                </div>
+            </div>
+
+            <% unless current_user.role == 'coach' %>
+            <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-200">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Height (cm)</label>
+                    <%= form.text_field :height, class: input_style, value: @profile.height %>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
+                    <%= form.text_field :weight, class: input_style, value: @profile.weight %>
+                </div>
+            </div>
+            <% end %>
+        </div>
     </div>
-    <div class="profile-container flex gap-5">
-      <div class="p-4">
-        <%= image_tag(@user.avatar_thumbnail, class: "w-24 h-24 object-cover rounded-full") %>
-    
-        <%= form.file_field :avatar, class: "mt-2" %>
-      </div>
-      <div class="flex flex-row flex-wrap">
-        <div class="px-5 flex flex-col gap-1 w-full">
-          <label for="email" class="block m-2 text-sm font-medium">email</label>
-          <%= form.text_field :email, class: input_style, value: @user.email %>
-          <label for="email" class="block m-2 text-sm font-medium">User Name</label>
-          <%= form.text_field :username, class: input_style, placeholder: "Dob", value: @user.username %>
-          <label for="email" class="block m-2 text-sm font-medium">First Name</label>    
-          <%= form.text_field :first_name, class: input_style, placeholder: "Alex", value: @user.first_name %>
-          <label for="email" class="block m-2 text-sm font-medium">Last Name</label>
-          <%= form.text_field :last_name, class: input_style, placeholder: "Brown", value: @user.last_name %>
-        </div>
-        <div class="px-5 flex flex-col gap-1 w-full">
-          <label for="email" class="block m-2 text-sm font-medium">Date of Birth</label>
-          <%= form.date_field :dob, id: 'dob', value: @user.dob, class: input_style%>
-          <label for="email" class="block m-2 text-sm font-medium">School Name</label>
-          <%= form.text_field :school_name, class: input_style, placeholder: "School Name", value: @profile&.school_name %>
-        </div>
-      </div>
-      <% if !current_user.role == 'coach'%>
-      <div>
-        <div class="px-5 flex flex-col gap-1 w-56">
-          <%= form.fields_for :athlete_profile do |profile_fields| %>
-            <label for="email" class="block m-2 text-sm font-medium">Height in cm</label>
-            <%= profile_fields.text_field :height, class: input_style , placeholder: "Height (cm)", value: @profile.height %>
-            <label for="email" class="block m-2 text-sm font-medium">Weight in Kg</label>
-            <%= profile_fields.text_field :weight, class: input_style , placeholder: "Weight (kg)", value: @profile.weight %>
-          <% end %>
-        </div>
-      </div>
-      <%end%>
-      <div class="mt-8 px-5 flex flex-col gap-1 w-56">
-        <%= form.submit "Save", class: "confirm-btn" %>
-      </div>
+
+    <div class="mt-8 flex justify-end">
+        <%= form.submit "Save Profile", class: "confirm-btn" %>
     </div>
-  </div>
+</div>
 <% end %>

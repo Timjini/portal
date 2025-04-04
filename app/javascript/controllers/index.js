@@ -4,8 +4,14 @@
 
 import { application } from "./application"
 
+import AddressAutocompleteController from "./address_autocomplete_controller"
+application.register("address-autocomplete", AddressAutocompleteController)
+
 import AvatarController from "./avatar_controller"
 application.register("avatar", AvatarController)
+
+import DrawerController from "./drawer_controller"
+application.register("drawer", DrawerController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
@@ -21,3 +27,7 @@ application.register("theme", ThemeController)
 
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
+
+
+import EditableFieldController from "./editable_field_controller"
+application.register("editable-field", EditableFieldController)

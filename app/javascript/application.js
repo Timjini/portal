@@ -2,6 +2,9 @@
 import '@hotwired/turbo-rails'
 import './controllers'
 import './main'
+import 'cropperjs';
+import '@panzoom/panzoom'
+
 
 // Dark Mode
 document.addEventListener('turbo:load', function () {
