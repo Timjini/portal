@@ -4,7 +4,7 @@ class Answer < ApplicationRecord
   belongs_to :user
   belongs_to :question
 
-  def has_health_issue # rubocop:disable Naming/PredicateName
+  def health_issue?
     answers = Answer.where(user_id: user_id)
     answers.any? { |answer| answer.content == 'Yes' } ? 'Yes' : 'No'
   end

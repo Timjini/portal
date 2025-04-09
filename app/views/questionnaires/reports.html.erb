@@ -49,7 +49,7 @@
                      <li><%=illness%></li>
                   </ul>
                <%end%>
-                <% if report.answers.any?(&:has_health_issue)%>
+                <% if report.answers.any?(&:health_issue?)%>
                 <span class="material-symbols-outlined text-red-500 animate-ping">
                      local_hospital
                   </span>
