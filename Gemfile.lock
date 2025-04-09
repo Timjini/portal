@@ -153,7 +153,6 @@ GEM
     em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
-    error_highlight (0.7.0)
     erubi (1.13.0)
     esbuild-rails (0.1.4)
       rails (>= 6.0.0)
@@ -479,7 +478,6 @@ DEPENDENCIES
   devise (~> 4.9)
   dotenv-rails (~> 2.1, >= 2.1.1)
   elasticsearch
-  error_highlight (>= 0.4.0)
   esbuild-rails
   factory_bot_rails
   faker
