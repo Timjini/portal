@@ -66,6 +66,8 @@ gem 'ffi', '~> 1.9', '>= 1.9.10'
 gem 'bootsnap', require: false
 
 group :development, :test do
+  gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
   gem 'byebug'
   gem 'debug', platforms: %i[mri windows]
   gem 'factory_bot_rails'
