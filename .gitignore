@@ -44,3 +44,5 @@
 
 /config/credentials/production.key
 sendgrid.env
+
+.byebug_history
