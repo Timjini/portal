@@ -1,23 +1,13 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = [ "hideable" ]
+  static targets = ['password']
 
-  showTargets() {
-    this.hideableTargets.forEach(el => {
-      el.hidden = false
-    });
-  }
-
-  hideTargets() {
-    this.hideableTargets.forEach(el => {
-      el.hidden = true
-    });
-  }
-
-  toggleTargets() {
-    this.hideableTargets.forEach((el) => {
-      el.hidden = !el.hidden
-    });
+  toggleVisibility() {
+    if (this.passwordTarget.type === 'password') {
+      this.passwordTarget.type = 'text'
+    } else {
+      this.passwordTarget.type = 'password'
+    }
   }
 }

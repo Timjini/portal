@@ -4,12 +4,12 @@ one:
   user: one
   coach: one
   comment: MyText
-  commentable: one
-  commentable_type: Commentable
+  reviewable: one
+  # reviewable_type: Commentable
 
 two:
   user: two
   coach: two
   comment: MyText
-  commentable: two
-  commentable_type: Commentable
+  reviewable: two
+  # reviewable_type: Commentable

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_21_184843) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_18_184021) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -255,6 +255,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_21_184843) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "extra", default: {}, null: false
+    t.date "start_date"
+    t.date "ending_date"
     t.index ["extra"], name: "index_training_packages_on_extra", using: :gin
   end
 

@@ -1,12 +1,6 @@
 <!-- Your HTML form for editing a KPI -->
 <div class="">
-    <h3 class="text-lg font-bold py-3">Create KPI's</h3>
-    <a onclick="addKpi();" class=" flex flex-row mx-auto gap-2">
-        <span class="material-symbols-outlined">
-            add_circle
-        </span>
-        <span> Update KPI</span>
-    </a>
+    <h3 class="text-lg font-bold py-3">Edit KPI's</h3>
 </div>
 <form id="editKpiForm" class="flex flex-col" style="min-height:80vh; padding-bottom:20px;">
     <div class="flex flex-row ">
@@ -28,6 +22,16 @@
                 <% end %>
             </select>
         </div>
+        <div class="pr-4">
+            <label for="degree" class="block mb-2 text-sm font-medium">Level:</label>
+            <select id="degree" name="degree" class="m-2 rounded border block flex-1 min-w-0 w-full text-sm p-2.5 table_header">
+                <% default_value = @level.step.presence || Level.steps.values.first %>
+                <% Level.steps.each do |key, value| %>
+                <option value="<%= value %>" <%= 'selected' if default_value == value %>><%= key.humanize %></option>
+                <% end %>
+            </select>
+        </div>
+
 
     </div>
 

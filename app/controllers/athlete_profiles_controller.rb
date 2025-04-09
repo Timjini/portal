@@ -15,17 +15,18 @@ class AthleteProfilesController < ApplicationController
   end
 
   def show # rubocop:disable Metrics/MethodLength
-    puts "athlete params: #{params}"
     service = CheckListService.new(params)
     result = service.show_athlete_status
-
-    @levels = result[:levels]
     @athlete = result[:athlete]
+    @levels = result[:levels]
+    Rails.logger.debug @levels.inspect.to_s
     @user = result[:user]
     @percentage = result[:percentage]
     @status = result[:status]
     @checklist_items_completed = result[:checklist_items_completed]
-    @athlete_level = UserChecklist.where(completed:true, user_id:@athlete.user_id)
+    @athlete_level = UserChecklist.where(completed: true, user_id: @athlete.user_id)
+
+    # @reviews = Review.where(user_id: @athlete.user_id)
 
     respond_to do |format|
       format.html

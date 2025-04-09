@@ -1,96 +1,111 @@
 # frozen_string_literal: true
 
 class AthleteProfile < ApplicationRecord
+  # Associations
   belongs_to :user, optional: true
-  # has_one_attached :image
+  has_one_attached :image
 
-  # validates :last_name, uniqueness: { case_sensitive: false }
-  # validates :first_name, uniqueness: { case_sensitive: false }
-  # validates_presence_of :first_name, :last_name
+  # Validations
+  validates :first_name, :last_name, presence: true
+  validates :first_name, uniqueness: { scope: :last_name, case_sensitive: false } # rubocop:disable Rails/UniqueValidationWithoutIndex
 
+  # Enums
   enum :level, {
     development: 0,
     intermediate: 1,
-    advance: 2
-  }
+    advanced: 2 # Fixed typo from 'advance' to 'advanced'
+  }, prefix: true
 
+  # Callbacks
+  before_validation :set_default_level, on: :create
+
+  # Delegations
+  delegate :email, to: :user, prefix: true, allow_nil: true
+
+  # Class Methods
+  class << self
+    def age_categories
+      {
+        child: (0..12),
+        junior: (13..18),
+        senior: (19..60)
+      }
+    end
+  end
+
+  # Instance Methods
   def image_thumbnail
-    if image.attached?
-      # avatar.variant(resize: "150x150!").processed
-      image
+    return default_image_url unless image.attached?
+
+    if Rails.env.production?
+      image.variant(resize_to_limit: [150, 150]).processed
     else
-      'https://imgur.com/a/SqiBbyF'
+      image
     end
   end
 
   def age
-    now = Time.now.utc.to_date
-    return '' if dob.nil?
+    return if dob.blank?
 
+    now = Time.zone.today
     now.year - dob.year - (dob.to_date.change(year: now.year) > now ? 1 : 0)
   end
 
   def athlete_category
-    case age
-    when 0..12
-      'Child'
-    when 13..18
-      'Junior'
-    when 19..60
-      'Senior'
-    end
+    return if age.blank?
+
+    self.class.age_categories.find do |_category, range|
+      range.cover?(age)
+    end&.first.to_s.capitalize
   end
 
-  def athlete_full_name
-    "#{first_name} #{last_name}"
+  def full_name
+    [first_name, last_name].compact_blank.join(' ')
   end
 
   def full_name=(name)
-    parts = name.split(' ', 2)
-    self.first_name = parts[0]
-    self.last_name = parts[1]
+    self.first_name, self.last_name = name.to_s.split(' ', 2)
   end
 
   def full_address
-    "#{address} #{city}"
+    [address, city].compact_blank.join(', ')
   end
 
   def check_lists
-    user = User.find(user_id)
-    user.user_checklists
+    user&.user_checklists || []
   end
 
-  def athlete_level
-    user = User.find(user_id)
-    user.user_levels
+  def athlete_levels
+    user&.user_levels || []
   end
 
-  def default_level
-    self.level = 0
-  end
-
-  def user_illness
-    illnesses_list = {
-      'Osgood Schlatter Disease' => 1,
-      'Arthritis' => 2,
-      'high blood pressure' => 3,
-      'low blood pressure' => 4,
-      'pain in their chest' => 5,
-      'heart condition' => 6,
-      'usage of drugs or medication' => 7
+  def user_illnesses # rubocop:disable Metrics/MethodLength
+    illness_mapping = {
+      1 => 'Osgood Schlatter Disease',
+      2 => 'Arthritis',
+      3 => 'High blood pressure',
+      4 => 'Low blood pressure',
+      5 => 'Pain in their chest',
+      6 => 'Heart condition',
+      7 => 'Usage of drugs or medication'
     }
 
-    questions = Question.where(id: 1..10)
-    answers = Answer.where(user_id: user_id, question_id: questions.pluck(:id))
+    positive_answers = Answer.where(
+      user_id: user_id,
+      question_id: illness_mapping.keys,
+      content: 'Yes'
+    ).pluck(:question_id)
 
-    illness_tags = []
+    positive_answers.filter_map { |id| illness_mapping[id] }
+  end
 
-    answers.each do |a|
-      if a.content == 'Yes'
-        illnesses_list.each { |key, value| illness_tags << key if a.question.id == value }
-      end
-    end
+  private
 
-    illness_tags.presence || []
+  def default_image_url
+    'https://pub-bc4cae30cb704275a2d82ae56b32c9b6.r2.dev/cfs/user.png'
+  end
+
+  def set_default_level
+    self.level ||= :development
   end
 end

@@ -27,7 +27,7 @@ module Users
         age = (Time.zone.today - dob).to_i / 365
 
         if age < 18
-          flash[:alert] = 'Parental guidances needed to create an account.'
+          flash[:alert] = 'Parental guidances needed to create an account.' # rubocop:disable Rails/I18nLocaleTexts
           return
         else
           @user.save
@@ -37,7 +37,7 @@ module Users
       if @user.persisted?
         handle_successful_creation
       else
-        flash[:alert] = 'Oops, something went wrong!'
+        flash[:alert] = 'Oops, something went wrong!' # rubocop:disable Rails/I18nLocaleTexts
         render 'new'
       end
     end
@@ -52,18 +52,16 @@ module Users
     end
 
     def handle_successful_creation
-      if @user.role == 'athlete'
-        create_athlete_profile(@user.id, params[:user][:dob])
-      end
+      create_athlete_profile(@user.id, params[:user][:dob]) if @user.role == 'athlete'
 
       sign_in(@user) # Manually sign in the user
       begin
         UserMailer.welcome_email(@user).deliver_now
-      rescue Exception => e
+      rescue Exception => e # rubocop:disable Lint/RescueException
         Rails.logger.debug { "Error sending email: #{e.message}" }
       end
 
-      flash[:success] = 'Athlete Profile created!'
+      flash[:success] = 'Athlete Profile created!' # rubocop:disable Rails/I18nLocaleTexts
       redirect_to root_path
     end
   end
