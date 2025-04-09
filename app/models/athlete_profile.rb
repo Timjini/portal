@@ -101,10 +101,6 @@ class AthleteProfile < ApplicationRecord
 
   private
 
-  def default_image_url
-    'https://pub-bc4cae30cb704275a2d82ae56b32c9b6.r2.dev/cfs/user.png'
-  end
-
   def set_default_level
     self.level ||= :development
   end

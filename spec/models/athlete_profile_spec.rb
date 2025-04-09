@@ -69,30 +69,6 @@ RSpec.describe AthleteProfile, type: :model do # rubocop:disable Metrics/BlockLe
     end
   end
 
-  describe '#image_thumbnail' do
-    let(:profile) { create(:athlete_profile, valid_attributes) }
-
-    context 'when image is attached' do
-      before do
-        profile.image.attach(
-          io: Rails.root.join('spec/fixtures/sample_athlete.png').open,
-          filename: 'sample_athlete.jpg',
-          content_type: 'image/jpeg'
-        )
-      end
-
-      it 'returns the attached image' do
-        expect(profile.image_thumbnail).to eq(profile.image)
-      end
-    end
-
-    context 'when image is not attached' do
-      it 'returns default image URL' do
-        expect(profile.image_thumbnail).to eq('https://pub-bc4cae30cb704275a2d82ae56b32c9b6.r2.dev/cfs/user.png')
-      end
-    end
-  end
-
   describe '#age' do
     let(:profile) { described_class.new(valid_attributes) }
 
