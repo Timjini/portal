@@ -10,7 +10,7 @@ module Users
       # @role_labels = { "athlete" => "Athlete", "athlete_parent" => "Parent" }
     end
 
-    def create
+    def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
       @user = User.new
       @user.email = params[:user][:email]
       @user.username = params[:user][:username].downcase

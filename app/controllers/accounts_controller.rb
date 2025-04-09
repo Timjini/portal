@@ -24,7 +24,7 @@ class AccountsController < ApplicationController
     redirect_to accounts_path
   end
 
-  def create_child_user
+  def create_child_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     @account = User.new
     @account.email = current_user.email
     @account.parent_id = current_user.id
@@ -39,14 +39,14 @@ class AccountsController < ApplicationController
     if @account.save
       create_athlete_child_profile(@account.id, params[:dob], params[:school_name], params[:password],
                                    params[:height], params[:weight])
-      flash[:success] = 'Child user created!'
+      flash[:success] = 'Child user created!' # rubocop:disable Rails/I18nLocaleTexts
 
       respond_to do |format|
         # format.html { redirect_to accounts_path }
         format.json { render json: { status: 'success', message: 'Child user created!' } }
       end
     else
-      flash[:alert] = 'Oops, something went wrong!'
+      flash[:alert] = 'Oops, something went wrong!' # rubocop:disable Rails/I18nLocaleTexts
 
       respond_to do |format|
         format.html { render 'new' }

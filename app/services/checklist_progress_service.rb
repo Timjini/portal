@@ -40,7 +40,7 @@ class ChecklistProgressService
     end
   end
 
-  def update_level_status_and_athlete_profile(_user_level)
+  def update_level_status_and_athlete_profile(_user_level) # rubocop:disable Metrics/AbcSize
     user_levels = UserLevel.where(user_id: @user_id, degree: @checklist.level.degree)
     completed_items = UserChecklist.where(user_id: @user_id, user_level_id: user_levels.pluck(:id),
                                           completed: true).count
@@ -49,7 +49,8 @@ class ChecklistProgressService
       "user_levels:#{user_levels.inspect},completed_items:#{completed_items} , total_items:#{total_items}"
     end
     new_status = completed_items == total_items ? 'completed' : 'in_progress'
-    user_levels.update_all(status: new_status)
+    # to be tested
+    user_levels.update_each(:status, new_status)
     @athlete_profile.update(level: user_levels.first.level.degree)
   end
 

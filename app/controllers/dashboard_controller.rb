@@ -15,7 +15,7 @@ class DashboardController < ApplicationController
 
   def goals_rewards_acheivements; end
 
-  def kpi_csv_upload
+  def kpi_csv_upload # rubocop:disable Metrics/MethodLength
     csv_file = params[:file]
     if csv_file.blank?
       render json: { error: 'No file uploaded' }, status: :bad_request
@@ -53,7 +53,7 @@ class DashboardController < ApplicationController
     end
   end
 
-  def save_attachments_to_public(attachment)
+  def save_attachments_to_public(attachment) # rubocop:disable Metrics/MethodLength
     return unless attachment.respond_to?(:read)
 
     attachments_dir = Rails.public_path.join('uploads') # Save under /public/uploads

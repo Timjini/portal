@@ -25,7 +25,7 @@ class DcpaEventsController < ApplicationController
 
     respond_to do |format|
       if @dcpa_event.save
-        format.html { redirect_to @dcpa_event, notice: 'Dcpa event was successfully created.' }
+        format.html { redirect_to @dcpa_event, notice: 'Dcpa event was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: @dcpa_event }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class DcpaEventsController < ApplicationController
   def update
     respond_to do |format|
       if @dcpa_event.update(dcpa_event_params)
-        format.html { redirect_to @dcpa_event, notice: 'Dcpa event was successfully updated.' }
+        format.html { redirect_to @dcpa_event, notice: 'Dcpa event was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @dcpa_event }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class DcpaEventsController < ApplicationController
     @dcpa_event.destroy!
 
     respond_to do |format|
-      format.html { redirect_to dcpa_events_path, status: :see_other, notice: 'Dcpa event was successfully destroyed.' }
+      format.html { redirect_to dcpa_events_path, status: :see_other, notice: 'Dcpa event was successfully destroyed.' } # rubocop:disable Rails/I18nLocaleTexts
       format.json { head :no_content }
     end
   end

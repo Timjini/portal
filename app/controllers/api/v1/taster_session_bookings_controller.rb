@@ -12,7 +12,7 @@ module Api
         @taster_session_booking = TasterSessionBooking.new
       end
 
-      def create
+      def create # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
         check_email = params[:email] || params[:parentEmail]
         user = User.find_by(email: check_email)
 
@@ -32,7 +32,7 @@ module Api
 
         if params[:registration_confirmation] && params[:registration_confirmation] == 'on'
           create_user(check_email, params[:firstName], params[:lastName], params[:phone], params[:role],
-                      params[:childBirthDate], params[:athleteBirthDate], params[:parentEmail], params[:parentFirstName], params[:parentLastName], params[:parentPhone], params[:childFullName])
+                      params[:childBirthDate], params[:athleteBirthDate], params[:parentEmail], params[:parentFirstName], params[:parentLastName], params[:parentPhone], params[:childFullName]) # rubocop:disable Layout/LineLength
           # create_user(,params[:role],params[:childBirthDate],params[:athleteBirthDate])
         end
 

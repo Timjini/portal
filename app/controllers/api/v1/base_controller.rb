@@ -37,7 +37,6 @@ module Api
 
         token = request.headers['Authorization'].split.last
         payload = JsonWebToken.decode(token)
-        Rails.logger.debug { "#{payload}==============" }
         return false if payload.blank?
 
         id = payload['user_id']

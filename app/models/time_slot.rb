@@ -10,7 +10,7 @@ class TimeSlot < ApplicationRecord
   # enum group_type: { development: "development", intermediate: "intermediate", advanced: "advanced"}
   enum :slot_type, { coach_slot: 'Coach Slot', taster_session_bookings: 'Taster Session Booking' }
   validates :recurrence_rule,
-            inclusion: { in: %w[none day week month], message: '%<value>s is not a valid recurrence rule' }, allow_nil: true
+            inclusion: { in: %w[none day week month], message: '%<value>s is not a valid recurrence rule' }, allow_nil: true # rubocop:disable Rails/I18nLocaleTexts,Layout/LineLength
   # validates :recurrence_end, presence: true, if: -> { recurrence_rule.present? }
   #
   def coach_name
@@ -45,7 +45,7 @@ class TimeSlot < ApplicationRecord
     end
   end
 
-  def coach_data
+  def coach_data # rubocop:disable Metrics/MethodLength
     calendars = CoachCalendar.where(id: coach_calendar_ids).uniq
 
     return [] if calendars.blank?

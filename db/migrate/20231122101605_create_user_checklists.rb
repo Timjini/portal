@@ -6,7 +6,7 @@ class CreateUserChecklists < ActiveRecord::Migration[7.1]
       t.references :user_level, null: false, foreign_key: true
       t.references :check_list, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
-      t.boolean :completed
+      t.boolean :completed, null: false, default: false
       t.string :title
 
       t.timestamps

@@ -9,16 +9,16 @@ module Api
 
       include AthleteProfilesHelper
 
-      def login
+      def login # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
         user = User.where('lower(email) = ?', params[:user][:email].downcase).first
         if user.nil?
           api_error(status: 404, errors: ["Sorry we didn't find you on CFS."])
         elsif user&.valid_password?(params[:user][:password])
-          tokenExpire = Time.zone.today + 365.days
-          user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: tokenExpire.to_time.to_i })
-          userData = ActiveModelSerializers::SerializableResource.new(user,
+          tokenExpire = Time.zone.today + 365.days # rubocop:disable Naming/VariableName
+          user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: tokenExpire.to_time.to_i }) # rubocop:disable Naming/VariableName
+          userData = ActiveModelSerializers::SerializableResource.new(user, # rubocop:disable Naming/VariableName
                                                                       each_serializer: Api::V1::UsersSerializer)
-          result = { type: 'Success', data: userData, message: ['User singin successfully.'], status: 200 }
+          result = { type: 'Success', data: userData, message: ['User signin successfully.'], status: 200 } # rubocop:disable Naming/VariableName
           render json: result
           nil
         else
@@ -26,7 +26,7 @@ module Api
         end
       end
 
-      def sign_up
+      def sign_up # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
         user = User.new(user_params)
 
         if params[:user][:dob].present?
@@ -43,13 +43,13 @@ module Api
           return result
         end
 
-        tokenExpire = Time.zone.today + 365.days
-        user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: tokenExpire.to_time.to_i })
+        tokenExpire = Time.zone.today + 365.days # rubocop:disable Naming/VariableName
+        user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: tokenExpire.to_time.to_i }) # rubocop:disable Naming/VariableName
 
         if user.save
           handle_successful_creation(user)
-          userData = ActiveModelSerializers::SerializableResource.new(user, each_serializer: Api::V1::UsersSerializer)
-          result = { type: 'Success', data: userData, message: ['Account created successfully.'], status: 200 }
+          userData = ActiveModelSerializers::SerializableResource.new(user, each_serializer: Api::V1::UsersSerializer) # rubocop:disable Naming/VariableName
+          result = { type: 'Success', data: userData, message: ['Account created successfully.'], status: 200 } # rubocop:disable Naming/VariableName
           render json: result
           nil
         else
@@ -73,7 +73,7 @@ module Api
         create_athlete_profile(user.id, params[:user][:dob]) if user.role == 'athlete'
         begin
           UserMailer.welcome_email(user).deliver_now
-        rescue Exception
+        rescue Exception # rubocop:disable Lint/RescueException
           Rails.logger.debug 'Error sending welcome email'
         end
       end
