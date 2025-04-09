@@ -28,8 +28,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @profile = @user.athlete_profile
   end
-#TODO before release
-  def update_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+
+  # TODO: before release
+  def update_user
     @user = User.find(params[:id])
     @profile = @user.athlete_profile || AthleteProfile.new(user: @user)
     begin
@@ -47,7 +48,7 @@ class UsersController < ApplicationController
     #         turbo_stream.replace(@user, partial: 'users/form', locals: { user: @user })
     #       ]
     #     end
-    #     format.html { redirect_to @user, notice: 'User and profile were successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
+    #     format.html { redirect_to @user, notice: 'User and profile were successfully updated.' }
     #   else
     #     format.turbo_stream do
     #       render turbo_stream: turbo_stream.replace('flash', partial: 'shared/flash',
@@ -93,5 +94,4 @@ class UsersController < ApplicationController
   def athlete_profile_params
     params.require(:athlete_profile).permit(:height, :weight, :dob, :level)
   end
-
 end

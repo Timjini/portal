@@ -76,6 +76,7 @@ gem 'sentry-ruby'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'byebug'
   gem 'debug', platforms: %i[mri windows]
   gem 'factory_bot_rails'
   gem 'faker'
@@ -109,8 +110,6 @@ gem 'searchkick'
 gem 'devise', '~> 4.9'
 
 gem 'will_paginate'
-
-gem 'byebug', group: :development
 
 gem 'rack-cors'
 
