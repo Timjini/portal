@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module NotificationHelper
-  def general_notification(user, category, message)
+  def general_notification(user, category, message) # rubocop:disable Metrics/MethodLength
     parent = User.find_by(parent_id: user.parent_id, role: 'parent') if user.role.in?(%w[parent_user child_user])
 
     notification_params = {

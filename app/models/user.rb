@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'securerandom'
-class User < ApplicationRecord
+class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -10,10 +10,10 @@ class User < ApplicationRecord
 
   attr_accessor :dob
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_one_attached :avatar
   has_one :athlete_profile, dependent: :destroy
-  has_many :qr_codes
+  has_many :qr_codes, dependent: :destroy
   has_many :user_checklists, dependent: :destroy
   has_many :user_levels, dependent: :destroy
   has_many :answers, dependent: :destroy
@@ -56,13 +56,13 @@ class User < ApplicationRecord
   #   "#{first_name} #{last_name}"
   # end
 
-  def age
+  def age # rubocop:disable Metrics/AbcSize
     profile = AthleteProfile.find_by(user_id: id)
 
     if profile&.dob
       dob = profile.dob
       current_date = Time.zone.today
-      age = current_date.year - dob.year - (current_date.month > dob.month || (current_date.month == dob.month && current_date.day >= dob.day) ? 0 : 1)
+      age = current_date.year - dob.year - (current_date.month > dob.month || (current_date.month == dob.month && current_date.day >= dob.day) ? 0 : 1) # rubocop:disable Layout/LineLength
       return age
     end
 
@@ -113,7 +113,7 @@ class User < ApplicationRecord
     end
   end
 
-  def current_level
+  def current_level # rubocop:disable Metrics/MethodLength
     user_level = UserLevel.where(user_id: id, status: 'completed').count
 
     case user_level

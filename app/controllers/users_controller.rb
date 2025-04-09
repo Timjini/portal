@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @profile = @user.athlete_profile || AthleteProfile.new(user: @user)
     begin
-      p athlete_profile_params
+      Rails.logger.debug athlete_profile_params
       @profile.update(params[:height])
     rescue StandardError => e
       put "error here, #{e}"
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     #   if @user.update(user_params)
     #     format.turbo_stream do
     #       render turbo_stream: [
-    #         turbo_stream.replace('flash', partial: 'shared/flash', locals: { notice: 'Profile updated successfully' }),
+    #         turbo_stream.replace('flash', partial: 'shared/flash', locals: { notice: 'Profile updated successfully' }), # rubocop:disable Layout/LineLength
     #         turbo_stream.replace(@user, partial: 'users/form', locals: { user: @user })
     #       ]
     #     end

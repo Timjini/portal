@@ -4,7 +4,7 @@ require 'rubygems'
 require 'recurrence'
 
 module TimeSlotsHelper
-  def create_recurrent_timeslots(time_slot, recurrence_rule, recurrence_end)
+  def create_recurrent_timeslots(time_slot, recurrence_rule, recurrence_end) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     recurrence_end = DateTime.parse(recurrence_end) if recurrence_end.present?
     if recurrence_rule == 'none'
       save_time_slot(time_slot)
@@ -25,7 +25,7 @@ module TimeSlotsHelper
           slot_type: time_slot.slot_type
         )
       end
-      redirect_to time_slots_path, notice: 'Recurrent timeslots were successfully created.'
+      redirect_to time_slots_path, notice: 'Recurrent timeslots were successfully created.' # rubocop:disable Rails/I18nLocaleTexts
     end
   rescue StandardError => e
     Rails.logger.debug { " =>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ERROR: #{e.message}" }
@@ -35,7 +35,7 @@ module TimeSlotsHelper
   def save_time_slot(time_slot)
     respond_to do |format|
       if time_slot.save
-        format.html { redirect_to time_slot_url(time_slot), notice: 'Time slot was successfully created.' }
+        format.html { redirect_to time_slot_url(time_slot), notice: 'Time slot was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: time_slot }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -56,6 +56,6 @@ module TimeSlotsHelper
       timeslot.update(time_slot_params)
     end
 
-    redirect_to time_slots_path, notice: 'Recurring timeslots were successfully updated.'
+    redirect_to time_slots_path, notice: 'Recurring timeslots were successfully updated.' # rubocop:disable Rails/I18nLocaleTexts
   end
 end

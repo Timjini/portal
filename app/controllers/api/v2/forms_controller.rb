@@ -25,7 +25,7 @@ module Api
         render json: { status: 'error', message: 'Form not found' }, status: :not_found
       end
 
-      def create
+      def create # rubocop:disable Metrics/MethodLength
         form = Form.new(form_params)
         if form.save
           begin

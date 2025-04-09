@@ -3,8 +3,8 @@
 module Api
   module V2
     class DcpaEventSerializer < ActiveModel::Serializer
-      attributes :id, :title, :coach, :dates, :start_time_formated, :end_time_formated, :location, :ages_available, :price,
-                 :dcpa_discount, :extras, :event_type, :status, :dcpa_price, :image_url
+      attributes :id, :title, :coach, :dates, :start_time_formated, :end_time_formated, :location, :ages_available,
+                 :price, :dcpa_discount, :extras, :event_type, :status, :dcpa_price, :image_url
 
       def event_type
         object.event_type.humanize

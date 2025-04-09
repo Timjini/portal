@@ -21,7 +21,7 @@ class TimeSlotsController < ApplicationController
   def edit; end
 
   # POST /time_slots or /time_slots.json
-  def create
+  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     user_ids = params[:time_slot][:user_ids].split(',')
     @time_slot = TimeSlot.new(time_slot_params)
 
@@ -47,14 +47,14 @@ class TimeSlotsController < ApplicationController
   end
 
   # PATCH/PUT /time_slots/1 or /time_slots/1.json
-  def update
+  def update # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     apply_to_all = params[:apply_to_all] == '1'
 
     respond_to do |format|
       if apply_to_all && @time_slot.recurrence_rule.present?
         update_recurrent_timeslots(@time_slot, time_slot_params)
       elsif @time_slot.update(time_slot_params)
-        format.html { redirect_to time_slot_url(@time_slot), notice: 'Time slot was successfully updated.' }
+        format.html { redirect_to time_slot_url(@time_slot), notice: 'Time slot was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @time_slot }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -68,7 +68,7 @@ class TimeSlotsController < ApplicationController
     @time_slot.destroy!
 
     respond_to do |format|
-      format.html { redirect_to time_slots_url, notice: 'Time slot was successfully destroyed.' }
+      format.html { redirect_to time_slots_url, notice: 'Time slot was successfully destroyed.' } # rubocop:disable Rails/I18nLocaleTexts
       format.json { head :no_content }
     end
   end

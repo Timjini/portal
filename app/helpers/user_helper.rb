@@ -3,7 +3,7 @@
 module UserHelper
   include AthleteProfilesHelper
 
-  def create_user(email, first_name, last_name, phone, role, child_dob, _athlete_dob, parent_email, parent_first_name,
+  def create_user(email, first_name, last_name, phone, role, child_dob, _athlete_dob, parent_email, parent_first_name, # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/ParameterLists
                   parent_last_name, parent_phone, child_name)
     if role == 'athlete'
       user = User.new

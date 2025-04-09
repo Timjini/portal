@@ -107,8 +107,8 @@ RSpec.describe AthleteProfile, type: :model do # rubocop:disable Metrics/BlockLe
     end
 
     it 'handles birthday not yet occurred this year' do
-      profile.dob = Date.new(1990, Date.today.month + 1, 1) # Next month
-      expect(profile.age).to eq(Date.today.year - 1990 - 1)
+      profile.dob = Date.new(1990, Time.zone.today.month + 1, 1) # Next month
+      expect(profile.age).to eq(Time.zone.today.year - 1990 - 1)
     end
   end
 

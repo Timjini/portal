@@ -14,7 +14,7 @@ class AthleteProfilesController < ApplicationController
     end
   end
 
-  def show # rubocop:disable Metrics/MethodLength
+  def show # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     service = CheckListService.new(params)
     result = service.show_athlete_status
     @athlete = result[:athlete]
@@ -50,20 +50,20 @@ class AthleteProfilesController < ApplicationController
 
     if existing_profile.present?
       existing_profile.update(athlete_params)
-      flash[:warning] = 'Account has been updated!'
+      flash[:warning] = 'Account has been updated!' # rubocop:disable Rails/I18nLocaleTexts
       redirect_to dashboard_path
     elsif user.present?
       @athlete = AthleteProfile.create(athlete_params)
 
       if @athlete.persisted?
-        flash[:success] = 'Athlete Profile created!'
+        flash[:success] = 'Athlete Profile created!' # rubocop:disable Rails/I18nLocaleTexts
         redirect_to athlete_profile_path(@athlete)
       else
-        flash[:warning] = 'Ooops something went wrong!'
+        flash[:warning] = 'Ooops something went wrong!' # rubocop:disable Rails/I18nLocaleTexts
         render 'new'
       end
     else
-      flash[:warning] = 'User not found with the provided user_id!'
+      flash[:warning] = 'User not found with the provided user_id!' # rubocop:disable Rails/I18nLocaleTexts
       redirect_to new_athlete_profile_path
     end
   end
@@ -94,7 +94,7 @@ class AthleteProfilesController < ApplicationController
 
     @athlete = AthleteProfile.find(params[:id])
     if @athlete.update(athlete_params)
-      flash[:success] = 'AthleteProfile updated'
+      flash[:success] = 'AthleteProfile updated' # rubocop:disable Rails/I18nLocaleTexts
       redirect_to athlete_path(@athlete)
     else
       render :edit

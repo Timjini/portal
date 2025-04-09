@@ -8,8 +8,13 @@ module Api
 
       def index
         @training_packages = TrainingPackage.where(package_type: params[:package_type], status: 'active')
-        render json: { message: 'success', data: ActiveModelSerializers::SerializableResource.new(@training_packages,
-                                                                                                  each_serializer: TrainingPackageSerializer) }
+        render json: {
+          message: 'success',
+          data: ActiveModelSerializers::SerializableResource.new(
+            @training_packages,
+            each_serializer: TrainingPackageSerializer
+          )
+        }
       end
     end
   end

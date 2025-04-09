@@ -1,14 +1,6 @@
 # frozen_string_literal: true
 
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# Ensure the existence of records required to run the application
 
 questionnaire = Questionnaire.create(title: 'Athlete registration form')
 
@@ -21,7 +13,10 @@ questions_data = [
     position: 1
   },
   {
-    content: 'Has your doctor/GP ever said that your child has a bone or joint problem, such as arthritis, that could be aggravated or made worse with exercise?',
+    content: <<~TEXT.strip,
+      Has your doctor/GP ever said that your child has a bone or joint problem,
+      such as arthritis, that could be aggravated or made worse with exercise?
+    TEXT
     question_type: 'radio',
     questionnaire_id: questionnaire.id,
     options: %w[Yes No],
@@ -49,7 +44,10 @@ questions_data = [
     position: 5
   },
   {
-    content: 'Has your doctor/GP ever said that your child has a heart condition and that he or she should only do physical activity recommended by a doctor?',
+    content: <<~TEXT.strip,
+      Has your doctor/GP ever said that your child has a heart condition and that
+      he or she should only do physical activity recommended by a doctor?
+    TEXT
     question_type: 'radio',
     questionnaire_id: questionnaire.id,
     options: %w[Yes No],
@@ -70,7 +68,10 @@ questions_data = [
     position: 8
   },
   {
-    content: 'Does your child often feel faint, have spells of dizziness or loss of consciousness at any point during exercise or on a day-to-day basis?',
+    content: <<~TEXT.strip,
+      Does your child often feel faint, have spells of dizziness or loss of
+      consciousness during exercise or on a day-to-day basis?
+    TEXT
     question_type: 'radio',
     questionnaire_id: questionnaire.id,
     options: %w[Yes No],
@@ -90,7 +91,6 @@ questions_data = [
     options: nil,
     position: 11
   },
-
   {
     content: 'How many litres of water does your child consume per day?',
     question_type: 'radio',
@@ -106,7 +106,10 @@ questions_data = [
     position: 13
   },
   {
-    content: "If there are any medical incidents that have presented themselves in the past but haven't been highlighted within this PAR-Q, please add this where necessary.",
+    content: <<~TEXT.strip,
+      If there are any medical incidents that have presented themselves in the
+      past but haven't been highlighted within this PAR-Q, please add this where necessary.
+    TEXT
     question_type: 'text',
     questionnaire_id: questionnaire.id,
     position: 14
@@ -118,7 +121,10 @@ questions_data = [
     position: 15
   },
   {
-    content: "Has your child participated in any of the following events? If so please tick anyone of the boxes below and inform us of their personal best time(s) or height. If you are unsure of your child's personal best time/height, please leave this blank.",
+    content: <<~TEXT.strip,
+      Has your child participated in any of the following events? If so, please tick any of the boxes
+      and inform us of their personal best time(s) or height. If unsure, leave this blank.
+    TEXT
     question_type: 'multiple',
     questionnaire_id: questionnaire.id,
     options: [
@@ -142,75 +148,48 @@ questions_data = [
     position: 18
   },
   {
-    content: 'In the unlikely event of an emergency, where the parent/guardian cannot be contacted, I hereby give permission for my child to receive medical treatment/first aid from a qualified member of staff.',
+    content: <<~TEXT.strip,
+      In the unlikely event of an emergency, where the parent/guardian cannot be contacted,
+      I hereby give permission for my child to receive medical treatment/first aid from a qualified member of staff.
+    TEXT
     question_type: 'radio',
     questionnaire_id: questionnaire.id,
     options: %w[Yes No],
     position: 19
   },
   {
-    content: "I, The parent/guardian/carer give permission for my child to leave the DCPA session unaccompanied. I have discussed with my child their journey and take full responsible for my child’s safety when travelling home from the DCPA session.\n\nIf you highlight the Yes box, this indicates you give permission for your child to make their own way home.\n\nIf you highlight the No box, this indicates your child won't make their own way home and a parent/guardian/carer will pick them up.",
+    content: <<~TEXT.strip,
+      I, the parent/guardian/carer, give permission for my child to leave the DCPA session unaccompanied.
+      I have discussed with my child their journey and take full responsibility for their safety when travelling home.
+      If you select "Yes", this indicates your child may make their own way home.
+      If you select "No", a parent/guardian/carer must pick them up.
+    TEXT
     question_type: 'radio',
     questionnaire_id: questionnaire.id,
     options: %w[Yes No],
     position: 20
   }
-
 ]
 
-qs = Question.all
-
-if qs.empty?
-
-  questions_data.each do |question_data|
-    Question.create!(question_data)
+questions_data.each { |q| Question.create!(q) } if Question.count.zero?
+if TrainingPackage.count.zero?
+  [
+    ['1 session a week', 38.00],
+    ['2 sessions a week', 81.00],
+    ['3 sessions a week', 124.00]
+  ].each do |name, price|
+    TrainingPackage.create!(
+      name: name,
+      description: "#{name.split.first} training session#{if name.include?('2') || name.include?('3')
+                                                            's'
+                                                          end} per week, billed monthly.",
+      features: ['Access to group training', 'Weekly guidance and support'].to_json,
+      price: price,
+      duration_in_days: 30,
+      package_type: 'group_training',
+      training_type: 'group_training',
+      duration: 'month',
+      status: 'active'
+    )
   end
-
-end
-
-# puts "created"
-#
-#
-## db/seeds.rb
-
-packges = TrainingPackage.all
-
-if packges.empty?
-  # Group Training Packages
-  TrainingPackage.create!(
-    name: '1 session a week',
-    description: '1 training session per week, billed monthly.',
-    features: '["Access to group training", "Weekly guidance and support"]',
-    price: 38.00,
-    duration_in_days: 30, # Assuming 1 month = 30 days
-    package_type: 'group_training',
-    training_type: 'group_training',
-    duration: 'month',
-    status: 'active'
-  )
-
-  TrainingPackage.create!(
-    name: '2 sessions a week',
-    description: '2 training sessions per week, billed monthly.',
-    features: '["Access to group training", "Weekly guidance and support"]',
-    price: 81.00,
-    duration_in_days: 30,
-    package_type: 'group_training',
-    training_type: 'group_training',
-    duration: 'month',
-    status: 'active'
-  )
-
-  TrainingPackage.create!(
-    name: '3 sessions a week',
-    description: '3 training sessions per week, billed monthly.',
-    features: '["Access to group training", "Weekly guidance and support"]',
-    price: 124.00,
-    duration_in_days: 30,
-    package_type: 'group_training',
-    training_type: 'group_training',
-    duration: 'month',
-    status: 'active'
-  )
-
 end

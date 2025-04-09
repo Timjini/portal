@@ -6,6 +6,6 @@ class NotificationMailer < ApplicationMailer
     @category = category
     @message = message
 
-    mail(to: user_email, subject: 'Notification')
+    mail(to: user_email, subject: 'Notification') # rubocop:disable Rails/I18nLocaleTexts
   end
 end

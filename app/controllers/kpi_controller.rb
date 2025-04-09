@@ -57,7 +57,7 @@ class KpiController < ApplicationController
     end
   end
 
-  def bulk_delete
+  def bulk_delete # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     level_ids = params[:level_ids]
 
     sleep 6
@@ -65,7 +65,7 @@ class KpiController < ApplicationController
     if level_ids.empty?
       # respond_to do |format|
       #   format.turbo_stream do
-      #     render turbo_stream: turbo_stream.replace("bulk-delete", partial: "kpis/delete_error", locals: { errors: ["Please select at least one level to delete."] })
+      #     render turbo_stream: turbo_stream.replace("bulk-delete", partial: "kpis/delete_error", locals: { errors: ["Please select at least one level to delete."] }) # rubocop:disable Layout/LineLength
       #     format.html { redirect_to kpis_path, alert: "Please select at least one level to delete." }
       #   end
       # end
@@ -75,7 +75,7 @@ class KpiController < ApplicationController
     if result[:success]
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.replace('bulk-delete', partial: 'kpis/delete_success') }
-        format.html { redirect_to kpis_path, notice: 'Levels deleted successfully.' }
+        format.html { redirect_to kpis_path, notice: 'Levels deleted successfully.' } # rubocop:disable Rails/I18nLocaleTexts
       end
     else
       respond_to do |format|
