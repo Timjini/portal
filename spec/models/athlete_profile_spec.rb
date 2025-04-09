@@ -179,7 +179,8 @@ RSpec.describe AthleteProfile, type: :model do # rubocop:disable Metrics/BlockLe
   describe '#check_lists' do
     it 'returns user checklists when user exists' do
       user = create(:user)
-      checklist = create(:user_checklist, user: user)
+      check_list = create(:check_list)
+      checklist = create(:user_checklist, user: user, check_list: check_list)
       profile = create(:athlete_profile, user: user)
       expect(profile.check_lists).to eq([checklist])
     end
