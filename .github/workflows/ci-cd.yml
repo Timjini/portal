@@ -1,4 +1,4 @@
-name: Ruby on Rails CI
+name: Portal CI & CD
 
 on:
   push:
@@ -74,12 +74,22 @@ jobs:
       - name: Update Bundler
         run: gem install bundler
 
-      # - name: Security audit dependencies
-      #   run: bundle exec bundle audit --update
-
-      # issues should be handled
-      # - name: Security audit application code
-      #   run: bundle exec brakeman -q -w2
-
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Set up SSH key for deployment
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 51.68.199.136 >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@51.68.199.136 << 'EOF'
+            /portal/deploy.sh
+          EOF
