@@ -14,11 +14,11 @@ module Api
         if user.nil?
           api_error(status: 404, errors: ["Sorry we didn't find you on CFS."])
         elsif user&.valid_password?(params[:user][:password])
-          tokenExpire = Time.zone.today + 365.days # rubocop:disable Naming/VariableName
-          user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: tokenExpire.to_time.to_i }) # rubocop:disable Naming/VariableName
-          userData = ActiveModelSerializers::SerializableResource.new(user, # rubocop:disable Naming/VariableName
-                                                                      each_serializer: Api::V1::UsersSerializer)
-          result = { type: 'Success', data: userData, message: ['User signin successfully.'], status: 200 } # rubocop:disable Naming/VariableName
+          token_expire = Time.zone.today + 365.days
+          user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: token_expire.to_time.to_i })
+          user_data = ActiveModelSerializers::SerializableResource.new(user,
+                                                                      each_serializer: Api::V1::UsersSerializer) # rubocop:disable Layout/ArgumentAlignment
+          result = { type: 'Success', data: user_data, message: ['User signin successfully.'], status: 200 }
           render json: result
           nil
         else
@@ -43,13 +43,13 @@ module Api
           return result
         end
 
-        tokenExpire = Time.zone.today + 365.days # rubocop:disable Naming/VariableName
-        user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: tokenExpire.to_time.to_i }) # rubocop:disable Naming/VariableName
+        token_expire = Time.zone.today + 365.days
+        user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: token_expire.to_time.to_i })
 
         if user.save
           handle_successful_creation(user)
-          userData = ActiveModelSerializers::SerializableResource.new(user, each_serializer: Api::V1::UsersSerializer) # rubocop:disable Naming/VariableName
-          result = { type: 'Success', data: userData, message: ['Account created successfully.'], status: 200 } # rubocop:disable Naming/VariableName
+          user_data = ActiveModelSerializers::SerializableResource.new(user, each_serializer: Api::V1::UsersSerializer)
+          result = { type: 'Success', data: user_data, message: ['Account created successfully.'], status: 200 }
           render json: result
           nil
         else
