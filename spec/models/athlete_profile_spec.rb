@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../rails_helper'
+require 'rails_helper'
 
 RSpec.describe AthleteProfile, type: :model do # rubocop:disable Metrics/BlockLength
   let(:user) { create(:user) }

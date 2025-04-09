@@ -57,7 +57,7 @@ jobs:
           bin/rails db:migrate
 
       - name: Run tests
-        run: bin/rails test
+        run: bundle exec rspec
 
   lint:
     runs-on: ubuntu-latest
