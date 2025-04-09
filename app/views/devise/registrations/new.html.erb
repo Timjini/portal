@@ -227,16 +227,18 @@
                         <label for="phone" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Phone</label>
                         <%= form.text_field :phone,id:"user-phone", placeholder: "+44 ", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
                     </div>
-                    <div class="mx-1" data-controller="address-autocomplete">
+                    <div class="mx-1" data-controller="address-autocomplete"
+                    data-address-autocomplete-api-key-value="<%= ENV['GOOGLE_API_KEY'] %>"
+                    >
                         <label for="address" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Address</label>
                         <%= form.text_field :address,
-      id: "user-address",
-      placeholder: "61 Meridian Wy., London N9 0AR, United Kingdom",
-      class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
-      data: { 
-        "address-autocomplete-target": "input",
-        "action": "place_changed->address-autocomplete#placeSelected"
-      }, autocomplete: "off" %>
+                        id: "user-address",
+                        placeholder: "61 Meridian Wy., London N9 0AR, United Kingdom",
+                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+                        data: { 
+                            "address-autocomplete-target": "input",
+                            "action": "place_changed->address-autocomplete#placeSelected",
+                        }, autocomplete: "off" %>
                     </div>
                 </div>
                 <div class="mx-2 mt-10">
