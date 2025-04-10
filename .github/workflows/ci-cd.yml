@@ -88,14 +88,14 @@ jobs:
       - name: Add SSH Key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY_BASE64 }}" | base64 -d > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan 51.68.199.136 >> ~/.ssh/known_hosts
       
-      - name: Debug key presence
+      - name: Debug SSH key file
         run: |
-          ls -la ~/.ssh
-          file ~/.ssh/id_rsa
+          ls -l ~/.ssh/id_rsa
+          cat ~/.ssh/id_rsa | wc -l
 
       - name: Deploy to server
         run: |
