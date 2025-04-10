@@ -12,7 +12,7 @@ class AccountsController < ApplicationController
   end
 
   def show
-    @account = User.all
+    @account = User.includes([:athlete_profile])
   end
 
   def create
@@ -57,9 +57,10 @@ class AccountsController < ApplicationController
 
   def all_accounts
     @accounts = if params[:role].present?
-                  User.where(role: params[:role]).paginate(page: params[:page], per_page: 10)
+                  User.includes([:athlete_profile]).where(role: params[:role]).paginate(page: params[:page],
+                                                                                        per_page: 10)
                 else
-                  User.all.paginate(page: params[:page], per_page: 10)
+                  User.includes([:athlete_profile]).all.paginate(page: params[:page], per_page: 10)
                 end
   end
 

@@ -40,7 +40,7 @@ class AthleteChecklistStatusService
   end
 
   def determine_level_status(levels) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    athlete_level = @athlete.athlete_level.where(status: 'completed')
+    athlete_level = @athlete.athlete_levels.where(status: 'completed')
     status = {}
 
     if athlete_level.blank? && levels.present?
