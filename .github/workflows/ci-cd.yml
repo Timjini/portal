@@ -100,5 +100,7 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@51.68.199.136 << 'EOF'
-            sudo /home/ubuntu/portal/deploy.sh
+            cd /home/ubuntu/portal || { echo "Directory not found!"; exit 1; }
+            chmod +x deploy.sh
+            ./deploy.sh
           EOF
