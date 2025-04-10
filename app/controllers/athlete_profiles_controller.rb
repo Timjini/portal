@@ -7,10 +7,9 @@ class AthleteProfilesController < ApplicationController
   def index
     @users = User.where(role: %w[child_user athlete])
     if params[:level].present?
-      @athletes = AthleteProfile.where(user_id: @users.ids).where(level: params[:level])
+      @athletes = AthleteProfile.includes(user: [:avatar_attachment]).where(user_id: @users.ids).where(level: params[:level])
     else
-      @users = User.where(role: %w[child_user athlete])
-      @athletes = AthleteProfile.where(user_id: @users.ids)
+      @athletes = AthleteProfile.includes(user: [:avatar_attachment]).where(user_id: @users.ids)
     end
   end
 
