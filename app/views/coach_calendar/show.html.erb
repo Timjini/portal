@@ -1,52 +1,10 @@
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
-<style>
-.fc-dayGridMonth-view {
-    margin-top: -40px;
-}
-.fc-scroller {
-    margin-top: -80px;
-}
-</style>
-<div class="flex flex-col">
+<div class="flex flex-col" data-controller="calendar" data-calendar-user-id-value="<%= params[:id] %>">
   <p style="color: green"><%= notice %></p>
-  <button onclick="location.reload();" class="confirm-btn">
+  <button data-action="click->calendar#refresh" class="confirm-btn">
     <span class="material-symbols-outlined">
-    sync
+      sync
     </span> refresh calendar 
   </button>
   <h1 class="font-extrabold text-2xl text-gray-800">Coach Calendar</h1>
-  <div id="calendar" class=""></div>
+  <div data-calendar-target="calendar"></div>
 </div>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-
-    var userId = <%=params[:id]%>
-    
-    if (!calendarEl) {
-      console.error("Calendar element not found.");
-      return;
-    }
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      eventTimeFormat: { 
-        hour: 'numeric',
-        minute: '2-digit',
-        meridiem: false
-      },
-      events: `/coach_calendar/data/${userId}`,
-      eventDidMount: function(info) {
-        console.log('Event mounted:', info.event.title);
-      },
-      loading: function(isLoading) {
-        if (isLoading) {
-          console.log('Calendar is loading...');
-        } else {
-          console.log('Calendar has finished loading.');
-        }
-      }
-    });
-    calendar.render();
-  });
-</script>
-

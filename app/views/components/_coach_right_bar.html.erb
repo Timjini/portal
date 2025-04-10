@@ -1,15 +1,15 @@
 <div class="r_sidebar  flex flex-col gap-10 px-10">
     <div class="navigation flex flex-row pt-4 gap-5 justify-left content-center">
-                            <a id="toggleThemeBtn" type="button" class="theme-btn">
-                                <span class="material-symbols-outlined theme_icon icon_span">
-                                    light_mode
-                                </span>
-                            </a>
-                            
-                                                        <%=render 'notifications/top_bar_notifications'%>
+        <button id="toggleThemeBtn" data-controller="theme" data-action="click->theme#toggle" class="theme-toggle-btn">
+            <span class="material-symbols-outlined theme_icon" data-theme-target="icon">
+                light_mode
+            </span>
+        </button>
 
-                             <a href="/users/<%=current_user.id%>" class="relative inline-flex items-center">
-                            <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 object-cover rounded-full")%>
-                            </a>
+        <%=render 'notifications/top_bar_notifications'%>
+
+        <a href="/users/<%=current_user.id%>" class="relative inline-flex items-center">
+            <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 object-cover rounded-full")%>
+        </a>
     </div>
 </div>

@@ -47,9 +47,14 @@
     
     <div class="flex flex-row gap-2">
       <div>
-        <%= form.label :group_types, "Group Types" %>
+       <%= form.label :group_types, "Group Types" %>
         <% group_types = ['development', 'intermediate', 'advanced'] %>
-        <%= form.collection_check_boxes(:group_types, group_types, :to_s, :titleize) %>
+        <% group_types.each do |type| %>
+          <div class="flex items-center">
+            <%= form.check_box :group_types, { multiple: true, checked: form.object.group_types&.include?(type) }, type, nil %>
+            <%= form.label "group_types_#{type}", type.titleize, class: "ml-2" %>
+          </div>
+        <% end %>
       </div>
       </div>
       <div>

@@ -9,7 +9,7 @@ class CoachCalendarService
     calendars = CoachCalendar.includes(:time_slots)
     return [] unless calendars.any?
 
-    time_slots = TimeSlot.all
+    time_slots = TimeSlot.includes(:coach_calendar)
     time_slots.map do |time_slot|
       coach_data = extract_coach_data(time_slot)
 
@@ -17,10 +17,10 @@ class CoachCalendarService
         id: time_slot.id,
         title: time_slot.title,
         groups: time_slot.group_type_list,
-        coach: coach_data[:names].join(', '),
+        coach: coach_data[:name],
         start: "#{time_slot.date}T#{time_slot.start_time.strftime('%H:%M:%S')}",
         end: "#{time_slot.date}T#{time_slot.end_time.strftime('%H:%M:%S')}",
-        color: coach_data[:colors].join(', '),
+        color: coach_data[:color],
         url: "/time_slots/#{time_slot.id}"
       }
     end
@@ -56,12 +56,9 @@ class CoachCalendarService
   private
 
   def extract_coach_data(time_slot)
-    coach_ids = time_slot.coach_calendar_ids.uniq
-    coaches = User.where(id: coach_ids)
-
     {
-      names: coaches.map(&:full_name),
-      colors: coaches.map(&:color)
+      name: time_slot.coach_calendar.user.full_name,
+      color: time_slot.coach_calendar.user.color
     }
   end
 end
