@@ -80,18 +80,18 @@ jobs:
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: test
-  #   steps:
-  #     - name: Add SSH Key
-  #       run: |
-  #         mkdir -p ~/.ssh
-  #         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-  #         chmod 600 ~/.ssh/id_rsa
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Add SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
-  #     - name: Deploy to server
-  #       run: |
-  #         ssh -o StrictHostKeyChecking=no ubuntu@51.68.199.136 << 'EOF'
-  #           /portal/deploy.sh
-  #         EOF
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@51.68.199.136 << 'EOF'
+            /portal/deploy.sh
+          EOF
