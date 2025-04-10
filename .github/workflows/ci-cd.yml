@@ -100,5 +100,5 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@51.68.199.136 << 'EOF'
-            /portal/deploy.sh
+            sudo /home/ubuntu/portal/deploy.sh
           EOF
