@@ -6,11 +6,11 @@ class AthleteProfilesController < ApplicationController
   include NotificationHelper
   def index
     @users = User.where(role: %w[child_user athlete])
-    if params[:level].present?
-      @athletes = AthleteProfile.includes(user: [:avatar_attachment]).where(user_id: @users.ids).where(level: params[:level])
-    else
-      @athletes = AthleteProfile.includes(user: [:avatar_attachment]).where(user_id: @users.ids)
-    end
+    @athletes = if params[:level].present?
+                  AthleteProfile.includes(user: [:avatar_attachment]).where(user_id: @users.ids).where(level: params[:level]) # rubocop:disable Layout/LineLength
+                else
+                  AthleteProfile.includes(user: [:avatar_attachment]).where(user_id: @users.ids)
+                end
   end
 
   def show # rubocop:disable Metrics/MethodLength,Metrics/AbcSize

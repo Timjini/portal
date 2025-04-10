@@ -6,7 +6,7 @@ class KpiService
   end
 
   def fetch_levels(page, per_page)
-    Level.all.paginate(page: page, per_page: per_page).order(:degree)
+    Level.includes([:check_lists]).all.paginate(page: page, per_page: per_page).order(:degree)
   end
 
   def create_level # rubocop:disable Metrics/MethodLength

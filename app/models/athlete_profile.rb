@@ -6,8 +6,8 @@ class AthleteProfile < ApplicationRecord
   has_one_attached :image
 
   # Validations
-  validates :first_name, :last_name, presence: true
-  validates :first_name, uniqueness: { scope: :last_name, case_sensitive: false } # rubocop:disable Rails/UniqueValidationWithoutIndex
+  # validates :first_name, :last_name, presence: true
+  # validates :first_name, uniqueness: { scope: :last_name, case_sensitive: false }
 
   # Enums
   enum :level, {
