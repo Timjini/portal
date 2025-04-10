@@ -31,3 +31,9 @@ application.register("visibility", VisibilityController)
 
 import EditableFieldController from "./editable_field_controller"
 application.register("editable-field", EditableFieldController)
+
+import CalendarController from "./calendar_controller"
+application.register("calendar", CalendarController)
+
+import UserSearchController from "./user_search_controller"
+application.register("user-search", UserSearchController)

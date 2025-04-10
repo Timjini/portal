@@ -18,7 +18,6 @@ class AthleteProfilesController < ApplicationController
     result = service.show_athlete_status
     @athlete = result[:athlete]
     @levels = result[:levels]
-    Rails.logger.debug @levels.inspect.to_s
     @user = result[:user]
     @percentage = result[:percentage]
     @status = result[:status]

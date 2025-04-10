@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class TimeSlot < ApplicationRecord
+  belongs_to :coach_calendar
   # serialize :coach_calendar_ids, JSON
   # serialize :group_types, JSON
 
   # validates :coach_calendar_ids, presence: true
   # validates :group_types, presence: true
+  before_validation :clean_group_types
 
   # enum group_type: { development: "development", intermediate: "intermediate", advanced: "advanced"}
   enum :slot_type, { coach_slot: 'Coach Slot', taster_session_bookings: 'Taster Session Booking' }
@@ -14,7 +16,7 @@ class TimeSlot < ApplicationRecord
   # validates :recurrence_end, presence: true, if: -> { recurrence_rule.present? }
   #
   def coach_name
-    calendars = CoachCalendar.where(id: coach_calendar_ids)
+    calendars = CoachCalendar.where(id: coach_calendar_id)
     if calendars.nil?
       'No coach assigned'
     else
@@ -36,7 +38,7 @@ class TimeSlot < ApplicationRecord
   end
 
   def coach_names
-    calendars = CoachCalendar.where(id: coach_calendar_ids)
+    calendars = CoachCalendar.where(id: coach_calendar_id)
     if calendars.nil?
       'No coach assigned'
     else
@@ -64,5 +66,11 @@ class TimeSlot < ApplicationRecord
     end
 
     unique_coaches.values
+  end
+
+  private
+
+  def clean_group_types
+    self.group_types = group_types.compact_blank if group_types.present?
   end
 end

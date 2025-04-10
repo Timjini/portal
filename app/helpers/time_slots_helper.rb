@@ -4,7 +4,7 @@ require 'rubygems'
 require 'recurrence'
 
 module TimeSlotsHelper
-  def create_recurrent_timeslots(time_slot, recurrence_rule, recurrence_end) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  def create_recurrent_timeslots(time_slot, title, recurrence_rule, recurrence_end, calendar) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     recurrence_end = DateTime.parse(recurrence_end) if recurrence_end.present?
     if recurrence_rule == 'none'
       save_time_slot(time_slot)
@@ -15,14 +15,15 @@ module TimeSlotsHelper
       recurrence = Recurrence.new(recurrence_rule_hash)
       recurrence.events.each do |event_date|
         TimeSlot.create(
+          title: title,
           date: event_date,
           start_time: time_slot.start_time,
           end_time: time_slot.end_time,
-          coach_calendar_ids: time_slot.coach_calendar_ids,
           recurrence_rule: time_slot.recurrence_rule,
           recurrence_end: time_slot.recurrence_end,
           group_types: time_slot.group_types,
-          slot_type: time_slot.slot_type
+          slot_type: time_slot.slot_type,
+          coach_calendar_id: calendar.id
         )
       end
       redirect_to time_slots_path, notice: 'Recurrent timeslots were successfully created.' # rubocop:disable Rails/I18nLocaleTexts
@@ -46,8 +47,8 @@ module TimeSlotsHelper
 
   def update_recurrent_timeslots(original_time_slot, time_slot_params)
     timeslots = Timeslot.where(
-      'coach_calendar_ids = ? AND start_time >= ? AND recurrence_rule = ?',
-      original_time_slot.coach_calendar_ids,
+      # 'coach_calendar_ids = ? AND start_time >= ? AND recurrence_rule = ?',
+      # original_time_slot.coach_calendar_ids,
       original_time_slot.start_time,
       original_time_slot.recurrence_rule
     )

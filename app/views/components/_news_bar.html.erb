@@ -1,78 +1,71 @@
  <!-- RIGHT SIDEBAR -->
-        <div class="r_sidebar  flex flex-col gap-10 px-10">
-                <div class="navigation flex flex-row pt-4 gap-5 justify-left content-center">
-                            <a id="toggleThemeBtn" type="button" class="theme-btn relative inline-flex items-center">
-                                <span class="material-symbols-outlined theme_icon icon_span">
-                                    light_mode
-                                </span>
-                            </a>
-
-                            <%=render 'notifications/top_bar_notifications'%>
-
+ <div class="r_sidebar  flex flex-col gap-10 px-10">
+     <div class="navigation flex flex-row pt-4 gap-5 justify-left content-center">
+         <button id="toggleThemeBtn" data-controller="theme" data-action="click->theme#toggle" class="theme-toggle-btn">
+             <span class="material-symbols-outlined theme_icon" data-theme-target="icon">
+                 light_mode
+             </span>
+         </button>
+         <%=render 'notifications/top_bar_notifications'%>
 
 
-                            <div></div>
-                            <div class="hidden"><a class="material-symbols-outlined icon_span">chat</a></div>
-                            <a href="/users/<%=current_user.id%>" class="relative inline-flex items-center">
-                            <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 object-cover rounded-full")%>
-                            </a>
-                </div>
-                <div class="hidden">
-                    <h3 class="text-lg font-bold py-3">Live Events</h3>
-                    <ul>
-                        <li>
-                            <div class="flex flex-row gap-3 p-1 sport_item">
-                                <img class="w-10 h-10 object-cover rounded-full mt-1"
-                                    src="https://img.freepik.com/free-vector/vector-isolated-realistic-soccer-ball-white_1284-41932.jpg?w=826&t=st=1699352692~exp=1699353292~hmac=f18fa2db28cb473972f7abca5a64ac467460ebd9d5ce2e957c95a71f6adddbc3"
-                                    alt="Rounded avatar">
-                                <div>
-                                    <span class="font-bold"> Football/Drills </span> <br />
-                                    <span> 10:00 am </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex flex-row gap-3 p-1 sport_item">
-                                <img class="w-10 h-10 rounded-full mt-2"
-                                    src="https://img.freepik.com/free-vector/basketball-ball-isolated_1284-42545.jpg?w=826&t=st=1699352719~exp=1699353319~hmac=0836d404da5b4f4b50b5bcfe08d5025d1d2c5818d377e22974400054dccf7ffc"
-                                    alt="Rounded avatar">
-                                <div>
-                                    <span class="font-bold"> BasketBall/Training </span> <br />
-                                    <span> 10:00 am </span>
-                                </div>
-                            </div>
 
-                        </li>
-                        <li>
-                            <div class="flex flex-row gap-3 p-1 sport_item">
-                                <img class="w-10 h-10 rounded-full mt-2"
-                                    src="https://img.freepik.com/free-vector/blue-geometric-woman-running-illustration_1284-52845.jpg?w=826&t=st=1699352758~exp=1699353358~hmac=dc61fcc69e1a689ea78e6d6b0b8e181231485e4b45b11e44f3178f4c7bede59b"
-                                    alt="Rounded avatar">
-                                <div>
-                                    <span class="font-bold"> Running/100m sprint </span> <br />
-                                    <span> 10:00 am </span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="flex flex-col gap-5 hidden">
-                    <h3 class="text-lg font-bold">Athlete Profile</h3>
-                    <div class="blog_card flex flex-col p-6 gap-3">
-                        <h4 class="font-bold">Latest KPI</h4>
-                            <span> Sprint </span>
-                            <div class="w-full bg-gray-100 rounded-full">
-                                <div class="kpi-bar text-xs font-medium  text-center p-0.5 leading-none rounded-full" style="width: 45%"> 45%</div>
-                            </div>
-                            <span> Resistance </span>
-                            <div class="w-full bg-gray-100 rounded-full ">
-                                    <div class="kpi-bar text-xs font-medium  text-center p-0.5 leading-none rounded-full" style="width: 60%"> 60%</div>
-                            </div>
-                            <span> Endurance </span>
-                            <div class="w-full bg-gray-100 rounded-full ">
-                                <div class="kpi-bar text-xs font-medium  text-center p-0.5 leading-none rounded-full" style="width: 14%"> 14%</div>
-                            </div>
-                    </div>
-                </div>
-                <div></div>
-        </div>
+         <div></div>
+         <div class="hidden"><a class="material-symbols-outlined icon_span">chat</a></div>
+         <a href="/users/<%=current_user.id%>" class="relative inline-flex items-center">
+             <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 object-cover rounded-full")%>
+         </a>
+     </div>
+     <div class="hidden">
+         <h3 class="text-lg font-bold py-3">Live Events</h3>
+         <ul>
+             <li>
+                 <div class="flex flex-row gap-3 p-1 sport_item">
+                     <img class="w-10 h-10 object-cover rounded-full mt-1" src="https://img.freepik.com/free-vector/vector-isolated-realistic-soccer-ball-white_1284-41932.jpg?w=826&t=st=1699352692~exp=1699353292~hmac=f18fa2db28cb473972f7abca5a64ac467460ebd9d5ce2e957c95a71f6adddbc3" alt="Rounded avatar">
+                     <div>
+                         <span class="font-bold"> Football/Drills </span> <br />
+                         <span> 10:00 am </span>
+                     </div>
+                 </div>
+             </li>
+             <li>
+                 <div class="flex flex-row gap-3 p-1 sport_item">
+                     <img class="w-10 h-10 rounded-full mt-2" src="https://img.freepik.com/free-vector/basketball-ball-isolated_1284-42545.jpg?w=826&t=st=1699352719~exp=1699353319~hmac=0836d404da5b4f4b50b5bcfe08d5025d1d2c5818d377e22974400054dccf7ffc" alt="Rounded avatar">
+                     <div>
+                         <span class="font-bold"> BasketBall/Training </span> <br />
+                         <span> 10:00 am </span>
+                     </div>
+                 </div>
+
+             </li>
+             <li>
+                 <div class="flex flex-row gap-3 p-1 sport_item">
+                     <img class="w-10 h-10 rounded-full mt-2" src="https://img.freepik.com/free-vector/blue-geometric-woman-running-illustration_1284-52845.jpg?w=826&t=st=1699352758~exp=1699353358~hmac=dc61fcc69e1a689ea78e6d6b0b8e181231485e4b45b11e44f3178f4c7bede59b" alt="Rounded avatar">
+                     <div>
+                         <span class="font-bold"> Running/100m sprint </span> <br />
+                         <span> 10:00 am </span>
+                     </div>
+                 </div>
+             </li>
+         </ul>
+     </div>
+     <div class="flex flex-col gap-5 hidden">
+         <h3 class="text-lg font-bold">Athlete Profile</h3>
+         <div class="blog_card flex flex-col p-6 gap-3">
+             <h4 class="font-bold">Latest KPI</h4>
+             <span> Sprint </span>
+             <div class="w-full bg-gray-100 rounded-full">
+                 <div class="kpi-bar text-xs font-medium  text-center p-0.5 leading-none rounded-full" style="width: 45%"> 45%</div>
+             </div>
+             <span> Resistance </span>
+             <div class="w-full bg-gray-100 rounded-full ">
+                 <div class="kpi-bar text-xs font-medium  text-center p-0.5 leading-none rounded-full" style="width: 60%"> 60%</div>
+             </div>
+             <span> Endurance </span>
+             <div class="w-full bg-gray-100 rounded-full ">
+                 <div class="kpi-bar text-xs font-medium  text-center p-0.5 leading-none rounded-full" style="width: 14%"> 14%</div>
+             </div>
+         </div>
+     </div>
+     <div></div>
+ </div>

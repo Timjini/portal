@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_18_184021) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_10_215048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -216,9 +216,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_18_184021) do
     t.string "recurrence_rule"
     t.datetime "recurrence_end"
     t.string "slot_type", default: "CoachTimeSlot"
-    t.text "coach_calendar_ids", default: [], array: true
     t.text "group_types", default: [], array: true
     t.string "title"
+    t.bigint "coach_calendar_id"
   end
 
   create_table "training_bookings", force: :cascade do |t|

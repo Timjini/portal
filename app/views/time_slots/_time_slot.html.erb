@@ -21,28 +21,29 @@
 
   <p>
     <strong>Group type:</strong>
-    <%= time_slot.group_type_list %>
+
+ <%= time_slot.group_type_list %> 
   </p>
 
   <p>
     <strong>Coaches:</strong>
-    <%= time_slot.coach_names %>
+ <%= time_slot.coach_names %> 
   </p>
-<div class="mb-4">
-  <% time_slot.coach_data.each do |coach| %>
+ <div class="mb-4">
   <div class="flex flex-row mb-4 justify-between items-center bg-gray-50 p-4 rounded-lg shadow-md">
     <div class="coach-image mb-5">
-            <%user = User.find(coach[:id])%>
-            <%= image_tag(user.avatar_thumbnail, class: "w-10 h-10 object-cover rounded-full") %>
+            <%= image_tag(time_slot.coach_calendar.user.avatar_thumbnail, class: "w-10 h-10 object-cover rounded-full") %>
             <div class="coach-info">
-      <h3><%= coach[:name] %></h3>
+      <h3><%= time_slot.coach_calendar.user.full_name %></h3>
     </div>
     </div>
      <div>
-      <a href="<%= coach[:url] %>" class="btn btn-primary">View Profile</a>
+      <%
+=begin%>
+ <a href="/<%= time_slot.coach_calendar.user.full_name.id %>" class="btn btn-primary">View Profile</a> 
+<%
+=end%>
     </div>
   </div>
-<% end %>
-</div>
-
+</div> 
 </div>
