@@ -50,7 +50,7 @@ class ChecklistProgressService
     end
     new_status = completed_items == total_items ? 'completed' : 'in_progress'
     # to be tested
-    user_levels.update_each(:status, new_status)
+    user_levels.update_all(status: new_status) # rubocop:disable Rails/SkipsModelValidations
     @athlete_profile.update(level: user_levels.first.level.degree)
   end
 
