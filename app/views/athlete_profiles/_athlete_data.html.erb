@@ -3,9 +3,9 @@
     <div id="accordion-collapse" data-accordion="collapse" class="">
         <%filtered_levels = {}
     if @levels.size > 25
-        filtered_levels = @levels.where(degree:@athlete.user.level).limit(5)
+        filtered_levels = @levels.includes([:check_lists]).where(degree:@athlete.user.level).limit(5)
         else
-        filtered_levels = @levels
+        filtered_levels = @levels.includes([:check_lists])
     end
    %>
         <!-- LEVEL -->
