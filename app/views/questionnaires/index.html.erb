@@ -1,124 +1,152 @@
-<style>
-  .span-alert{font-size:12px;}
-.form_title{font-size:2rem;font-weight:bold;margin-top:10px;}
-</style>
-  <h1 class="form_title">Athlete registration form</h1 >
-<form id="questionnaire-form" class="flex flex-col gap-10 my-10">
-  <% @questions.each do |q| %>
-    <div class="relative overflow-x-auto general_card">
-      <span><strong><%= q.position %>.</strong> <%= q.content %> </span>
-      <div class="pt-4" id="answers-<%= q.id %>">
-        <% case  q.question_type %>
-        <%when 'multiple'%>
-         <% q.options.each do |option| %>
-              <span id="empty-content-<%= q.id %>" class="text-red-500 hidden span-alert">field required</span>
-              <div class="flex items-center mb-4">
-                <input id="<%= q.id %>" type="checkbox" value="<%= option %>" name="<%= q.id %>" class="w-4 h-4 border-gray-300 mr-2">
-                <label for="<%= q.id %>" class="ms-2 text-sm font-medium"><%= option %></label>
-                  <input type="hidden" name="user_id" value="<%=current_user.id%>" />
-              </div>
-          <%end%>
-        <%when'radio'%>
-              <% q.options.each do |option| %>
-              <span id="empty-content-<%= q.id %>" class="text-red-500 hidden span-alert">field required</span>
-              <div class="flex items-center mb-4">
-                <input id="<%= q.id %>" type="radio" value="<%= option %>" name="<%= q.id %>" class="w-4 h-4 border-gray-300 mr-2">
-                <label for="<%= q.id %>" class="ms-2 text-sm font-medium"><%= option %></label>
-                <input type="hidden" name="user_id" value="<%=current_user.id%>" />
-              </div>
-          <%end%>
-          <div class="hidden">
-              <% if q.id < 11 %>
-              <label class="ms-2 text-sm font-medium"> please outline below. </label>
-               <textarea class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"> </textarea>
-              <%end%>
-          </div>
-        <%when 'text'%>
-              <div>
-                <textarea type="text" name="<%= q.id %>" id="<%= q.id %>" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Write your title here..."></textarea>
-                <span id="empty-content-<%= q.id %>" class="hidden text-red-500 hidden span-alert">field required</span>
-              </div>
-        <%end%>
-      </div>
+<div class="max-w-3xl mx-auto p-6" data-controller="questionnaire questionnaire-submit" data-questionnaire-total-steps-value="4" data-questionnaire-submit-submit-url-value="<%= answers_path %>" data-questionnaire-submit-user-id-value="<%= current_user.id %>">
+    <!-- Progress bar -->
+    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
+        <div class="bg-red-700 h-2.5 rounded-full" data-questionnaire-target="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-  <% end %>
-  <div class="flex flex-row">
-  <button type="button" class="btn" onclick="createAnswer()">Confirm</button>
-  <a href="/" class="btnSecondary"> Return </a>
-  </div>
 
-</form>
+    <form id="questionnaire-form" class="space-y-6" data-questionnaire-submit-target="form" data-action="submit->questionnaire-submit#submit">
+        <h1 class="text-2xl font-bold text-center mb-8">Athlete Health Questionnaire</h1>
+        <!-- Step 1 -->
+        <div data-questionnaire-target="step" class="space-y-6">
+            <% @questions[0..4].each do |q| %>
+            <div class="p-6 bg-white rounded-lg shadow">
+                <p class="font-medium mb-4"><%= q.position %>. <%= q.content %></p>
+                <div class="space-y-3">
+                    <% if q.question_type == 'radio' %>
+                    <% q.options.each do |option| %>
+                    <div class="flex items-center">
+                        <input id="q<%= q.id %>_<%= option.parameterize %>" type="radio" name="answers[<%= q.id %>]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500" required>
+                        <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
+                            <%= option %>
+                        </label>
+                    </div>
+                    <% end %>
+                    <% elsif q.question_type == 'multiple' %>
+                    <% q.options.each do |option| %>
+                    <div class="flex items-center">
+                        <input id="q<%= q.id %>_<%= option.parameterize %>" type="checkbox" name="answers[<%= q.id %>][]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
+                            <%= option %>
+                        </label>
+                    </div>
+                    <% end %>
+                    <% else %>
+                    <textarea name="answers[<%= q.id %>]" id="q<%= q.id %>" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                    <% end %>
+                </div>
+            </div>
+            <% end %>
+        </div>
 
+        <!-- Step 2 -->
+        <div data-questionnaire-target="step" class="hidden space-y-6">
+            <% @questions[5..9].each do |q| %>
+            <div class="p-6 bg-white rounded-lg shadow">
+                <p class="font-medium mb-4"><%= q.position %>. <%= q.content %></p>
+                <div class="space-y-3">
+                    <% if q.question_type == 'radio' %>
+                    <% q.options.each do |option| %>
+                    <div class="flex items-center">
+                        <input id="q<%= q.id %>_<%= option.parameterize %>" type="radio" name="answers[<%= q.id %>]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500" required>
+                        <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
+                            <%= option %>
+                        </label>
+                    </div>
+                    <% end %>
+                    <% elsif q.question_type == 'multiple' %>
+                    <% q.options.each do |option| %>
+                    <div class="flex items-center">
+                        <input id="q<%= q.id %>_<%= option.parameterize %>" type="checkbox" name="answers[<%= q.id %>][]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
+                            <%= option %>
+                        </label>
+                    </div>
+                    <% end %>
+                    <% else %>
+                    <textarea name="answers[<%= q.id %>]" id="q<%= q.id %>" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                    <% end %>
+                </div>
+            </div>
+            <% end %>
+        </div>
 
-<script>
-function createAnswer() {
-  var answers = [];
-  var contentEmpty = false;
+        <!-- Step 3 -->
+        <div data-questionnaire-target="step" class="hidden space-y-6">
+            <% @questions[10..14].each do |q| %>
+            <div class="p-6 bg-white rounded-lg shadow">
+                <p class="font-medium mb-4"><%= q.position %>. <%= q.content %></p>
+                <div class="space-y-3">
+                    <% if q.question_type == 'radio' %>
+                    <% q.options.each do |option| %>
+                    <div class="flex items-center">
+                        <input id="q<%= q.id %>_<%= option.parameterize %>" type="radio" name="answers[<%= q.id %>]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500" required>
+                        <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
+                            <%= option %>
+                        </label>
+                    </div>
+                    <% end %>
+                    <% elsif q.question_type == 'multiple' %>
+                    <% q.options.each do |option| %>
+                    <div class="flex items-center">
+                        <input id="q<%= q.id %>_<%= option.parameterize %>" type="checkbox" name="answers[<%= q.id %>][]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
+                            <%= option %>
+                        </label>
+                    </div>
+                    <% end %>
+                    <% else %>
+                    <textarea name="answers[<%= q.id %>]" id="q<%= q.id %>" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                    <% end %>
+                </div>
+            </div>
+            <% end %>
+        </div>
 
-  <% @questions.each do |q| %>
-    var questionId = <%= q.id %>;
-    var content;
+        <!-- Step 4 -->
+        <div data-questionnaire-target="step" class="hidden space-y-6">
+            <% @questions[15..19].each do |q| %>
+            <div class="p-6 bg-white rounded-lg shadow">
+                <p class="font-medium mb-4"><%= q.position %>. <%= q.content %></p>
+                <div class="space-y-3">
+                    <% if q.question_type == 'radio' %>
+                    <% q.options.each do |option| %>
+                    <div class="flex items-center">
+                        <input id="q<%= q.id %>_<%= option.parameterize %>" type="radio" name="answers[<%= q.id %>]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500" required>
+                        <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
+                            <%= option %>
+                        </label>
+                    </div>
+                    <% end %>
+                    <% elsif q.question_type == 'multiple' %>
+                    <% q.options.each do |option| %>
+                    <div class="flex items-center">
+                        <input id="q<%= q.id %>_<%= option.parameterize %>" type="checkbox" name="answers[<%= q.id %>][]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
+                            <%= option %>
+                        </label>
+                    </div>
+                    <% end %>
+                    <% else %>
+                    <textarea name="answers[<%= q.id %>]" id="q<%= q.id %>" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                    <% end %>
+                </div>
+            </div>
+            <% end %>
+        </div>
 
-    // Check if the question is a radio type
-    if ("<%= q.question_type %>" === "radio") {
-      var selectedOption = document.querySelector('input[name="' + questionId + '"]:checked');
-      content = selectedOption ? selectedOption.value : null;
-    } else {
-      // For textarea type questions
-      content = document.getElementById('<%= q.id %>').value.trim(); // Trim removes leading and trailing whitespaces
-    }
+        <!-- Navigation buttons -->
+        <div class="flex justify-between pt-6">
+            <button type="button" data-action="click->questionnaire#prev" data-questionnaire-target="prevButton" class="hidden px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
+                Previous
+            </button>
 
-    var userId = <%= params[:user_id] %>;
+            <button type="button" data-action="click->questionnaire#next" data-questionnaire-target="nextButton" class="btn">
+                Next
+            </button>
 
-    // Check if content is empty
-    if (!content) {
-      contentEmpty = true;
-      // Show the hidden span for the current question
-      document.querySelector('#empty-content-' + questionId).classList.remove('hidden');
-    } else {
-      // Hide the span if content is not empty
-      document.querySelector('#empty-content-' + questionId).classList.add('hidden');
-    }
-
-    // Push the answer to the array
-    answers.push({ question_id: questionId, content: content, user_id: userId });
-  <% end %>
-
-  if (contentEmpty) {
-    // Stop further execution if any content is empty
-    return;
-  }
-
-  // Send a POST request to your server
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/answers', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4) {
-      if (xhr.status == 200) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Thank you!',
-          showConfirmButton: true,
-          confirmButtonText: "OK"
-        }).then((result) => {
-            window.location.href = '/';
-        });
-      } else {
-        Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
-    });
-      }
-    }
-  };
-
-  xhr.send(JSON.stringify({ answers: answers }));
-}
-
-
-
-</script>
-
+            <button type="submit" data-questionnaire-target="submitButton" class="btn">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
