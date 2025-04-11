@@ -21,26 +21,20 @@ class TimeSlotsController < ApplicationController
   def edit; end
 
   # POST /time_slots or /time_slots.json
-  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    # fetch existing calendars
-    coaches_ids = params[:time_slot][:user_ids].split(',')
-    available_calendars = CoachCalendar.where(user_id: coaches_ids).to_a
-    if available_calendars.empty?
-      coaches_ids.each do |coach_id|
-        coach_calendar = CoachCalendar.create(user_id: coach_id)
-        available_calendars << coach_calendar
-      end
-    end
-    @time_slot = TimeSlot.new(time_slot_params)
+  def create # rubocop:disable Metrics/MethodLength
+    coach_ids = params[:time_slot][:user_ids].split(',').map(&:to_i)
+    service = TimeslotCreationService.new(time_slot_params, coach_ids)
+    result = with_error_handling { service.call }
 
-    if params[:time_slot][:recurrence_rule].present?
-      available_calendars.each do |calendar|
-        create_recurrent_timeslots(@time_slot, params[:time_slot][:title], params[:time_slot][:recurrence_rule],
-                                   params[:time_slot][:recurrence_end], calendar)
+    respond_to do |format|
+      if result
+        handle_success(format, result)
+      else
+        handle_failure(format, result)
       end
-    else
-      save_time_slot(@time_slot)
     end
+  rescue StandardError => e
+    Rails.logger.debug { "---> #{e.message}" }
   end
 
   # PATCH/PUT /time_slots/1 or /time_slots/1.json
@@ -72,6 +66,25 @@ class TimeSlotsController < ApplicationController
 
   private
 
+  # delete this after debugging
+  def with_error_handling
+    yield
+  rescue StandardError => e
+    Rails.logger.debug { "---> #{e.message}" }
+  end
+
+  def handle_success(format, result)
+    notice = result[:count] ? "#{result[:count]} timeslots created" : 'Timeslot created'
+    format.html { redirect_to time_slots_path, notice: notice }
+    format.json { render :show, status: :created, location: result[:time_slot] }
+  end
+
+  def handle_failure(format, result)
+    @time_slot = result[:time_slot] || TimeSlot.new(time_slot_params)
+    format.html { render :new, status: :unprocessable_entity }
+    format.json { render json: result[:errors], status: :unprocessable_entity }
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_time_slot
     @time_slot = TimeSlot.find(params[:id])
@@ -79,7 +92,7 @@ class TimeSlotsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def time_slot_params
-    params.require(:time_slot).permit(:date, :start_time, :end_time, :slot_type,
-                                      :recurrence_rule, :recurrence_end, group_types: [], user_ids: [])
+    params.require(:time_slot).permit(:title, :date, :start_time, :end_time, :slot_type,
+                                      :recurrence_rule, :recurrence_end, group_types: [])
   end
 end

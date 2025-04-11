@@ -1,49 +1,66 @@
-<div id="<%= dom_id time_slot %>" class="flex flex-col gap-2 my-10 rounded-2xl shadow-soft-lg p-4">
-  <p>
-    <strong>Date:</strong>
-    <%= time_slot.date.strftime("%d/%m/%Y") %>
-  </p>
-
-  <p>
-    <strong>Title:</strong>
-    <%= time_slot.title %>
-  </p>
-
-  <p>
-    <strong>Start time:</strong>
-    <%= time_slot.start_time.strftime("%H:%M") %>
-  </p>
-
-  <p>
-    <strong>End time:</strong>
-    <%= time_slot.end_time.strftime("%H:%M") %>
-  </p>
-
-  <p>
-    <strong>Group type:</strong>
-
- <%= time_slot.group_type_list %> 
-  </p>
-
-  <p>
-    <strong>Coaches:</strong>
- <%= time_slot.coach_names %> 
-  </p>
- <div class="mb-4">
-  <div class="flex flex-row mb-4 justify-between items-center bg-gray-50 p-4 rounded-lg shadow-md">
-    <div class="coach-image mb-5">
-            <%= image_tag(time_slot.coach_calendar.user.avatar_thumbnail, class: "w-10 h-10 object-cover rounded-full") %>
-            <div class="coach-info">
-      <h3><%= time_slot.coach_calendar.user.full_name %></h3>
-    </div>
-    </div>
-     <div>
-      <%
-=begin%>
- <a href="/<%= time_slot.coach_calendar.user.full_name.id %>" class="btn btn-primary">View Profile</a> 
-<%
-=end%>
+<div id="<%= dom_id time_slot %>" class="time-slot-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all hover:shadow-lg">
+  <!-- Header with date -->
+  <div class="bg-gradient-to-r from-blue-50 to-purple-50 px-6 py-4 border-b border-gray-100">
+    <h3 class="text-lg font-bold text-gray-800"><%= time_slot.title %></h3>
+    <div class="flex items-center text-sm text-gray-600 mt-1">
+      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+      </svg>
+      <%= time_slot.date.strftime("%A, %d %B %Y") %>
     </div>
   </div>
-</div> 
+
+  <!-- Main content -->
+  <div class="px-6 py-4">
+    <!-- Time information -->
+    <div class="flex items-center mb-4">
+      <div class="time-pill bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium mr-3">
+        <%= time_slot.start_time.strftime("%H:%M") %> - <%= time_slot.end_time.strftime("%H:%M") %>
+      </div>
+      <div class="time-duration text-sm text-gray-500">
+        <%= ((time_slot.end_time - time_slot.start_time)/3600).round(1) %> hours
+      </div>
+    </div>
+
+    <!-- Group types -->
+    <div class="mb-4">
+      <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Group Types</h4>
+      <div class="flex flex-wrap gap-2">
+          <span class="group-tag bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-medium">
+            <%= time_slot.group_type_list %>
+          </span>
+      </div>
+    </div>
+
+    <!-- Coach information -->
+    <div class="coach-section bg-gray-50 rounded-lg p-4 mt-4">
+      <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Coach</h4>
+      <div class="flex items-center">
+        <%= image_tag(
+          time_slot.coach_calendar.user.avatar_thumbnail, 
+          class: "w-12 h-12 object-cover rounded-full border-2 border-white shadow-sm",
+          alt: "#{time_slot.coach_calendar.user.full_name}'s profile picture"
+        ) %>
+        <div class="ml-4">
+          <h3 class="font-bold text-gray-800"><%= time_slot.coach_calendar.user.full_name %></h3>
+          <div class="flex items-center mt-1">
+            <svg class="w-4 h-4 text-yellow-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+            </svg>
+            <span class="text-sm text-gray-600">4.8 (24 reviews)</span>
+          </div>
+        </div>
+      </div>
+      <%= link_to "View Profile", "/users/#{time_slot.coach_calendar.user.id}" , 
+          class: "mt-3 inline-block text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors" %>
+    </div>
+  </div>
+
+  <!-- Footer with action buttons -->
+  <div class="bg-gray-50 px-6 py-3 border-t border-gray-100 flex justify-end">
+    <%= link_to "Edit", edit_time_slot_path(time_slot), class: "text-sm font-medium text-gray-600 hover:text-gray-800 mr-4" %>
+    <%= button_to "Delete", time_slot, method: :delete, 
+          class: "text-sm font-medium text-red-600 hover:text-red-800",
+          data: { confirm: "Are you sure you want to cancel this session?" } %>
+  </div>
 </div>
