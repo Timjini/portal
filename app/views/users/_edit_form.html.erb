@@ -17,11 +17,8 @@
                         </div>
                     </div>
                     <div class="panzoom-container absolute inset-0 overflow-hidden rounded-full">
-                        <img id="image" class="w-full h-full object-cover" 
-                            src="/assets/user.png" 
-                            alt="Avatar Preview" 
-                            data-avatar-target="image">
-                        </div>
+                    <%= image_tag(@user.avatar_thumbnail,id:"image", class: "w-full h-full object-cover", data: { avatar_target: true }) %>
+                    </div>
                 </div>
                 <label for="avatarInput" type="button" class="cursor-pointer inline-flex justify-between items-center focus:outline-none border py-2 px-4 rounded-lg shadow-sm text-left text-gray-600 bg-white hover:bg-gray-100 font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" class="inline-flex flex-shrink-0 w-6 h-6 -mt-1 mr-1" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

@@ -7,20 +7,9 @@
 
 <% level_ids = @levels.pluck(:id).join(',') %>
 
-<%
-=begin%>
- <%= turbo_frame_tag "bulk-delete" do %>
-  <%= form_with url: "/kpis/bulk_delete", method: :post, id: "bulk-delete-form" do |form| %>
-    <%= form.hidden_field 'level_ids', value: level_ids %>
-<%= form.submit "Delete", class: "delete-button btnSecondary", id: "delete-button", data: { turbo: "true" } %>
-  <% end %>
-<% end %> 
-<%
-=end%>
-
 <div class="flex mx-auto">
-        <%= will_paginate @levels, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %>
-    </div>
+    <%= will_paginate @levels, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %>
+</div>
 
 <div class="relative overflow-x-auto general_card">
     <table class="w-full text-sm text-left " style="padding:0;margin:0;">
@@ -163,30 +152,27 @@
         });
 
         const deleteButton = document.querySelector("#delete-button");
-  const form = document.querySelector("#bulk-delete-form");
+        const form = document.querySelector("#bulk-delete-form");
 
-  if (deleteButton && form) {
-    deleteButton.addEventListener("click", (event) => {
-      event.preventDefault(); // Prevent default action
+        if (deleteButton && form) {
+            deleteButton.addEventListener("click", (event) => {
+                event.preventDefault(); // Prevent default action
 
-      Swal.fire({
-        title: "Are you sure?",
-        text: "This action cannot be undone.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Yes, delete it!",
-      }).then((result) => {
-         console.log(result);
-        if (result.isConfirmed) {
-          form.requestSubmit();
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This action cannot be undone.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Yes, delete it!",
+                }).then((result) => {
+                    console.log(result);
+                    if (result.isConfirmed) {
+                        form.requestSubmit();
+                    }
+                });
+            });
         }
-      });
     });
-  }
-    });
-
-    
-
 </script>

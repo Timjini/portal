@@ -34,6 +34,7 @@ export default class extends Controller {
         const timeText = arg.timeText
         const coachName = arg.event.extendedProps.coach || 'No coach'
         const groups = arg.event.extendedProps.groups || ''
+        const backgroundColor = arg.event.extendedProps.backgroundColor
         
         const eventEl = document.createElement('div')
         eventEl.className = 'fc-event-main flex flex-col p-1'
@@ -51,7 +52,7 @@ export default class extends Controller {
         
         const groupEl = document.createElement('span')
         groupEl.className = 'text-xs opacity-75 truncate'
-        groupEl.textContent = groups.replace(/^,\s*/, '') // Remove leading comma
+        groupEl.textContent = groups.replace(/^,\s*/, '')
         
         titleEl.appendChild(coachEl)
         titleEl.appendChild(groupEl)
@@ -62,15 +63,23 @@ export default class extends Controller {
         return { domNodes: [eventEl] }
       },
       eventDidMount: (info) => {
-        // Apply custom styling
-        if (info.event.extendedProps.color) {
-          info.el.style.backgroundColor = `${info.event.extendedProps.color}15`
-          info.el.style.borderLeft = `3px solid ${info.event.extendedProps.color}`
+        console.log("Event data:", info.event)
+        if (info.event.backgroundColor) {
+          info.el.style.backgroundColor = info.event.backgroundColor
+          info.el.style.borderColor = info.event.borderColor || info.event.backgroundColor
           info.el.style.color = '#333'
-          info.el.style.boxShadow = 'none'
+        
+          const dotEl = info.el.querySelector('.fc-event-dot')
+          if (dotEl) {
+            dotEl.style.backgroundColor = info.event.backgroundColor
+          }
+        
+          const titleEl = info.el.querySelector('.fc-event-title')
+          if (titleEl) {
+            titleEl.style.color = '#333'
+          }
         }
         
-        // Add hover effect
         info.el.style.transition = 'all 0.2s ease'
         info.el.addEventListener('mouseenter', () => {
           info.el.style.transform = 'translateX(2px)'
@@ -82,7 +91,6 @@ export default class extends Controller {
         })
       },
       eventClick: (info) => {
-        // Handle event clicks (e.g., open edit modal)
         window.location.href = info.event.url
       },
       loading: (isLoading) => {

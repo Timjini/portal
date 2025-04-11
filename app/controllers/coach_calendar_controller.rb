@@ -2,17 +2,17 @@
 
 class CoachCalendarController < ApplicationController
   def index
-    service = CoachCalendarService.new
+    service = Calendar::CoachCalendarService.new
     @calendar = service.fetch_all_calendars_only
   end
 
   def show
-    service = CoachCalendarService.new(params)
+    service = Calendar::CoachCalendarService.new(params)
     @calendar = service.fetch_calendar_with_time_slots
   end
 
   def calendar_data
-    service = CoachCalendarService.new(params)
+    service = Calendar::CoachCalendarService.new(params)
     result = service.fetch_calendar_by_user
 
     if result
@@ -20,10 +20,12 @@ class CoachCalendarController < ApplicationController
     else
       render json: { error: "No calendar found for user with ID #{params[:user_id]}" }, status: :not_found
     end
+  rescue StandardError => e
+    Rails.logger.debug { "---> #{e.message}" }
   end
 
   def all_calendars
-    service = CoachCalendarService.new
+    service = Calendar::CoachCalendarService.new
     result = service.fetch_all_calendars
 
     if result.empty?

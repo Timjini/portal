@@ -10,6 +10,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   attr_accessor :dob
 
+  scope :coaches, -> { where(role: 'coach') }
   has_many :comments, dependent: :destroy
   has_one_attached :avatar
   has_one :athlete_profile, dependent: :destroy

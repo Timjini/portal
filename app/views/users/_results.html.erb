@@ -1,40 +1,21 @@
-<!-- users/_results.html.erb -->
-
-<!-- Options -->
-<% users = User.where(role: 'coach') %>
-<select id="selectElement" class="py-2 text-sm" multiple>
-  <% users.each do |user| %>
-    <option value="<%= user.id %>"><%= user.full_name %></option>
-  <% end %>
-</select>
-<input type="hidden" id="selectedIds" name="time_slot[user_ids]" value="">
-
-<!-- Include SlimSelect library -->
-<script src="https://cdn.jsdelivr.net/npm/slim-select@latest/dist/slimselect.min.js" defer></script>
-<script>
-document.addEventListener('turbo:load', () => {
-  // Initialize SlimSelect for the dropdown
-  const slimSelect = new SlimSelect({
-    select: '#selectElement',
-    settings: {
-      showSearch: true,
-      searchText: 'No Coaches Available',
-      searchPlaceholder: 'Search for the good stuff!',
-      searchHighlight: true
-    }
-  });
-
-  // Function to update hidden field with selected values
-  const updateHiddenField = () => {
-    const selectedValues = slimSelect.getSelected();
-    console.log(selectedValues);
-    document.getElementById('selectedIds').value = selectedValues.join(',');
-  };
-
-  // Add event listener to update hidden field on change
-  document.querySelector('#selectElement').addEventListener('change', updateHiddenField);
-
-  // Initialize hidden field with current select values
-  updateHiddenField();
-});
-</script>
+<div data-controller="multi-select"
+     data-multi-select-placeholder-value="Search for the good stuff!"
+     data-multi-select-no-results-text-value="No Coaches Available"
+     class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+     >
+  
+  <select id="coach-select" 
+          data-multi-select-target="select" 
+          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" 
+          multiple>
+    <% User.coaches.each do |coach| %>
+      <option value="<%= coach.id %>"><%= coach.full_name %></option>
+    <% end %>
+  </select>
+  
+  <input type="hidden" 
+         name="time_slot[user_ids]" 
+         data-multi-select-target="hidden"
+         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+         >
+</div>

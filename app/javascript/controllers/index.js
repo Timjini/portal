@@ -37,3 +37,9 @@ application.register("calendar", CalendarController)
 
 import UserSearchController from "./user_search_controller"
 application.register("user-search", UserSearchController)
+
+import MultiSelectController from "./multi_select_controller"
+application.register("multi-select", MultiSelectController)
+
+import RecurrenceToggleController from "./recurrence_toggle_controller"
+application.register("recurrence-toggle", RecurrenceToggleController)

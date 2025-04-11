@@ -2,6 +2,8 @@
 # must run these commands 
 # chmod +x /home/ubuntu/portal/deploy.sh
 # chmod +r docker-compose.yml
+echo "stash any changes.."
+git stash
 
 echo "Pulling latest code..."
 git pull origin main

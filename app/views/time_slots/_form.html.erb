@@ -1,91 +1,115 @@
-<% label_style = "block mb-2 text-sm font-medium"%>
-<% input_style="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5" %>
-<%= form_with(model: time_slot) do |form| %>
-  <div class="w-120 mb-2">
+<% label_style = "block mb-2 text-sm font-medium text-gray-700" %>
+<% input_style = "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" %>
+<% error_style = "mt-1 text-sm text-red-600" %>
 
-    <% if time_slot.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>
+<%= form_with(model: time_slot, class: "max-w-2xl mx-auto p-6 rounded-lg shadow-md") do |form| %>
+  <% if time_slot.errors.any? %>
+    <div class="p-4 mb-6 bg-red-50 rounded-lg">
+      <h2 class="text-lg font-medium text-red-800"><%= pluralize(time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>
+      <ul class="mt-2 list-disc list-inside text-red-600">
+        <% time_slot.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-        <ul>
-          <% time_slot.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="flex flex-row gap-2">
-      <div>
+  <div class="space-y-6">
+    <div>
       <%= render partial: 'users/results', locals: { users: @users } %>
-      </div>
-    </div>
-    <div class="flex flex-row gap-2">
-      <div>
-        <%= form.label :title, style: label_style %>
-        <%= form.text_field :title, class: input_style %>
-      </div>
-    </div>
-    <div class="flex flex-row gap-2">
-      <div>
-        <%= form.label :event_date, style: label_style %>
-        <%= form.date_field :date, class: input_style %>
-      </div>
     </div>
 
-    <div class="flex flex-row gap-2">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
       <div>
-        <%= form.label :start_time, style: label_style %>
-        <%= form.time_field :start_time, class: input_style %>
-      </div>
-
-      <div>
-        <%= form.label :end_time, style: label_style %>
-        <%= form.time_field :end_time, class: input_style %>
-      </div>
-    </div>
-    
-    <div class="flex flex-row gap-2">
-      <div>
-       <%= form.label :group_types, "Group Types" %>
-        <% group_types = ['development', 'intermediate', 'advanced'] %>
-        <% group_types.each do |type| %>
-          <div class="flex items-center">
-            <%= form.check_box :group_types, { multiple: true, checked: form.object.group_types&.include?(type) }, type, nil %>
-            <%= form.label "group_types_#{type}", type.titleize, class: "ml-2" %>
-          </div>
+        <%= form.label :title, "Title *", class: label_style %>
+        <%= form.text_field :title, class: "#{input_style} #{time_slot.errors[:title].any? ? 'border-red-500' : ''}", required: true %>
+        <% if time_slot.errors[:title].any? %>
+          <p class="<%= error_style %>"><%= time_slot.errors[:title].first %></p>
         <% end %>
       </div>
-      </div>
+
       <div>
-        <%= form.label :slot_type, style: label_style %>
-        <%= form.select :slot_type, TimeSlot.slot_types.keys.map { |slot_type| [slot_type.titleize, slot_type] }, {}, class: input_style %>
+        <%= form.label :slot_type, "Slot Type *", class: label_style %>
+        <%= form.select :slot_type, TimeSlot.slot_types.keys.map { |slot_type| [slot_type.titleize, slot_type] }, { include_blank: "Select a type" }, class: "#{input_style} #{time_slot.errors[:slot_type].any? ? 'border-red-500' : ''}", required: true %>
+        <% if time_slot.errors[:slot_type].any? %>
+          <p class="<%= error_style %>"><%= time_slot.errors[:slot_type].first %></p>
+        <% end %>
       </div>
     </div>
 
-    <div class="flex flex-row gap-2">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
       <div>
-        <%= form.label :recurrence_rule, "Recurrence Rule (optional)", style: label_style %>
-        <%= form.select :recurrence_rule, options_for_select([['N/A', :none], ['Daily', :day], ['Weekly', :week]], selected: time_slot.recurrence_rule), {}, class: input_style, data: { behavior: 'recurrence-rule' } %>
+        <%= form.label :event_date, "Event Date *", class: label_style %>
+        <%= form.date_field :date, class: "#{input_style} #{time_slot.errors[:date].any? ? 'border-red-500' : ''}", required: true %>
+        <% if time_slot.errors[:date].any? %>
+          <p class="<%= error_style %>"><%= time_slot.errors[:date].first %></p>
+        <% end %>
       </div>
 
-      <div id="recurrence-end-container">
-        <%= form.label :recurrence_end, "Recurrence End Date", style: label_style %>
-        <%= form.date_field :recurrence_end, default: time_slot.recurrence_end, class: input_style %>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= form.label :start_time, "Start Time *", class: label_style %>
+          <%= form.time_field :start_time, class: "#{input_style} #{time_slot.errors[:start_time].any? ? 'border-red-500' : ''}", required: true %>
+          <% if time_slot.errors[:start_time].any? %>
+            <p class="<%= error_style %>"><%= time_slot.errors[:start_time].first %></p>
+          <% end %>
+        </div>
+
+        <div>
+          <%= form.label :end_time, "End Time *", class: label_style %>
+          <%= form.time_field :end_time, class: "#{input_style} #{time_slot.errors[:end_time].any? ? 'border-red-500' : ''}", required: true %>
+          <% if time_slot.errors[:end_time].any? %>
+            <p class="<%= error_style %>"><%= time_slot.errors[:end_time].first %></p>
+          <% end %>
+        </div>
       </div>
     </div>
 
-    
-
-    <% if time_slot.recurrence_rule.present? %>
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2" data-controller="recurrence-toggle">
       <div>
-        <%= form.label :apply_to_all, "Apply to all occurrences", style: label_style %>
-        <%= form.check_box :apply_to_all, {}, '1', '0' %>
+        <fieldset class="p-4 border border-gray-200 rounded-lg">
+          <legend class="text-sm font-medium text-gray-700 px-2">Group Types *</legend>
+          <% group_types = ['development', 'intermediate', 'advanced'] %>
+          <% group_types.each do |type| %>
+            <div class="flex items-center mb-2">
+              <%= form.check_box :group_types, { multiple: true, checked: form.object.group_types&.include?(type), class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 #{time_slot.errors[:group_types].any? ? 'border-red-500' : ''}" }, type, nil %>
+              <%= form.label "group_types_#{type}", type.titleize, class: "ml-2 text-sm text-gray-700" %>
+            </div>
+          <% end %>
+          <% if time_slot.errors[:group_types].any? %>
+            <p class="<%= error_style %>"><%= time_slot.errors[:group_types].first %></p>
+          <% end %>
+        </fieldset>
+      </div>
+
+      <div>
+        <div class="p-4 border border-gray-200 rounded-lg">
+          <%= form.label :recurrence_rule, "Recurrence Rule", class: label_style %>
+          <%= form.select :recurrence_rule, 
+                options_for_select([['None', :none], ['Daily', :day], ['Weekly', :week]], selected: time_slot.recurrence_rule || :none), 
+                {}, 
+                class: input_style, 
+                data: { "recurrence-toggle-target": "ruleSelect", action: "recurrence-toggle#toggleEndContainer" } %>
+          
+          <div id="recurrence-end-container" 
+              data-recurrence-toggle-target="endContainer">
+            <%= form.label :recurrence_end, "Recurrence End Date", class: label_style %>
+            <%= form.date_field :recurrence_end, value: time_slot.recurrence_end, class: input_style %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% if time_slot.recurrence_rule.present? && time_slot.recurrence_rule != "none" %>
+      <div class="flex items-center">
+        <%= form.check_box :apply_to_all, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" %>
+        <%= form.label :apply_to_all, "Apply to all occurrences", class: "ml-2 text-sm text-gray-700" %>
       </div>
     <% end %>
 
-    <div>
-      <%= form.submit "Save Time slot", class: "mt-10 confirm-btn" %>
+    <div class="flex justify-end space-x-4 pt-6">
+      <%= link_to "Back to time slots", time_slots_path, class: "confirm-btn" %>
+      <%= form.submit "Save Time Slot", class: "btn" %>
     </div>
   </div>
 <% end %>
