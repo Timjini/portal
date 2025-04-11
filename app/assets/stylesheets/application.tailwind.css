@@ -910,6 +910,9 @@ article {
   border-radius: 20px;
 }
 
+.span-alert{font-size:12px;}
+.form_title{font-size:2rem;font-weight:bold;margin-top:10px;}
+
 @media (min-width: 1100px) {
 
   /* .dashboard_logo{display: none !important;} */

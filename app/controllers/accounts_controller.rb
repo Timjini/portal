@@ -7,7 +7,8 @@ class AccountsController < ApplicationController
 
   def index
     @accounts = if current_user.role == 'parent_user'
-                  User.where(parent_id: current_user.id).includes(:athlete_profile)
+                  User.where(parent_id: current_user.id)
+                      .includes(:athlete_profile, avatar_attachment: :blob)
                 end
   end
 

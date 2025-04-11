@@ -43,3 +43,9 @@ application.register("multi-select", MultiSelectController)
 
 import RecurrenceToggleController from "./recurrence_toggle_controller"
 application.register("recurrence-toggle", RecurrenceToggleController)
+
+import QuestionnaireController from "./questionnaire_controller"
+application.register("questionnaire", QuestionnaireController)
+
+import QuestionnaireSubmitController from "./questionnaire_submit_controller"
+application.register("questionnaire-submit", QuestionnaireSubmitController)

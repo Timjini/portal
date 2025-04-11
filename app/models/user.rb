@@ -1,61 +1,122 @@
 # frozen_string_literal: true
 
 require 'securerandom'
+
 class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # Devise Configuration
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
-  before_create :assign_unique_color
 
-  attr_accessor :dob
+  # Constants
+  ROLE_TYPES = {
+    athlete: 'athlete',
+    parent_user: 'parent_user',
+    child_user: 'child_user',
+    coach: 'coach',
+    admin: 'admin'
+  }.freeze
 
-  scope :coaches, -> { where(role: 'coach') }
-  has_many :comments, dependent: :destroy
+  # Associations
   has_one_attached :avatar
   has_one :athlete_profile, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :qr_codes, dependent: :destroy
   has_many :user_checklists, dependent: :destroy
   has_many :user_levels, dependent: :destroy
   has_many :answers, dependent: :destroy
-
   has_many :notifications, as: :notifiable, dependent: :destroy
 
-  validates :username, uniqueness: true
-  # # validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  # validates :password, presence: true
-  # validates :username, length: { minimum: 3, maximum: 20 }
+  # Scopes
+  scope :coaches, -> { where(role: 'coach') }
+  scope :by_role, ->(role) { role.present? ? where(role: role) : all }
+  scope :parents, -> { where(role: 'parent_user') }
+  scope :children, -> { where(role: 'child_user') }
 
-  # searchkick text_middle: %i[username email first_name last_name]
+  # Enums
+  enum role: ROLE_TYPES # rubocop:disable Rails/EnumSyntax
 
-  def generate_jwt
-    JsonWebToken.encode({ user_id: id })
+  # Validations
+  validates :username,
+            presence: true,
+            uniqueness: { case_sensitive: false },
+            length: { minimum: 3, maximum: 20 }
+
+  validates :email,
+            presence: true,
+            format: { with: URI::MailTo::EMAIL_REGEXP }
+
+  validates :password,
+            presence: true,
+            on: :create
+
+  validates :role,
+            inclusion: { in: ROLE_TYPES.values }
+
+  before_save :normalize_username
+  # Callbacks
+  before_create :assign_unique_color
+
+  # Virtual Attributes
+  attr_accessor :dob
+
+  # Instance Methods
+
+  ## Role Methods
+  def parent_user?
+    role == 'parent_user'
   end
 
-  enum :role, {
-    'athlete' => 'athlete',
-    'parent_user' => 'parent_user',
-    'child_user' => 'child_user',
-    'coach' => 'coach',
-    'admin' => 'admin'
-  }
+  def child_users
+    User.where(parent_id: id).includes([:avatar_attachment])
+  end
 
+  ## Profile Methods
   def avatar_thumbnail
-    if avatar.attached?
-      # avatar.variant(resize: "150x150!").processed
-      avatar
-    else
-      'user.png'
-    end
+    avatar.attached? ? avatar : 'user.png'
   end
 
   def full_name
+    return 'Unknown' unless first_name.present? && last_name.present?
+
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
 
-  # def name
-  #   "#{first_name} #{last_name}"
-  # end
+  def athlete_profile_data
+    @athlete_profile_data ||= athlete_profile || NullAthleteProfile.new
+  end
+
+  delegate :height, :weight, :power_of_ten, :level,
+           :child_password, :dob, to: :athlete_profile_data, prefix: true, allow_nil: true
+
+  ## Level and Progress Methods
+  def current_level
+    completed_levels = user_levels.completed.count
+
+    case completed_levels
+    when 0..5 then 'Beginner'
+    when 6..10 then 'Intermediate'
+    when 11..15 then 'Advanced'
+    when 16..20 then 'Elite'
+    when 21..25 then 'Pro'
+    else 'Unknown'
+    end
+  end
+
+  def participation
+    answers.find_by(question_id: 16)&.content || 'NO'
+  end
+
+  ## Authentication Methods
+  def generate_jwt
+    JWT.encode({ user_id: id, exp: 24.hours.from_now.to_i }, Rails.application.secrets.secret_key_base)
+  end
+
+  def level
+    l = AthleteProfile.find_by(user_id: id)
+    return '---' if l.nil?
+
+    l.level
+  end
 
   def age # rubocop:disable Metrics/AbcSize
     profile = AthleteProfile.find_by(user_id: id)
@@ -92,13 +153,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     p.power_of_ten
   end
 
-  def level
-    l = AthleteProfile.find_by(user_id: id)
-    return '---' if l.nil?
-
-    l.level
-  end
-
   def child_password
     p = AthleteProfile.find_by(user_id: id)
     return '---' if p.nil?
@@ -114,44 +168,31 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def current_level # rubocop:disable Metrics/MethodLength
-    user_level = UserLevel.where(user_id: id, status: 'completed').count
+  # Private Methods
+  private
 
-    case user_level
-    when 0..5
-      'Beginner'
-    when 6..10
-      'Intermediate'
-    when 11..15
-      'Advanced'
-    when 16..20
-      'Elite'
-    when 21..25
-      'Pro'
-    end
-  end
-
-  def participation
-    # participating in event question number 16
-    answer = Answer.find_by(user_id: id, question_id: 16)
-
-    if answer.nil?
-      'NO'
-    else
-      answer.content
-    end
+  def normalize_username
+    self.username = username.downcase if username.present?
   end
 
   def assign_unique_color
-    existing_colors = User.pluck(:color)
-    self.color = generate_unique_color(existing_colors)
+    self.color = generate_unique_color
   end
 
-  def generate_unique_color(existing_colors)
+  def generate_unique_color
     loop do
-      color = SecureRandom.hex(3)
-      color = "##{color}"
-      break color unless existing_colors.include?(color)
+      color = "##{SecureRandom.hex(3)}"
+      break color unless User.exists?(color: color)
     end
+  end
+
+  # Null Object Pattern for athlete profile
+  class NullAthleteProfile
+    def height = '---'
+    def weight = '---'
+    def power_of_ten = '---'
+    def level = '---'
+    def child_password = '---'
+    def dob = nil
   end
 end
