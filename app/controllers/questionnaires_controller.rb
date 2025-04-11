@@ -13,8 +13,7 @@ class QuestionnairesController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @questionnaire = Questionnaire.last
-    @questions = Question.where(questionnaire_id: @questionnaire.id)
+    @questions = Question.order(id: :asc)
     @answers = Answer.includes(:question).where(question_id: @questions.ids, user_id: params[:id])
   end
 end
