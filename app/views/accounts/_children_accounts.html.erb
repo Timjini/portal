@@ -16,14 +16,20 @@
                 <div>
                     <div class="px-5 flex flex-col gap-1">
                         <span class="font-bold text-2xl"> <%=account.full_name%> </span>
-                        <span class="py-2"> <strong>Age :</strong><%=account.age%></span>
+
+                        <span class="py-2"> <strong>Age :</strong><%=account&.age%></span> 
+
                         <span> <strong>Username:</strong> <%=account.username%></span>
-                        <span><strong>Password:</strong> <%=account.child_password%></span>
+
+                        <span><strong>Password:</strong> <%=account.child_password%></span> 
+
                     </div>
                 </div>
                 <div class="px-5 flex flex-col gap-1">
                     <a class="btnSecondary mb-4 text-center" href="/users/edit_user/<%=account.id%>">Edit</a>
-                    <a class="btn mb-4 text-center" href="<%=account.athlete_profile_url%>">Profile</a>
+
+                    <a class="btn mb-4 text-center" href="<%=account.athlete_profile_url%>">Profile</a> 
+
                     <% @questionnaire = Question.includes(:answers).where(answers: { user_id: account.id }) %>
                     <%if @questionnaire.blank?%>
                     <a class=" text-center btnSecondary" href="/questionnaires?user_id=<%=account.id%>">Questionnaire</a>

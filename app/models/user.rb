@@ -2,7 +2,7 @@
 
 require 'securerandom'
 
-class User < ApplicationRecord
+class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Devise Configuration
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
@@ -67,7 +67,7 @@ class User < ApplicationRecord
   end
 
   def child_users
-    User.where(parent_id: id)
+    User.where(parent_id: id).includes([:avatar_attachment])
   end
 
   ## Profile Methods
@@ -116,6 +116,56 @@ class User < ApplicationRecord
     return '---' if l.nil?
 
     l.level
+  end
+
+  def age # rubocop:disable Metrics/AbcSize
+    profile = AthleteProfile.find_by(user_id: id)
+
+    if profile&.dob
+      dob = profile.dob
+      current_date = Time.zone.today
+      age = current_date.year - dob.year - (current_date.month > dob.month || (current_date.month == dob.month && current_date.day >= dob.day) ? 0 : 1) # rubocop:disable Layout/LineLength
+      return age
+    end
+
+    # Return nil if there is no valid DOB
+    nil
+  end
+
+  def height
+    h = AthleteProfile.find_by(user_id: id)
+    return '---' if h.nil?
+
+    h.height
+  end
+
+  def weight
+    w = AthleteProfile.find_by(user_id: id)
+    return '---' if w.nil?
+
+    w.weight
+  end
+
+  def power_of_ten
+    p = AthleteProfile.find_by(user_id: id)
+    return '---' if p.nil?
+
+    p.power_of_ten
+  end
+
+  def child_password
+    p = AthleteProfile.find_by(user_id: id)
+    return '---' if p.nil?
+
+    p.child_password
+  end
+
+  def athlete_profile_url
+    if athlete_profile
+      "/athlete_profiles/#{athlete_profile.id}"
+    else
+      ''
+    end
   end
 
   # Private Methods
