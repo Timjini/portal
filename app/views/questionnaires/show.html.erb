@@ -1,28 +1,66 @@
-<%=render 'components/back_button'%>
+<%= render 'components/back_button' %>
 
-<div class="profile-container">
-<%= image_tag(@user.avatar_thumbnail, class:"w-12 h-12 object-cover rounded-full")%>
-<div>
-<span>Username:</span><h2 class="text-xl"><%=@user.username%></h2>
-</div>
-</div>
-<div class="mb-5 flex flex-col">
-  <% @answers.each do |a| %>
-  <div class="mb-6">
-    <div class="">
-     <%=a.question.position%> - <%= a.question.content %>
-    </div>
+<div class="max-w-3xl mx-auto p-6  rounded-lg shadow-md">
+  <!-- Profile Header -->
+  <div class="flex items-center mb-8 p-4 bg-gray-50 rounded-lg">
+    <%= image_tag(@user.avatar_thumbnail, class: "w-12 h-12 object-cover rounded-full mr-4") %>
     <div>
-      <%= a.content %>
-      <% if a.content == "Yes" && a.question.position < 11 %>
-        <span class="material-symbols-outlined text-red-500 animate-ping">
-          local_hospital
-        </span>
-      <% end %>
+      <span class="text-gray-600 text-sm">Username:</span>
+      <h2 class="text-xl font-semibold text-gray-800"><%= @user.username %></h2>
     </div>
+  </div>
+
+  <!-- Questionnaire Title -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800 border-b pb-2">Medical Questionnaire</h1>
+    <p class="text-gray-600 mt-1">Please review the answers below</p>
+  </div>
+
+  <!-- Questions Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <% @answers.each do |a| %>
+      <div class="p-4 border rounded-lg <%= a.content == "Yes" && a.question.position < 11 ? 'border-red-200 bg-red-50' : 'border-gray-200' %>">
+        <div class="flex items-start">
+          <!-- Question Number -->
+          <div class="flex-shrink-0 mr-3 flex items-center justify-center h-6 w-6 rounded-full 
+                        <%= a.content == "Yes" && a.question.position < 11 ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800' %> 
+                        text-xs font-medium">
+            <%= a.question.position %>
+          </div>
+          
+          <!-- Question Content -->
+          <div class="flex-1">
+            <h3 class="text-sm font-medium text-gray-800"><%= a.question.content %></h3>
+            <div class="mt-1 flex items-center">
+              <span class="<%= a.content == "Yes" ? 'text-red-600 font-medium' : 'text-gray-600' %>">
+                <%= a.content %>
+              </span>
+              <% if a.content == "Yes" && a.question.position < 11 %>
+                <span class="material-symbols-outlined text-red-500 ml-2" title="Medical attention recommended">
+                  warning
+                </span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Additional Notes Section -->
+  <% if @answers.any? { |a| a.content == "Yes" && a.question.position < 11 } %>
+    <div class="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+      <h3 class="text-lg font-medium text-yellow-800 flex items-center">
+        <span class="material-symbols-outlined mr-2">note</span>
+        Important Notes
+      </h3>
+      <div class="mt-2 text-yellow-700">
+        <% if @answers.last.question.position == 11 && @answers.last.content.present? %>
+          <%= simple_format(@answers.last.content, class: "bg-white p-3 rounded border border-yellow-300") %>
+        <% else %>
+          <p>One or more answers indicate that medical consultation is recommended before participating in physical activities.</p>
+        <% end %>
+      </div>
     </div>
   <% end %>
 </div>
-
-</li>
-</ul>
