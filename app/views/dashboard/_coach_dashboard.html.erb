@@ -3,32 +3,38 @@
 <div class="coach_dashboard flex flex-row justify-center px-12 flex-wrap gap-10">
     <div class="general_card w-72">
         <%= link_to athlete_profiles_path(level: 0) do %>
-                                <p class="mb-0 font-sans font-semibold leading-normal text-sm">Development Group</p>
-                                <h5 class="mb-0 font-bold">
-                                    <% beginner_athletes = AthleteProfile.where(level: 0).count %>
-                                    <%= beginner_athletes %>
-                                    <span class="leading-normal text-sm font-weight-bolder text-lime-500"></span>
-                                </h5>
-                              <% end %>
+        <p class="mb-0 font-sans font-semibold leading-normal text-sm">Development Group</p>
+        <h5 class="mb-0 font-bold">
+            <% beginner_athletes = User.includes(:athlete_profile)
+            .where(role: ['athlete', 'child_user'])
+            .where(athlete_profiles: { level: 0 }).count %>
+            <%= beginner_athletes %>
+            <span class="leading-normal text-sm font-weight-bolder text-lime-500"></span>
+        </h5>
+        <% end %>
     </div>
     <div class="general_card w-72">
-    <%= link_to athlete_profiles_path(level: 1) do %>
-                                <p class="mb-0 font-sans font-semibold leading-normal text-sm">Intermediate Group</p>
-                                <h5 class="mb-0 font-bold">
-                                    <% intermediate_athletes = AthleteProfile.where(level: 1).count %>
-                                    <%= intermediate_athletes%>
-                                    <span class="leading-normal text-red-600 text-sm font-weight-bolder"></span>
-                                </h5>
-                            <%end%>
+        <%= link_to athlete_profiles_path(level: 1) do %>
+        <p class="mb-0 font-sans font-semibold leading-normal text-sm">Intermediate Group</p>
+        <h5 class="mb-0 font-bold">
+            <% intermediate_athletes = User.includes(:athlete_profile)
+            .where(role: ['athlete', 'child_user'])
+            .where(athlete_profiles: { level: 1 }).count %>
+            <%= intermediate_athletes%>
+            <span class="leading-normal text-red-600 text-sm font-weight-bolder"></span>
+        </h5>
+        <%end%>
     </div>
     <div class="general_card w-72">
-     <%= link_to athlete_profiles_path(level: 2) do %>
-                                <p class="mb-0 font-sans font-semibold leading-normal text-sm">Advanced Group</p>
-                                <h5 class="mb-0 font-bold">
-                                    <% advanced_athletes = AthleteProfile.where(level: 2).count %>
-                                    <%= advanced_athletes%>
-                                    <span class="leading-normal text-red-600 text-sm font-weight-bolder"></span>
-                                </h5>
-                            <%end%>
+        <%= link_to athlete_profiles_path(level: 2) do %>
+        <p class="mb-0 font-sans font-semibold leading-normal text-sm">Advanced Group</p>
+        <h5 class="mb-0 font-bold">
+            <% advanced_athletes = User.includes(:athlete_profile)
+            .where(role: ['athlete', 'child_user'])
+            .where(athlete_profiles: { level: 2 }).count %>
+            <%= advanced_athletes%>
+            <span class="leading-normal text-red-600 text-sm font-weight-bolder"></span>
+        </h5>
+        <%end%>
     </div>
 </div>
