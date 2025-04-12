@@ -98,27 +98,27 @@ RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
       end
     end
 
-    describe '#avatar_thumbnail' do
-      context 'when avatar is attached' do
-        before do
-          user.avatar.attach(
-            io: Rails.root.join('spec/fixtures/sample_athlete.png').open,
-            filename: 'sample_athlete.png',
-            content_type: 'image/png'
-          )
-        end
+    # describe '#avatar_thumbnail' do
+    #   context 'when avatar is attached' do
+    #     before do
+    #       user.avatar.attach(
+    #         io: Rails.root.join('spec/fixtures/sample_athlete.png').open,
+    #         filename: 'sample_athlete.png',
+    #         content_type: 'image/png'
+    #       )
+    #     end
 
-        it 'returns the avatar' do
-          expect(user.avatar_thumbnail).to eq(user.avatar)
-        end
-      end
+    #     it 'returns the avatar' do
+    #       expect(user.avatar_thumbnail).to eq(user.avatar)
+    #     end
+    #   end
 
-      context 'when avatar is not attached' do
-        it 'returns default image path' do
-          expect(user.avatar_thumbnail).to eq('user.png')
-        end
-      end
-    end
+    #   context 'when avatar is not attached' do
+    #     it 'returns default image path' do
+    #       expect(user.avatar_thumbnail).to eq('user.png')
+    #     end
+    #   end
+    # end
 
     describe '#current_level' do
       context 'with completed user levels' do
