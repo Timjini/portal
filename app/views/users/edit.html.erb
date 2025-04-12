@@ -1,0 +1,98 @@
+<% input_style = "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" %>
+<%= form_with model: @user, url: update_user_path(@user), local: true, data: { turbo: false } do |form| %>
+  <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
+      <%= @user.athlete? ? "ATHLETE PROFILE" : "USER PROFILE" %>
+    </h2>
+
+    <% if current_user.admin? %>
+      <div class="mb-6 p-4 bg-blue-50 rounded-lg">
+        <label class="block text-sm font-medium text-blue-800 mb-1">User Role*</label>
+        <%= form.select :role, 
+            options_for_select(User::ROLE_TYPES.map { |k,v| [k.to_s.titleize, v] }), 
+            { selected: @user.role }, 
+            class: input_style,
+            disabled: !current_user.admin? %>
+        <p class="mt-1 text-xs text-blue-600">Only admins can modify roles</p>
+      </div>
+    <% end %>
+
+    <!-- Avatar Section -->
+    <div class="flex flex-col md:flex-row gap-8 mb-6">
+      <div class="text-center" data-controller="avatar">
+        <div class="mx-auto w-28 h-28 mb-2 border rounded-full relative bg-gray-100 shadow-inset">
+          <%= image_tag(@user.avatar_thumbnail, id: "image", class: "w-full h-full object-cover rounded-full", data: { avatar_target: true }) %>
+        </div>
+        <label for="avatarInput" class="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+          <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+          </svg>
+          Change Photo
+        </label>
+        <%= form.file_field :avatar, class: "hidden", id: "avatarInput", data: { avatar_target: "input" } %>
+      </div>
+
+      <!-- User Details -->
+      <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email*</label>
+          <%= form.email_field :email, class: input_style, required: true %>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Username*</label>
+          <%= form.text_field :username, class: input_style, required: true %>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">First Name*</label>
+          <%= form.text_field :first_name, class: input_style, required: true %>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Last Name*</label>
+          <%= form.text_field :last_name, class: input_style, required: true %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Athlete Profile Section -->
+    <div class="border-t pt-6">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">Athlete Details</h3>
+
+      <%= form.fields_for :athlete_profile, @profile do |profile_form| %>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+            <%= profile_form.date_field :dob, class: input_style, max: Date.today %>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">School Name</label>
+            <%= profile_form.text_field :school_name, class: input_style %>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Height (cm)</label>
+            <%= profile_form.number_field :height, class: input_style, min: 0, step: 0.1 %>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
+            <%= profile_form.number_field :weight, class: input_style, min: 0, step: 0.1 %>
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Power of Ten URL</label>
+            <%= profile_form.text_field :power_of_ten, 
+                class: input_style,
+                placeholder: "https://www.thepowerof10.info/athletes/profile.aspx?athleteid=..." %>
+            <p class="mt-1 text-xs text-gray-500">Link to athlete's Power of Ten profile</p>
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Level</label>
+            <%= profile_form.select :level, ['development', 'intermediate', 'advanced'], {}, class: input_style %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mt-8 flex justify-end gap-3">
+      <%= link_to "Cancel", users_path(@user), class: "px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" %>
+      <%= form.submit "Save Changes", class: "btn" %>
+    </div>
+  </div>
+<% end %>

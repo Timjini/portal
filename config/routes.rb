@@ -95,6 +95,7 @@ Rails.application.routes.draw do
 
   # Edit user
   get 'users/edit_user/:id', to: 'users#edit_user', as: 'edit_user'
+  get 'users/edit/:id', to: 'users#edit', as: 'edit'
   patch 'users/update_user/:id', to: 'users#update_user', as: 'update_user'
   delete '/delete_user/:id', to: 'users#delete_user'
 

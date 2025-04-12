@@ -24,41 +24,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit_user
-    @user = User.find(params[:id])
-    @profile = @user.athlete_profile
-  end
-
-  # TODO: before release
-  def update_user
-    @user = User.find(params[:id])
-    @profile = @user.athlete_profile || AthleteProfile.new(user: @user)
-    begin
-      Rails.logger.debug athlete_profile_params
-      @profile.update(params[:height])
-    rescue StandardError => e
-      put "error here, #{e}"
-    end
-
-    # respond_to do |format|
-    #   if @user.update(user_params)
-    #     format.turbo_stream do
-    #       render turbo_stream: [
-    #         turbo_stream.replace('flash', partial: 'shared/flash', locals: { notice: 'Profile updated successfully' }), # rubocop:disable Layout/LineLength
-    #         turbo_stream.replace(@user, partial: 'users/form', locals: { user: @user })
-    #       ]
-    #     end
-    #     format.html { redirect_to @user, notice: 'User and profile were successfully updated.' }
-    #   else
-    #     format.turbo_stream do
-    #       render turbo_stream: turbo_stream.replace('flash', partial: 'shared/flash',
-    #                                                          locals: { alert: 'Error updating profile' })
-    #     end
-    #     format.html { render :edit }
-    #   end
-    # end
-  end
-
   def delete_user
     @user = User.find(params[:id])
 
@@ -71,27 +36,56 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-
-  def search_users(query)
-    User.where('name ILIKE ? OR username ILIKE ? OR email ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
+  def edit
+    @user = User.find(params[:id])
+    @profile = @user.athlete_profile || @user.build_athlete_profile
   end
 
-  def user_params # rubocop:disable Metrics/MethodLength
-    params.require(:user).permit(:email,
-                                 :username,
-                                 :first_name,
-                                 :last_name,
-                                 :role,
-                                 :phone,
-                                 :address,
-                                 :avatar,
-                                 :dob,
-                                 :school_name,
-                                 athlete_profile_attributes: %i[id height weight level])
+  def update_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+    @user = User.find(params[:id])
+    @profile = @user.athlete_profile || @user.build_athlete_profile
+
+    respond_to do |format|
+      if @user.update(user_params) && @profile.update(athlete_profile_params)
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace('flash', partial: 'shared/flash', locals: { notice: 'Profile updated successfully' }),
+            turbo_stream.replace(@user, partial: 'users/form', locals: { user: @user })
+          ]
+        end
+        format.html { redirect_to users_path(@user), notice: 'Profile updated successfully' } # rubocop:disable Rails/I18nLocaleTexts
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('flash',
+                                                    partial: 'shared/flash',
+                                                    locals: { alert: @user.errors.full_messages.to_sentence })
+        end
+        format.html { render :edit, status: :unprocessable_entity }
+      end
+    end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to users_path, alert: 'User not found' # rubocop:disable Rails/I18nLocaleTexts
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(
+      :email, :username, :first_name, :last_name,
+      :phone, :address, :avatar, :role
+    )
   end
 
   def athlete_profile_params
-    params.require(:athlete_profile).permit(:height, :weight, :dob, :level)
+    return {} if params[:user][:athlete_profile_attributes].blank?
+
+    params.require(:user).require(:athlete_profile_attributes).permit(
+      :id, :first_name, :last_name, :dob, :height,
+      :weight, :school_name, :level, :power_of_ten
+    )
+  end
+
+  def search_users(query)
+    User.where('name ILIKE ? OR username ILIKE ? OR email ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
   end
 end
