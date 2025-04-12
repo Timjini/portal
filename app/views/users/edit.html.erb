@@ -92,6 +92,7 @@
             <label class="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
             <%= profile_form.number_field :weight, class: input_style, min: 0, step: 0.1 %>
           </div>
+          <% if current_user.admin? %>
           <div class="md:col-span-2">
             <label class="block text-sm font-medium text-gray-700 mb-1">Power of Ten URL</label>
             <%= profile_form.text_field :power_of_ten, 
@@ -103,6 +104,7 @@
             <label class="block text-sm font-medium text-gray-700 mb-1">Level</label>
             <%= profile_form.select :level, ['development', 'intermediate', 'advanced'], {}, class: input_style %>
           </div>
+          <% end %>
         </div>
       <% end %>
     </div>
