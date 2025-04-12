@@ -6,7 +6,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Devise Configuration
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
-
+  # accepts_nested_attributes_for :athlete_profile
   # Constants
   ROLE_TYPES = {
     athlete: 'athlete',
