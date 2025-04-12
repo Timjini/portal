@@ -77,9 +77,9 @@ class UsersController < ApplicationController
   end
 
   def athlete_profile_params
-    return {} if params[:user][:athlete_profile_attributes].blank?
+    return {} if params[:user][:athlete_profile].blank?
 
-    params.require(:user).require(:athlete_profile_attributes).permit(
+    params.require(:user).require(:athlete_profile).permit(
       :id, :first_name, :last_name, :dob, :height,
       :weight, :school_name, :level, :power_of_ten
     )
