@@ -39,6 +39,9 @@ gem 'redis', '>= 4.0.1'
 gem 'devise', '~> 4.9'
 gem 'jwt'
 
+# Authorization
+gem 'cancancan'
+
 # Error tracking
 gem 'sentry-rails'
 gem 'sentry-ruby'

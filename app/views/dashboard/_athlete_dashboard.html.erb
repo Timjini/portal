@@ -1,4 +1,6 @@
-
+<%
+=begin%>
+ 
 
 
 <%= render 'dashboard/dashbord_hero'%>
@@ -7,4 +9,319 @@
  <% @questionnaire = Question.includes(:answers).where(answers: { user_id: current_user.id }) %>
     <%if @questionnaire.blank?%>
     <a class=" text-center btn" href="/questionnaires?user_id=<%=current_user.id%>">Please Fill The Registration Questionnaire</a>
-<%end%>
+<%end%> 
+<%
+=end%>
+
+
+<div class=" min-h-screen p-4 md:p-8">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900 flex items-center gap-2">
+        <span class="bg-blue-100 text-blue-600 p-2 rounded-full">
+          <span class="material-symbols-outlined">sports</span>
+        </span>
+        Athlete Dashboard
+      </h1>
+      <p class="text-gray-600 mt-1">Track your performance, training, and progress</p>
+    </div>
+    <div class="mt-4 md:mt-0 flex items-center gap-4">
+      <div class=" p-3 rounded-lg shadow-sm flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white">
+          <span class="material-symbols-outlined">person</span>
+        </div>
+        <div>
+          <p class="font-medium text-gray-900">John Athlete</p>
+          <p class="text-xs text-gray-500">Adult Program</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Dashboard Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Performance Snapshot -->
+    <div class="lg:col-span-2  rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-blue-600">
+            <span class="material-symbols-outlined">monitoring</span>
+          </span>
+          Performance Snapshot
+        </h2>
+        <select class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+          <option>Last 4 Weeks</option>
+          <option>Last 8 Weeks</option>
+          <option>Season to Date</option>
+        </select>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <!-- Speed Metric -->
+        <div class="bg-blue-50 p-4 rounded-lg">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-sm text-gray-600">Speed</p>
+              <p class="text-2xl font-bold text-gray-900">8.2 m/s</p>
+            </div>
+            <span class="text-green-500 material-symbols-outlined">trending_up</span>
+          </div>
+          <div class="mt-2 h-2 bg-blue-200 rounded-full">
+            <div class="h-2 bg-blue-600 rounded-full" style="width: 82%"></div>
+          </div>
+        </div>
+        
+        <!-- Strength Metric -->
+        <div class="bg-purple-50 p-4 rounded-lg">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-sm text-gray-600">Strength</p>
+              <p class="text-2xl font-bold text-gray-900">185 kg</p>
+            </div>
+            <span class="text-green-500 material-symbols-outlined">trending_up</span>
+          </div>
+          <div class="mt-2 h-2 bg-purple-200 rounded-full">
+            <div class="h-2 bg-purple-600 rounded-full" style="width: 74%"></div>
+          </div>
+        </div>
+        
+        <!-- Endurance Metric -->
+        <div class="bg-green-50 p-4 rounded-lg">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-sm text-gray-600">Endurance</p>
+              <p class="text-2xl font-bold text-gray-900">92 VO₂</p>
+            </div>
+            <span class="text-yellow-500 material-symbols-outlined">trending_flat</span>
+          </div>
+          <div class="mt-2 h-2 bg-green-200 rounded-full">
+            <div class="h-2 bg-green-600 rounded-full" style="width: 92%"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Performance Chart (placeholder) -->
+      <div class="bg-gray-50 rounded-lg h-64 flex items-center justify-center text-gray-400">
+        [Performance Trends Chart]
+      </div>
+    </div>
+
+    <!-- Training Schedule -->
+    <div class=" rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-orange-500">
+            <span class="material-symbols-outlined">calendar_month</span>
+          </span>
+          Training Schedule
+        </h2>
+        <button class="text-blue-600 text-sm font-medium">View All</button>
+      </div>
+      
+      <div class="space-y-4">
+        <!-- Session 1 -->
+        <div class="border-l-4 border-blue-500 pl-4 py-2">
+          <div class="flex justify-between">
+            <p class="font-medium">Speed Development</p>
+            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">High Intensity</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">Tomorrow, 9:00 AM</p>
+          <p class="text-sm mt-1">Track Session - 100m repeats</p>
+        </div>
+        
+        <!-- Session 2 -->
+        <div class="border-l-4 border-green-500 pl-4 py-2">
+          <div class="flex justify-between">
+            <p class="font-medium">Strength Training</p>
+            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Medium Intensity</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">Wed, 4:30 PM</p>
+          <p class="text-sm mt-1">Olympic lifts + Core</p>
+        </div>
+        
+        <!-- Session 3 -->
+        <div class="border-l-4 border-purple-500 pl-4 py-2">
+          <div class="flex justify-between">
+            <p class="font-medium">Recovery Session</p>
+            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">Low Intensity</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">Fri, 10:00 AM</p>
+          <p class="text-sm mt-1">Yoga + Mobility</p>
+        </div>
+      </div>
+      
+      <button class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined">add</span>
+        Add Personal Session
+      </button>
+    </div>
+
+    <!-- KPI Feedback & Coach Comments -->
+    <div class=" rounded-xl shadow-sm p-6">
+      <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+        <span class="text-yellow-500">
+          <span class="material-symbols-outlined">insights</span>
+        </span>
+        KPI Feedback Summary
+      </h2>
+      
+      <div class="space-y-4">
+        <div>
+          <p class="font-medium text-gray-900">Strengths</p>
+          <ul class="list-disc list-inside text-sm text-gray-700 mt-1 space-y-1">
+            <li>Explosive power development</li>
+            <li>Consistent training attendance</li>
+            <li>Excellent recovery metrics</li>
+          </ul>
+        </div>
+        
+        <div>
+          <p class="font-medium text-gray-900">Areas to Improve</p>
+          <ul class="list-disc list-inside text-sm text-gray-700 mt-1 space-y-1">
+            <li>Late-stage endurance in 400m</li>
+            <li>Left-side mobility</li>
+            <li>Pre-session hydration</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mt-8">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-4">
+          <span class="text-red-500">
+            <span class="material-symbols-outlined">record_voice_over</span>
+          </span>
+          Coach Comments
+        </h2>
+        
+        <div class="bg-blue-50 rounded-lg p-4">
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                <span class="material-symbols-outlined">sports_martial_arts</span>
+              </div>
+            </div>
+            <div>
+              <p class="font-medium">Coach Williams • <span class="text-sm text-gray-600">2 days ago</span></p>
+              <p class="text-sm mt-1">"Great progress on your block starts! Focus on maintaining form through the full 100m. Let's work on pacing strategies next session."</p>
+              <div class="mt-2 flex gap-2">
+                <button class="text-blue-600 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-base">play_circle</span>
+                  View Video
+                </button>
+                <button class="text-blue-600 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-base">reply</span>
+                  Reply
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Goal Progress -->
+    <div class=" rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-green-600">
+            <span class="material-symbols-outlined">flag</span>
+          </span>
+          Goal Progress
+        </h2>
+        <button class="text-blue-600 text-sm font-medium">Set New Goal</button>
+      </div>
+      
+      <div class="space-y-4">
+        <div>
+          <div class="flex justify-between mb-1">
+            <p class="font-medium">Sub-11s 100m</p>
+            <p class="text-sm text-gray-600">68% complete</p>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div class="bg-blue-600 h-2.5 rounded-full" style="width: 68%"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">Target date: June 15 • Current: 11.3s</p>
+        </div>
+        
+        <div>
+          <div class="flex justify-between mb-1">
+            <p class="font-medium">200kg Squat</p>
+            <p class="text-sm text-gray-600">42% complete</p>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div class="bg-purple-600 h-2.5 rounded-full" style="width: 42%"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">Target date: July 1 • Current: 185kg</p>
+        </div>
+        
+        <div>
+          <div class="flex justify-between mb-1">
+            <p class="font-medium">Regional Qualifier</p>
+            <p class="text-sm text-green-600">Achieved!</p>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div class="bg-green-600 h-2.5 rounded-full" style="width: 100%"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">Completed: May 5 • Next: State Finals</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Health & Recovery -->
+    <div class="lg:col-span-2  rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-teal-600">
+            <span class="material-symbols-outlined">favorite</span>
+          </span>
+          Health & Recovery
+        </h2>
+        <div class="flex gap-2">
+          <button class="text-blue-600 text-sm font-medium">Log Health Data</button>
+          <button class="text-blue-600 text-sm font-medium">View History</button>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Injury Status -->
+        <div class="bg-red-50 p-4 rounded-lg">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-red-500 material-symbols-outlined">emergency</span>
+            <p class="font-medium">Injury Status</p>
+          </div>
+          <p class="text-sm">No active injuries</p>
+          <p class="text-xs text-gray-500 mt-2">Last injury: Apr 12 (Ankle sprain - resolved)</p>
+        </div>
+        
+        <!-- Recovery Days -->
+        <div class="bg-amber-50 p-4 rounded-lg">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-amber-500 material-symbols-outlined">bedtime</span>
+            <p class="font-medium">Recovery Days</p>
+          </div>
+          <p class="text-sm">2 scheduled this week</p>
+          <p class="text-xs text-gray-500 mt-2">Last recovery: 82% effectiveness</p>
+        </div>
+        
+        <!-- Nutrition Notes -->
+        <div class="bg-green-50 p-4 rounded-lg">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-green-500 material-symbols-outlined">nutrition</span>
+            <p class="font-medium">Nutrition Notes</p>
+          </div>
+          <p class="text-sm">Protein intake on target</p>
+          <p class="text-xs text-gray-500 mt-2">Hydration needs improvement (-12%)</p>
+        </div>
+      </div>
+      
+      <!-- Weekly Recovery Chart -->
+      <div class="mt-6">
+        <p class="font-medium mb-2">Weekly Recovery Metrics</p>
+        <div class="bg-gray-50 rounded-lg h-48 flex items-center justify-center text-gray-400">
+          [Recovery Trends Chart]
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

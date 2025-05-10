@@ -1,0 +1,378 @@
+<div class="min-h-screen p-4 md:p-6">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-3">
+        <span class="bg-blue-100 text-blue-600 p-2 rounded-full">
+          <span class="material-symbols-outlined">admin_panel_settings</span>
+        </span>
+        Academy Administration
+      </h1>
+      <p class="text-gray-600 mt-1">System overview and management tools</p>
+    </div>
+    <div class="mt-4 md:mt-0 flex items-center gap-4">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+        <span class="material-symbols-outlined">refresh</span>
+        Refresh Data
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-blue-500">
+      <p class="text-sm text-gray-600">Active Users</p>
+      <p class="text-2xl font-bold">1,248</p>
+      <p class="text-xs text-gray-500 mt-1">+12% this month</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-green-500">
+      <p class="text-sm text-gray-600">Assessments Completed</p>
+      <p class="text-2xl font-bold">327</p>
+      <p class="text-xs text-gray-500 mt-1">87% of target</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-purple-500">
+      <p class="text-sm text-gray-600">Avg. Session Rating</p>
+      <p class="text-2xl font-bold">4.7</p>
+      <p class="text-xs text-gray-500 mt-1">/5.0 from parents</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-red-500">
+      <p class="text-sm text-gray-600">System Alerts</p>
+      <p class="text-2xl font-bold">3</p>
+      <p class="text-xs text-gray-500 mt-1">Needs attention</p>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Platform Activity -->
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-blue-600">
+            <span class="material-symbols-outlined">monitoring</span>
+          </span>
+          Platform Activity
+        </h2>
+        <select class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+          <option>Last 7 Days</option>
+          <option>Last 30 Days</option>
+          <option>This Quarter</option>
+        </select>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-blue-50 p-3 rounded-lg">
+          <p class="text-sm text-gray-600">Daily Logins</p>
+          <p class="text-xl font-bold">214 avg</p>
+          <div class="h-2 bg-blue-200 rounded-full mt-2">
+            <div class="h-2 bg-blue-600 rounded-full" style="width: 78%"></div>
+          </div>
+        </div>
+        <div class="bg-green-50 p-3 rounded-lg">
+          <p class="text-sm text-gray-600">Assessments/Day</p>
+          <p class="text-xl font-bold">14.3 avg</p>
+          <div class="h-2 bg-green-200 rounded-full mt-2">
+            <div class="h-2 bg-green-600 rounded-full" style="width: 65%"></div>
+          </div>
+        </div>
+        <div class="bg-purple-50 p-3 rounded-lg">
+          <p class="text-sm text-gray-600">Feedback Sent</p>
+          <p class="text-xl font-bold">87/day</p>
+          <div class="h-2 bg-purple-200 rounded-full mt-2">
+            <div class="h-2 bg-purple-600 rounded-full" style="width: 92%"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-gray-50 rounded-lg h-64 flex items-center justify-center text-gray-400">
+        [Activity Trends Chart]
+      </div>
+    </div>
+
+    <!-- User Management -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-green-600">
+            <span class="material-symbols-outlined">group</span>
+          </span>
+          User Management
+        </h2>
+        <button class="text-blue-600 text-sm font-medium">View All</button>
+      </div>
+      
+      <div class="space-y-4">
+        <div class="bg-blue-50 p-4 rounded-lg">
+          <div class="flex justify-between">
+            <p class="font-medium">User Types</p>
+            <button class="text-blue-600 text-sm">Details</button>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mt-3">
+            <div>
+              <p class="text-xs text-gray-600">Athletes</p>
+              <p class="font-medium">842</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-600">Parents</p>
+              <p class="font-medium">327</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-600">Coaches</p>
+              <p class="font-medium">48</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-600">Admins</p>
+              <p class="font-medium">5</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-red-50 p-4 rounded-lg">
+          <div class="flex justify-between">
+            <p class="font-medium">Inactive Accounts</p>
+            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">23</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">No login in 60+ days</p>
+          <button class="w-full mt-3 bg-white hover:bg-gray-100 text-red-600 py-1 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-sm">mail</span>
+            Send Reminders
+          </button>
+        </div>
+        
+        <div class="bg-yellow-50 p-4 rounded-lg">
+          <div class="flex justify-between">
+            <p class="font-medium">Pending Approvals</p>
+            <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">7</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">New coach applications</p>
+          <button class="w-full mt-3 bg-white hover:bg-gray-100 text-yellow-600 py-1 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-sm">rate_review</span>
+            Review Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Program Health -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-purple-600">
+            <span class="material-symbols-outlined">health_metrics</span>
+          </span>
+          Program Health
+        </h2>
+        <button class="text-blue-600 text-sm font-medium">View Details</button>
+      </div>
+      
+      <div class="space-y-4">
+        <div>
+          <div class="flex justify-between mb-1">
+            <p class="font-medium">Coach Feedback Completion</p>
+            <p class="text-sm font-medium">92%</p>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div class="bg-green-600 h-2.5 rounded-full" style="width: 92%"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">3 coaches behind schedule</p>
+        </div>
+        
+        <div>
+          <div class="flex justify-between mb-1">
+            <p class="font-medium">Session Punctuality</p>
+            <p class="text-sm font-medium">87%</p>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div class="bg-blue-600 h-2.5 rounded-full" style="width: 87%"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">13% started late this week</p>
+        </div>
+        
+        <div>
+          <div class="flex justify-between mb-1">
+            <p class="font-medium">Parent Satisfaction</p>
+            <p class="text-sm font-medium">4.5/5</p>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div class="bg-purple-600 h-2.5 rounded-full" style="width: 90%"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">From 142 survey responses</p>
+        </div>
+        
+        <div class="bg-gray-50 rounded-lg p-3 mt-4">
+          <p class="font-medium text-sm mb-2">Program Highlights</p>
+          <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+            <li>U12 Soccer has highest satisfaction (4.8/5)</li>
+            <li>Coach Williams has 100% feedback completion</li>
+            <li>Evening sessions have 23% better punctuality</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI System Check -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-amber-600">
+            <span class="material-symbols-outlined">verified</span>
+          </span>
+          KPI System Check
+        </h2>
+        <button class="text-blue-600 text-sm font-medium">Run Full Scan</button>
+      </div>
+      
+      <div class="space-y-4">
+        <div class="bg-green-50 p-4 rounded-lg">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-green-500">check_circle</span>
+            <div>
+              <p class="font-medium">Formulas Valid</p>
+              <p class="text-sm text-gray-600">All 142 KPI calculations</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-red-50 p-4 rounded-lg">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-red-500">warning</span>
+            <div>
+              <p class="font-medium">Data Inconsistencies</p>
+              <p class="text-sm text-gray-600">3 athletes with missing data</p>
+            </div>
+          </div>
+          <button class="w-full mt-3 bg-white hover:bg-gray-100 text-red-600 py-1 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-sm">visibility</span>
+            View Issues
+          </button>
+        </div>
+        
+        <div class="bg-blue-50 p-4 rounded-lg">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-blue-500">history</span>
+            <div>
+              <p class="font-medium">Last Full Scan</p>
+              <p class="text-sm text-gray-600">May 28, 2024 · 14:32</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-yellow-50 p-4 rounded-lg">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-yellow-500">timer</span>
+            <div>
+              <p class="font-medium">Scheduled Checks</p>
+              <p class="text-sm text-gray-600">Daily at 2:00 AM</p>
+            </div>
+          </div>
+          <button class="w-full mt-3 bg-white hover:bg-gray-100 text-yellow-600 py-1 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-sm">edit</span>
+            Change Schedule
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications & Reports -->
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Notifications -->
+        <div>
+          <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+            <span class="text-red-500">
+              <span class="material-symbols-outlined">notifications</span>
+            </span>
+            System Alerts
+          </h2>
+          
+          <div class="space-y-3">
+            <div class="p-3 bg-red-50 rounded-lg border-l-4 border-red-500">
+              <div class="flex justify-between">
+                <p class="font-medium">Backup Failed</p>
+                <p class="text-xs text-gray-600">Today 3:14 AM</p>
+              </div>
+              <p class="text-sm text-gray-700 mt-1">Nightly database backup unsuccessful</p>
+              <button class="mt-2 text-red-600 text-sm flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">settings_backup_restore</span>
+                Retry Backup
+              </button>
+            </div>
+            
+            <div class="p-3 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+              <div class="flex justify-between">
+                <p class="font-medium">Feedback to Moderate</p>
+                <p class="text-xs text-gray-600">2 unread</p>
+              </div>
+              <p class="text-sm text-gray-700 mt-1">Coach comments requiring review</p>
+              <button class="mt-2 text-purple-600 text-sm flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">rate_review</span>
+                Moderate Now
+              </button>
+            </div>
+            
+            <div class="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+              <div class="flex justify-between">
+                <p class="font-medium">New System Update</p>
+                <p class="text-xs text-gray-600">Version 2.3.1</p>
+              </div>
+              <p class="text-sm text-gray-700 mt-1">Performance improvements available</p>
+              <button class="mt-2 text-blue-600 text-sm flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">system_update</span>
+                View Changelog
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Reports -->
+        <div>
+          <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+            <span class="text-green-500">
+              <span class="material-symbols-outlined">description</span>
+            </span>
+            Data Reports
+          </h2>
+          
+          <div class="bg-gray-50 rounded-lg p-4">
+            <p class="font-medium text-sm mb-3">Generate and Export Reports</p>
+            
+            <div class="space-y-3">
+              <button class="w-full bg-white hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-between">
+                <span>KPI Summary</span>
+                <span class="material-symbols-outlined text-sm">download</span>
+              </button>
+              
+              <button class="w-full bg-white hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-between">
+                <span>Attendance Records</span>
+                <span class="material-symbols-outlined text-sm">download</span>
+              </button>
+              
+              <button class="w-full bg-white hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-between">
+                <span>Program Performance</span>
+                <span class="material-symbols-outlined text-sm">download</span>
+              </button>
+              
+              <button class="w-full bg-white hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-between">
+                <span>Coach Evaluations</span>
+                <span class="material-symbols-outlined text-sm">download</span>
+              </button>
+            </div>
+            
+            <div class="mt-4">
+              <p class="text-xs text-gray-600 mb-2">Custom Date Range</p>
+              <div class="flex gap-2">
+                <input type="date" class="bg-white border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+                <span class="self-center">to</span>
+                <input type="date" class="bg-white border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+              </div>
+              <button class="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-sm">tune</span>
+                Generate Custom Report
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

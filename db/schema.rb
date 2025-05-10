@@ -264,7 +264,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_10_215048) do
     t.bigint "user_level_id", null: false
     t.bigint "check_list_id", null: false
     t.bigint "user_id", null: false
-    t.boolean "completed"
+    t.boolean "completed", default: false, null: false
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

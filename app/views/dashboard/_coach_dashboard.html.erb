@@ -1,4 +1,6 @@
-<%= render 'dashboard/dashbord_hero'%>
+<%
+=begin%>
+ <%= render 'dashboard/dashbord_hero'%>
 
 <div class="coach_dashboard flex flex-row justify-center px-12 flex-wrap gap-10">
     <div class="general_card w-72">
@@ -37,4 +39,458 @@
         </h5>
         <%end%>
     </div>
+</div> 
+<%
+=end%>
+
+<div class="min-h-screen p-4 md:p-6">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-3">
+        <span class="bg-blue-100 text-blue-600 p-2 rounded-full">
+          <span class="material-symbols-outlined">sports</span>
+        </span>
+        Coach Dashboard
+      </h1>
+      <p class="text-gray-600 mt-1">Manage your athletes and training sessions</p>
+    </div>
+    <div class="mt-4 md:mt-0 flex items-center gap-4">
+      <div class="relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">search</span>
+        <input type="text" placeholder="Search athletes..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+        <span class="material-symbols-outlined">add</span>
+        New Session
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-blue-500">
+      <p class="text-sm text-gray-600">Total Athletes</p>
+      <p class="text-2xl font-bold">42</p>
+      <p class="text-xs text-gray-500 mt-1">3 new this month</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-green-500">
+      <p class="text-sm text-gray-600">Sessions Today</p>
+      <p class="text-2xl font-bold">5</p>
+      <p class="text-xs text-gray-500 mt-1">12 athletes scheduled</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-yellow-500">
+      <p class="text-sm text-gray-600">Pending Reviews</p>
+      <p class="text-2xl font-bold">8</p>
+      <p class="text-xs text-gray-500 mt-1">Overdue: 2</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-red-500">
+      <p class="text-sm text-gray-600">Performance Alerts</p>
+      <p class="text-2xl font-bold">3</p>
+      <p class="text-xs text-gray-500 mt-1">Needs attention</p>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Athlete Overview Table -->
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-blue-600">
+            <span class="material-symbols-outlined">group</span>
+          </span>
+          Athlete Roster
+        </h2>
+        <div class="flex gap-2">
+          <select class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+            <option>All Levels</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+          </select>
+          <select class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+            <option>All Age Groups</option>
+            <option>U10</option>
+            <option>U12</option>
+            <option>U14</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Athlete</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Level</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Attendance</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Score</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 overflow-hidden">
+                    <img src="https://i.pravatar.cc/150?img=3" alt="" class="h-full w-full object-cover">
+                  </div>
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">Alex Johnson</div>
+                    <div class="text-sm text-gray-500">U12 Soccer</div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Intermediate 2</span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">92%</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">84/100</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 overflow-hidden">
+                    <img src="https://i.pravatar.cc/150?img=5" alt="" class="h-full w-full object-cover">
+                  </div>
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">Sam Wilson</div>
+                    <div class="text-sm text-gray-500">U14 Basketball</div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">13</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Advanced 1</span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">100%</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">91/100</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
+              </td>
+            </tr>
+            <tr class="bg-yellow-50 hover:bg-yellow-100">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-10 w-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 overflow-hidden">
+                    <img src="https://i.pravatar.cc/150?img=8" alt="" class="h-full w-full object-cover">
+                  </div>
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">Jordan Lee</div>
+                    <div class="text-sm text-gray-500">U10 Soccer</div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">9</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Beginner 3</span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">78%</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-600">62/100 (-12%)</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <a href="#" class="text-blue-600 hover:text-blue-900">Review</a>
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 overflow-hidden">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="" class="h-full w-full object-cover">
+                  </div>
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">Taylor Smith</div>
+                    <div class="text-sm text-gray-500">U12 Basketball</div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Intermediate 1</span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">95%</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">88/100</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="mt-4 flex justify-between items-center">
+        <p class="text-sm text-gray-700">Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">42</span> athletes</p>
+        <div class="flex gap-1">
+          <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">Previous</button>
+          <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">1</button>
+          <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">2</button>
+          <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today's Schedule -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-orange-500">
+            <span class="material-symbols-outlined">calendar_month</span>
+          </span>
+          Today's Schedule
+        </h2>
+        <button class="text-blue-600 text-sm font-medium">View All</button>
+      </div>
+      
+      <div class="space-y-4">
+        <div class="border-l-4 border-blue-500 pl-4 py-2">
+          <div class="flex justify-between">
+            <p class="font-medium">Morning Drills</p>
+            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">9:00 AM</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">U12 Soccer - Skills Development</p>
+          <div class="flex flex-wrap gap-1 mt-2">
+            <span class="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full flex items-center gap-1">
+              <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+              5 athletes
+            </span>
+            <button class="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">list</span>
+              Roster
+            </button>
+            <button class="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">edit</span>
+              Plan
+            </button>
+          </div>
+        </div>
+        
+        <div class="border-l-4 border-green-500 pl-4 py-2">
+          <div class="flex justify-between">
+            <p class="font-medium">Private Session</p>
+            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">11:30 AM</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">Alex Johnson - Shooting Form</p>
+          <div class="flex flex-wrap gap-1 mt-2">
+            <button class="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">visibility</span>
+              Profile
+            </button>
+            <button class="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">video_library</span>
+              Last Session
+            </button>
+          </div>
+        </div>
+        
+        <div class="border-l-4 border-purple-500 pl-4 py-2">
+          <div class="flex justify-between">
+            <p class="font-medium">Team Practice</p>
+            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">4:00 PM</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">U14 Basketball - Scrimmage Prep</p>
+          <div class="flex flex-wrap gap-1 mt-2">
+            <span class="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full flex items-center gap-1">
+              <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+              8 athletes
+            </span>
+            <button class="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">stadium</span>
+              Field 2
+            </button>
+          </div>
+        </div>
+        
+        <div class="border-l-4 border-red-500 pl-4 py-2">
+          <div class="flex justify-between">
+            <p class="font-medium">Evaluation Due</p>
+            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">Jordan Lee</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">Quarterly Skills Assessment</p>
+          <div class="flex flex-wrap gap-1 mt-2">
+            <button class="text-xs bg-red-100 text-red-800 hover:bg-red-200 px-2 py-1 rounded-full flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">edit</span>
+              Complete Now
+            </button>
+            <button class="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">schedule</span>
+              Remind Later
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Reviews & Feedback Panel -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+        <span class="text-yellow-500">
+          <span class="material-symbols-outlined">assignment</span>
+        </span>
+        Pending Reviews
+      </h2>
+      
+      <div class="space-y-3 mb-6">
+        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 overflow-hidden">
+              <img src="https://i.pravatar.cc/150?img=8" alt="" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <p class="font-medium text-sm">Jordan Lee</p>
+              <p class="text-xs text-gray-600">U10 Soccer</p>
+            </div>
+          </div>
+          <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">Overdue</span>
+        </div>
+        
+        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 overflow-hidden">
+              <img src="https://i.pravatar.cc/150?img=12" alt="" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <p class="font-medium text-sm">Morgan Taylor</p>
+              <p class="text-xs text-gray-600">U12 Basketball</p>
+            </div>
+          </div>
+          <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">Due Today</span>
+        </div>
+        
+        <button class="w-full mt-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-sm">list</span>
+          View All (8)
+        </button>
+      </div>
+      
+      <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-4 mt-6">
+        <span class="text-green-500">
+          <span class="material-symbols-outlined">quick_reference</span>
+        </span>
+        Quick Feedback
+      </h2>
+      
+      <div class="bg-gray-50 rounded-lg p-4">
+        <select class="w-full bg-white border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-2 mb-3 focus:ring-blue-500 focus:border-blue-500">
+          <option>Select Athlete</option>
+          <option>Jordan Lee</option>
+          <option>Alex Johnson</option>
+          <option>Sam Wilson</option>
+        </select>
+        
+        <select class="w-full bg-white border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-2 mb-3 focus:ring-blue-500 focus:border-blue-500">
+          <option>Feedback Type</option>
+          <option>Technique Note</option>
+          <option>Encouragement</option>
+          <option>Area for Improvement</option>
+        </select>
+        
+        <textarea rows="3" class="w-full bg-white border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-2 mb-3 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your feedback..."></textarea>
+        
+        <div class="flex justify-between">
+          <button class="text-blue-600 text-sm flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">video_library</span>
+            Attach Video
+          </button>
+          <button class="bg-blue-600 hover:bg-blue-700 text-white py-1 px-4 rounded-lg text-sm font-medium">
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Performance Alerts & Analytics -->
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Performance Alerts -->
+        <div>
+          <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+            <span class="text-red-500">
+              <span class="material-symbols-outlined">warning</span>
+            </span>
+            Performance Alerts
+          </h2>
+          
+          <div class="space-y-3">
+            <div class="p-3 bg-red-50 rounded-lg border-l-4 border-red-500">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 overflow-hidden">
+                  <img src="https://i.pravatar.cc/150?img=8" alt="" class="w-full h-full object-cover">
+                </div>
+                <div>
+                  <p class="font-medium text-sm">Jordan Lee</p>
+                  <p class="text-xs text-gray-600">Sprint Time ↓12%</p>
+                </div>
+              </div>
+              <p class="text-xs text-gray-700">Last 3 sessions show consistent decline. Possible injury or motivation issue.</p>
+              <div class="flex gap-2 mt-2">
+                <button class="text-xs bg-red-100 text-red-800 hover:bg-red-200 px-2 py-1 rounded-full flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">healing</span>
+                  Check Injury
+                </button>
+                <button class="text-xs bg-blue-100 text-blue-800 hover:bg-blue-200 px-2 py-1 rounded-full flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">forum</span>
+                  Talk to Parent
+                </button>
+              </div>
+            </div>
+            
+            <div class="p-3 bg-amber-50 rounded-lg border-l-4 border-amber-500">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 overflow-hidden">
+                  <img src="https://i.pravatar.cc/150?img=15" alt="" class="w-full h-full object-cover">
+                </div>
+                <div>
+                  <p class="font-medium text-sm">Casey Kim</p>
+                  <p class="text-xs text-gray-600">Attendance ↓30%</p>
+                </div>
+              </div>
+              <p class="text-xs text-gray-700">Missed 3 of last 5 sessions. Previously perfect attendance.</p>
+              <div class="flex gap-2 mt-2">
+                <button class="text-xs bg-amber-100 text-amber-800 hover:bg-amber-200 px-2 py-1 rounded-full flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">schedule</span>
+                  Check Schedule
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Analytics -->
+        <div>
+          <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+            <span class="text-blue-500">
+              <span class="material-symbols-outlined">bar_chart</span>
+            </span>
+            Group Analytics
+          </h2>
+          
+          <div class="bg-gray-50 rounded-lg p-4 mb-4">
+            <p class="font-medium text-sm mb-2">U12 Basketball - Shooting Accuracy</p>
+            <div class="h-40 flex items-center justify-center text-gray-400">
+              [Shooting % Chart]
+            </div>
+            <p class="text-xs text-gray-600 mt-2">Team average: 68% (+5% from last month)</p>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-2">
+            <div class="bg-blue-50 p-2 rounded-lg">
+              <p class="text-xs text-gray-600">Best Performer</p>
+              <p class="font-medium text-sm">Sam Wilson</p>
+              <p class="text-xs text-blue-600">82% accuracy</p>
+            </div>
+            <div class="bg-amber-50 p-2 rounded-lg">
+              <p class="text-xs text-gray-600">Most Improved</p>
+              <p class="font-medium text-sm">Taylor Smith</p>
+              <p class="text-xs text-amber-600">+15% this month</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

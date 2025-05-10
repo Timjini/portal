@@ -76,6 +76,8 @@ Rails.application.routes.draw do
 
   resources :answers, only: [:create]
 
+  resources :athlete_tracking, only: [:index]
+
   resources :qr_codes, only: %i[new create index show]
   get 'qr_code_generation', to: 'qr_codes#index'
   get 'scanner', to: 'qr_codes#scanner'

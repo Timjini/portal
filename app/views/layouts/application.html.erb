@@ -49,23 +49,23 @@
 
 <body>
     <% flash.each do |type, msg| %>
-      <div id="hideMe" class="slide-pop-up absolute top-0 right-0 <%=type%>" style="position: absolute;z-index: 2;top: 10%;background-color: #f5f5f5;padding: 20px;margin-right: 10px;border-radius: 10px;box-shadow: antiquewhite;color: #242424;/* display: flex; */justify-content: flex-end;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-          <%= msg %>
-      </div>
+    <div id="hideMe" class="slide-pop-up absolute top-0 right-0 <%=type%>" style="position: absolute;z-index: 2;top: 10%;background-color: #f5f5f5;padding: 20px;margin-right: 10px;border-radius: 10px;box-shadow: antiquewhite;color: #242424;/* display: flex; */justify-content: flex-end;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+        <%= msg %>
+    </div>
     <% end %>
 
     <% if user_signed_in? %>
-      <main class="main_screen">
-          <%= render 'components/navbar' %>
-          <div class="dashboard p-8 flex flex-col gap-5">
-              <%= render 'components/mobile_nav'%>
-              <%= yield %>
-          </div>
-      </main>
+    <main class="">
+        <%= render 'components/navbar' %>
+        <div class="p-8 flex flex-col gap-5">
+            <%= render 'components/mobile_nav'%>
+            <%= yield %>
+        </div>
+    </main>
     <%else%>
-      <main class="main-screen">
-          <%=yield%>
-      </main>
+    <main class="main-screen">
+        <%=yield%>
+    </main>
     <%end%>
 </body>
 
