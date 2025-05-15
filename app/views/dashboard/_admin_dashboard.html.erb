@@ -22,22 +22,22 @@
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
     <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-blue-500">
       <p class="text-sm text-gray-600">Active Users</p>
-      <p class="text-2xl font-bold">1,248</p>
+      <p class="text-2xl font-bold"><%= User.all.count%></p>
       <p class="text-xs text-gray-500 mt-1">+12% this month</p>
     </div>
     <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-green-500">
       <p class="text-sm text-gray-600">Assessments Completed</p>
-      <p class="text-2xl font-bold">327</p>
+      <p class="text-2xl font-bold"><%= UserChecklist.all.count%></p>
       <p class="text-xs text-gray-500 mt-1">87% of target</p>
     </div>
     <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-purple-500">
       <p class="text-sm text-gray-600">Avg. Session Rating</p>
-      <p class="text-2xl font-bold">4.7</p>
+      <p class="text-2xl font-bold">--</p>
       <p class="text-xs text-gray-500 mt-1">/5.0 from parents</p>
     </div>
     <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-red-500">
       <p class="text-sm text-gray-600">System Alerts</p>
-      <p class="text-2xl font-bold">3</p>
+      <p class="text-2xl font-bold">--</p>
       <p class="text-xs text-gray-500 mt-1">Needs attention</p>
     </div>
   </div>
@@ -63,23 +63,23 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="bg-blue-50 p-3 rounded-lg">
           <p class="text-sm text-gray-600">Daily Logins</p>
-          <p class="text-xl font-bold">214 avg</p>
+          <p class="text-xl font-bold">-- avg</p>
           <div class="h-2 bg-blue-200 rounded-full mt-2">
-            <div class="h-2 bg-blue-600 rounded-full" style="width: 78%"></div>
+            <div class="h-2 bg-blue-600 rounded-full" style="width: 0%"></div>
           </div>
         </div>
         <div class="bg-green-50 p-3 rounded-lg">
           <p class="text-sm text-gray-600">Assessments/Day</p>
-          <p class="text-xl font-bold">14.3 avg</p>
+          <p class="text-xl font-bold">--avg</p>
           <div class="h-2 bg-green-200 rounded-full mt-2">
-            <div class="h-2 bg-green-600 rounded-full" style="width: 65%"></div>
+            <div class="h-2 bg-green-600 rounded-full" style="width: 0%"></div>
           </div>
         </div>
         <div class="bg-purple-50 p-3 rounded-lg">
           <p class="text-sm text-gray-600">Feedback Sent</p>
-          <p class="text-xl font-bold">87/day</p>
+          <p class="text-xl font-bold">--/day</p>
           <div class="h-2 bg-purple-200 rounded-full mt-2">
-            <div class="h-2 bg-purple-600 rounded-full" style="width: 92%"></div>
+            <div class="h-2 bg-purple-600 rounded-full" style="width: 0%"></div>
           </div>
         </div>
       </div>
@@ -110,19 +110,19 @@
           <div class="grid grid-cols-2 gap-4 mt-3">
             <div>
               <p class="text-xs text-gray-600">Athletes</p>
-              <p class="font-medium">842</p>
+              <p class="font-medium"><%=User.where(role:'athlete').count%></p>
             </div>
             <div>
               <p class="text-xs text-gray-600">Parents</p>
-              <p class="font-medium">327</p>
+              <p class="font-medium"><%=User.where(role:'parent_user').count%></p>
             </div>
             <div>
               <p class="text-xs text-gray-600">Coaches</p>
-              <p class="font-medium">48</p>
+              <p class="font-medium"><%=User.where(role:'coach').count%></p>
             </div>
             <div>
-              <p class="text-xs text-gray-600">Admins</p>
-              <p class="font-medium">5</p>
+              <p class="text-xs text-gray-600">Under age Athlete</p>
+              <p class="font-medium"><%=User.where(role:'child_user').count%></p>
             </div>
           </div>
         </div>
@@ -130,7 +130,7 @@
         <div class="bg-red-50 p-4 rounded-lg">
           <div class="flex justify-between">
             <p class="font-medium">Inactive Accounts</p>
-            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">23</span>
+            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">--</span>
           </div>
           <p class="text-sm text-gray-600 mt-1">No login in 60+ days</p>
           <button class="w-full mt-3 bg-white hover:bg-gray-100 text-red-600 py-1 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
@@ -165,7 +165,7 @@
         <button class="text-blue-600 text-sm font-medium">View Details</button>
       </div>
       
-      <div class="space-y-4">
+      <div class="space-y-4 hidden">
         <div>
           <div class="flex justify-between mb-1">
             <p class="font-medium">Coach Feedback Completion</p>
@@ -222,7 +222,7 @@
         <button class="text-blue-600 text-sm font-medium">Run Full Scan</button>
       </div>
       
-      <div class="space-y-4">
+      <div class="space-y-4 hidden">
         <div class="bg-green-50 p-4 rounded-lg">
           <div class="flex items-center gap-3">
             <span class="material-symbols-outlined text-green-500">check_circle</span>
@@ -285,7 +285,7 @@
             System Alerts
           </h2>
           
-          <div class="space-y-3">
+          <div class="space-y-3 hidden">
             <div class="p-3 bg-red-50 rounded-lg border-l-4 border-red-500">
               <div class="flex justify-between">
                 <p class="font-medium">Backup Failed</p>
@@ -336,7 +336,7 @@
           <div class="bg-gray-50 rounded-lg p-4">
             <p class="font-medium text-sm mb-3">Generate and Export Reports</p>
             
-            <div class="space-y-3">
+            <div class="space-y-3 hidden">
               <button class="w-full bg-white hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-between">
                 <span>KPI Summary</span>
                 <span class="material-symbols-outlined text-sm">download</span>
