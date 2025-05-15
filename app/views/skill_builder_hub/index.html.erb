@@ -1,0 +1,299 @@
+<div class="min-h-screen bg-gradient-to-b from-blue-50 to-purple-50 p-4 md:p-6">
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 flex items-center justify-center gap-2">
+      <span class="text-red-500">
+        <span class="material-symbols-outlined">play_circle</span>
+      </span>
+      Videos & Learning
+    </h1>
+    <p class="text-gray-600 mt-1">Improve your skills with coach-approved content</p>
+  </div>
+
+  <!-- Progress Overview -->
+  <div class="bg-white rounded-2xl shadow-sm p-6 mb-8">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div class="flex-1">
+        <h2 class="text-lg font-semibold text-gray-900 mb-1">Your Learning Progress</h2>
+        <div class="w-full bg-gray-200 rounded-full h-3">
+          <div class="bg-gradient-to-r from-blue-400 to-purple-500 h-3 rounded-full" style="width: 68%"></div>
+        </div>
+        <p class="text-sm text-gray-600 mt-1">Completed 17 of 25 recommended activities (68%)</p>
+      </div>
+      <div class="grid grid-cols-3 gap-2 text-center">
+        <div class="bg-blue-50 p-2 rounded-lg">
+          <p class="text-xl font-bold text-blue-600">12</p>
+          <p class="text-xs text-gray-600">Videos</p>
+        </div>
+        <div class="bg-purple-50 p-2 rounded-lg">
+          <p class="text-xl font-bold text-purple-600">3</p>
+          <p class="text-xs text-gray-600">Quizzes</p>
+        </div>
+        <div class="bg-green-50 p-2 rounded-lg">
+          <p class="text-xl font-bold text-green-600">2</p>
+          <p class="text-xs text-gray-600">Drills</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Coach-Picked Videos -->
+    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-blue-600">
+            <span class="material-symbols-outlined">sports</span>
+          </span>
+          Coach-Recommended Videos
+        </h2>
+        <select class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+          <option>All Skills</option>
+          <option>Shooting</option>
+          <option>Dribbling</option>
+          <option>Defense</option>
+        </select>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Video 1 -->
+        <div class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+          <div class="relative aspect-video bg-gray-200">
+            <img src="https://images.unsplash.com/photo-1543357480-c60d400e2ef9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80" alt="Video thumbnail" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+              <span class="material-symbols-outlined text-white text-4xl">play_circle</span>
+            </div>
+            <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+              4:32
+            </div>
+            <div class="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">star</span>
+              Recommended
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-medium">Mastering the Stepover</h3>
+            <p class="text-sm text-gray-600 mt-1">Coach Williams • May 2024</p>
+            <div class="flex justify-between items-center mt-3">
+              <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Dribbling</span>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-gray-500 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">visibility</span>
+                  87%
+                </span>
+                <button class="text-blue-600 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">playlist_add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Video 2 -->
+        <div class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+          <div class="relative aspect-video bg-gray-200">
+            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80" alt="Video thumbnail" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+              <span class="material-symbols-outlined text-white text-4xl">play_circle</span>
+            </div>
+            <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+              6:15
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-medium">Curve Shot Techniques</h3>
+            <p class="text-sm text-gray-600 mt-1">Coach Taylor • April 2024</p>
+            <div class="flex justify-between items-center mt-3">
+              <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Shooting</span>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-gray-500 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">visibility</span>
+                  65%
+                </span>
+                <button class="text-blue-600 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">playlist_add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Video 3 -->
+        <div class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+          <div class="relative aspect-video bg-gray-200">
+            <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80" alt="Video thumbnail" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+              <span class="material-symbols-outlined text-white text-4xl">play_circle</span>
+            </div>
+            <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+              3:48
+            </div>
+            <div class="absolute top-2 left-2 bg-green-600 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">check</span>
+              Completed
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-medium">Defensive Positioning</h3>
+            <p class="text-sm text-gray-600 mt-1">Coach Rodriguez • March 2024</p>
+            <div class="flex justify-between items-center mt-3">
+              <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">Defense</span>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-green-600 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">check_circle</span>
+                  Watched
+                </span>
+                <button class="text-blue-600 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">replay</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Video 4 -->
+        <div class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+          <div class="relative aspect-video bg-gray-200">
+            <img src="https://images.unsplash.com/photo-1579952363872-3f4dfb68e4d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80" alt="Video thumbnail" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+              <span class="material-symbols-outlined text-white text-4xl">play_circle</span>
+            </div>
+            <div class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+              5:22
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-medium">Goalkeeper Footwork</h3>
+            <p class="text-sm text-gray-600 mt-1">Coach Lee • May 2024</p>
+            <div class="flex justify-between items-center mt-3">
+              <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">Goalkeeping</span>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-gray-500 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">visibility</span>
+                  0%
+                </span>
+                <button class="text-blue-600 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">playlist_add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button class="w-full mt-6 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined">expand_more</span>
+        Load More Videos
+      </button>
+    </div>
+
+    <!-- Gamified Learning -->
+    <div class="bg-white rounded-2xl shadow-sm p-6">
+      <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+        <span class="text-purple-600">
+          <span class="material-symbols-outlined">extension</span>
+        </span>
+        Gamified Learning
+      </h2>
+      
+      <div class="space-y-4">
+        <!-- Quiz Card -->
+        <div class="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow">
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600">
+              <span class="material-symbols-outlined">quiz</span>
+            </div>
+            <div>
+              <h3 class="font-medium">Dribbling Knowledge Quiz</h3>
+              <p class="text-sm text-gray-600 mt-1">Test what you learned from videos</p>
+              <div class="flex items-center gap-2 mt-2">
+                <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">5 Questions</span>
+                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">25 XP</span>
+              </div>
+            </div>
+          </div>
+          <button class="w-full mt-3 bg-gradient-to-r from-purple-400 to-blue-400 hover:from-purple-500 hover:to-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined">play_arrow</span>
+            Start Quiz
+          </button>
+        </div>
+        
+        <!-- Challenge Card -->
+        <div class="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow">
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-green-600">
+              <span class="material-symbols-outlined">flag</span>
+            </div>
+            <div>
+              <h3 class="font-medium">Weekly Skill Challenge</h3>
+              <p class="text-sm text-gray-600 mt-1">Practice stepovers 10 minutes/day</p>
+              <div class="flex items-center gap-2 mt-2">
+                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">3 Days Left</span>
+                <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">50 XP</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                <div class="bg-green-500 h-2 rounded-full" style="width: 60%"></div>
+              </div>
+              <p class="text-xs text-gray-600 mt-1">3 of 5 days completed</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Completed Task -->
+        <div class="border border-gray-200 rounded-xl p-4 bg-green-50 hover:shadow-md transition-shadow">
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-green-600">
+              <span class="material-symbols-outlined">check_circle</span>
+            </div>
+            <div>
+              <h3 class="font-medium">Shooting Accuracy Test</h3>
+              <p class="text-sm text-gray-600 mt-1">5 targets from 20 yards</p>
+              <div class="flex items-center gap-2 mt-2">
+                <span class="text-xs bg-white text-green-800 px-2 py-1 rounded-full">Completed</span>
+                <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">+35 XP</span>
+              </div>
+              <p class="text-xs text-green-600 mt-2 flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">military_tech</span>
+                Earned "Sharpshooter" badge
+              </p>
+            </div>
+          </div>
+          <button class="w-full mt-3 bg-white hover:bg-gray-100 text-green-600 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2 border border-green-200">
+            <span class="material-symbols-outlined">replay</span>
+            Try Again
+          </button>
+        </div>
+        
+        <!-- Leaderboard -->
+        <div class="bg-blue-50 rounded-xl p-4 mt-4">
+          <h3 class="font-medium text-blue-800 mb-3 flex items-center gap-2">
+            <span class="material-symbols-outlined text-blue-600">leaderboard</span>
+            Learning Leaderboard
+          </h3>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 bg-white p-2 rounded-lg">
+              <span class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+              <span class="font-medium flex-1">Jamie R.</span>
+              <span class="text-sm font-bold">1,240 XP</span>
+            </div>
+            <div class="flex items-center gap-2 bg-white p-2 rounded-lg">
+              <span class="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-xs font-bold">2</span>
+              <span class="font-medium flex-1">You</span>
+              <span class="text-sm font-bold">980 XP</span>
+            </div>
+            <div class="flex items-center gap-2 bg-white p-2 rounded-lg">
+              <span class="w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+              <span class="font-medium flex-1">Taylor S.</span>
+              <span class="text-sm font-bold">875 XP</span>
+            </div>
+          </div>
+          <button class="w-full mt-3 bg-blue-100 hover:bg-blue-200 text-blue-600 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined">visibility</span>
+            View Full Leaderboard
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -67,7 +67,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def child_users
-    User.where(parent_id: id).includes([:avatar_attachment])
+    User.where(parent_id: id)
   end
 
   ## Profile Methods

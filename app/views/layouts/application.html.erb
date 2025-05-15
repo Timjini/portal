@@ -48,22 +48,17 @@
 </head>
 
 <body>
-    <% flash.each do |type, msg| %>
-    <div id="hideMe" class="slide-pop-up absolute top-0 right-0 <%=type%>" style="position: absolute;z-index: 2;top: 10%;background-color: #f5f5f5;padding: 20px;margin-right: 10px;border-radius: 10px;box-shadow: antiquewhite;color: #242424;/* display: flex; */justify-content: flex-end;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-        <%= msg %>
-    </div>
-    <% end %>
-
+    <%= turbo_stream_from "flash" %>
+    <%= render 'shared/flash' %>
     <% if user_signed_in? %>
-    <main class="">
+    <main class="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-gray-50">
         <%= render 'components/navbar' %>
-        <div class="p-8 flex flex-col gap-5">
-            <%= render 'components/mobile_nav'%>
+        <div class="lg:ml-64 p-6 w-full flex-1">
             <%= yield %>
         </div>
     </main>
     <%else%>
-    <main class="main-screen">
+    <main class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-gray-200 p-4">
         <%=yield%>
     </main>
     <%end%>

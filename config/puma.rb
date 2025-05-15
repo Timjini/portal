@@ -42,7 +42,7 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-max_threads_count = ENV.fetch('RAILS_MAX_THREADS', 8)
+max_threads_count = ENV.fetch('RAILS_MAX_THREADS', 5)
 min_threads_count = ENV.fetch('RAILS_MIN_THREADS') { max_threads_count }
 threads min_threads_count, max_threads_count
 
@@ -74,21 +74,3 @@ preload_app!
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
-
-# Production script
-# if ENV['RAILS_ENV'] == 'production'
-#   require 'concurrent-ruby'
-
-#   # Use WEB_CONCURRENCY env var or fallback to physical cores
-#   worker_count = Integer(ENV.fetch('WEB_CONCURRENCY') {
-#     Concurrent.physical_processor_count
-#   })
-#   workers worker_count if worker_count > 1
-
-#   # Use 5–16 threads depending on your workload
-#   min_threads = Integer(ENV.fetch('RAILS_MIN_THREADS', 5))
-#   max_threads = Integer(ENV.fetch('RAILS_MAX_THREADS', 16))
-#   threads min_threads, max_threads
-
-#   preload_app!
-# end

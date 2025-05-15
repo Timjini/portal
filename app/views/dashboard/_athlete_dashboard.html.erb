@@ -28,12 +28,10 @@
     </div>
     <div class="mt-4 md:mt-0 flex items-center gap-4">
       <div class=" p-3 rounded-lg shadow-sm flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white">
-          <span class="material-symbols-outlined">person</span>
-        </div>
+      <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white")%>
         <div>
-          <p class="font-medium text-gray-900">John Athlete</p>
-          <p class="text-xs text-gray-500">Adult Program</p>
+          <p class="font-medium text-gray-900"><%= current_user.full_name%></p>
+          <p class="text-xs text-gray-500"><%= current_user.level%> Program</p>
         </div>
       </div>
     </div>
@@ -220,7 +218,7 @@
       </div>
     </div>
 
-    <!-- Goal Progress -->
+    <!-- Goal Progress  HERE KPI EXPECTED SCORE BY LEVEL-->
     <div class=" rounded-xl shadow-sm p-6">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">

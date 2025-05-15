@@ -1,135 +1,24 @@
-<script defer>
-    function onDocumentReady(callback) {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', callback);
-        } else {
-            callback();
-        }
-    }
-    onDocumentReady(function() {
-        const toggleLinks = document.querySelectorAll('.toggle-link');
-        const toggleSections = document.querySelectorAll('.toggle-section');
-
-        toggleLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-
-                const targetId = link.getAttribute('href').substring(1);
-
-                toggleSections.forEach(section => {
-                    if (section.id === targetId) {
-                        section.style.display = 'flex';
-                        section.style.flexDirection = 'column';
-                    } else {
-                        section.style.display = 'none';
-                    }
-                });
-            });
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-        const passwordInput = document.getElementById('password');
-        const passwordConfrim = document.getElementById('passwordConfrim');
-        const message = document.getElementById('message');
-
-        passwordConfirm.addEventListener("input", function() {
-            if (passwordConfirm.value !== passwordInput.value) {
-                passwordConfirm.classList.add('warning');
-            } else {
-                passwordConfirm.classList.remove('warning');
-            }
-        })
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-        const email = document.getElementById('email');
-        const firstName = document.getElementById('firstName');
-        const lastName = document.getElementById('lastName');
-        const password = document.getElementById('password');
-        const passwordConfirmInput = document.getElementById('passwordConfirm');
-        const nextBtn = document.getElementById('next');
-        const dobInput = document.getElementById('dob');
-
-        // Function to calculate age
-        function calculateAge(dob) {
-            const dobValue = new Date(dob);
-            const today = new Date();
-            const age = today.getFullYear() - dobValue.getFullYear();
-            return age;
-        }
-
-        // Function to check if the user is under 18 and show an alert
-        function checkAge() {
-            const dobValue = dobInput.value;
-            const age = dobValue ? calculateAge(dobValue) : 0;
-
-            if (age < 18) {
-                alert('You must be at least 18 years old to proceed.');
-            }
-        }
-
-        // Function to check if any fields are empty and enable/disable the next button
-        function checkFields() {
-            const dobValue = dobInput.value;
-            const age = dobValue ? calculateAge(dobValue) : 0;
-
-            if (
-                email.value.trim() !== '' &&
-                firstName.value.trim() !== '' &&
-                lastName.value.trim() !== '' &&
-                password.value.trim() !== '' &&
-                passwordConfirmInput.value.trim() !== '' &&
-                age >= 18
-            ) {
-                // Enable the next button
-                nextBtn.removeAttribute('disabled');
-            } else {
-                // Disable the next button
-                nextBtn.setAttribute('disabled', 'true');
-            }
-        }
-
-        // Use the 'change' event instead of 'input' for better control
-        email.addEventListener('change', checkFields);
-        firstName.addEventListener('change', checkFields);
-        lastName.addEventListener('change', checkFields);
-        password.addEventListener('change', checkFields);
-        passwordConfirmInput.addEventListener('change', checkFields);
-
-        dobInput.addEventListener('input', function() {
-            checkFields();
-            checkAge();
-        });
-
-        // Call checkFields once to initialize the button visibility
-        checkFields();
-    });
-
-
-
-    function handleClick(element) {
-        // Remove active class from all links
-        var links = document.querySelectorAll('.toggle-link');
-        links.forEach(function(link) {
-            link.classList.remove('active', 'text-blue-600', 'border-blue-600', 'dark:text-blue-500', 'dark:border-blue-500');
-            console.log(link.classList);
-        });
-
-        // Apply active class to the clicked link
-        element.classList.add('active', 'text-blue-600', 'border-blue-600', 'dark:text-blue-500', 'dark:border-blue-500');
-    }
-</script>
-<% @links =  ["Step1", "Step2"] %>
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |form| %>
-<main class="sign-up-form">
-    <section id="<%=@links.first.downcase%>" class="toggle-section bg-slate-50 dark:bg-transparent dark:bg-gradient-to-tl dark:from-gray-900 dark:to-slate-800 shadow-soft-xl rounded-2xl bg-clip-border " style="display:flex;">
-        <input type="hidden" id="user-id" value="user.id" class="here">
-        <article class=" p-10 flex flex-col justify-between rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
-            <div>
-                <h2 class="mt-2 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10 text-center"> Personal Information</h2>
-                <p class="my-2 font-light text-center">create an account</p>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { controller: "signup-validation" }) do |form| %>
+<div class="">
+    <div class="w-full md:w-[500px] max-w-2xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
+        <!-- Progress Steps -->
+        <div class="flex justify-center py-4 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex space-x-4">
+                <button type="button" class="step-indicator flex items-center justify-center w-10 h-10 rounded-full bg-indigo-600 text-white font-medium" data-signup-validation-target="step1Indicator" data-action="click->signup-validation#goToStep1">
+                    1
+                </button>
+                <div class="flex items-center">
+                    <div class="w-16 h-1 bg-gray-300 dark:bg-gray-600"></div>
+                </div>
+                <button type="button" class="step-indicator flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-300 font-medium" data-signup-validation-target="step2Indicator" data-action="click->signup-validation#goToStep2">
+                    2
+                </button>
             </div>
+        </div>
+
+        <!-- Step 1 - Personal Information -->
+        <div class="p-8" data-signup-validation-target="step1">
+            <!-- [Previous content remains the same until the form fields] -->
             <div class="mb-5 text-center" data-controller="avatar">
                 <div class="mx-auto w-28 h-28 mb-2 border rounded-full relative bg-gray-100 mb-4 shadow-inset">
                     <div data-loading-indicator-target="loadingIndicator" class="loading-indicator hidden">
@@ -159,108 +48,202 @@
                 <div class="mx-auto w-48 text-gray-500 text-xs text-center mt-1">Click to add profile picture</div>
                 <%= form.file_field :avatar, class: "hidden", id: "avatarInput", data: { avatar_target: "input" } %>
             </div>
-            <div class="form-fields">
+            <!-- Updated Form Fields for Step 1 -->
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <!-- Email Field -->
                 <div>
-                    <label for="email" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Email</label>
-                    <%= form.email_field :email,id:"email", placeholder:"email@example.com", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>
-                </div>
-                <div>
-                    <label for="username" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Username</label>
-                    <%= form.text_field :username,id:"username", placeholder:"Nathan10", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>
-                </div>
-            </div>
-            <div class="form-fields">
-                <div class="">
-                    <label for="first_name" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">First Name</label>
-                    <%= form.text_field :first_name,id:"firstName", placeholder: "John", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>
-                </div>
-                <div class="">
-                    <label for="last_name" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Last Name</label>
-                    <%= form.text_field :last_name,id:"lastName", placeholder: "Smith", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>
-                </div>
-            </div>
-            <div class="form-fields">
-                <div class="">
-                    <label for="password" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Password</label>
-                    <%= form.password_field :password,id:"password", placeholder: "******", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>
-                </div>
-                <div class="">
-                    <label for="confrim_password" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Confirm Password</label>
-                    <%=form.password_field :password_confirmation,id:"passwordConfirm" , placeholder:"******", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", autocomplete:"off" %>
-                </div>
-            </div>
-            <div>
-                <a href="/users/sign_in" class="inline mr-3 pb-1 border-b-2 border-blue-200 hover:border-blue-700 m-2 text-sm font-medium text-gray-400 hover:text-blue-300 dark:text-white">I already have an account.</a>
-            </div>
-            <div class="mt-8 flex justify-between inset-x-0 bottom-0">
-                <a href="#<%=@links.first.downcase%>" onclick="handleClick(this)" class="toggle-link no-visibility">
-                    <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
-                        Back
-                    </span>
-                </a>
-                <a href="#<%=@links.second.downcase%>" id="next" onclick="handleClick(this)" class="toggle-link">
-                    <span class="p-3 px-12 border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
-                        Next
-                    </span>
-                </a>
-            </div>
-        </article>
-    </section>
-    <section id="<%=@links.second.downcase%>" class="toggle-section bg-slate-50 dark:bg-transparent dark:bg-gradient-to-tl dark:from-gray-900 dark:to-slate-800 shadow-soft-xl rounded-2xl bg-clip-border ">
-        <article class=" p-10 flex flex-col h-screen justify-between rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
-            <div class=" mt-2 mb-10">
-                <h2 class="mt-5 mb-24 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10 text-center"> Personal Information</h2>
-                <div class="flex flex-col">
-                    <div class="mx-1">
-                        <label for="phone" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Phone</label>
-                        <%= form.text_field :phone,id:"user-phone", placeholder: "+44 ", class: "m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
-                    </div>
-                    <div class="mx-1" data-controller="address-autocomplete"
-                    data-address-autocomplete-api-key-value="<%= ENV['GOOGLE_API_KEY'] %>"
-                    >
-                        <label for="address" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Address</label>
-                        <%= form.text_field :address,
-                        id: "user-address",
-                        placeholder: "61 Meridian Wy., London N9 0AR, United Kingdom",
+                    <%= form.label :email, "Email Address", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+                    <%= form.email_field :email, 
                         class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+                        placeholder: "you@example.com",
+                        data: { 
+                            "signup-validation-target": "email",
+                            "field-name": "email",
+                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
+                        } %>
+                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="emailError"></p>
+                </div>
+
+                <!-- Username Field -->
+                <div>
+                    <%= form.label :username, "Username", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+                    <%= form.text_field :username, 
+                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+                        placeholder: "username123",
+                        data: { 
+                            "signup-validation-target": "username",
+                            "field-name": "username",
+                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
+                        } %>
+                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="usernameError"></p>
+                </div>
+
+                <!-- First Name Field -->
+                <div>
+                    <%= form.label :first_name, "First Name", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+                    <%= form.text_field :first_name, 
+                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+                        placeholder: "John",
+                        data: { 
+                            "signup-validation-target": "firstName",
+                            "field-name": "firstName",
+                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
+                        } %>
+                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="firstNameError"></p>
+                </div>
+
+                <!-- Last Name Field -->
+                <div>
+                    <%= form.label :last_name, "Last Name", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+                    <%= form.text_field :last_name, 
+                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+                        placeholder: "Doe",
+                        data: { 
+                            "signup-validation-target": "lastName",
+                            "field-name": "lastName",
+                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
+                        } %>
+                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="lastNameError"></p>
+                </div>
+
+                <!-- Password Field -->
+                <div>
+                    <%= form.label :password, "Password", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+                    <div class="relative">
+                        <%= form.password_field :password, 
+                            class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+                            placeholder: "••••••••",
+                            data: { 
+                                "signup-validation-target": "password",
+                                "field-name": "password",
+                                "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
+                            } %>
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" data-action="click->signup-validation#togglePasswordVisibility">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-signup-validation-target="passwordIcon">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="passwordError"></p>
+                </div>
+
+                <!-- Password Confirmation Field -->
+                <div>
+                    <%= form.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+                    <%= form.password_field :password_confirmation, 
+                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+                        placeholder: "••••••••",
+                        data: { 
+                            "signup-validation-target": "passwordConfirmation",
+                            "field-name": "passwordConfirmation",
+                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
+                        } %>
+                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="passwordConfirmationError"></p>
+                </div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-between">
+                <%= link_to "Already have an account?", new_session_path(resource_name), class: "text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400" %>
+                <button type="button" class="next-step-btn inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" data-action="click->signup-validation#nextStep" data-signup-validation-target="nextButton" disabled>
+                    Next Step
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2 - Additional Information -->
+        <div class="p-8 hidden" data-signup-validation-target="step2">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Additional Information</h2>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Step 2: Complete your profile</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <!-- Phone Field -->
+                <div>
+                    <%= form.label :phone, "Phone Number", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+                    <%= form.text_field :phone, 
+                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+                        placeholder: "+1 (555) 123-4567",
+                        data: { 
+                            "signup-validation-target": "phone",
+                            "field-name": "phone",
+                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
+                        } %>
+                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="phoneError"></p>
+                </div>
+
+                <!-- Address Field -->
+                <div data-controller="address-autocomplete" data-address-autocomplete-api-key-value="<%= ENV['GOOGLE_API_KEY'] %>">
+                    <%= form.label :address, "Address", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+                    <%= form.text_field :address,
+                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+                        placeholder: "123 Main St, City, Country",
                         data: { 
                             "address-autocomplete-target": "input",
-                            "action": "place_changed->address-autocomplete#placeSelected",
-                        }, autocomplete: "off" %>
-                    </div>
+                            "action": "place_changed->address-autocomplete#placeSelected input->signup-validation#validateField blur->signup-validation#markAsTouched",
+                            "signup-validation-target": "address",
+                            "field-name": "address"
+                        } %>
+                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="addressError"></p>
                 </div>
-                <div class="mx-2 mt-10">
-                    <label for="email" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">I' am</label>
-                    <div class="flex m-2">
-                        <label class="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm mr-4">
-                            <div class="text-teal-600 mr-3">
-                                <%= form.radio_button :role, 'parent_user', id: "parent_role", class:"form-radio focus:outline-none focus:shadow-outline" %>
-                            </div>
-                            <div class="select-none text-gray-700">a Parent of an Athlete(s)</div>
-                        </label>
-                        <label class="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm">
-                            <div class="text-teal-600 mr-3">
-                                <%= form.radio_button :role, 'athlete', id: "athlete_role", class:"form-radio focus:outline-none focus:shadow-outline" %>
-                                <%= form.radio_button :role, nil, id: "no_role", class:"hidden" %>
-                            </div>
-                            <div class="select-none text-gray-700">an Athlete</div>
-                        </label>
+
+                <!-- Date of Birth Field -->
+                <div>
+                    <%= form.label :dob, "Date of Birth", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+                    <%= form.date_field :dob, 
+                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+                        data: { 
+                            "signup-validation-target": "dob",
+                            "field-name": "dob",
+                            "action": "change->signup-validation#validateField blur->signup-validation#markAsTouched"
+                        } %>
+                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="dobError"></p>
+                </div>
+
+                <!-- Role Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">I am</label>
+                    <div class="mt-2 space-y-2" data-action="change->signup-validation#validateField click->signup-validation#markAsTouched">
+                        <div class="flex items-center">
+                            <%= form.radio_button :role, 'parent_user', 
+                                class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700",
+                                data: { 
+                                    "signup-validation-target": "role",
+                                    "field-name": "role"
+                                } %>
+                            <%= form.label :parent_user, "a Parent of an Athlete(s)", class: "ml-2 block text-sm text-gray-900 dark:text-gray-300" %>
+                        </div>
+                        <div class="flex items-center">
+                            <%= form.radio_button :role, 'athlete', 
+                                class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700",
+                                data: { 
+                                    "signup-validation-target": "role",
+                                    "field-name": "role"
+                                } %>
+                            <%= form.label :athlete, "an Athlete", class: "ml-2 block text-sm text-gray-900 dark:text-gray-300" %>
+                        </div>
                     </div>
-                    <div class="flex  flex-col mt-2">
-                        <label class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Date of Birth</label>
-                        <%=form.date_field :dob , id:'dob' ,value:"2018-12-31" ,class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
-                    </div>
+                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="roleError"></p>
                 </div>
             </div>
-            <div class="flex justify-between">
-                <a href="#<%=@links.first.downcase%>" onclick="handleClick(this)" class="toggle-link" style="margin-top:15px;">
-                    <span class="p-3 px-12 border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
-                        Back
-                    </span>
-                </a>
-                <%= form.submit "Save", class: "confirm-btn" %>
+
+            <div class="mt-6 flex items-center justify-between">
+                <button type="button" class="inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" data-action="click->signup-validation#prevStep">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 -ml-1 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Previous
+                </button>
+                <%= form.submit "Create Account", 
+                    class: "inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed",
+                    data: { "signup-validation-target": "submitButton" },
+                    disabled: true %>
             </div>
-        </article>
-    </section>
-</main>
-<%end%>
+        </div>
+    </div>
+</div>
+<% end %>

@@ -44,27 +44,12 @@ class UsersController < ApplicationController
   def update_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     @user = User.find(params[:id])
     @profile = @user.athlete_profile || @user.build_athlete_profile
-
-    respond_to do |format|
-      if @user.update(user_params) && @profile.update(athlete_profile_params)
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.replace('flash', partial: 'shared/flash', locals: { notice: 'Profile updated successfully' }),
-            turbo_stream.replace(@user, partial: 'users/form', locals: { user: @user })
-          ]
-        end
-        format.html { redirect_to users_path(@user), notice: 'Profile updated successfully' } # rubocop:disable Rails/I18nLocaleTexts
-      else
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('flash',
-                                                    partial: 'shared/flash',
-                                                    locals: { alert: @user.errors.full_messages.to_sentence })
-        end
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @user.update(user_params) && @profile.update(athlete_profile_params)
+      redirect_to users_path(@user), notice: 'Profile updated successfully'
+    else
+      flash[:alert] = @user.errors.full_messages.to_sentence
+      redirect_to edit_user_path(@user)
     end
-  rescue ActiveRecord::RecordNotFound
-    redirect_to users_path, alert: 'User not found' # rubocop:disable Rails/I18nLocaleTexts
   end
 
   private

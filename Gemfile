@@ -13,7 +13,7 @@ gem 'cssbundling-rails'
 gem 'esbuild-rails'
 gem 'jsbundling-rails'
 gem 'sprockets-rails'
-gem 'tailwindcss-rails'
+gem 'tailwindcss-rails', '~> 3.0'
 
 # Hotwire
 gem 'stimulus-rails'
