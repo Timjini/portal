@@ -14,4 +14,10 @@ class UserMailer < ApplicationMailer
     # This will automatically render the welcome_email.html.erb and welcome_email.text.erb templates
     mail(to: @user.email, subject: 'Welcome to Chambers For Sport') # rubocop:disable Rails/I18nLocaleTexts
   end
+
+  def reset_password_instructions(user, token, _opts = {})
+    @resource = user
+    @token = token
+    mail(to: @resource.email, subject: 'Password Reset Instructions') # rubocop:disable Rails/I18nLocaleTexts
+  end
 end
