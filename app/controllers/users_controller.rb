@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     @profile = @user.athlete_profile || @user.build_athlete_profile
   end
 
-  def update_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  def update_user # rubocop:disable Metrics/AbcSize
     @user = User.find(params[:id])
     @profile = @user.athlete_profile || @user.build_athlete_profile
     if @user.update(user_params) && @profile.update(athlete_profile_params)

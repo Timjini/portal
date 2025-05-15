@@ -4,7 +4,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    return unless user.present?
+    nil if user.blank?
 
     # Define abilities for the user here. For example:
     #
