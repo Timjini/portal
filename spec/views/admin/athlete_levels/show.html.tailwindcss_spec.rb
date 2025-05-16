@@ -1,19 +1,21 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "admin/athlete_levels/show", type: :view do
+RSpec.describe 'admin/athlete_levels/show', type: :view do
   before(:each) do
     assign(:admin_athlete_level, Admin::AthleteLevel.create!(
-      name: "Name",
-      position: 2,
-      description: "MyText",
-      min_age: 3,
-      max_age: 4,
-      color: "Color",
-      active: false
-    ))
+                                   name: 'Name',
+                                   position: 2,
+                                   description: 'MyText',
+                                   min_age: 3,
+                                   max_age: 4,
+                                   color: 'Color',
+                                   active: false
+                                 ))
   end
 
-  it "renders attributes in <p>" do
+  it 'renders attributes in <p>' do
     render
     expect(rendered).to match(/Name/)
     expect(rendered).to match(/2/)

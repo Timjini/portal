@@ -1,14 +1,15 @@
+# frozen_string_literal: true
+
 class AthleteLevelCategoriesController < ApplicationController
-  before_action :set_athlete_level_category, only: %i[ show edit update destroy ]
+  before_action :set_athlete_level_category, only: %i[show edit update destroy]
 
   # GET /athlete_level_categories or /athlete_level_categories.json
   def index
-    @athlete_level_categories = AthleteLevelCategory.all
+    @athlete_level_categories = AthleteLevelCategory.includes(%i[athlete_level kpi_category])
   end
 
   # GET /athlete_level_categories/1 or /athlete_level_categories/1.json
-  def show
-  end
+  def show; end
 
   # GET /athlete_level_categories/new
   def new
@@ -16,8 +17,7 @@ class AthleteLevelCategoriesController < ApplicationController
   end
 
   # GET /athlete_level_categories/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /athlete_level_categories or /athlete_level_categories.json
   def create
@@ -25,7 +25,7 @@ class AthleteLevelCategoriesController < ApplicationController
 
     respond_to do |format|
       if @athlete_level_category.save
-        format.html { redirect_to @athlete_level_category, notice: "Athlete level category was successfully created." }
+        format.html { redirect_to @athlete_level_category, notice: 'Athlete level category was successfully created.' }
         format.json { render :show, status: :created, location: @athlete_level_category }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class AthleteLevelCategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @athlete_level_category.update(athlete_level_category_params)
-        format.html { redirect_to @athlete_level_category, notice: "Athlete level category was successfully updated." }
+        format.html { redirect_to @athlete_level_category, notice: 'Athlete level category was successfully updated.' }
         format.json { render :show, status: :ok, location: @athlete_level_category }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,23 @@ class AthleteLevelCategoriesController < ApplicationController
     @athlete_level_category.destroy!
 
     respond_to do |format|
-      format.html { redirect_to athlete_level_categories_path, status: :see_other, notice: "Athlete level category was successfully destroyed." }
+      format.html do
+        redirect_to athlete_level_categories_path, status: :see_other,
+                                                   notice: 'Athlete level category was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_athlete_level_category
-      @athlete_level_category = AthleteLevelCategory.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def athlete_level_category_params
-      params.require(:athlete_level_category).permit(:athlete_level_id, :kpi_category_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_athlete_level_category
+    @athlete_level_category = AthleteLevelCategory.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def athlete_level_category_params
+    params.require(:athlete_level_category).permit(:athlete_level_id, :kpi_category_id)
+  end
 end

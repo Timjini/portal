@@ -1,9 +1,13 @@
 <%= form_with(model: step_exercise, class: "contents") do |form| %>
   <% if step_exercise.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(step_exercise.errors.count, "error") %> prohibited this step_exercise from being saved:</h2>
-
-      <ul class="list-disc ml-6">
+    <div id="error_explanation" class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded">
+      <div class="flex items-center">
+        <svg class="h-5 w-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+        </svg>
+        <h2 class="text-lg font-medium text-red-800"><%= pluralize(step_exercise.errors.count, "error") %> prohibited this from being saved:</h2>
+      </div>
+      <ul class="mt-2 list-disc pl-5 space-y-1 text-sm text-red-700">
         <% step_exercise.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,37 +15,69 @@
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :step_id %>
-    <%= form.text_field :step_id, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": step_exercise.errors[:step_id].none?, "border-red-400 focus:outline-red-600": step_exercise.errors[:step_id].any?}] %>
-  </div>
+  <div class="space-y-6">
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <div class="px-4 py-5 sm:p-6 space-y-6">
+        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+          <!-- Step Dropdown with Breadcrumb -->
+          <div class="sm:col-span-3">
+            <%= form.label :step_id, "Step", class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1 relative">
+              <%= form.collection_select :step_id, 
+                  Step.includes(:athlete_level_category => [:athlete_level, :kpi_category]).all,
+                  :id, 
+                  :full_breadcrumb,
+                  { prompt: "Select a step" },
+                  class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{step_exercise.errors[:step_id].any? ? 'border-red-300 text-red-900' : ''}"
+              %>
+              <% if step_exercise.errors[:step_id].any? %>
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              <% end %>
+            </div>
+            <% if step_exercise.errors[:step_id].any? %>
+              <p class="mt-2 text-sm text-red-600"><%= step_exercise.errors[:step_id].first %></p>
+            <% end %>
+          </div>
 
-  <div class="my-5">
-    <%= form.label :exercise_id %>
-    <%= form.text_field :exercise_id, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": step_exercise.errors[:exercise_id].none?, "border-red-400 focus:outline-red-600": step_exercise.errors[:exercise_id].any?}] %>
-  </div>
+          <!-- Exercise Dropdown -->
+          <div class="sm:col-span-3">
+            <%= form.label :exercise_id, "Exercise", class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1 relative">
+              <%= form.collection_select :exercise_id, Exercise.all, :id, :name,
+                  { prompt: "Select an exercise" },
+                  class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{step_exercise.errors[:exercise_id].any? ? 'border-red-300 text-red-900' : ''}"
+              %>
+              <% if step_exercise.errors[:exercise_id].any? %>
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              <% end %>
+            </div>
+            <% if step_exercise.errors[:exercise_id].any? %>
+              <p class="mt-2 text-sm text-red-600"><%= step_exercise.errors[:exercise_id].first %></p>
+            <% end %>
+          </div>
 
-  <div class="my-5">
-    <%= form.label :reps %>
-    <%= form.number_field :reps, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": step_exercise.errors[:reps].none?, "border-red-400 focus:outline-red-600": step_exercise.errors[:reps].any?}] %>
-  </div>
+          <!-- Exercise Parameters -->
+          <div class="sm:col-span-2">
+            <%= form.label :order, "Order", class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.number_field :order, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{step_exercise.errors[:distance_meters].any? ? 'border-red-300 text-red-900' : ''}" %>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <div class="my-5">
-    <%= form.label :sets %>
-    <%= form.number_field :sets, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": step_exercise.errors[:sets].none?, "border-red-400 focus:outline-red-600": step_exercise.errors[:sets].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :duration_seconds %>
-    <%= form.number_field :duration_seconds, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": step_exercise.errors[:duration_seconds].none?, "border-red-400 focus:outline-red-600": step_exercise.errors[:duration_seconds].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :distance_meters %>
-    <%= form.number_field :distance_meters, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": step_exercise.errors[:distance_meters].none?, "border-red-400 focus:outline-red-600": step_exercise.errors[:distance_meters].any?}] %>
-  </div>
-
-  <div class="inline">
-    <%= form.submit class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+        <%= link_to "Cancel", step_exercises_path, class: "inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+        <%= form.submit class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ml-2" %>
+      </div>
+    </div>
   </div>
 <% end %>

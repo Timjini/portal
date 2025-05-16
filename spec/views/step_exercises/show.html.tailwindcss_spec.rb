@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "step_exercises/show", type: :view do
+RSpec.describe 'step_exercises/show', type: :view do
   before(:each) do
     assign(:step_exercise, StepExercise.create!(
-      step: nil,
-      exercise: nil,
-      reps: 2,
-      sets: 3,
-      duration_seconds: 4,
-      distance_meters: 5
-    ))
+                             step: nil,
+                             exercise: nil,
+                             reps: 2,
+                             sets: 3,
+                             duration_seconds: 4,
+                             distance_meters: 5
+                           ))
   end
 
-  it "renders attributes in <p>" do
+  it 'renders attributes in <p>' do
     render
     expect(rendered).to match(//)
     expect(rendered).to match(//)

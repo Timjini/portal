@@ -1,14 +1,15 @@
+# frozen_string_literal: true
+
 class StepsController < ApplicationController
-  before_action :set_step, only: %i[ show edit update destroy ]
+  before_action :set_step, only: %i[show edit update destroy]
 
   # GET /steps or /steps.json
   def index
-    @steps = Step.all
+    @steps = Step.includes(%i[exercises athlete_level_category])
   end
 
   # GET /steps/1 or /steps/1.json
-  def show
-  end
+  def show; end
 
   # GET /steps/new
   def new
@@ -16,8 +17,7 @@ class StepsController < ApplicationController
   end
 
   # GET /steps/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /steps or /steps.json
   def create
@@ -25,7 +25,7 @@ class StepsController < ApplicationController
 
     respond_to do |format|
       if @step.save
-        format.html { redirect_to @step, notice: "Step was successfully created." }
+        format.html { redirect_to @step, notice: 'Step was successfully created.' }
         format.json { render :show, status: :created, location: @step }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class StepsController < ApplicationController
   def update
     respond_to do |format|
       if @step.update(step_params)
-        format.html { redirect_to @step, notice: "Step was successfully updated." }
+        format.html { redirect_to @step, notice: 'Step was successfully updated.' }
         format.json { render :show, status: :ok, location: @step }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,18 @@ class StepsController < ApplicationController
     @step.destroy!
 
     respond_to do |format|
-      format.html { redirect_to steps_path, status: :see_other, notice: "Step was successfully destroyed." }
+      format.html { redirect_to steps_path, status: :see_other, notice: 'Step was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_step
-      @step = Step.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def step_params
-      params.require(:step).permit(:athlete_level_id, :kpi_category_id, :step_number)
-    end
+  def set_step
+    @step = Step.find(params[:id])
+  end
+
+  def step_params
+    params.require(:step).permit(:athlete_level_category_id, :step_number)
+  end
 end

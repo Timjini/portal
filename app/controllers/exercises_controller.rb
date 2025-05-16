@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ExercisesController < ApplicationController
-  before_action :set_exercise, only: %i[ show edit update destroy ]
+  before_action :set_exercise, only: %i[show edit update destroy]
 
   # GET /exercises or /exercises.json
   def index
@@ -7,8 +9,7 @@ class ExercisesController < ApplicationController
   end
 
   # GET /exercises/1 or /exercises/1.json
-  def show
-  end
+  def show; end
 
   # GET /exercises/new
   def new
@@ -16,8 +17,7 @@ class ExercisesController < ApplicationController
   end
 
   # GET /exercises/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /exercises or /exercises.json
   def create
@@ -25,7 +25,7 @@ class ExercisesController < ApplicationController
 
     respond_to do |format|
       if @exercise.save
-        format.html { redirect_to @exercise, notice: "Exercise was successfully created." }
+        format.html { redirect_to @exercise, notice: 'Exercise was successfully created.' }
         format.json { render :show, status: :created, location: @exercise }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class ExercisesController < ApplicationController
   def update
     respond_to do |format|
       if @exercise.update(exercise_params)
-        format.html { redirect_to @exercise, notice: "Exercise was successfully updated." }
+        format.html { redirect_to @exercise, notice: 'Exercise was successfully updated.' }
         format.json { render :show, status: :ok, location: @exercise }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,19 @@ class ExercisesController < ApplicationController
     @exercise.destroy!
 
     respond_to do |format|
-      format.html { redirect_to exercises_path, status: :see_other, notice: "Exercise was successfully destroyed." }
+      format.html { redirect_to exercises_path, status: :see_other, notice: 'Exercise was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_exercise
-      @exercise = Exercise.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def exercise_params
-      params.require(:exercise).permit(:name, :description, :reps, :sets, :duration_seconds, :distance_meters, :male_benchmark, :female_benchmark, :notes, :movement_patterns, :equipment)
-    end
+  def set_exercise
+    @exercise = Exercise.find(params[:id])
+  end
+
+  def exercise_params
+    params.require(:exercise).permit(:name, :description, :reps, :sets, :duration_seconds, :distance_meters,
+                                     :male_benchmark, :female_benchmark, :notes, :movement_patterns, :equipment)
+  end
 end

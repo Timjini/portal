@@ -12,23 +12,18 @@ class CsvImportService
     raise 'File does not exist' unless File.exist?(@file_path)
 
     CSV.foreach(@file_path, headers: @headers) do |row|
+      row_hash = row.to_h
       if block_given?
-        yield row
+        yield row_hash
       else
-        process_row(row)
+        process_row(row_hash)
       end
     end
   end
 
   private
 
-  def process_row(row)
-    process_rows(row)
-  rescue NotImplementedError
+  def process_row(_row)
     raise NotImplementedError, 'You must override `process_row` or provide a block when calling the service'
-  end
-
-  def process_rows(row)
-    raise NotImplementedError, 'You must implement the `process_rows` method in the subclass or pass a block'
   end
 end

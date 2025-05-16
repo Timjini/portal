@@ -3,7 +3,7 @@
 class CreateAthleteLevels < ActiveRecord::Migration[7.1]
   def change
     create_table :athlete_levels do |t|
-      t.string :name, null: false  # remove unique: true here
+      t.string :name, null: false # remove unique: true here
       t.integer :position, null: false, default: 0
       t.text    :description
       t.integer :min_age

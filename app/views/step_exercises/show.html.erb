@@ -1,17 +1,111 @@
-<% content_for :title, "Showing step exercise" %>
+<% content_for :title, "Step Exercise Details" %>
 
-<div class="md:w-2/3 w-full">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Flash Message -->
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <div class="rounded-md bg-green-50 p-4 mb-6">
+      <div class="flex items-center">
+        <svg class="h-5 w-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+        </svg>
+        <p class="text-sm font-medium text-green-800"><%= notice %></p>
+      </div>
+    </div>
   <% end %>
 
-  <h1 class="font-bold text-4xl">Showing step exercise</h1>
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">Step Exercise Details</h1>
+    <div class="flex space-x-3">
+      <%= link_to "Edit", edit_step_exercise_path(@step_exercise), class: "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      <%= button_to "Delete", @step_exercise, method: :delete, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500", data: { turbo_confirm: "Are you sure you want to delete this step exercise?" } %>
+    </div>
+  </div>
 
-  <%= render @step_exercise %>
+  <!-- Content Card -->
+  <div class="bg-white shadow rounded-lg overflow-hidden">
+    <div class="px-4 py-5 sm:p-6">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <!-- Step Information -->
+        <div>
+          <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Step Details</h2>
+          <div class="space-y-4">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Step Path</p>
+              <p class="mt-1 text-sm text-gray-900 font-semibold">
+                <% if @step_exercise.step %>
+                  <%= @step_exercise.step.full_breadcrumb %>
+                <% else %>
+                  <span class="text-gray-400">Not assigned</span>
+                <% end %>
+              </p>
+            </div>
+            
+            <div>
+              <p class="text-sm font-medium text-gray-500">Order</p>
+              <p class="mt-1 text-sm text-gray-900"><%= @step_exercise.order %></p>
+            </div>
+          </div>
+        </div>
 
-  <%= link_to "Edit this step exercise", edit_step_exercise_path(@step_exercise), class: "mt-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to step exercises", step_exercises_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <div class="inline-block ml-2">
-    <%= button_to "Destroy this step exercise", @step_exercise, method: :delete, class: "mt-2 rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium" %>
+        <!-- Exercise Information -->
+        <div>
+          <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Exercise Details</h2>
+          <div class="space-y-4">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Exercise</p>
+              <p class="mt-1 text-sm text-gray-900 font-semibold">
+                <% if @step_exercise.exercise %>
+                  <%= @step_exercise.exercise.name %>
+                <% else %>
+                  <span class="text-gray-400">Not assigned</span>
+                <% end %>
+              </p>
+            </div>
+            
+            <% if @step_exercise.exercise && @step_exercise.exercise.image_url.present? %>
+              <div class="mt-4">
+                <%= image_tag @step_exercise.exercise.image_url, class: "h-40 w-full object-cover rounded-md" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parameters Section -->
+      <div class="mt-8">
+        <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Exercise Parameters</h2>
+        <div class="grid grid-cols-2 gap-6 sm:grid-cols-4">
+      
+          
+          <% if @step_exercise.order.present? %>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <p class="text-sm font-medium text-gray-500">Order</p>
+              <p class="mt-1 text-xl font-semibold text-yellow-600"><%= @step_exercise.order %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Exercise Description -->
+      <% if @step_exercise.exercise && @step_exercise.exercise.description.present? %>
+        <div class="mt-8">
+          <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Exercise Description</h2>
+          <div class="prose max-w-none text-gray-700">
+            <%= simple_format @step_exercise.exercise.description %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Back Link -->
+  <div class="mt-6">
+    <%= link_to step_exercises_path, class: "inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900" do %>
+      <svg class="mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+      </svg>
+      Back to all step exercises
+    <% end %>
   </div>
 </div>

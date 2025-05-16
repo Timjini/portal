@@ -1,17 +1,148 @@
-<% content_for :title, "Showing exercise" %>
+<% content_for :title, @exercise.name %>
 
-<div class="md:w-2/3 w-full">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Flash Message -->
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <div class="rounded-md bg-green-50 p-4 mb-6">
+      <div class="flex items-center">
+        <svg class="h-5 w-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+        </svg>
+        <p class="text-sm font-medium text-green-800"><%= notice %></p>
+      </div>
+    </div>
   <% end %>
 
-  <h1 class="font-bold text-4xl">Showing exercise</h1>
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-900"><%= @exercise.name %></h1>
+    <div class="flex space-x-3">
+      <%= link_to "Edit", edit_exercise_path(@exercise), class: "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      <%= button_to "Delete", @exercise, method: :delete, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500", data: { turbo_confirm: "Are you sure you want to delete this exercise?" } %>
+    </div>
+  </div>
 
-  <%= render @exercise %>
+  <!-- Content Card -->
+  <div class="bg-white shadow rounded-lg overflow-hidden">
+    <!-- Exercise Image -->
+    <% if @exercise.image_url.present? %>
+      <div class="h-64 bg-gray-100 overflow-hidden">
+        <%= image_tag @exercise.image_url, alt: @exercise.name, class: "w-full h-full object-cover" %>
+      </div>
+    <% end %>
 
-  <%= link_to "Edit this exercise", edit_exercise_path(@exercise), class: "mt-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to exercises", exercises_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <div class="inline-block ml-2">
-    <%= button_to "Destroy this exercise", @exercise, method: :delete, class: "mt-2 rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium" %>
+    <div class="px-4 py-5 sm:p-6">
+      <!-- Description -->
+      <% if @exercise.description.present? %>
+        <div class="prose max-w-none text-gray-700 mb-8">
+          <%= simple_format @exercise.description %>
+        </div>
+      <% end %>
+
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <!-- Performance Parameters -->
+        <div>
+          <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Performance Parameters</h2>
+          <div class="grid grid-cols-2 gap-4">
+            <% if @exercise.reps.present? %>
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-sm font-medium text-gray-500">Reps</p>
+                <p class="mt-1 text-xl font-semibold text-blue-600"><%= @exercise.reps %></p>
+              </div>
+            <% end %>
+            
+            <% if @exercise.sets.present? %>
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-sm font-medium text-gray-500">Sets</p>
+                <p class="mt-1 text-xl font-semibold text-green-600"><%= @exercise.sets %></p>
+              </div>
+            <% end %>
+            
+            <% if @exercise.duration_seconds.present? %>
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-sm font-medium text-gray-500">Duration</p>
+                <p class="mt-1 text-xl font-semibold text-yellow-600"><%= @exercise.duration_seconds %>s</p>
+              </div>
+            <% end %>
+            
+            <% if @exercise.distance_meters.present? %>
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-sm font-medium text-gray-500">Distance</p>
+                <p class="mt-1 text-xl font-semibold text-purple-600"><%= @exercise.distance_meters %>m</p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Benchmarks -->
+        <div>
+          <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Benchmarks</h2>
+          <div class="grid grid-cols-2 gap-4">
+            <% if @exercise.male_benchmark.present? %>
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-sm font-medium text-gray-500">Male</p>
+                <p class="mt-1 text-xl font-semibold text-blue-600"><%= @exercise.male_benchmark %></p>
+              </div>
+            <% end %>
+            
+            <% if @exercise.female_benchmark.present? %>
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-sm font-medium text-gray-500">Female</p>
+                <p class="mt-1 text-xl font-semibold text-pink-600"><%= @exercise.female_benchmark %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2">
+        <% if @exercise.equipment.present? %>
+          <div>
+            <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Equipment</h2>
+            <div class="flex flex-wrap gap-2">
+              <% @exercise.equipment.split(',').each do |item| %>
+                <span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800">
+                  <%= item.strip %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @exercise.movement_patterns.present? %>
+          <div>
+            <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Movement Patterns</h2>
+            <div class="flex flex-wrap gap-2">
+              <% @exercise.movement_patterns.split(',').each do |pattern| %>
+                <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+                  <%= pattern.strip %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Notes -->
+      <% if @exercise.notes.present? %>
+        <div class="mt-8">
+          <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Notes</h2>
+          <div class="prose max-w-none text-gray-700">
+            <%= simple_format @exercise.notes %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Back Link -->
+  <div class="mt-6">
+    <%= link_to exercises_path, class: "inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900" do %>
+      <svg class="mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+      </svg>
+      Back to all exercises
+    <% end %>
   </div>
 </div>
