@@ -1,25 +1,119 @@
-<% content_for :title, "Steps" %>
-
-<div class="w-full">
+<div class="px-4 sm:px-6 lg:px-8">
+  <!-- Flash Message -->
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <div class="rounded-md bg-green-50 p-4 mb-4">
+      <div class="flex items-center">
+        <svg class="h-5 w-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+        </svg>
+        <p class="text-sm font-medium text-green-800"><%= notice %></p>
+      </div>
+    </div>
   <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Steps</h1>
-    <%= link_to "New step", new_step_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+  <div class="sm:flex sm:items-center justify-between">
+    <div class="sm:flex-auto">
+      <h1 class="text-xl font-semibold text-gray-900">Steps</h1>
+      <p class="mt-2 text-sm text-gray-700">Manage progression steps for athlete training</p>
+    </div>
+    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <%= link_to "New Step", new_step_path, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto" %>
+    </div>
   </div>
 
-  <div id="steps" class="min-w-full">
-    <% if @steps.any? %>
-      <% @steps.each do |step| %>
-        <%= render step %>
-        <p>
-          <%= link_to "Show this step", step, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-        </p>
-      <% end %>
-    <% else %>
-      <p class="text-center my-10">No steps found.</p>
-    <% end %>
+  <!-- Filters -->
+  <div class="mt-6 flex items-center space-x-4 hidden">
+    <div class="w-full sm:w-64">
+      <select class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500">
+        <option>Filter by Athlete Level</option>
+        <% AthleteLevel.all.each do |level| %>
+          <option value="<%= level.id %>"><%= level.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <div class="w-full sm:w-64">
+      <select class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500">
+        <option>Filter by Category</option>
+        <% KpiCategory.all.each do |category| %>
+          <option value="<%= category.id %>"><%= category.name %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+
+  <div class="mt-8 flow-root">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <% if @steps.any? %>
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Step</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Athlete Level</th>
+                  <%
+=begin%>
+ <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Category</th> 
+<%
+=end%>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Exercises</th>
+                  <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <span class="sr-only">Actions</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <% @steps.each do |step| %>
+                  <tr id="<%= dom_id step %>">
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                      Step <%= step.step_number %>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <%= step.full_breadcrumb %>
+                    </td>
+                    <%
+=begin%>
+ <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <%= step.kpi_category.name %>
+                    </td> 
+<%
+=end%>
+                    <td class="px-3 py-4 text-sm text-gray-500">
+                      <% if step.exercises.any? %>
+                        <div class="flex flex-wrap gap-1">
+                          <% step.exercises.each do |exercise| %>
+                            <span class="inline-flex items-center rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
+                              <%= exercise.name %>
+                            </span>
+                          <% end %>
+                        </div>
+                      <% else %>
+                        <span class="text-gray-400">None assigned</span>
+                      <% end %>
+                    </td>
+                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                      <%= link_to "View", step, class: "text-blue-600 hover:text-blue-900 mr-4" %>
+                      <%= link_to "Edit", edit_step_path(step), class: "text-indigo-600 hover:text-indigo-900 mr-4" %>
+                      <%= link_to "Delete", step, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-900" %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <div class="text-center bg-white py-10 rounded-lg shadow">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">No steps found</h3>
+            <p class="mt-1 text-sm text-gray-500">Get started by creating a new step.</p>
+            <div class="mt-6">
+              <%= link_to "New Step", new_step_path, class: "inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
