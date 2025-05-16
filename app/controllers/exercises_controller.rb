@@ -6,7 +6,18 @@ class ExercisesController < ApplicationController
 
   # GET /exercises or /exercises.json
   def index
-    @exercises = Exercise.all
+    if params[:term].present?
+      term = "%#{params[:term]}%"
+      @exercises = Exercise.where('name ILIKE :term OR description ILIKE :term', term: term)
+      puts "--------->, #{params[:term]}"
+    else
+      @exercises = Exercise.all.paginate(page: params[:page], per_page: 10)
+    end
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   # GET /exercises/1 or /exercises/1.json
@@ -35,6 +46,28 @@ class ExercisesController < ApplicationController
     end
   end
 
+  def bulk_exercise_upload # rubocop:disable Metrics/MethodLength
+    csv_file = params[:file]
+    if csv_file.blank?
+      render json: { error: 'No file uploaded' }, status: :bad_request
+      return
+    end
+
+    saved_file = SaveAttachmentToPublic.call(csv_file)
+    unless saved_file
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: 'File upload failed', status: :unprocessable_entity }
+      return
+    end
+
+    csv_service = CsvImportService.new(saved_file)
+    csv_service.call do |row|
+      Exercise.create!(row)
+    end
+
+    render json: { message: 'CSV processed successfully' }, status: :ok
+  end
+
   # PATCH/PUT /exercises/1 or /exercises/1.json
   def update
     respond_to do |format|
@@ -57,6 +90,7 @@ class ExercisesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
   private
 

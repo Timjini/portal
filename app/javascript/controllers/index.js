@@ -22,6 +22,9 @@ application.register("drawer", DrawerController)
 import EditableFieldController from "./editable_field_controller"
 application.register("editable-field", EditableFieldController)
 
+import ExerciseSearchController from "./exercise_search_controller"
+application.register("exercise-search", ExerciseSearchController)
+
 import FlashController from "./flash_controller"
 application.register("flash", FlashController)
 

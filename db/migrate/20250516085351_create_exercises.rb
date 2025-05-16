@@ -10,8 +10,8 @@ class CreateExercises < ActiveRecord::Migration[7.1]
       # Common measurable fields
       t.integer :reps
       t.integer :sets
-      t.integer :duration_secondsonds
-      t.float :distance_meterseters
+      t.integer :duration_seconds
+      t.float :distance_meters
 
       # Gender specific benchmarks (optional)
       t.string :male_benchmark

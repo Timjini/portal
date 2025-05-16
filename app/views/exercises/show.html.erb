@@ -74,21 +74,49 @@
                     </div>
                 </div>
 
-                <!-- Benchmarks -->
+                <!-- Benchmarks and Metadata -->
                 <div>
-                    <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Benchmarks</h2>
+                    <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Exercise Details</h2>
                     <div class="grid grid-cols-2 gap-4">
                         <% if @exercise.male_benchmark.present? %>
                         <div class="bg-gray-50 p-3 rounded-lg">
-                            <p class="text-sm font-medium text-gray-500">Male</p>
+                            <p class="text-sm font-medium text-gray-500">Male Benchmark</p>
                             <p class="mt-1 text-xl font-semibold text-blue-600"><%= @exercise.male_benchmark %></p>
                         </div>
                         <% end %>
 
                         <% if @exercise.female_benchmark.present? %>
                         <div class="bg-gray-50 p-3 rounded-lg">
-                            <p class="text-sm font-medium text-gray-500">Female</p>
+                            <p class="text-sm font-medium text-gray-500">Female Benchmark</p>
                             <p class="mt-1 text-xl font-semibold text-pink-600"><%= @exercise.female_benchmark %></p>
+                        </div>
+                        <% end %>
+
+                        <% if @exercise.difficulty_level.present? %>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-sm font-medium text-gray-500">Difficulty</p>
+                            <p class="mt-1 text-xl font-semibold text-indigo-600"><%= @exercise.difficulty_level %></p>
+                        </div>
+                        <% end %>
+
+                        <% if @exercise.intensity.present? %>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-sm font-medium text-gray-500">Intensity</p>
+                            <p class="mt-1 text-xl font-semibold text-red-600"><%= @exercise.intensity %></p>
+                        </div>
+                        <% end %>
+
+                        <% if @exercise.position.present? %>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-sm font-medium text-gray-500">Position</p>
+                            <p class="mt-1 text-xl font-semibold text-gray-600"><%= @exercise.position %></p>
+                        </div>
+                        <% end %>
+
+                        <% if @exercise.primary_focus.present? %>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-sm font-medium text-gray-500">Primary Focus</p>
+                            <p class="mt-1 text-xl font-semibold text-teal-600"><%= @exercise.primary_focus %></p>
                         </div>
                         <% end %>
                     </div>
@@ -110,7 +138,6 @@
                 </div>
                 <% end %>
 
-
                 <% if @exercise.movement_patterns.present? %>
                 <div>
                     <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Movement Patterns</h2>
@@ -123,6 +150,28 @@
                     </div>
                 </div>
                 <% end %>
+
+                <% if @exercise.muscle_group.present? %>
+                <div>
+                    <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Muscle Group</h2>
+                    <div class="flex flex-wrap gap-2">
+                        <% @exercise.muscle_group.each do |group| %>
+                        <span class="inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-800">
+                            <%= group.to_s.strip %>
+                        </span>
+                        <% end %>
+                    </div>
+                </div>
+                <% end %>
+
+                <% if @exercise.video_url.present? %>
+                <div>
+                    <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Video</h2>
+                    <div class="aspect-w-16 aspect-h-9">
+                        <iframe class="w-full h-64 rounded-lg" src="<%= @exercise.video_url %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <% end %>
             </div>
 
             <!-- Notes -->
@@ -131,6 +180,25 @@
                 <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Notes</h2>
                 <div class="prose max-w-none text-gray-700">
                     <%= simple_format @exercise.notes %>
+                </div>
+            </div>
+            <% end %>
+
+            <!-- Extra Attributes -->
+            <% if @exercise.extra_attributes.present? %>
+            <div class="mt-8">
+                <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Additional Information</h2>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+                        <% @exercise.extra_attributes.each do |key, value| %>
+                        <% if value.present? %>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500"><%= key.to_s.humanize %></dt>
+                            <dd class="mt-1 text-sm text-gray-900"><%= value %></dd>
+                        </div>
+                        <% end %>
+                        <% end %>
+                    </dl>
                 </div>
             </div>
             <% end %>

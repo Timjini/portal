@@ -32,7 +32,7 @@
                             :id, 
                             :breadcrumb,
                             { prompt: "Select an athlete level" },
-                            class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{step.errors[:athlete_level_category_id].any? ? 'border-red-300 text-red-900' : ''}"
+                            class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{step.errors[:athlete_level_category_id].any? ? 'border-red-300 text-red-900' : ''}"
                         %>
                         <% if step.errors[:athlete_level_category_id].any? %>
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -51,7 +51,7 @@
                     <%= form.label :step_number, "Step Number", class: "block text-sm font-medium text-gray-700" %>
                     <div class="mt-1 relative rounded-md shadow-sm">
                         <%= form.number_field :step_number, 
-                  class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{step.errors[:step_number].any? ? 'border-red-300 text-red-900' : ''}",
+                  class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{step.errors[:step_number].any? ? 'border-red-300 text-red-900' : ''}",
                   min: 1,
                   max: 5,
                   placeholder: "1-5" %>

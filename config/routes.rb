@@ -5,7 +5,11 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   resources :athlete_level_categories
   resources :step_exercises
-  resources :exercises
+  resources :exercises do
+    collection do
+      post :bulk_exercise_upload
+    end
+  end
   resources :steps
   mount Sidekiq::Web => '/sidekiq'
 

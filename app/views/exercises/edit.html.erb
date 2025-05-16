@@ -5,6 +5,10 @@
 
   <%= render "form", exercise: @exercise %>
 
-  <%= link_to "Show this exercise", @exercise, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to exercises", exercises_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%
+=begin%>
+ <%= link_to "Show this exercise", @exercise, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "Back to exercises", exercises_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %> 
+<%
+=end%>
 </div>
