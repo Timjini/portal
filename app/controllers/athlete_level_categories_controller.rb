@@ -2,6 +2,7 @@
 
 class AthleteLevelCategoriesController < ApplicationController
   before_action :set_athlete_level_category, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   # GET /athlete_level_categories or /athlete_level_categories.json
   def index

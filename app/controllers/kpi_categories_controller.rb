@@ -2,6 +2,7 @@
 
 class KpiCategoriesController < ApplicationController
   before_action :set_kpi_category, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   # GET /kpi_categories or /kpi_categories.json
   def index

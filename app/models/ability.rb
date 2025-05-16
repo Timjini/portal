@@ -4,7 +4,19 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    nil if user.blank?
+    nil if user.blank? # rubocop:disable Lint/Void
+    user ||= User.new # guest user
+
+    if user.admin?
+      can :manage, :all
+    elsif user.coach?
+      can :manage, Exercise
+      can :read, Athlete
+      # add more coach-specific rules
+    else
+      # default for athletes
+      # can :read, Exercise
+    end
 
     # Define abilities for the user here. For example:
     #

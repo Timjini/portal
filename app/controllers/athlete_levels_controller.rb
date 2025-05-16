@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AthleteLevelsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_athlete_level, only: %i[show edit update destroy]
 
   # GET /athlete_levels or /athlete_levels.json

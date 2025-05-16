@@ -2,6 +2,7 @@
 
 class TimeSlotsController < ApplicationController
   before_action :set_time_slot, only: %i[show edit update destroy]
+  load_and_authorize_resource
   include TimeSlotsHelper
 
   # GET /time_slots or /time_slots.json

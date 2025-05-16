@@ -2,6 +2,7 @@
 
 class StepsController < ApplicationController
   before_action :set_step, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   # GET /steps or /steps.json
   def index

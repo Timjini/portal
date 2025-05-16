@@ -2,6 +2,7 @@
 
 class StepExercisesController < ApplicationController
   before_action :set_step_exercise, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   # GET /step_exercises or /step_exercises.json
   def index
