@@ -117,14 +117,14 @@
             <div class="sm:col-span-3">
               <%= form.label :movement_patterns, "Movement Patterns (comma separated)", class: "block text-sm font-medium text-gray-700" %>
               <div class="mt-1">
-                <%= form.text_field :movement_patterns, class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{exercise.errors[:movement_patterns].any? ? 'border-red-300 text-red-900' : ''}" %>
+                <%= form.text_field :movement_patterns, value: exercise.movement_patterns&.join(', '), class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{exercise.errors[:movement_patterns].any? ? 'border-red-300 text-red-900' : ''}" %>
               </div>
             </div>
 
             <div class="sm:col-span-3">
               <%= form.label :equipment, "Equipment (comma separated)", class: "block text-sm font-medium text-gray-700" %>
               <div class="mt-1">
-                <%= form.text_field :equipment, class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{exercise.errors[:equipment].any? ? 'border-red-300 text-red-900' : ''}" %>
+                <%= form.text_field :equipment,value: exercise.equipment&.join(', ') , class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{exercise.errors[:equipment].any? ? 'border-red-300 text-red-900' : ''}" %>
               </div>
             </div>
 
@@ -153,6 +153,12 @@
               <%= form.label :primary_focus, "Primary Focus", class: "block text-sm font-medium text-gray-700" %>
               <div class="mt-1">
                 <%= form.text_field :primary_focus, class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+              </div>
+            </div>
+            <div class="sm:col-span-3">
+              <%= form.label :muscle_group, "Muscle Group", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= form.text_field :muscle_group, class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
               </div>
             </div>
           </div>

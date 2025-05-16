@@ -13,6 +13,9 @@ application.register("avatar", AvatarController)
 import CalendarController from "./calendar_controller"
 application.register("calendar", CalendarController)
 
+import ColorPickerController from "./color_picker_controller"
+application.register("color-picker", ColorPickerController)
+
 import DrawerController from "./drawer_controller"
 application.register("drawer", DrawerController)
 

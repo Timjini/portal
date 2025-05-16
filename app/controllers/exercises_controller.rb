@@ -25,7 +25,7 @@ class ExercisesController < ApplicationController
 
     respond_to do |format|
       if @exercise.save
-        format.html { redirect_to @exercise, notice: 'Exercise was successfully created.' }
+        format.html { redirect_to @exercise, notice: 'Exercise was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: @exercise }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class ExercisesController < ApplicationController
   def update
     respond_to do |format|
       if @exercise.update(exercise_params)
-        format.html { redirect_to @exercise, notice: 'Exercise was successfully updated.' }
+        format.html { redirect_to @exercise, notice: 'Exercise was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @exercise }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class ExercisesController < ApplicationController
     @exercise.destroy!
 
     respond_to do |format|
-      format.html { redirect_to exercises_path, status: :see_other, notice: 'Exercise was successfully destroyed.' }
+      format.html { redirect_to exercises_path, status: :see_other, notice: 'Exercise was successfully destroyed.' } # rubocop:disable Rails/I18nLocaleTexts
       format.json { head :no_content }
     end
   end
@@ -65,6 +65,6 @@ class ExercisesController < ApplicationController
 
   def exercise_params
     params.require(:exercise).permit(:name, :description, :reps, :sets, :duration_seconds, :distance_meters,
-                                     :male_benchmark, :female_benchmark, :notes, :movement_patterns, :equipment)
+                                     :male_benchmark, :female_benchmark, :notes, :movement_patterns, :image, :difficulty_level, :intensity, :muscle_group, :primary_focus, :equipment, :video_url, extra_attributes: {}) # rubocop:disable Layout/LineLength
   end
 end

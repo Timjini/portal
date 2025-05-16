@@ -1,30 +1,59 @@
-<div id="<%= dom_id athlete_level %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= athlete_level.name %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Position:</strong>
-    <%= athlete_level.position %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= athlete_level.description %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Min age:</strong>
-    <%= athlete_level.min_age %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Max age:</strong>
-    <%= athlete_level.max_age %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Color:</strong>
-    <%= athlete_level.color %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Active:</strong>
-    <%= athlete_level.active %>
-  </p>
+<div id="<%= dom_id athlete_level %>" class="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b border-gray-200">Athlete Level Details</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-gray-50 p-4 rounded-lg">
+      <p class="mb-3">
+        <strong class="block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-1">Name:</strong>
+        <span class="text-lg text-gray-800"><%= athlete_level.name %></span>
+      </p>
+    </div>
+
+    <div class="bg-gray-50 p-4 rounded-lg">
+      <p class="mb-3">
+        <strong class="block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-1">Position:</strong>
+        <span class="text-lg text-gray-800"><%= athlete_level.position %></span>
+      </p>
+    </div>
+
+    <div class="bg-gray-50 p-4 rounded-lg col-span-1 md:col-span-2">
+      <p class="mb-3">
+        <strong class="block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-1">Description:</strong>
+        <span class="text-gray-700"><%= athlete_level.description %></span>
+      </p>
+    </div>
+
+    <div class="bg-gray-50 p-4 rounded-lg">
+      <p class="mb-3">
+        <strong class="block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-1">Min age:</strong>
+        <span class="text-lg text-gray-800"><%= athlete_level.min_age %></span>
+      </p>
+    </div>
+
+    <div class="bg-gray-50 p-4 rounded-lg">
+      <p class="mb-3">
+        <strong class="block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-1">Max age:</strong>
+        <span class="text-lg text-gray-800"><%= athlete_level.max_age %></span>
+      </p>
+    </div>
+
+    <div class="bg-gray-50 p-4 rounded-lg">
+      <p class="mb-3">
+        <strong class="block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-1">Color:</strong>
+        <div class="flex items-center mt-2">
+          <span class="w-6 h-6 rounded-full mr-2" style="background-color: <%= athlete_level.color %>"></span>
+          <span class="text-gray-800"><%= athlete_level.color %></span>
+        </div>
+      </p>
+    </div>
+
+    <div class="bg-gray-50 p-4 rounded-lg">
+      <p class="mb-3">
+        <strong class="block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-1">Active:</strong>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= athlete_level.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+          <%= athlete_level.active ? 'Yes' : 'No' %>
+        </span>
+      </p>
+    </div>
+  </div>
 </div>

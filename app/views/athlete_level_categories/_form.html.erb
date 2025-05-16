@@ -25,7 +25,7 @@
             <div class="mt-1 relative">
               <%= form.collection_select :athlete_level_id, AthleteLevel.all, :id, :name,
                 { prompt: "Select an athlete level" },
-                class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{athlete_level_category.errors[:athlete_level_id].any? ? 'border-red-300 text-red-900' : ''}"
+                class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{athlete_level_category.errors[:athlete_level_id].any? ? 'border-red-300 text-red-900' : ''}"
               %>
               <% if athlete_level_category.errors[:athlete_level_id].any? %>
                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -46,7 +46,7 @@
             <div class="mt-1 relative">
               <%= form.collection_select :kpi_category_id, KpiCategory.all, :id, :name,
                 { prompt: "Select a category" },
-                class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{athlete_level_category.errors[:kpi_category_id].any? ? 'border-red-300 text-red-900' : ''}"
+                class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm #{athlete_level_category.errors[:kpi_category_id].any? ? 'border-red-300 text-red-900' : ''}"
               %>
               <% if athlete_level_category.errors[:kpi_category_id].any? %>
                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">

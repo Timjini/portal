@@ -5,6 +5,14 @@
 
   <%= render "form", athlete_level: @athlete_level %>
 
-  <%= link_to "Show this athlete level", @athlete_level, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to athlete levels", athlete_levels_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%
+=begin%>
+ <%= link_to "Show this athlete level", @athlete_level, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %> 
+<%
+=end%>
+  <%
+=begin%>
+ <%= link_to "Back to athlete levels", athlete_levels_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %> 
+<%
+=end%>
 </div>

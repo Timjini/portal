@@ -25,7 +25,7 @@ class AthleteLevelCategoriesController < ApplicationController
 
     respond_to do |format|
       if @athlete_level_category.save
-        format.html { redirect_to @athlete_level_category, notice: 'Athlete level category was successfully created.' }
+        format.html { redirect_to @athlete_level_category, notice: 'Athlete level category was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: @athlete_level_category }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class AthleteLevelCategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @athlete_level_category.update(athlete_level_category_params)
-        format.html { redirect_to @athlete_level_category, notice: 'Athlete level category was successfully updated.' }
+        format.html { redirect_to @athlete_level_category, notice: 'Athlete level category was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @athlete_level_category }
       else
         format.html { render :edit, status: :unprocessable_entity }
