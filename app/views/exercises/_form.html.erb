@@ -1,0 +1,72 @@
+<%= form_with(model: exercise, class: "contents") do |form| %>
+  <% if exercise.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% exercise.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:name].none?, "border-red-400 focus:outline-red-600": exercise.errors[:name].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 4, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:description].none?, "border-red-400 focus:outline-red-600": exercise.errors[:description].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :reps %>
+    <%= form.number_field :reps, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:reps].none?, "border-red-400 focus:outline-red-600": exercise.errors[:reps].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :sets %>
+    <%= form.number_field :sets, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:sets].none?, "border-red-400 focus:outline-red-600": exercise.errors[:sets].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :duration_seconds %>
+    <%= form.number_field :duration_seconds, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:duration_seconds].none?, "border-red-400 focus:outline-red-600": exercise.errors[:duration_seconds].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :distance_meters %>
+    <%= form.number_field :distance_meters, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:distance_meters].none?, "border-red-400 focus:outline-red-600": exercise.errors[:distance_meters].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :male_benchmark %>
+    <%= form.text_field :male_benchmark, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:male_benchmark].none?, "border-red-400 focus:outline-red-600": exercise.errors[:male_benchmark].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :female_benchmark %>
+    <%= form.text_field :female_benchmark, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:female_benchmark].none?, "border-red-400 focus:outline-red-600": exercise.errors[:female_benchmark].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :notes %>
+    <%= form.text_area :notes, rows: 4, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:notes].none?, "border-red-400 focus:outline-red-600": exercise.errors[:notes].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :movement_patterns %>
+    <%= form.text_field :movement_patterns, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:movement_patterns].none?, "border-red-400 focus:outline-red-600": exercise.errors[:movement_patterns].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :equipment %>
+    <%= form.text_field :equipment, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": exercise.errors[:equipment].none?, "border-red-400 focus:outline-red-600": exercise.errors[:equipment].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

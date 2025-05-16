@@ -1,6 +1,7 @@
-class Coaches::AssessmentsController < ApplicationController
-  
+# frozen_string_literal: true
+
+class Coaches::AssessmentsController < ApplicationController # rubocop:disable Style/ClassAndModuleChildren
   def index
-    puts "--------------->#{session[:step].inspect}"
+    
   end
 end

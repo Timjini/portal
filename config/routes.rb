@@ -3,6 +3,10 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :athlete_level_categories
+  resources :step_exercises
+  resources :exercises
+  resources :steps
   mount Sidekiq::Web => '/sidekiq'
 
   # Common Routes
@@ -164,5 +168,12 @@ Rails.application.routes.draw do
     resources :reports, only: [:index]
     resources :content, only: %i[index edit update]
     resources :billing, only: %i[index show]
+  end
+
+  resources :kpi_categories
+  resources :athlete_levels
+
+  namespace :admin do
+    resources :content, only: %i[index edit update]
   end
 end

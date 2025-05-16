@@ -1,0 +1,2 @@
+module AthleteLevelCategoriesHelper
+end

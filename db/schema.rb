@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_10_215048) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_16_124146) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_10_215048) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "admin_athlete_levels", force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.text "description"
+    t.integer "min_age"
+    t.integer "max_age"
+    t.string "color"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "answers", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id", null: false
@@ -51,6 +63,29 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_10_215048) do
     t.string "explination"
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
+  end
+
+  create_table "athlete_level_categories", force: :cascade do |t|
+    t.bigint "athlete_level_id", null: false
+    t.bigint "kpi_category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["athlete_level_id", "kpi_category_id"], name: "idx_on_athlete_level_id_kpi_category_id_c7c3682592", unique: true
+    t.index ["athlete_level_id"], name: "index_athlete_level_categories_on_athlete_level_id"
+    t.index ["kpi_category_id"], name: "index_athlete_level_categories_on_kpi_category_id"
+  end
+
+  create_table "athlete_levels", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "position", default: 0, null: false
+    t.text "description"
+    t.integer "min_age"
+    t.integer "max_age"
+    t.string "color"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_athlete_levels_on_name", unique: true
   end
 
   create_table "athlete_profiles", force: :cascade do |t|
@@ -116,6 +151,30 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_10_215048) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "exercises", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.integer "reps"
+    t.integer "sets"
+    t.integer "duration_secondsonds"
+    t.float "distance_meterseters"
+    t.string "male_benchmark"
+    t.string "female_benchmark"
+    t.string "video_url"
+    t.integer "position"
+    t.string "difficulty_level"
+    t.string "intensity"
+    t.string "notes"
+    t.string "muscle_group"
+    t.string "primary_focus"
+    t.string "movement_patterns", default: [], array: true
+    t.string "equipment", default: [], array: true
+    t.jsonb "extra_attributes", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["extra_attributes"], name: "index_exercises_on_extra_attributes", using: :gin
+  end
+
   create_table "forms", force: :cascade do |t|
     t.string "email", null: false
     t.string "title"
@@ -124,6 +183,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_10_215048) do
     t.string "subject"
     t.string "status"
     t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "kpi_categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -189,6 +255,26 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_10_215048) do
     t.index ["coach_id"], name: "index_reviews_on_coach_id"
     t.index ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable"
     t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "step_exercises", force: :cascade do |t|
+    t.bigint "step_id", null: false
+    t.bigint "exercise_id", null: false
+    t.integer "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_step_exercises_on_exercise_id"
+    t.index ["step_id", "exercise_id"], name: "index_step_exercises_on_step_id_and_exercise_id", unique: true
+    t.index ["step_id"], name: "index_step_exercises_on_step_id"
+  end
+
+  create_table "steps", force: :cascade do |t|
+    t.bigint "athlete_level_category_id", null: false
+    t.integer "step_number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["athlete_level_category_id", "step_number"], name: "index_steps__category_and_number", unique: true
+    t.index ["athlete_level_category_id"], name: "index_steps_on_athlete_level_category_id"
   end
 
   create_table "taster_session_bookings", force: :cascade do |t|
@@ -311,6 +397,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_10_215048) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
+  add_foreign_key "athlete_level_categories", "athlete_levels"
+  add_foreign_key "athlete_level_categories", "kpi_categories"
   add_foreign_key "athlete_profiles", "users"
   add_foreign_key "check_lists", "levels"
   add_foreign_key "coach_calendars", "users"
@@ -320,6 +408,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_10_215048) do
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "reviews", "users"
   add_foreign_key "reviews", "users", column: "coach_id"
+  add_foreign_key "step_exercises", "exercises"
+  add_foreign_key "step_exercises", "steps"
+  add_foreign_key "steps", "athlete_level_categories"
   add_foreign_key "taster_session_bookings", "users"
   add_foreign_key "training_bookings", "training_packages"
   add_foreign_key "training_bookings", "users"
