@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'exercises/edit', type: :view do
+RSpec.describe 'exercises/edit', type: :view do # rubocop:disable Metrics/BlockLength
   let(:exercise) do
     Exercise.create!(
       name: 'MyString',

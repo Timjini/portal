@@ -12,6 +12,6 @@ class Exercise < ApplicationRecord
 
   # has_many :steps, through: :step_exercises
   def image_url
-    image.attached? ? image : 'user.png'
+    image.attached? ? image : 'coach-athlete.png'
   end
 end

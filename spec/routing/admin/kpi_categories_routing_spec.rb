@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Admin::KpiCategoriesController, type: :routing do
+RSpec.describe Admin::KpiCategoriesController, type: :routing do # rubocop:disable Metrics/BlockLength
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/admin/kpi_categories').to route_to('admin/kpi_categories#index')

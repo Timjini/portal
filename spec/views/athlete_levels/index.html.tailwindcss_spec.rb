@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'athlete_levels/index', type: :view do
+RSpec.describe 'athlete_levels/index', type: :view do # rubocop:disable Metrics/BlockLength
   before(:each) do
     assign(:athlete_levels, [
              AthleteLevel.create!(

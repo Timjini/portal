@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AthleteLevelsController, type: :routing do
+RSpec.describe AthleteLevelsController, type: :routing do # rubocop:disable Metrics/BlockLength
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/athlete_levels').to route_to('athlete_levels#index')

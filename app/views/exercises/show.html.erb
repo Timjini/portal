@@ -24,10 +24,20 @@
 
     <!-- Content Card -->
     <div class="bg-white shadow rounded-lg overflow-hidden">
-        <!-- Exercise Image -->
-        <% if @exercise.image_url.present? %>
-        <div class="h-64 bg-gray-100 overflow-hidden">
-            <%= image_tag @exercise.image_url, alt: @exercise.name, class: "w-full h-full object-cover" %>
+        <!-- Media Section (Image and Video) -->
+        <% if @exercise.image_url.present? || @exercise.video_url.present? %>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+            <% if @exercise.image_url.present? %>
+            <div class="aspect-square bg-gray-100 overflow-hidden rounded-lg">
+                <%= image_tag @exercise.image_url, alt: @exercise.name, class: "w-full h-full object-cover" %>
+            </div>
+            <% end %>
+
+            <% if @exercise.video_url.present? %>
+            <div class="aspect-square bg-gray-900 rounded-lg overflow-hidden">
+                <iframe class="w-full h-full" src="<%= @exercise.video_url.gsub('watch?v=', 'embed/') %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <% end %>
         </div>
         <% end %>
 
@@ -81,42 +91,42 @@
                         <% if @exercise.male_benchmark.present? %>
                         <div class="bg-gray-50 p-3 rounded-lg">
                             <p class="text-sm font-medium text-gray-500">Male Benchmark</p>
-                            <p class="mt-1 text-xl font-semibold text-blue-600"><%= @exercise.male_benchmark %></p>
+                            <p class="mt-1 text-md font-semibold text-blue-600"><%= @exercise.male_benchmark %></p>
                         </div>
                         <% end %>
 
                         <% if @exercise.female_benchmark.present? %>
                         <div class="bg-gray-50 p-3 rounded-lg">
                             <p class="text-sm font-medium text-gray-500">Female Benchmark</p>
-                            <p class="mt-1 text-xl font-semibold text-pink-600"><%= @exercise.female_benchmark %></p>
+                            <p class="mt-1 text-md font-semibold text-pink-600"><%= @exercise.female_benchmark %></p>
                         </div>
                         <% end %>
 
                         <% if @exercise.difficulty_level.present? %>
                         <div class="bg-gray-50 p-3 rounded-lg">
                             <p class="text-sm font-medium text-gray-500">Difficulty</p>
-                            <p class="mt-1 text-xl font-semibold text-indigo-600"><%= @exercise.difficulty_level %></p>
+                            <p class="mt-1 text-md font-semibold text-indigo-600"><%= @exercise.difficulty_level %></p>
                         </div>
                         <% end %>
 
                         <% if @exercise.intensity.present? %>
                         <div class="bg-gray-50 p-3 rounded-lg">
                             <p class="text-sm font-medium text-gray-500">Intensity</p>
-                            <p class="mt-1 text-xl font-semibold text-red-600"><%= @exercise.intensity %></p>
+                            <p class="mt-1 text-md font-semibold text-red-600"><%= @exercise.intensity %></p>
                         </div>
                         <% end %>
 
                         <% if @exercise.position.present? %>
                         <div class="bg-gray-50 p-3 rounded-lg">
                             <p class="text-sm font-medium text-gray-500">Position</p>
-                            <p class="mt-1 text-xl font-semibold text-gray-600"><%= @exercise.position %></p>
+                            <p class="mt-1 text-md font-semibold text-gray-600"><%= @exercise.position %></p>
                         </div>
                         <% end %>
 
                         <% if @exercise.primary_focus.present? %>
                         <div class="bg-gray-50 p-3 rounded-lg">
                             <p class="text-sm font-medium text-gray-500">Primary Focus</p>
-                            <p class="mt-1 text-xl font-semibold text-teal-600"><%= @exercise.primary_focus %></p>
+                            <p class="mt-1 text-md font-semibold text-teal-600"><%= @exercise.primary_focus %></p>
                         </div>
                         <% end %>
                     </div>
@@ -160,15 +170,6 @@
                             <%= group.to_s.strip %>
                         </span>
                         <% end %>
-                    </div>
-                </div>
-                <% end %>
-
-                <% if @exercise.video_url.present? %>
-                <div>
-                    <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Video</h2>
-                    <div class="aspect-w-16 aspect-h-9">
-                        <iframe class="w-full h-64 rounded-lg" src="<%= @exercise.video_url %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
                 <% end %>

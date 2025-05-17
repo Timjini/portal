@@ -83,7 +83,12 @@
                         <div class="flex flex-wrap gap-1">
                           <% step.exercises.each do |exercise| %>
                             <span class="inline-flex items-center rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
-                              <%= exercise.name %>
+                            <%= link_to exercise.name , exercise %>
+                              <%
+=begin%>
+ <%= exercise.name %> 
+<%
+=end%>
                             </span>
                           <% end %>
                         </div>

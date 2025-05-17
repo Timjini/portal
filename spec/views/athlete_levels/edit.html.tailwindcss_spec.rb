@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'athlete_levels/edit', type: :view do
+RSpec.describe 'athlete_levels/edit', type: :view do # rubocop:disable Metrics/BlockLength
   let(:athlete_level) do
     AthleteLevel.create!(
       name: 'MyString',

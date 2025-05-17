@@ -26,7 +26,7 @@ class StepsController < ApplicationController
 
     respond_to do |format|
       if @step.save
-        format.html { redirect_to @step, notice: 'Step was successfully created.' }
+        format.html { redirect_to @step, notice: 'Step was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: @step }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class StepsController < ApplicationController
   def update
     respond_to do |format|
       if @step.update(step_params)
-        format.html { redirect_to @step, notice: 'Step was successfully updated.' }
+        format.html { redirect_to @step, notice: 'Step was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @step }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class StepsController < ApplicationController
     @step.destroy!
 
     respond_to do |format|
-      format.html { redirect_to steps_path, status: :see_other, notice: 'Step was successfully destroyed.' }
+      format.html { redirect_to steps_path, status: :see_other, notice: 'Step was successfully destroyed.' } # rubocop:disable Rails/I18nLocaleTexts
       format.json { head :no_content }
     end
   end

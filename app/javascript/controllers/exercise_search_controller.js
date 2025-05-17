@@ -1,11 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "results"]
-
-  connect() {
-    console.log("connected",connected)
-  }
+  static targets = ["input"]
 
   search() {
     const query = this.inputTarget.value

@@ -13,7 +13,7 @@ class Ability
       can :manage, Exercise
       can :read, Athlete
       # add more coach-specific rules
-    else
+    else # rubocop:disable Style/EmptyElse
       # default for athletes
       # can :read, Exercise
     end

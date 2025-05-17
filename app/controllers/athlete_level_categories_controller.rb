@@ -55,7 +55,7 @@ class AthleteLevelCategoriesController < ApplicationController
     respond_to do |format|
       format.html do
         redirect_to athlete_level_categories_path, status: :see_other,
-                                                   notice: 'Athlete level category was successfully destroyed.'
+                                                   notice: 'Athlete level category was successfully destroyed.' # rubocop:disable Rails/I18nLocaleTexts
       end
       format.json { head :no_content }
     end

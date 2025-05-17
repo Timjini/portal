@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'exercises/index', type: :view do
-  before(:each) do
+RSpec.describe 'exercises/index', type: :view do # rubocop:disable Metrics/BlockLength
+  before(:each) do # rubocop:disable Metrics/BlockLength
     assign(:exercises, [
              Exercise.create!(
                name: 'Name',

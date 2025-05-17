@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ExercisesController, type: :routing do
+RSpec.describe ExercisesController, type: :routing do # rubocop:disable Metrics/BlockLength
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/exercises').to route_to('exercises#index')

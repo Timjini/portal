@@ -26,7 +26,7 @@ class StepExercisesController < ApplicationController
 
     respond_to do |format|
       if @step_exercise.save
-        format.html { redirect_to @step_exercise, notice: 'Step exercise was successfully created.' }
+        format.html { redirect_to @step_exercise, notice: 'Step exercise was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: @step_exercise }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class StepExercisesController < ApplicationController
   def update
     respond_to do |format|
       if @step_exercise.update(step_exercise_params)
-        format.html { redirect_to @step_exercise, notice: 'Step exercise was successfully updated.' }
+        format.html { redirect_to @step_exercise, notice: 'Step exercise was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @step_exercise }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,7 +54,7 @@ class StepExercisesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to step_exercises_path, status: :see_other, notice: 'Step exercise was successfully destroyed.'
+        redirect_to step_exercises_path, status: :see_other, notice: 'Step exercise was successfully destroyed.' # rubocop:disable Rails/I18nLocaleTexts
       end
       format.json { head :no_content }
     end

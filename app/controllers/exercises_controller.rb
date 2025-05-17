@@ -5,11 +5,11 @@ class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[show edit update destroy]
 
   # GET /exercises or /exercises.json
-  def index
+  def index # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     if params[:term].present?
       term = "%#{params[:term]}%"
       @exercises = Exercise.where('name ILIKE :term OR description ILIKE :term', term: term)
-      puts "--------->, #{params[:term]}"
+      Rails.logger.debug { "--------->, #{params[:term]}" }
     else
       @exercises = Exercise.all.paginate(page: params[:page], per_page: 10)
     end
@@ -90,7 +90,6 @@ class ExercisesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
 
   private
 

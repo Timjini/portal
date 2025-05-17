@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/utils/save_attachment_to_public.rb
 
 class SaveAttachmentToPublic
