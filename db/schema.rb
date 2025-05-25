@@ -42,18 +42,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_16_124146) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "admin_athlete_levels", force: :cascade do |t|
-    t.string "name"
-    t.integer "position"
-    t.text "description"
-    t.integer "min_age"
-    t.integer "max_age"
-    t.string "color"
-    t.boolean "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "answers", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id", null: false
