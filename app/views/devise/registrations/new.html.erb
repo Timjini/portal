@@ -210,6 +210,7 @@
                     <div class="mt-2 space-y-2" data-action="change->signup-validation#validateField click->signup-validation#markAsTouched">
                         <div class="flex items-center">
                             <%= form.radio_button :role, 'parent_user', 
+                                checked: false,
                                 class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700",
                                 data: { 
                                     "signup-validation-target": "role",
@@ -219,6 +220,7 @@
                         </div>
                         <div class="flex items-center">
                             <%= form.radio_button :role, 'athlete', 
+                                checked: false,
                                 class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700",
                                 data: { 
                                     "signup-validation-target": "role",
