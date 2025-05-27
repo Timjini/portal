@@ -16,6 +16,9 @@ application.register("calendar", CalendarController)
 import ColorPickerController from "./color_picker_controller"
 application.register("color-picker", ColorPickerController)
 
+import KpiTableController from "./kpi_table_controller"
+application.register("controller", KpiTableController)
+
 import DrawerController from "./drawer_controller"
 application.register("drawer", DrawerController)
 
@@ -30,6 +33,9 @@ application.register("flash", FlashController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import LevelController from "./level_controller"
+application.register("level", LevelController)
 
 import MultiSelectController from "./multi_select_controller"
 application.register("multi-select", MultiSelectController)
@@ -60,3 +66,6 @@ application.register("user-search", UserSearchController)
 
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
+
+import KpiFormController from "./kpi_form_controller"
+application.register("kpi-form", KpiFormController)
