@@ -159,6 +159,7 @@ Rails.application.routes.draw do
 
   # Coach Routes
   namespace :coaches do
+    resources :dashboard, only: [:index]
     resources :athletes, only: %i[index show]
     resources :sessions, only: %i[new create index]
     resources :assessments, only: %i[new create index]

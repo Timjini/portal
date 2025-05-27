@@ -161,7 +161,9 @@
                 </div>
                 <% end %>
 
-                <% if @exercise.muscle_group.present? %>
+                <%
+=begin%>
+ <% if @exercise.muscle_group.present? %>
                 <div>
                     <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Muscle Group</h2>
                     <div class="flex flex-wrap gap-2">
@@ -172,7 +174,9 @@
                         <% end %>
                     </div>
                 </div>
-                <% end %>
+                <% end %> 
+<%
+=end%>
             </div>
 
             <!-- Notes -->
