@@ -69,3 +69,6 @@ application.register("visibility", VisibilityController)
 
 import KpiFormController from "./kpi_form_controller"
 application.register("kpi-form", KpiFormController)
+
+import UserTableController from "./user_table_controller"
+application.register("user-table", UserTableController)
