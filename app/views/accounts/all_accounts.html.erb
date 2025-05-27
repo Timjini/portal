@@ -48,7 +48,7 @@
                         <a class="material-symbols-outlined" href="/users/edit/<%=account.id%>">
                             edit
                         </a>
-                        <%if account.role == 'coach'%>
+                        <%if account.role == 'coach' && account.coach_calendars.present?%>
                         <a class="material-symbols-outlined" href="/coach_calendar/<%=account.id%>">
                           <span class="material-symbols-outlined">
                           calendar_month

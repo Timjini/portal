@@ -3,6 +3,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:delete_user]
   skip_before_action :verify_authenticity_token, only: [:delete_user]
+  load_and_authorize_resource
 
   def index
     @levels = Level.all

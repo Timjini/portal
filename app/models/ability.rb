@@ -11,7 +11,7 @@ class Ability
       can :manage, :all
     elsif user.coach?
       can :manage, Exercise
-      can :read, Athlete
+      can :read, CoachCalendar
       # add more coach-specific rules
     else # rubocop:disable Style/EmptyElse
       # default for athletes

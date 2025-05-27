@@ -4,6 +4,7 @@ class AccountsController < ApplicationController
   skip_forgery_protection only: [:create_child_user]
   before_action :authenticate_user!
   include AthleteProfilesHelper
+  # load_and_authorize_resource
 
   def index
     @accounts = if current_user.role == 'parent_user'
