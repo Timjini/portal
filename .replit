@@ -4,7 +4,7 @@ run = "bundle exec rails assets:precompile && bundle exec rails server -p 5000 -
 [nix]
 channel = "stable-24_05"
 packages = [
-  "ruby_3_2",
+  # "ruby_3_2",
   "libyaml",
   "postgresql_16",
   "nodejs-20_x",
