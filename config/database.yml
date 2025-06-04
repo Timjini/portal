@@ -7,10 +7,11 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV['DB_NAME'] %>
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: postgres
+  SUPABASE_DB_HOST: 'postgresql://postgres:2rgeN4hB6UNsmb8w@db.jjyomcfvulpyotwamuxv.supabase.co:5432/postgres'
+  SUPABASE_DB_NAME: postgres
+  SUPABASE_DB_USER: postgres
+  SUPABASE_DB_PASSWORD: '2rgeN4hB6UNsmb8w'
+  SUPABASE_DB_PORT: 5432
 
 
 # Warning: The database defined as "test" will be erased and
