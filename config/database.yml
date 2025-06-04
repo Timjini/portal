@@ -5,16 +5,6 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-# development:
-#   adapter: postgresql
-#   encoding: unicode
-#   database: 
-#   pool: 5
-#   username: 
-#   password: 
-#   host: localhost
-#   port: 5433 
-
 development:
   <<: *default
   SUPABASE_DB_HOST: 'postgresql://postgres:2rgeN4hB6UNsmb8w@db.jjyomcfvulpyotwamuxv.supabase.co:5432/postgres'
