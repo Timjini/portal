@@ -1,11 +1,9 @@
 modules = ["nodejs-20", "web", "ruby-3.2"]
-run = "node index.js"
-
+run = "bundle exec rails server -p 5000 -b 0.0.0.0"
 [nix]
 channel = "stable-24_05"
 packages = [
   "rubyPackages_3_2.railties",
-  "rubyPackages_3_2.psych",
   "libyaml",
   "postgresql",
   "zlib",
