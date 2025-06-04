@@ -1,0 +1,63 @@
+<% if exercises.any? %>
+<div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reps/Sets</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration/Distance</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Primary Focus</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Benchmarks</th>
+                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <span class="sr-only">Actions</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+            <% @exercises.each do |exercise| %>
+            <tr id="<%= dom_id exercise %>">
+                <td class="px-4 py-4 whitespace-nowrap">
+                    <%= exercise.name %>
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap">
+                    <%= exercise.description&.slice(0, 30) %>
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap">
+                    <%= exercise.reps %>x<%= exercise.sets %>
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap">
+                    <%= exercise.duration_seconds %>s | <%= exercise.distance_meters %>m
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap">
+                    <%= exercise.primary_focus %>
+                </td>
+                <td class="px-3 py-4 text-sm text-gray-500">
+                    <div class="flex space-x-2">
+                        <span class="inline-flex items-center rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">M: <%= exercise.male_benchmark %></span>
+                        <span class="inline-flex items-center rounded bg-purple-100 px-2 py-0.5 text-xs font-medium text-pink-800">F: <%= exercise.female_benchmark %></span>
+                    </div>
+                </td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    <%= link_to "View", exercise, class: "text-blue-600 hover:text-blue-900 mr-4" %>
+                    <%= link_to "Edit", edit_exercise_path(exercise), class: "text-indigo-600 hover:text-indigo-900 mr-4" %>
+                    <%= link_to "Delete", exercise, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-900" %>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <%= will_paginate @exercises, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %>
+</div>
+<% else %>
+<div class="text-center bg-white py-10 rounded-lg shadow">
+    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <h3 class="mt-2 text-sm font-medium text-gray-900">No exercises found</h3>
+    <p class="mt-1 text-sm text-gray-500">Get started by creating a new exercise.</p>
+    <div class="mt-6">
+        <%= link_to "New Exercise", new_exercise_path, class: "inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+    </div>
+</div>
+<% end %>

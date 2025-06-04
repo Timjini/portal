@@ -1,50 +1,71 @@
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-<main class="sign-up-form " style="height:100dvh;overfow:hidden;">
-   <section id="" class="toggle-section bg-slate-50 dark:bg-transparent dark:bg-gradient-to-tl dark:from-gray-900 dark:to-slate-800 shadow-soft-xl rounded-2xl bg-clip-border " style="display:flex;">
-      <input type="hidden" id="user-id" value="user.id" class="here">
-      <article class="form-container p-10 flex flex-col justify-between rounded-xl text-gray-500 xl:col-span-2 transform duration-500 hover:-translate-y-1 cursor-pointer dark:text-gray-100">
-         <div>
-            <%=image_tag ("cfs-dark.png"), class:"h-24 w-auto mx-auto" %>
-            <h2 class="mt-2 text-2xl font-light text-gray-500  dark:text-gray-100 leading-snug  min-h-10 text-center"> Login Information</h2>
-            <p class="my-2 font-light text-center">Welcome Back</p>
-         </div>
-         <div class="mt-2 ">
-            <div>
-               <label for="email" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Email or Username</label>    
-               <%= f.text_field :username,id:"email", placeholder:"email@example.com", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "space-y-6") do |f| %>
+  <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+      <%= image_tag("cfs-dark.png", class: "h-24 w-auto mx-auto") %>
+      <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Sign in to your account</h2>
+    </div>
+
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <div class="space-y-6">
+          <div>
+            <%= f.label :email, "Email address", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+            <div class="mt-1">
+                <%= f.text_field :username,id:"email", placeholder:"email@example.com", class:"m-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
             </div>
-               <div class="" data-controller="visibility">
-                  <label for="password" class="block m-2 text-sm font-medium text-gray-500 dark:text-white">Password</label>
-                  <div class="relative">
-                     <%= f.password_field :password, id: "password", placeholder: "******", class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", data: { visibility_target: "password" }  %>
-                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer eye-icon" data-action="click->visibility#toggleVisibility">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-500 dark:text-white">
-                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 17.121a9 9 0 01-12.677-12.677M2 12a10 10 0 0120 0m-7-2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                     </div>
-                  </div>
-               </div>
-            <div class="remember">
-               <% if devise_mapping.rememberable? %>
-               <div class="flex items-center px-3 rounded-2xl">
-                  <%= f.check_box :remember_me , class:"w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-600 dark:focus:ring-red-700 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
-                  <%= f.label :remember_me , class:"block m-2 text-sm font-medium text-gray-500 dark:text-white" %>
-               </div>
-               <div>
-                  <a href="/users/sign_up" class="inline mr-3 pb-1 border-b-2 border-blue-200 hover:border-blue-700 m-2 text-sm font-medium text-gray-400 hover:text-blue-300 dark:text-white"> I don't have an account ?</a>
-               </div>
-               <% end %>
+          </div>
+
+          <div data-controller="visibility">
+            <%= f.label :password, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <%= f.password_field :password, autocomplete: "current-password", 
+                  class: "block w-full appearance-none rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white",
+                  placeholder: "••••••••",
+                  data: { visibility_target: "password" } %>
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" data-action="click->visibility#toggleVisibility">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
             </div>
-         </div>
-         <div class="mt-16 flex justify-between inset-x-0 bottom-0">
-            <a href="" onclick="handleClick(this)" class="toggle-link no-visibility">
-            <span class="p-3  border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black ">
-            Back
-            </span>
-            </a>
-            <%= f.submit "Log in", class:"mb-12 p-3 px-8 border-2 border-gray-200 rounded-md text-base hover:bg-gray-200 hover:border-gray-200 cursor-pointer hover:text-black " %>
-         </div>
-      </article>
-   </section>
-</main>
-<%end%>
+          </div>
+
+          <div class="grid grid-cols-2 items-center justify-between">
+            <% if devise_mapping.rememberable? %>
+              <div class="flex items-center">
+                <%= f.check_box :remember_me, class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700" %>
+                <%= f.label :remember_me, class: "ml-2 block text-sm text-gray-900 dark:text-gray-300" %>
+              </div>
+            <% end %>
+
+            <div class="text-sm">
+              <%= link_to "Forgot your password?", new_password_path(resource_name), class: "font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300" %>
+            </div>
+          </div>
+
+          <div>
+            <%= f.submit "Sign in", class: "flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200" %>
+          </div>
+        </div>
+
+        <% if devise_mapping.registerable? %>
+          <div class="mt-6">
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="bg-white dark:bg-gray-800 px-2 text-gray-500 dark:text-gray-400">Or</span>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <%= link_to "Create new account", new_registration_path(resource_name), class: "flex w-full justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-white shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,4 +1,6 @@
-<%= render 'dashboard/dashbord_hero'%>
+<%
+=begin%>
+ <%= render 'dashboard/dashbord_hero'%>
 
     <a href="/accounts" class="w-full flex flex-row gap-2 p-5 rounded-lg warning-box justify-between">
     <span class="material-symbols-outlined">
@@ -9,5 +11,414 @@
             ads_click
             </span></a>
 
-    </a>
+    </a> 
+<%
+=end%>
 
+<div class="min-h-screen p-4 md:p-6">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-3">
+        <span class="bg-blue-100 text-blue-600 p-2 rounded-full">
+          <span class="material-symbols-outlined">family_restroom</span>
+        </span>
+        Parent Dashboard
+      </h1>
+      <p class="text-gray-600 mt-1">Stay connected with your athlete's journey</p>
+    </div>
+    <div class="mt-4 md:mt-0">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+        <span class="material-symbols-outlined">notifications</span>
+        Notification Center
+      </button>
+    </div>
+  </div>
+
+  <!-- Child Overview Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+  <%if !current_user.child_users.nil?%>
+    <% current_user.child_users.each do |child| %>
+    <% questionnaire_filled = Question.includes(:answers).where(answers: { user_id: child.id }).exists? %>
+  
+      <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500 relative">
+        <!-- Questionnaire Badge (only shows when not filled) -->
+        <% unless questionnaire_filled %>
+          <div class="absolute -top-2 -right-2">
+            <span class="inline-flex items-center gap-1 bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-red-200">
+              <span class="material-symbols-outlined text-sm">warning</span>
+              Questionnaire Needed
+            </span>
+          </div>
+        <% end %>
+
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0">
+            <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 overflow-hidden">
+              <%= image_tag(child.avatar_thumbnail, class: "w-full h-full object-cover") %>
+            </div>
+          </div>
+          <div class="flex-1">
+            <h3 class="font-bold text-lg text-gray-900"><%= child.full_name %></h3>
+            
+            <div class="mt-3 grid grid-cols-2 gap-2">
+              <div>
+                <p class="text-xs text-gray-500">Age</p>
+                <p class="text-sm font-medium"><%= child.age %> Years</p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Current Level</p>
+                <p class="text-sm font-medium flex items-center gap-1">
+                  <span class="text-yellow-500 material-symbols-outlined text-sm">star</span>
+                  <%= child.level %>
+                </p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Attendance</p>
+                <p class="text-sm font-medium text-green-600">95%</p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Last Evaluation</p>
+                <p class="text-sm font-medium">May 15</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 space-y-2">
+          <a href="<%= child.athlete_profile_url %>" class="w-full bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-sm">visibility</span>
+            View Full Profile
+          </a>
+          
+          <% unless questionnaire_filled %>
+            <a href="/questionnaires?user_id=<%= child.id %>" class="w-full bg-red-50 hover:bg-red-100 text-red-600 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-sm">assignment</span>
+              Complete Questionnaire
+            </a>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <%end%>
+    <!-- Add Child Button -->
+    <div class="bg-white rounded-xl shadow-sm p-6 border-2 border-dashed border-gray-300 hover:border-blue-400 transition-colors flex flex-col items-center justify-center">
+      <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 mb-3">
+        <span class="material-symbols-outlined text-3xl">add</span>
+      </div>
+      <h3 class="font-medium text-gray-700 mb-1">Add Child Athlete</h3>
+      <p class="text-sm text-gray-500 text-center mb-3">Track multiple athletes in one place</p>
+      <%= link_to "/accounts/add_child", class:"bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium flex items-center gap-1" do%>
+        <span class="material-symbols-outlined text-sm">person_add</span>
+        Register Child
+      <%end%>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Progress Timeline -->
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-blue-600">
+            <span class="material-symbols-outlined">timeline</span>
+          </span>
+          Progress Timeline
+        </h2>
+        <select class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+        <% if !current_user.child_users.nil?%>
+          <% current_user.child_users.each do |child|%>
+          <option><%=child.full_name%></option>
+          <%end %>
+        <%end%>
+        </select>
+      </div>
+      
+      <div class="hidden relative pl-6 pb-6 border-l-2 border-gray-200 space-y-6">
+        <!-- Milestone 1 -->
+        <div class="relative">
+          <div class="absolute -left-7 w-5 h-5 rounded-full bg-blue-500 border-4 border-white flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-sm">military_tech</span>
+          </div>
+          <div class="bg-blue-50 rounded-lg p-4">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="font-medium">Level Up: Intermediate 2</p>
+                <p class="text-sm text-gray-600 mt-1">May 15, 2024</p>
+              </div>
+              <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Achievement</span>
+            </div>
+            <p class="text-sm mt-2">Emma advanced to Intermediate 2 with excellent dribbling skills and improved teamwork.</p>
+          </div>
+        </div>
+        
+        <!-- Milestone 2 -->
+        <div class="relative">
+          <div class="absolute -left-7 w-5 h-5 rounded-full bg-green-500 border-4 border-white flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-sm">emoji_events</span>
+          </div>
+          <div class="bg-green-50 rounded-lg p-4">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="font-medium">Tournament Champions</p>
+                <p class="text-sm text-gray-600 mt-1">May 5, 2024</p>
+              </div>
+              <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Team Event</span>
+            </div>
+            <p class="text-sm mt-2">Blue Dragons won the Spring Cup with Emma scoring 2 goals in finals.</p>
+            <button class="mt-2 text-green-600 text-sm flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">photo_library</span>
+              View Tournament Photos
+            </button>
+          </div>
+        </div>
+        
+        <!-- Milestone 3 -->
+        <div class="relative">
+          <div class="absolute -left-7 w-5 h-5 rounded-full bg-purple-500 border-4 border-white flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-sm">monitoring</span>
+          </div>
+          <div class="bg-purple-50 rounded-lg p-4">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="font-medium">Skills Evaluation</p>
+                <p class="text-sm text-gray-600 mt-1">April 20, 2024</p>
+              </div>
+              <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">Assessment</span>
+            </div>
+            <p class="text-sm mt-2">Shooting accuracy improved by 15% since last evaluation. Passing needs more consistency.</p>
+            <button class="mt-2 text-purple-600 text-sm flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">description</span>
+              View Full Report
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upcoming Events -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-red-500">
+            <span class="material-symbols-outlined">event</span>
+          </span>
+          Upcoming Events
+        </h2>
+        <button class="text-blue-600 text-sm font-medium">View Calendar</button>
+      </div>
+      
+      <div class="space-y-4 hidden">
+        <!-- Event 1 -->
+        <div class="border-l-4 border-blue-500 pl-4 py-2">
+          <div class="flex justify-between">
+            <p class="font-medium">Summer Skills Evaluation</p>
+            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Emma</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">June 5, 2024 · 4:00 PM</p>
+          <p class="text-sm mt-1">Mandatory for all U10 players</p>
+          <button class="mt-2 text-blue-600 text-sm flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">location_on</span>
+            Main Field
+          </button>
+        </div>
+        
+        <!-- Event 2 -->
+        <div class="border-l-4 border-green-500 pl-4 py-2">
+          <div class="flex justify-between">
+            <p class="font-medium">Regional Tournament</p>
+            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Both</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">June 15-16, 2024</p>
+          <p class="text-sm mt-1">Travel required - hotel info sent</p>
+          <button class="mt-2 text-green-600 text-sm flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">hotel</span>
+            View Accommodations
+          </button>
+        </div>
+        
+        <!-- Event 3 -->
+        <div class="border-l-4 border-purple-500 pl-4 py-2">
+          <div class="flex justify-between">
+            <p class="font-medium">Parent-Coach Meeting</p>
+            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">Liam</span>
+          </div>
+          <p class="text-sm text-gray-600 mt-1">June 8, 2024 · 6:30 PM</p>
+          <p class="text-sm mt-1">Season planning discussion</p>
+          <button class="mt-2 text-purple-600 text-sm flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">rsvp</span>
+            Confirm Attendance
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Messages & Feedback -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-amber-500">
+            <span class="material-symbols-outlined">forum</span>
+          </span>
+          Coach Feedback
+        </h2>
+        <button class="text-blue-600 text-sm font-medium">Message Coaches</button>
+      </div>
+      
+      <div class="space-y-4 hidden">
+        <!-- Message 1 -->
+        <div class="bg-blue-50 rounded-lg p-4">
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                <span class="material-symbols-outlined">sports_soccer</span>
+              </div>
+            </div>
+            <div>
+              <p class="font-medium">Coach Williams · <span class="text-sm text-gray-600">May 18</span></p>
+              <p class="text-sm mt-1">"Emma showed great leadership in practice today helping newer players learn passing drills."</p>
+              <div class="mt-2 flex gap-2">
+                <button class="text-blue-600 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">thumb_up</span>
+                  Like
+                </button>
+                <button class="text-blue-600 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">reply</span>
+                  Reply
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Message 2 -->
+        <div class="bg-green-50 rounded-lg p-4">
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                <span class="material-symbols-outlined">sports_basketball</span>
+              </div>
+            </div>
+            <div>
+              <p class="font-medium">Coach Taylor · <span class="text-sm text-gray-600">May 15</span></p>
+              <p class="text-sm mt-1">"Liam's shooting form has improved dramatically! See the video analysis I shared in his portal."</p>
+              <div class="mt-2 flex gap-2">
+                <button class="text-green-600 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">play_circle</span>
+                  View Video
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Message 3 -->
+        <div class="bg-amber-50 rounded-lg p-4">
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">
+                <span class="material-symbols-outlined">warning</span>
+              </div>
+            </div>
+            <div>
+              <p class="font-medium">Coach Williams · <span class="text-sm text-gray-600">May 10</span></p>
+              <p class="text-sm mt-1">"Emma seemed tired at practice today. Might need an extra rest day before Saturday's game."</p>
+              <div class="mt-2 flex gap-2">
+                <button class="text-amber-600 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">hotel</span>
+                  Rest Suggestions
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attendance & Notifications -->
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Attendance -->
+        <div>
+          <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+            <span class="text-green-600">
+              <span class="material-symbols-outlined">event</span>
+            </span>
+            Attendance
+          </h2>
+          
+          <div class="space-y-4">
+          <% if !current_user.child_users.nil?%>
+          <% current_user.child_users.each do |child|%>
+          <div>
+              <div class="flex justify-between mb-2">
+                <p class="font-medium"><%=child.full_name%></p>
+                <p class="text-sm font-medium text-green-600">95%</p>
+              </div>
+              <div class="flex gap-1">
+                <div class="h-2 flex-1 bg-green-400 rounded"></div>
+                <div class="h-2 flex-1 bg-green-400 rounded"></div>
+                <div class="h-2 flex-1 bg-green-400 rounded"></div>
+                <div class="h-2 flex-1 bg-green-400 rounded"></div>
+                <div class="h-2 flex-1 bg-gray-200 rounded"></div>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">1 missed session (May 3)</p>
+            </div>
+          <%end %>
+        <%end%>
+            
+            <button class="w-full mt-4 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-sm">download</span>
+              Download Attendance Records
+            </button>
+          </div>
+        </div>
+        
+        <!-- Notifications -->
+        <div>
+          <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+            <span class="text-red-500">
+              <span class="material-symbols-outlined">notifications</span>
+            </span>
+            Recent Alerts
+          </h2>
+          
+          <div class="space-y-3 hidden">
+            <div class="flex items-start gap-3 p-3 bg-red-50 rounded-lg">
+              <span class="material-symbols-outlined text-red-500 mt-0.5">emergency</span>
+              <div>
+                <p class="font-medium">Injury Report</p>
+                <p class="text-sm text-gray-600">Emma reported minor ankle soreness after practice</p>
+                <p class="text-xs text-gray-500 mt-1">May 18 · Coach Williams</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+              <span class="material-symbols-outlined text-green-500 mt-0.5">military_tech</span>
+              <div>
+                <p class="font-medium">Goal Achieved!</p>
+                <p class="text-sm text-gray-600">Liam reached his free throw target (75%)</p>
+                <p class="text-xs text-gray-500 mt-1">May 15 · Coach Taylor</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
+              <span class="material-symbols-outlined text-blue-500 mt-0.5">payments</span>
+              <div>
+                <p class="font-medium">Payment Reminder</p>
+                <p class="text-sm text-gray-600">Summer program fees due June 1</p>
+                <p class="text-xs text-gray-500 mt-1">May 14 · System</p>
+              </div>
+            </div>
+            
+            <button class="w-full mt-2 bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-sm">notifications_active</span>
+              Notification Settings
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

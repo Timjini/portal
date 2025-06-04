@@ -6,7 +6,7 @@ class KpiController < ApplicationController
 
   def index
     service = KpiService.new(params)
-    @levels = service.fetch_levels(params[:page], 5)
+    @levels = service.fetch_levels(params[:page], 5).order(:step, :category)
   end
 
   def edit

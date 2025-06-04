@@ -1,5 +1,5 @@
 <% input_style = "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" %>
-<%= form_with model: @user, url: update_user_path(@user), local: true, data: { turbo: false } do |form| %>
+<%= form_with model: @user, url: update_user_path(@user), local: true, data: { turbo: true } do |form| %>
   <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
     <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
       <%= @user.athlete? ? "ATHLETE PROFILE" : "USER PROFILE" %>
@@ -110,7 +110,11 @@
     </div>
 
     <div class="mt-8 flex justify-end gap-3">
-      <%= link_to "Cancel", users_path(@user), class: "px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" %>
+      <%
+=begin%>
+ <%= link_to "Cancel", users_path(@user), class: "px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" %> 
+<%
+=end%>
       <%= form.submit "Save Changes", class: "btn" %>
     </div>
   </div>

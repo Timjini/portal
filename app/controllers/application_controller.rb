@@ -31,6 +31,10 @@ class ApplicationController < ActionController::Base
     render json: { status: 'error', message: }, status: :not_found
   end
 
+  rescue_from CanCan::AccessDenied do |_exception|
+    redirect_to root_path, alert: 'You are not authorized to access this page.' # rubocop:disable Rails/I18nLocaleTexts
+  end
+
   # def set_dashboard_root_path
   #   redirect_to dashboard_url
   # end

@@ -5,11 +5,11 @@
 
   <% content_for :title, "Dcpa events" %>
 
-  <div class="flex justify-between items-center">
+  <div class="px-4 sm:px-6 lg:px-8 py-8 flex justify-between items-center">
     <h1 class="font-bold text-4xl">Dcpa events</h1>
     <%= link_to "New dcpa event", new_dcpa_event_path, class: "btn" %>
   </div>
-
+  <% if @dcpa_events.present? %>
   <div id="dcpa_events" class="min-w-full">
     <% @dcpa_events.each do |dcpa_event| %>
       <%= render dcpa_event %>
@@ -18,4 +18,13 @@
       </p>
     <% end %>
   </div>
+  <% else %>
+  <div class="text-center bg-white py-10 rounded-lg shadow">
+    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <h3 class="mt-2 text-sm font-medium text-gray-900">No taster session found</h3>
+    <p class="mt-1 text-sm text-gray-500">Reports will appear here once athletes participate.</p>
+  </div>
+<% end %>
 </div>

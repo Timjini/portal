@@ -10,11 +10,44 @@ application.register("address-autocomplete", AddressAutocompleteController)
 import AvatarController from "./avatar_controller"
 application.register("avatar", AvatarController)
 
+import CalendarController from "./calendar_controller"
+application.register("calendar", CalendarController)
+
+import ColorPickerController from "./color_picker_controller"
+application.register("color-picker", ColorPickerController)
+
+import KpiTableController from "./kpi_table_controller"
+application.register("controller", KpiTableController)
+
 import DrawerController from "./drawer_controller"
 application.register("drawer", DrawerController)
 
+import EditableFieldController from "./editable_field_controller"
+application.register("editable-field", EditableFieldController)
+
+import ExerciseSearchController from "./exercise_search_controller"
+application.register("exercise-search", ExerciseSearchController)
+
+import FlashController from "./flash_controller"
+application.register("flash", FlashController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import LevelController from "./level_controller"
+application.register("level", LevelController)
+
+import MultiSelectController from "./multi_select_controller"
+application.register("multi-select", MultiSelectController)
+
+import QuestionnaireController from "./questionnaire_controller"
+application.register("questionnaire", QuestionnaireController)
+
+import QuestionnaireSubmitController from "./questionnaire_submit_controller"
+application.register("questionnaire-submit", QuestionnaireSubmitController)
+
+import RecurrenceToggleController from "./recurrence_toggle_controller"
+application.register("recurrence-toggle", RecurrenceToggleController)
 
 import SearchController from "./search_controller"
 application.register("search", SearchController)
@@ -22,30 +55,20 @@ application.register("search", SearchController)
 import SidebarController from "./sidebar_controller"
 application.register("sidebar", SidebarController)
 
+import SignupValidationController from "./signup_validation_controller"
+application.register("signup-validation", SignupValidationController)
+
 import ThemeController from "./theme_controller"
 application.register("theme", ThemeController)
-
-import VisibilityController from "./visibility_controller"
-application.register("visibility", VisibilityController)
-
-
-import EditableFieldController from "./editable_field_controller"
-application.register("editable-field", EditableFieldController)
-
-import CalendarController from "./calendar_controller"
-application.register("calendar", CalendarController)
 
 import UserSearchController from "./user_search_controller"
 application.register("user-search", UserSearchController)
 
-import MultiSelectController from "./multi_select_controller"
-application.register("multi-select", MultiSelectController)
+import VisibilityController from "./visibility_controller"
+application.register("visibility", VisibilityController)
 
-import RecurrenceToggleController from "./recurrence_toggle_controller"
-application.register("recurrence-toggle", RecurrenceToggleController)
+import KpiFormController from "./kpi_form_controller"
+application.register("kpi-form", KpiFormController)
 
-import QuestionnaireController from "./questionnaire_controller"
-application.register("questionnaire", QuestionnaireController)
-
-import QuestionnaireSubmitController from "./questionnaire_submit_controller"
-application.register("questionnaire-submit", QuestionnaireSubmitController)
+import UserTableController from "./user_table_controller"
+application.register("user-table", UserTableController)

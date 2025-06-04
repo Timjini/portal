@@ -1,72 +1,73 @@
-
 <% if current_user.role == 'admin' && !@taster_session_bookings.nil? %>
-<div class="">
-   <h3 class="text-lg font-bold py-3">Taster Sessions</h3>
-</div>
-<div class="relative overflow-x-auto general_card">
-   <table class="w-full text-sm text-left " style="padding:0;margin:0;">
-      <div class="py-2" style="max-width:200px;">
-         <input type="text" class=" w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " id="tasterSearchInput" placeholder="Search...">
+  <div class="px-4 sm:px-6 lg:px-8 py-8">
+    <h3 class="text-lg font-bold pb-3">Taster Sessions</h3>
+   <% if @taster_session_bookings.present? %>
+    <div class="w-full rounded-lg bg-white shadow-sm p-4">
+      <div class="flex justify-between items-center mb-4">
+        <div class="w-64">
+          <input
+            type="text"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+            id="tasterSearchInput"
+            placeholder="Search..."
+          />
+        </div>
       </div>
-      <thead class="text-xs uppercase table_header">
-         <tr>
-            <th scope="col" class="px-6 py-3" >
-               Taster Session Date
-            </th>
-            <th scope="col" class="px-6 py-3">
-               Athlete Type
-            </th>
-            <th scope="col" class="px-6 py-3">
-               Athlete Info
-            </th>
-            <th scope="col" class="px-6 py-3">
-               Medical Info
-            </th>
-            <th scope="col" class="px-6 py-3">
-               Action
-            </th>
-         </tr>
-      </thead>
-      <tbody>
-         <% @taster_session_bookings.each do |session| %>
-         <tr class="border-b border-gray-400">
-            <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
-               <%=session.taster_session_date%>
-            </th>
-            <td class="px-6 py-4">
-                <%=session.role.humanize%>
-            </td>
-            <td class="px-6 py-4">
-            <div class="flex flex-col">
-               <div>
-               <%=session.full_name_by_role%>
-               </div>
-               <div>
-               <%=session.email%>
-               </div>
-               <div>
-               <span class="text-gray-600">
-                phone: <%=session.phone%>
-               </span>
-               </div>
-            </div>
-            </td>
-            <td class="px-6 py-4">
-               <%=session.health_issues%>
-            </td>
-            <td class="px-6 py-4 flex flex-row gap-4">
-              <button  class="material-symbols-outlined delete-level-button"  data-level-id="<%= session.id %>">
-                <span class="material-symbols-outlined">
-                delete
-                </span>
-               </button>
-            </td>
-         </tr>
-         <%end%>
-      </tbody>
-   </table>
-   <div class="flex mx-auto">
-   <%= will_paginate @taster_session_bookings, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %>
-   </div>
-</div>
-<%end%>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-700">
+          <thead class="text-xs uppercase bg-gray-100 text-gray-700 border-b">
+            <tr>
+              <th scope="col" class="px-6 py-3">Taster Session Date</th>
+              <th scope="col" class="px-6 py-3">Athlete Type</th>
+              <th scope="col" class="px-6 py-3">Athlete Info</th>
+              <th scope="col" class="px-6 py-3">Medical Info</th>
+              <th scope="col" class="px-6 py-3">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @taster_session_bookings.each do |session| %>
+              <tr class="border-b hover:bg-gray-50">
+                <td class="px-6 py-4 font-medium whitespace-nowrap">
+                  <%= session.taster_session_date %>
+                </td>
+                <td class="px-6 py-4">
+                  <%= session.role.humanize %>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex flex-col gap-1">
+                    <div><%= session.full_name_by_role %></div>
+                    <div><%= session.email %></div>
+                    <div class="text-gray-600 text-sm">Phone: <%= session.phone %></div>
+                  </div>
+                </td>
+                <td class="px-6 py-4"><%= session.health_issues %></td>
+                <td class="px-6 py-4">
+                  <button
+                    class="text-red-600 hover:text-red-800 material-symbols-outlined delete-level-button"
+                    data-level-id="<%= session.id %>">
+                    delete
+                  </button>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-4 flex justify-center">
+        <%= will_paginate @taster_session_bookings, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %>
+      </div>
+    </div>
+  </div>
+
+  <% else %>
+  <div class="text-center bg-white py-10 rounded-lg shadow">
+    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <h3 class="mt-2 text-sm font-medium text-gray-900">No taster session found</h3>
+    <p class="mt-1 text-sm text-gray-500">Reports will appear here once athletes participate.</p>
+  </div>
+<% end %>
+<% end %>
