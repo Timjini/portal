@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 ruby '3.2.2'
 
-gem 'sqlite3'
+gem 'pg'
 gem 'puma', '>= 5.0'
 gem 'rails', '~> 7.1.2'
 

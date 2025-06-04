@@ -1,4 +1,4 @@
-modules = ["bun-1.1", "nodejs-20", "ruby-3.2", "web"]
+modules = ["bun-1.1", "nodejs-20", "ruby-3.2", "web", "postgresql-17"]
 run = "node index.js"
 
 [nix]
