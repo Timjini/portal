@@ -1,0 +1,19 @@
+modules = ["nodejs-20", "web", "ruby-3.2"]
+run = "node index.js"
+
+[nix]
+channel = "stable-24_05"
+packages = [
+  "rubyPackages_3_2.railties",
+  "rubyPackages_3_2.psych",
+  "libyaml",
+  "postgresql",
+  "zlib",
+  "gmp",
+  "rbenv",
+  "nodejs-20_x",
+  "docker-compose",
+  "docker_26",
+]
+[deployment]
+run = ["sh", "-c", "node index.js"]
