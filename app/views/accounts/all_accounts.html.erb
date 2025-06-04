@@ -1,141 +1,156 @@
+<% if current_user.role.in?(%w[admin coach]) %>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6" data-controller="user-table">
+  <!-- Header Section -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+    <div class="flex items-center gap-4">
+      <%= render 'components/back_button' %>
+      <h1 class="text-2xl font-bold text-gray-800">User Accounts</h1>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+      <%= render 'accounts/add_user' %>
+    </div>
+  </div>
 
-<%if current_user.role == 'admin' || current_user.role == 'coach'%>
-<%=render 'components/back_button'%>
-<%= render 'accounts/add_user'%>
-<%= render 'accounts/tabs'%>
-<div class="relative overflow-x-auto general_card ">
-    <table class="w-full text-sm text-left  p-5" style="padding:0;margin:0;">
-    <div class="py-2" style="max-width:200px;">
-   <input type="text" class=" w-24 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " id="userSearchInput" placeholder="Search...">
-   </div>
-        <thead class="text-xs uppercase table_header" >
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    User's Name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Email / Username
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Role
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Action
-                </th>
-            </tr>
+  <%= render 'accounts/tabs' %>
+
+  <!-- Search and Table -->
+  <div class="bg-white rounded-xl shadow-md overflow-hidden general_card">
+    <!-- Search Bar -->
+    <div class="p-4 border-b border-gray-200">
+      <div class="relative max-w-xs">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <input type="text" id="userSearchInput" placeholder="Search users..." 
+               class="pl-10 pr-4 py-2 w-full bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+               data-action="input->user-table#search">
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-blue-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">
+              User
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">
+              Contact
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">
+              Role
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">
+              Profile Info
+            </th>
+            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-blue-700 uppercase tracking-wider">
+              Actions
+            </th>
+          </tr>
         </thead>
-        <tbody>
-            <% @accounts.each do |account|%>
-                <tr class="border-b border-gray-400">
-                    <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
-                    <%if account.role == 'child_user' || account.role =='athlete'%>
-                    <a href="/athlete_profiles/<%=account.athlete_profile.id%>">
-                        <%=account.full_name%>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @accounts.each do |account| %>
+            <tr class="hover:bg-gray-50 transition-colors" data-user-table-target="row">
+              <!-- User Column -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-10 w-10">
+                    <%= image_tag account.avatar_thumbnail, class: "h-10 w-10 rounded-full object-cover border border-gray-200" %>
+                  </div>
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">
+                      <% if account.athlete_profile_url.present? %>
+                        <a href="<%= account.athlete_profile_url %>" class="text-blue-600 hover:text-blue-800">
+                          <%= account.full_name %>
+                        </a>
+                      <% else %>
+                        <a href="/users/<%= account.id %>" class="text-blue-600 hover:text-blue-800">
+                          <%= account.full_name %>
+                        </a>
+                      <% end %>
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      <%= account.current_level %>
+                    </div>
+                  </div>
+                </div>
+              </td>
+
+              <!-- Contact Column -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900"><%= account.email %></div>
+                <div class="text-xs text-gray-500"><%= account.username %></div>
+              </td>
+
+              <!-- Role Column -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                  <%= role_badge_class(account.role) %>">
+                  <%= account.role.humanize %>
+                </span>
+              </td>
+
+              <!-- Profile Info Column -->
+              <td class="px-6 py-4">
+                <div class="text-sm text-gray-900">
+                  <% if account.athlete_profile_data %>
+                    <div class="flex items-center gap-2">
+                      <span class="text-xs text-gray-500">Age:</span>
+                      <span><%= account.age || '---' %></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-xs text-gray-500">Level:</span>
+                      <span><%= account.athlete_profile_data.level.humanize %></span>
+                    </div>
+                  <% else %>
+                    <span class="text-xs text-gray-500">No profile data</span>
+                  <% end %>
+                </div>
+              </td>
+
+              <!-- Actions Column -->
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <div class="flex justify-end items-center space-x-3">
+                  <a href="/users/edit/<%= account.id %>" class="text-blue-600 hover:text-blue-900" title="Edit">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                  </a>
+
+                  <% if account.role == 'coach' && account.coach_calendars.present? %>
+                    <a href="/coach_calendar/<%= account.id %>" class="text-indigo-600 hover:text-indigo-900" title="Calendar">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
                     </a>
-                    <%else%>
-                    <a href="/users/<%=account.id%>">
-                     <%=account.full_name%>
-                     </a>
-                    <%end%>
-                    </th>
-                    <td class="px-6 py-4">
-                        <%= account.email %> / <%= account.username %>
-                    </td>
-                    <td class="px-6 py-4">
-                        <%= account.role%>
-                    </td>
-                    <td class="px-6 py-4">
-                        <a class="material-symbols-outlined" href="/users/edit/<%=account.id%>">
-                            edit
-                        </a>
-                        <%if account.role == 'coach'%>
-                        <a class="material-symbols-outlined" href="/coach_calendar/<%=account.id%>">
-                          <span class="material-symbols-outlined">
-                          calendar_month
-                          </span>
-                        </a>
-                        <%end%>
-                        <turbo-frame id="user-frame">
-                        <a class="material-symbols-outlined delete-user-button" data-user-id="<%= account.id %>">
-                            delete
-                        </a>
-                        </turbo-frame>
-                    </td>
-                </tr>
-            <%end%>
+                  <% end %>
+
+                  <button data-action="click->user-table#deleteUser" 
+                          data-user-id="<%= account.id %>" 
+                          class="text-red-600 hover:text-red-900" 
+                          title="Delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
-    </table>
-            <%= will_paginate @accounts, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="flex justify-center mt-6">
+    <%= will_paginate @accounts, renderer: WillPaginate::ActionView::LinkRenderer, 
+        class: "pagination flex items-center space-x-1", 
+        previous_label: '&larr; Previous', 
+        next_label: 'Next &rarr;' %>
+  </div>
 </div>
-
-<%end%>
-
-<script>
-document.addEventListener('turbo:load', () => {
-  const deleteUserButtons = document.querySelectorAll('.delete-user-button');
-
-   const searchInput = document.getElementById('userSearchInput');
-  const tableRows = document.querySelectorAll('.border-b');
-
-  // Event listener for the search input
-  searchInput.addEventListener('input', () => {
-    const searchTerm = searchInput.value.toLowerCase();
-
-    tableRows.forEach(row => {
-      const rowData = row.innerText.toLowerCase();
-
-      // If the row contains the search term, display it; otherwise, hide it
-      row.style.display = rowData.includes(searchTerm) ? 'table-row' : 'none';
-    });
-  });
-
-  deleteUserButtons.forEach(button => {
-    button.addEventListener('click', async (event) => {
-      event.preventDefault();
-
-      const userId = button.getAttribute('data-user-id');
-
-      const confirmation = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      });
-
-      if (confirmation.isConfirmed) {
-        try {
-          const res = await fetch(`/delete_user/${userId}`, { method: 'DELETE' });
-
-          if (res.ok) {
-            Turbo.visit(`all_accounts`, { action: 'replace' });
-            Swal.fire({
-              icon: 'success',
-              title: 'Success!',
-              text: 'User deleted successfully!',
-            });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops!',
-              text: 'User deletion failed. Please try again.',
-            });
-          }
-        } catch (error) {
-          console.error('Error during delete:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops!',
-            text: 'An error occurred. Please try again later.',
-          });
-        }
-      }
-    });
-  });
-});
-
-
-
-</script>
+<% end %>

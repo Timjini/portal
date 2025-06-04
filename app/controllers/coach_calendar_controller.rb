@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CoachCalendarController < ApplicationController
+  load_and_authorize_resource
   def index
     service = Calendar::CoachCalendarService.new
     @calendar = service.fetch_all_calendars_only

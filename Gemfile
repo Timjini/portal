@@ -13,7 +13,7 @@ gem 'cssbundling-rails'
 gem 'esbuild-rails'
 gem 'jsbundling-rails'
 gem 'sprockets-rails'
-gem 'tailwindcss-rails'
+gem 'tailwindcss-rails', '~> 3.0'
 
 # Hotwire
 gem 'stimulus-rails'
@@ -38,6 +38,9 @@ gem 'redis', '>= 4.0.1'
 # Authentication & security
 gem 'devise', '~> 4.9'
 gem 'jwt'
+
+# Authorization
+gem 'cancancan'
 
 # Error tracking
 gem 'sentry-rails'

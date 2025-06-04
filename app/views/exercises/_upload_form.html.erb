@@ -1,0 +1,8 @@
+<%= form_with url: bulk_exercise_upload_exercises_path, method: :post, local: true, html: { multipart: true } do |form| %>
+  <div class="mb-4">
+    <%= form.label :file, "Upload CSV", class: "block text-sm font-medium text-gray-700" %>
+    <%= form.file_field :file, accept: '.csv', class: "mt-1 block w-full border rounded-md p-2 border-gray-300 shadow-sm" %>
+  </div>
+
+  <%= form.submit "Upload", class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+<% end %>

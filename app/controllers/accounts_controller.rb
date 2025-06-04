@@ -4,6 +4,7 @@ class AccountsController < ApplicationController
   skip_forgery_protection only: [:create_child_user]
   before_action :authenticate_user!
   include AthleteProfilesHelper
+  # load_and_authorize_resource
 
   def index
     @accounts = if current_user.role == 'parent_user'
@@ -59,9 +60,9 @@ class AccountsController < ApplicationController
   def all_accounts
     @accounts = if params[:role].present?
                   User.includes([:athlete_profile]).where(role: params[:role]).paginate(page: params[:page],
-                                                                                        per_page: 10)
+                                                                                        per_page: 10).includes([:avatar_attachment])
                 else
-                  User.includes([:athlete_profile]).all.paginate(page: params[:page], per_page: 10)
+                  User.includes([:athlete_profile]).all.paginate(page: params[:page], per_page: 10).includes([:coach_calendars, :avatar_attachment])
                 end
   end
 
