@@ -91,16 +91,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   ## Level and Progress Methods
   def current_level
-    completed_levels = user_levels.completed.count
-
-    case completed_levels
-    when 0..5 then 'Beginner'
-    when 6..10 then 'Intermediate'
-    when 11..15 then 'Advanced'
-    when 16..20 then 'Elite'
-    when 21..25 then 'Pro'
-    else 'Unknown'
-    end
+    return '---' if self.role.in?(['coach', 'admin'])
+    completed_levels = self.level
   end
 
   def participation

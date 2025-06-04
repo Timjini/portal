@@ -68,7 +68,7 @@
                 <% athlete_level['kpi_categories'].each do |kpi_category| %>
                 <% kpi_category['steps'].each do |step| %>
                 <!-- KPI Content for Selected Tab -->
-                <div class="bg-white rounded-b-lg shadow-md p-6">
+                <div class="bg-white rounded-b-lg shadow-md p-6 mb-4">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">
                         <%= kpi_category['meta']['display_name'] %> - Step <%= step['meta']['number'] %>
                     </h3>
@@ -83,12 +83,15 @@
                             <h4 class="font-medium text-gray-800">
                                 <%= exercise['attributes']['name'] %>
                             </h4>
+                            <a href="/exercises/<%= exercise['attributes']['id'] %>" class="ml-2 text-blue-600 hover:text-blue-800 text-sm" target="_blank">
+                                <i class="fas fa-info-circle"></i> Details
+                            </a>
                         </div>
 
                         <% if exercise['attributes']['duration'] %>
                         <p class="text-sm text-gray-600 mb-3 flex items-center">
                             <i class="fas fa-clock mr-2 text-blue-500"></i>
-                            <span class="font-medium">Duration:</span> 
+                            <span class="font-medium">Duration:</span>
                             <%= exercise['attributes']['duration'] %> minutes
                         </p>
                         <% end %>
@@ -128,49 +131,42 @@
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Progress Summary</h2>
 
                 <div class="space-y-4">
+                    <%@kpi_categories.each do |kpi|%>
                     <div>
                         <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium text-gray-700">Information Management</span>
+                            <span class="text-sm font-medium text-gray-700"><%=kpi.name%></span>
                             <span class="text-sm font-medium text-gray-700">1/2 complete</span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2.5">
                             <div class="bg-blue-600 h-2.5 rounded-full" style="width: 50%"></div>
                         </div>
                     </div>
-
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium text-gray-700">Physical Strength</span>
-                            <span class="text-sm font-medium text-gray-700">0/3 complete</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="bg-red-500 h-2.5 rounded-full" style="width: 0%"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium text-gray-700">Overall Progress</span>
-                            <span class="text-sm font-medium text-gray-700">1/5 complete (20%)</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: 20%"></div>
-                        </div>
-                    </div>
+                    <% end %>
                 </div>
 
-                <div class="mt-6 pt-4 border-t border-gray-200">
-                    <h3 class="font-medium text-gray-700 mb-2">Recommendations</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <button class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium hover:bg-green-200">
-                            <i class="fas fa-check-circle mr-1"></i> Ready for next step
-                        </button>
-                        <button class="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium hover:bg-yellow-200">
-                            <i class="fas fa-sync-alt mr-1"></i> Needs more practice
-                        </button>
-                        <button class="px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium hover:bg-red-200">
-                            <i class="fas fa-undo mr-1"></i> Repeat current step
-                        </button>
+                <div class="mt-6">
+                    <label class="block text-sm font-medium text-gray-700">Recommendations</label>
+                    <div class="mt-2 space-y-2 flex flex-row gap-4">
+                        <div class="flex items-center">
+                            <input type="radio" id="recommendation_ready" name="recommendation" value="ready" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                            <label for="recommendation_ready" class="ml-2 block text-sm text-gray-900">
+                                <i class="fas fa-check-circle mr-1 text-green-600"></i> Ready for next step
+                            </label>
+                        </div>
+
+                        <div class="flex items-center">
+                            <input type="radio" id="recommendation_practice" name="recommendation" value="practice" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                            <label for="recommendation_practice" class="ml-2 block text-sm text-gray-900">
+                                <i class="fas fa-sync-alt mr-1 text-yellow-600"></i> Needs more practice
+                            </label>
+                        </div>
+
+                        <div class="flex items-center">
+                            <input type="radio" id="recommendation_repeat" name="recommendation" value="repeat" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                            <label for="recommendation_repeat" class="ml-2 block text-sm text-gray-900">
+                                <i class="fas fa-undo mr-1 text-red-600"></i> Repeat current step
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>

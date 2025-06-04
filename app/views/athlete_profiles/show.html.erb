@@ -37,9 +37,7 @@
 
 <div class="min-h-scree p-4 md:p-6">
 <% if current_user.admin?%>
- <%= render 'components/back_button'%>
-  <%= render 'athlete_profiles/athlete_profile_card'%> 
-  <%= render 'athlete_profiles/athlete_data'%> 
+  <%= render 'components/back_button'%>
 <%else%>
   <!-- Profile Header -->
   <div class="flex flex-col items-center text-center mb-8">

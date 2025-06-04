@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_16_124146) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_28_190101) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -94,6 +94,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_16_124146) do
     t.datetime "updated_at", null: false
     t.string "child_password"
     t.index ["user_id"], name: "index_athlete_profiles_on_user_id"
+  end
+
+  create_table "attendances", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "attended_at", null: false
+    t.string "status", default: "present", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
   create_table "check_lists", force: :cascade do |t|
@@ -202,6 +211,26 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_16_124146) do
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
+  create_table "pricing_packages", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "price_per_session", precision: 8, scale: 2
+    t.decimal "monthly_fee", precision: 8, scale: 2
+    t.string "billing_type", default: "per_session", null: false
+    t.integer "sessions_per_month", default: 0, null: false
+    t.integer "minimum_commitment_months", default: 0, null: false
+    t.boolean "active", default: true, null: false
+    t.boolean "requires_commitment", default: false, null: false
+    t.boolean "requires_payment_method", default: true, null: false
+    t.boolean "requires_approval", default: false, null: false
+    t.boolean "requires_contract", default: false, null: false
+    t.boolean "requires_terms_of_service", default: true, null: false
+    t.boolean "requires_privacy_policy", default: true, null: false
+    t.boolean "requires_marketing_consent", default: false, null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "qr_codes", force: :cascade do |t|
     t.boolean "scanned", default: false
     t.string "data"
@@ -263,6 +292,23 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_16_124146) do
     t.datetime "updated_at", null: false
     t.index ["athlete_level_category_id", "step_number"], name: "index_steps__category_and_number", unique: true
     t.index ["athlete_level_category_id"], name: "index_steps_on_athlete_level_category_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "pricing_package_id", null: false
+    t.string "status", default: "active", null: false
+    t.string "payment_method", null: false
+    t.string "billing_cycle", default: "monthly", null: false
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.string "currency", default: "GBP", null: false
+    t.string "external_provider", default: "manual", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pricing_package_id"], name: "index_subscriptions_on_pricing_package_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "taster_session_bookings", force: :cascade do |t|
@@ -388,6 +434,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_16_124146) do
   add_foreign_key "athlete_level_categories", "athlete_levels"
   add_foreign_key "athlete_level_categories", "kpi_categories"
   add_foreign_key "athlete_profiles", "users"
+  add_foreign_key "attendances", "users"
   add_foreign_key "check_lists", "levels"
   add_foreign_key "coach_calendars", "users"
   add_foreign_key "comments", "users"
@@ -399,6 +446,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_16_124146) do
   add_foreign_key "step_exercises", "exercises"
   add_foreign_key "step_exercises", "steps"
   add_foreign_key "steps", "athlete_level_categories"
+  add_foreign_key "subscriptions", "pricing_packages"
+  add_foreign_key "subscriptions", "users"
   add_foreign_key "taster_session_bookings", "users"
   add_foreign_key "training_bookings", "training_packages"
   add_foreign_key "training_bookings", "users"
