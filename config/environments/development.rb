@@ -20,8 +20,7 @@ Rails.application.configure do
   # config.hosts << "chambersforsport.net"
   config.hosts << 'chambersforsport.com'
   config.hosts << 'club.chambersforsport.com'
-  config.hosts << 'cfs-portal.onrender.com'
-  config.hosts << 'onrender.com'
+  config.hosts << '74ef0978-0a2d-4678-9efc-1ee8e8d16d59-00-14dx8bq4x65hr.picard.replit.dev'
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development

@@ -8,6 +8,8 @@ packages = [
   "rubyPackages_3_2.psych",
   "libyaml",
   "postgresql",
+  "libyaml.dev",
+  "pkg-config",
   "zlib",
   "gmp",
   "rbenv",
@@ -18,3 +20,11 @@ packages = [
 
 [deployment]
 run = ["sh", "-c", "node index.js"]
+
+[[ports]]
+localPort = 3000
+externalPort = 3000
+
+[[ports]]
+localPort = 5000
+externalPort = 80
