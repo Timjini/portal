@@ -27,6 +27,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :notifications, as: :notifiable, dependent: :destroy
   has_many :coach_calendars, dependent: :destroy
 
+  has_many :user_logins, dependent: :destroy
+
   # Scopes
   scope :coaches, -> { where(role: 'coach') }
   scope :by_role, ->(role) { role.present? ? where(role: role) : all }

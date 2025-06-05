@@ -11,6 +11,10 @@ class DashboardController < ApplicationController
     @notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User', viewed: false)
     @displayed_notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User',
                                                   viewed: false).last(5)
+    @daily_logins = UserLogin
+                    .where(login_at: 7.days.ago.beginning_of_day..Time.current.end_of_day)
+                    .order('DATE(login_at) DESC')
+                    .count
   end
 
   def goals_rewards_acheivements; end

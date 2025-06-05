@@ -2,6 +2,8 @@
 
 module Users
   class SessionsController < Devise::SessionsController
+    after_action :track_login, if: :user_signed_in?
+
     def show
       @user = User.find(params[:id])
     end
@@ -20,6 +22,10 @@ module Users
         error_message = 'Invalid username or password'
         redirect_to new_user_session_path, alert: error_message
       end
+    end
+
+    def track_login
+      LoginTracker.record_login(current_user)
     end
   end
 end
