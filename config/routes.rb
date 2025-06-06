@@ -181,4 +181,5 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :content, only: %i[index edit update]
   end
+  post 'assessments/create', to: 'coaches/assessments#create', as: 'create_assessment'
 end
