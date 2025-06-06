@@ -1,51 +1,4 @@
-<%= form_with(url: create_assessment_path, method: :post, local: true, class: "space-y-6") do |f| %>
-    <div id="athlete-profile" class="bg-white rounded-lg shadow-md p-6 mb-6">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4">Athlete Profile</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <h3 class="font-medium text-gray-700">Personal Information</h3>
-          <p class="text-gray-900">
-            <span class="font-semibold">Name:</span> 
-            <%= @athlete[:name] %>
-          </p>
-          <p class="text-gray-900">
-            <span class="font-semibold">Age:</span> 
-            <%= @athlete[:age] %>
-          </p>
-          <p class="text-gray-900">
-            <span class="font-semibold">Gender:</span> 
-            <%= @athlete[:gender] %>
-          </p>
-        </div>
-        <div>
-          <h3 class="font-medium text-gray-700">Current Level</h3>
-          <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full inline-block font-medium">
-            <%= @athlete[:level] %>
-          </div>
-          <p class="mt-2 text-sm text-gray-600">
-            Started: <%= @athlete[:start_date] %>
-          </p>
-        </div>
-        <div>
-          <h3 class="font-medium text-gray-700">Recent Assessments</h3>
-          <div class="space-y-1">
-            <p class="text-sm">
-              <%= @athlete[:last_assessment][:date] %>: 
-              <%= @athlete[:last_assessment][:score] %> KPIs met
-            </p>
-            <p class="text-sm">
-              <%= @athlete[:prev_assessment][:date] %>: 
-              <%= @athlete[:prev_assessment][:score] %> KPIs met
-            </p>
-            <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-              View full history <i class="fas fa-chevron-right ml-1"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  <% if @kpi_categories.present? %>
+    <% if @kpi_categories.present? %>
     <div id="kpi-sections">
       <div class="mb-6">
         <div class="border-b border-gray-200">
@@ -165,19 +118,3 @@
       </div>
     </div>
   <% end %>
-<% end %>
-
-<% content_for :javascript do %>
-  <script>
-    // Simple stimulus controller for file uploads
-    import { Controller } from "@hotwired/stimulus"
-
-    export default class extends Controller {
-      static targets = ["evidenceInput"]
-
-      click() {
-        this.evidenceInputTarget.click()
-      }
-    }
-  </script>
-<% end %>

@@ -10,7 +10,7 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
     @kpi_categories = KpiCategory.order(:id)
     @structured_data = ExerciseStructureQuery.new.call
     @athlete = User.find(params[:id])
-    @steps = Step.includes(%i[exercises athlete_level_category])
+    @steps = Step.all
     @assessments = Assessment.where(athlete_id: @athlete.id).order(created_at: :desc)
   end
 
@@ -22,21 +22,33 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   end
 
   def create
-    puts "Params: #{params.inspect}"
-    @athlete = User.find(assessment_params[:athlete_id])
+    Rails.logger.info "Assessment creation started with params: #{params.permit!.to_h}"
 
-    puts "Athlete: #{@athlete.inspect}"
-    @assessment = Assessment.new(assessment_params)
-    @assessment.coach = current_user
-    @assessment.athlete = @athlete
+    @athlete = User.find(params[:athlete_id])
+    @assessment = Assessment.new(
+      notes: params[:notes],
+      recommendation: params[:recommendation],
+      athlete_id: @athlete.id,
+      coach_id: current_user.id
+    )
 
     if @assessment.save
+      Rails.logger.info "Assessment created successfully: #{@assessment.attributes}"
       redirect_to all_accounts_accounts_path, notice: 'Assessment saved successfully'
     else
+      Rails.logger.error "Assessment failed to save: #{@assessment.errors.full_messages}"
       @kpi_categories = KpiCategory.all
       @structured_data = ExerciseStructureQuery.new.call
-      render :new
+      render :new, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error "Record invalid: #{e.message}\n#{e.record.errors.full_messages}"
+    @kpi_categories = KpiCategory.all
+    @structured_data = ExerciseStructureQuery.new.call
+    render :new, status: :unprocessable_entity
+  rescue StandardError => e
+    Rails.logger.error "Unexpected error: #{e.class} - #{e.message}\n#{e.backtrace.join("\n")}"
+    redirect_to all_accounts_accounts_path, alert: 'Failed to create assessment'
   end
 
   def require_coach

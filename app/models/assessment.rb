@@ -16,6 +16,6 @@ class Assessment < ApplicationRecord
   private
 
   def coach_must_have_coach_role
-    errors.add(:coach, 'must be a coach') unless coach&.coach?
+    errors.add(:coach, 'must be a coach') unless coach&.coach? || coach&.admin?
   end
 end
