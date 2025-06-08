@@ -1,0 +1,120 @@
+    <% if @kpi_categories.present? %>
+    <div id="kpi-sections">
+      <div class="mb-6">
+        <div class="border-b border-gray-200">
+          <nav class="-mb-px flex space-x-8 overflow-x-auto">
+            <% @kpi_categories.each do |kpi| %>
+              <button type="button" class="tab-button whitespace-nowrap py-4 px-4 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                <%= kpi.name %>
+              </button>
+            <% end %>
+          </nav>
+        </div>
+
+        <% @structured_data['athlete_levels'].each do |athlete_level| %>
+          <% athlete_level['kpi_categories'].each do |kpi_category| %>
+            <% kpi_category['steps'].each do |step| %>
+              <div class="bg-white rounded-b-lg shadow-md p-6 mb-4">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                  <%= kpi_category['meta']['display_name'] %> - Step <%= step['meta']['number'] %>
+                </h3>
+
+                <% step['exercises'].each do |exercise| %>
+                  <div class="border border-gray-200 rounded-lg p-4 mb-4">
+                    <div class="flex items-center mb-2">
+                      <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mr-2">
+                        <i class="fas fa-check text-green-600 text-xs"></i>
+                      </div>
+                      <h4 class="font-medium text-gray-800">
+                        <%= exercise['attributes']['name'] %>
+                      </h4>
+                    </div>
+
+                    <%= f.fields_for :kpi_data, f.object.kpi_data || {} do |kpi_fields| %>
+                      <%= kpi_fields.hidden_field :exercise_id, value: exercise['attributes']['id'] %>
+
+                      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                          <%= kpi_fields.select "status_#{exercise['attributes']['id']}", 
+                            options_for_select([
+                              ['Not Attempted', '0'],
+                              ['Developing', '1'],
+                              ['Meeting Expectations', '2'],
+                              ['Exceeding', '3']
+                            ], selected: kpi_fields.object["status_#{exercise['attributes']['id']}"]),
+                            class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm" %>
+                        </div>
+                        <div>
+                          <label class="block text-sm font-medium text-gray-700 mb-1">Evidence</label>
+                          <%= kpi_fields.file_field "evidence_#{exercise['attributes']['id']}", 
+                            class: "hidden", 
+                            data: { target: "evidence-input" } %>
+                          <button type="button" 
+                                  class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                  data-action="click->evidence-input#click">
+                            <i class="fas fa-upload mr-2"></i> Upload Video/Photo
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="mt-3">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+                        <%= kpi_fields.text_area "notes_#{exercise['attributes']['id']}", 
+                          rows: 2,
+                          class: "p-2.5 border block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm",
+                          placeholder: "Add observations or feedback..." %>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Progress Summary</h2>
+
+        <div class="space-y-4">
+          <% @kpi_categories.each do |kpi| %>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="text-sm font-medium text-gray-700"><%= kpi.name %></span>
+                <span class="text-sm font-medium text-gray-700">1/2 complete</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 50%"></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="mt-6">
+          <label class="block text-sm font-medium text-gray-700">Recommendations</label>
+          <div class="mt-2 space-y-2 flex flex-row gap-4">
+            <% Assessment.recommendations.each do |key, value| %>
+              <div class="flex items-center">
+                <%= f.radio_button :recommendation, key, class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" %>
+                <%= f.label "recommendation_#{key}", class: "ml-2 block text-sm text-gray-900" do %>
+                  <i class="<%= recommendation_icon(key) %> mr-1"></i> <%= recommendation_label(key) %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Assessment Actions</h2>
+        <div class="flex flex-wrap gap-3">
+          <%= f.submit "Save Assessment", 
+                class: "px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+          <button type="button" class="px-4 py-2 bg-gray-100 text-gray-800 rounded-md text-sm font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+            <i class="fas fa-file-pdf mr-2"></i> Export as PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  <% end %>

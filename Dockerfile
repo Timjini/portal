@@ -1,7 +1,10 @@
 # Dockerfile
 
 # Use the official Ruby image as the base image
-FROM ruby:3.1.2
+FROM ruby:3.2.2-bullseye
+
+# Update the base image to ensure security patches are applied
+RUN apt-get update -qq && apt-get upgrade -y
 
 # Install curl for Node.js installation
 RUN apt-get update -qq && apt-get install -y curl

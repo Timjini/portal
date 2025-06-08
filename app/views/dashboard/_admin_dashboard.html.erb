@@ -63,7 +63,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="bg-blue-50 p-3 rounded-lg">
           <p class="text-sm text-gray-600">Daily Logins</p>
-          <p class="text-xl font-bold">-- avg</p>
+          <p class="text-xl font-bold"><%= @daily_logins || '--' %>/ day</p>
           <div class="h-2 bg-blue-200 rounded-full mt-2">
             <div class="h-2 bg-blue-600 rounded-full" style="width: 0%"></div>
           </div>

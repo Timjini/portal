@@ -27,6 +27,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :notifications, as: :notifiable, dependent: :destroy
   has_many :coach_calendars, dependent: :destroy
 
+  has_many :user_logins, dependent: :destroy
+  has_many :assessments, dependent: :destroy
+
   # Scopes
   scope :coaches, -> { where(role: 'coach') }
   scope :by_role, ->(role) { role.present? ? where(role: role) : all }
@@ -91,8 +94,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   ## Level and Progress Methods
   def current_level
-    return '---' if self.role.in?(['coach', 'admin'])
-    completed_levels = self.level
+    return '---' if role.in?(%w[coach admin])
+
+    level
   end
 
   def participation

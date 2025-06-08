@@ -162,7 +162,7 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index]
     resources :athletes, only: %i[index show]
     resources :sessions, only: %i[new create index]
-    resources :assessments, only: %i[new create index]
+    resources :assessments, only: %i[new show create index]
     resources :messages, only: %i[index show create]
   end
 
@@ -181,4 +181,5 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :content, only: %i[index edit update]
   end
+  post 'assessments/create', to: 'coaches/assessments#create', as: 'create_assessment'
 end

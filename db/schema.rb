@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_28_190101) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_28_190101) do
     t.string "explination"
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
+  end
+
+  create_table "assessments", force: :cascade do |t|
+    t.bigint "athlete_id", null: false
+    t.bigint "coach_id", null: false
+    t.jsonb "kpi_data"
+    t.string "recommendation"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["athlete_id"], name: "index_assessments_on_athlete_id"
+    t.index ["coach_id"], name: "index_assessments_on_coach_id"
   end
 
   create_table "athlete_level_categories", force: :cascade do |t|
@@ -404,6 +416,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_28_190101) do
     t.index ["user_id"], name: "index_user_levels_on_user_id"
   end
 
+  create_table "user_logins", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "login_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_logins_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: ""
     t.string "username"
@@ -431,6 +451,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_28_190101) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
+  add_foreign_key "assessments", "users", column: "athlete_id"
+  add_foreign_key "assessments", "users", column: "coach_id"
   add_foreign_key "athlete_level_categories", "athlete_levels"
   add_foreign_key "athlete_level_categories", "kpi_categories"
   add_foreign_key "athlete_profiles", "users"
@@ -456,4 +478,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_28_190101) do
   add_foreign_key "user_checklists", "users"
   add_foreign_key "user_levels", "levels"
   add_foreign_key "user_levels", "users"
+  add_foreign_key "user_logins", "users"
 end

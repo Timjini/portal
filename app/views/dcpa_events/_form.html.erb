@@ -1,130 +1,168 @@
-<%= form_with(model: dcpa_event, class: "contents") do |form| %>
-  <% if dcpa_event.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(dcpa_event.errors.count, "error") %> prohibited this dcpa_event from being saved:</h2>
+     <%= form_with(model: dcpa_event, class: "space-y-6 max-w-3xl mx-auto") do |form| %>
+       <% if dcpa_event.errors.any? %>
+         <div id="error_explanation" class="bg-red-50 text-red-600 p-4 rounded-lg border border-red-100">
+           <h2 class="font-bold text-lg"><%= pluralize(dcpa_event.errors.count, "error") %> prohibited this dcpa_event from being saved:</h2>
+           <ul class="mt-2 list-disc list-inside">
+             <% dcpa_event.errors.each do |error| %>
+               <li><%= error.full_message %></li>
+             <% end %>
+           </ul>
+         </div>
+       <% end %>
 
-      <ul>
-        <% dcpa_event.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+         <div class="space-y-6">
+           <!-- Image Upload -->
+           <div class="space-y-2">
+                 <div data-controller="image-preview">
+                   <%= form.label :image, "Event Image", class: "block text-sm font-medium text-gray-700" %>
 
-  <div>
-        <%= image_tag(dcpa_event.image_thumbnail, class: "h-36 object-cover") %>
-    
-        <%= form.file_field :image, class: "mt-2" %>
-  </div>
+                   <div class="mt-1">
+                     <!-- Default preview (shown when no image selected) -->
+                     <div data-image-preview-target="defaultPreview" class="<%= dcpa_event.image.attached? ? 'hidden' : '' %> h-48 bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+                       <span class="text-gray-500">No image selected</span>
+                     </div>
 
-  <div class="my-5">
-    <%= form.label :title %>
-    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+                     <!-- Preview of existing image or newly uploaded one -->
+                     <% if dcpa_event.image.attached? %>
+                       <%= image_tag dcpa_event.image_thumbnail, 
+                             data: { "image-preview-target": "preview" },
+                             class: "h-48 w-full object-cover rounded-lg border" %>
+                     <% else %>
+                       <%= image_tag "", 
+                             data: { "image-preview-target": "preview" },
+                             class: "hidden h-48 w-full object-cover rounded-lg border" %>
+                     <% end %>
+                   </div>
 
-  <div class="my-5">
-    <%= form.label :coach %>
-    <%= form.text_field :coach, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+                   <%= form.file_field :image, 
+                         data: { action: "change->image-preview#displayPreview" },
+                         class: "mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" %>
+                 </div>
+           </div>
 
-<div class="my-5">
-  <%= form.label :dates, "Dates" %>
-  <div id="dates-fields">
-    <!-- Iterate over existing dates to create individual date fields -->
-    <% dcpa_event.dates.each_with_index do |date, index| %>
-      <%= form.date_field :dates, 
-        value: date.present? ? date.strftime("%Y-%m-%d") : Date.today.strftime("%Y-%m-%d"), 
-        class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", 
-        id: "dates-picker-#{index}", 
-        name: "dcpa_event[dates][]" %>
-    <% end %>
-    <!-- Add a blank field if no dates exist -->
-    <% if dcpa_event.dates.empty? %>
-      <%= form.date_field :dates, 
-        value: Date.today.strftime("%Y-%m-%d"), 
-        class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full", 
-        id: "dates-picker-0", 
-        name: "dcpa_event[dates][]" %>
-    <% end %>
-  </div>
-  <button type="button" id="add-date" class="mt-2 bg-blue-500 text-white px-3 py-2 rounded-md">
-    Add Date
-  </button>
-</div>
+           <!-- Basic Info -->
+           <div>
+             <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
+             <%= form.text_field :title, class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 " %>
+           </div>
 
+           <div>
+             <%= form.label :coach, class: "block text-sm font-medium text-gray-700" %>
+             <%= form.text_field :coach, class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 " %>
+           </div>
 
+           <!-- Dates - Controlled by Stimulus -->
+           <div data-controller="dates">
+             <%= form.label :dates, "Event Dates", class: "block text-sm font-medium text-gray-700" %>
+             <div data-dates-target="container" class="space-y-2">
+               <% if dcpa_event.dates.any? %>
+                 <% dcpa_event.dates.each_with_index do |date, index| %>
+                   <div class="flex items-center space-x-2">
+                     <%= form.date_field :dates, 
+                       value: date.present? ? date.strftime("%Y-%m-%d") : Date.today.strftime("%Y-%m-%d"), 
+                       class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ", 
+                       name: "dcpa_event[dates][]" %>
+                     <button type="button" data-action="dates#remove" class="text-red-500 hover:text-red-700">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                         <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                       </svg>
+                     </button>
+                   </div>
+                 <% end %>
+               <% else %>
+                 <div class="flex items-center space-x-2">
+                   <%= form.date_field :dates, 
+                     value: Date.today.strftime("%Y-%m-%d"), 
+                     class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ", 
+                     name: "dcpa_event[dates][]" %>
+                   <button type="button" data-action="dates#remove" class="text-red-500 hover:text-red-700">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                       <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                     </svg>
+                   </button>
+                 </div>
+               <% end %>
+             </div>
+             <button type="button" data-action="dates#add" class="mt-2 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                 <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+               </svg>
+               Add Date
+             </button>
+           </div>
+         </div>
 
+         <div class="space-y-6">
+           <!-- Time Fields -->
+           <div class="grid grid-cols-2 gap-4 mt-2">
+             <div>
+               <%= form.label :time_start, "Start Time", class: "block text-sm font-medium text-gray-700" %>
+               <%= form.time_field :time_start, class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 " %>
+             </div>
+             <div>
+               <%= form.label :time_end, "End Time", class: "block text-sm font-medium text-gray-700" %>
+               <%= form.time_field :time_end, class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 " %>
+             </div>
+           </div>
 
-  <div class="my-5">
-    <%= form.label :time_start %>
-    <%= form.time_field :time_start, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+           <!-- Location -->
+           <div>
+             <%= form.label :location, class: "block text-sm font-medium text-gray-700" %>
+             <%= form.text_field :location, class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 " %>
+           </div>
 
-  <div class="my-5">
-    <%= form.label :time_end %>
-    <%= form.time_field :time_end, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+           <!-- Ages & Pricing -->
+           <div>
+             <%= form.label :ages_available, "Available Ages", class: "block text-sm font-medium text-gray-700" %>
+             <%= form.text_field :ages_available, class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 " %>
+           </div>
 
-  <div class="my-5">
-    <%= form.label :location %>
-    <%= form.text_field :location, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+           <div class="grid grid-cols-2 gap-4">
+             <div>
+               <%= form.label :price, class: "block text-sm font-medium text-gray-700" %>
+               <div class="mt-1 relative rounded-md shadow-sm">
+                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                   <span class="text-gray-500 sm:text-sm"></span>
+                 </div>
+                 <%= form.text_field :price, class: "pl-4 w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5", placeholder: "0.00" %>
+               </div>
+             </div>
+             <div>
+               <%= form.label :dcpa_discount, "DCPA Discount", class: "block text-sm font-medium text-gray-700" %>
+               <div class="mt-1 relative rounded-md shadow-sm">
+                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                   <span class="text-gray-500 sm:text-sm"></span>
+                 </div>
+                 <%= form.text_field :dcpa_discount, class: " w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5", placeholder: "% 0.00" %>
+               </div>
+             </div>
+           </div>
 
-  <div class="my-5">
-    <%= form.label :ages_available %>
-    <%= form.text_field :ages_available, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+           <!-- Extras -->
+           <div>
+             <%= form.label :extras, class: "block text-sm font-medium text-gray-700" %>
+             <%= form.text_field :extras, class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 " %>
+           </div>
 
-  <div class="my-5">
-    <%= form.label :price %>
-    <%= form.text_field :price, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+           <!-- Dropdowns -->
+           <div class="grid grid-cols-2 gap-4">
+             <div>
+               <%= form.label :event_type, "Event Type", class: "block text-sm font-medium text-gray-700" %>
+               <%= form.select :event_type, DcpaEvent::EVENT_TYPES.map { |type| [type.humanize, type] }, { include_blank: 'Select type' }, class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 " %>
+             </div>
+             <div>
+               <%= form.label :status, class: "block text-sm font-medium text-gray-700" %>
+               <%= form.select :status, DcpaEvent::STATUS.map { |type| [type.humanize, type] }, { include_blank: 'Select status' }, class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 " %>
+             </div>
+           </div>
+         </div>
+       </div>
 
-  <div class="my-5">
-    <%= form.label :dcpa_discount %>
-    <%= form.text_field :dcpa_discount, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :extras %>
-    <%= form.text_field :extras, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :event_type %>
-    <%= form.select :event_type, DcpaEvent::EVENT_TYPES.map { |type| [type.humanize, type] }, { include_blank: 'Please select' }, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-
-  <div class="my-5">
-    <%= form.label :status %>
-    <%= form.select :status, DcpaEvent::STATUS.map { |type| [type.humanize, type] }, { include_blank: 'Please select' }, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
-  </div>
-<% end %>
-<script>
- document.addEventListener("DOMContentLoaded", () => {
-  let dateIndex = 1;
-
-  document.getElementById("add-date").addEventListener("click", () => {
-    const datesFieldsContainer = document.getElementById("dates-fields");
-
-    const newDateField = document.createElement("input");
-    newDateField.type = "date";
-    newDateField.name = "dcpa_event[dates][]";
-    newDateField.id = `dates-picker-${dateIndex}`;
-    newDateField.className = "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full";
-
-    datesFieldsContainer.appendChild(newDateField);
-
-    if (typeof flatpickr !== "undefined") {
-      flatpickr(`#dates-picker-${dateIndex}`);
-    }
-
-    dateIndex++;
-  });
-});
-</script>
+       <div class="pt-5">
+         <div class="flex justify-end">
+           <%= link_to "Cancel", dcpa_events_path, class: "bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+           <%= form.submit class: "ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+         </div>
+       </div>
+     <% end %>

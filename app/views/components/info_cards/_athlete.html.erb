@@ -1,0 +1,40 @@
+<div id="athlete-profile" class="bg-white rounded-lg shadow-md p-6 mb-6">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">Athlete Profile</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div>
+      <h3 class="font-medium text-gray-700">Personal Information</h3>
+      <p class="text-gray-900">
+        <span class="font-semibold">Name:</span> 
+        <%= athlete.full_name %>
+      </p>
+      <p class="text-gray-900">
+        <span class="font-semibold">Age:</span> 
+        <%= athlete.age %>
+      </p>
+    </div>
+    <div>
+      <h3 class="font-medium text-gray-700">Current Level</h3>
+      <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full inline-block font-medium">
+        <%= athlete.level %>
+      </div>
+      <p class="mt-2 text-sm text-gray-600">
+        Started: <%= athlete.created_at.strftime('%d/%m/%Y') %>
+      </p>
+    </div>
+    <div>
+      <h3 class="font-medium text-gray-700">Recent Assessments</h3>
+      <div class="space-y-1">
+        <p class="text-sm">
+          : 
+            KPIs met
+        </p>
+        <p class="text-sm">
+           : 
+            KPIs met
+        </p>
+        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+          View full history <i class="fas fa-chevron-right ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

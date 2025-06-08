@@ -29,6 +29,15 @@ class DcpaEvent < ApplicationRecord
     self.time_end = time_end.strftime('%H:%M') if time_end.present?
   end
 
+  def status_color(status)
+    case status
+    when 'draft' then 'bg-gray-100 text-gray-800'
+    when 'active' then 'bg-green-100 text-green-800'
+    when 'inactive' then 'bg-red-100 text-red-800'
+    else 'bg-blue-100 text-blue-800'
+    end
+  end
+
   private
 
   def valid_dates_array
