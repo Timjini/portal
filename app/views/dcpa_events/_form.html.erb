@@ -24,15 +24,15 @@
                      </div>
 
                      <!-- Preview of existing image or newly uploaded one -->
-                     <% if dcpa_event.image.attached? %>
-                       <%= image_tag dcpa_event.image_thumbnail, 
-                             data: { "image-preview-target": "preview" },
-                             class: "h-48 w-full object-cover rounded-lg border" %>
-                     <% else %>
-                       <%= image_tag "", 
-                             data: { "image-preview-target": "preview" },
-                             class: "hidden h-48 w-full object-cover rounded-lg border" %>
-                     <% end %>
+                     <% if dcpa_event.persisted? && dcpa_event.image.attached? %>
+                      <%= image_tag dcpa_event.image_thumbnail,
+                            data: { "image-preview-target": "preview" },
+                            class: "h-48 w-full object-cover rounded-lg border" %>
+                    <% else %>
+                      <%= image_tag "", 
+                            data: { "image-preview-target": "preview" },
+                            class: "hidden h-48 w-full object-cover rounded-lg border" %>
+                    <% end %>
                    </div>
 
                    <%= form.file_field :image, 
@@ -56,11 +56,16 @@
            <div data-controller="dates">
              <%= form.label :dates, "Event Dates", class: "block text-sm font-medium text-gray-700" %>
              <div data-dates-target="container" class="space-y-2">
-               <% if dcpa_event.dates.any? %>
-                 <% dcpa_event.dates.each_with_index do |date, index| %>
+               <% if dcpa_event.dates_array.any? %>
+                 <% dcpa_event.dates_array.each_with_index do |date, index| %>
                    <div class="flex items-center space-x-2">
                      <%= form.date_field :dates, 
-                       value: date.present? ? date.strftime("%Y-%m-%d") : Date.today.strftime("%Y-%m-%d"), 
+                     value: begin
+                        parsed = Date.parse(date)
+                        parsed.strftime("%Y-%m-%d")
+                      rescue ArgumentError
+                        Date.today.strftime("%Y-%m-%d")
+                      end, 
                        class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ", 
                        name: "dcpa_event[dates][]" %>
                      <button type="button" data-action="dates#remove" class="text-red-500 hover:text-red-700">

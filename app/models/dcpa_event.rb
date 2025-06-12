@@ -38,13 +38,19 @@ class DcpaEvent < ApplicationRecord
     end
   end
 
+  def dates_array
+    JSON.parse(dates || '[]')
+  rescue JSON::ParserError
+    []
+  end
+
   private
 
-  def valid_dates_array
-    return unless dates.blank? || !dates.is_a?(Array) || dates.any? { |date| !date.is_a?(Date) }
+  # def valid_dates_array
+  #   return unless dates_array.blank? || !dates_array.is_a?(Array) || dates_array.any? { |date| !date.is_a?(Date) }
 
-    errors.add(:dates, 'must be an array of valid dates')
-  end
+  #   errors.add(:dates, 'must be an array of valid dates')
+  # end
 
   def end_time_after_start_time
     return unless time_start.present? && time_end.present? && time_start >= time_end
