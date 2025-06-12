@@ -15,6 +15,7 @@ run = "bundle exec rails assets:precompile && bundle exec rails server -p 5000 -
 channel = "stable-24_05"
 packages = [
   "libyaml",
+  "libyaml.dev",
   "mysql.client",
   "mysql",
   "mysql.dev",
