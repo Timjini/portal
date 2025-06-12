@@ -16,6 +16,8 @@ packages = [
   "libyaml",
   "mysql.client",
   "mysql",
+  "mysql.dev",
+  "mariadb.dev",
   "postgresql_16",
   "nodejs-20_x",
   "zlib",
