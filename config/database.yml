@@ -17,13 +17,14 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV['DB_NAME'] %>
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  encoding: unicode
+  adapter: mysql2
+  database: 'u858075988_portal'
+  username: 'u858075988_info'
+  password: '$cCYOT6?byI8'
+  encoding: utf8mb4
   prepared_statements: false
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: postgres
+  host: srv829.hstgr.io
 
 
 # Warning: The database defined as "test" will be erased and
