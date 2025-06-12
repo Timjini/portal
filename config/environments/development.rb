@@ -15,6 +15,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # white list
+  config.hosts << /.*\.replit.dev/
   config.hosts << /[a-z0-9]+\.c9users\.io/
   config.hosts << /[a-z0-9]+\.c9\.io/
   # config.hosts << "chambersforsport.net"
