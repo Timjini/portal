@@ -24,31 +24,31 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   def create
     Rails.logger.info "Assessment creation started with params: #{params.permit!.to_h}"
 
-    @athlete = User.find(params[:athlete_id])
-    @assessment = Assessment.new(
-      notes: params[:notes],
-      recommendation: params[:recommendation],
-      athlete_id: @athlete.id,
-      coach_id: current_user.id
-    )
+    #   @athlete = User.find(params[:athlete_id])
+    #   @assessment = Assessment.new(
+    #     notes: params[:notes],
+    #     recommendation: params[:recommendation],
+    #     athlete_id: @athlete.id,
+    #     coach_id: current_user.id
+    #   )
 
-    if @assessment.save
-      Rails.logger.info "Assessment created successfully: #{@assessment.attributes}"
-      redirect_to all_accounts_accounts_path, notice: 'Assessment saved successfully'
-    else
-      Rails.logger.error "Assessment failed to save: #{@assessment.errors.full_messages}"
-      @kpi_categories = KpiCategory.all
-      @structured_data = ExerciseStructureQuery.new.call
-      render :new, status: :unprocessable_entity
-    end
-  rescue ActiveRecord::RecordInvalid => e
-    Rails.logger.error "Record invalid: #{e.message}\n#{e.record.errors.full_messages}"
-    @kpi_categories = KpiCategory.all
-    @structured_data = ExerciseStructureQuery.new.call
-    render :new, status: :unprocessable_entity
-  rescue StandardError => e
-    Rails.logger.error "Unexpected error: #{e.class} - #{e.message}\n#{e.backtrace.join("\n")}"
-    redirect_to all_accounts_accounts_path, alert: 'Failed to create assessment'
+    #   if @assessment.save
+    #     Rails.logger.info "Assessment created successfully: #{@assessment.attributes}"
+    #     redirect_to all_accounts_accounts_path, notice: 'Assessment saved successfully'
+    #   else
+    #     Rails.logger.error "Assessment failed to save: #{@assessment.errors.full_messages}"
+    #     @kpi_categories = KpiCategory.all
+    #     @structured_data = ExerciseStructureQuery.new.call
+    #     render :new, status: :unprocessable_entity
+    #   end
+    # rescue ActiveRecord::RecordInvalid => e
+    #   Rails.logger.error "Record invalid: #{e.message}\n#{e.record.errors.full_messages}"
+    #   @kpi_categories = KpiCategory.all
+    #   @structured_data = ExerciseStructureQuery.new.call
+    #   render :new, status: :unprocessable_entity
+    # rescue StandardError => e
+    #   Rails.logger.error "Unexpected error: #{e.class} - #{e.message}\n#{e.backtrace.join("\n")}"
+    #   redirect_to all_accounts_accounts_path, alert: 'Failed to create assessment'
   end
 
   def require_coach
