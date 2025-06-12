@@ -1,4 +1,5 @@
 modules = [
+  "nodejs-20",
   "ruby-3.2",
   "mysql",
   "gcc",
