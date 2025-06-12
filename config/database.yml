@@ -18,13 +18,13 @@ default: &default
 development:
   <<: *default
   adapter: mysql2
-  database: 'u858075988_portal'
-  username: 'u858075988_info'
-  password: '$cCYOT6?byI8'
+  database:  <%= ENV['SQL_DB_NAME'] %>'u858075988_portal'
+  username: <%= ENV['SQL_DB_USER'] %> 'u858075988_info'
+  password: <%= ENV['SQL_DB_PASSWORD'] %> '$cCYOT6?byI8'
   encoding: utf8mb4
   prepared_statements: false
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: srv829.hstgr.io
+  host: <%= ENV['SQL_HOST'] %> srv829.hstgr.io
 
 
 # Warning: The database defined as "test" will be erased and
