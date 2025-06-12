@@ -14,4 +14,28 @@ class Exercise < ApplicationRecord
   def image_url
     image.attached? ? image : 'coach-athlete.png'
   end
+
+  def movement_patterns_array
+    JSON.parse(movement_patterns || '[]')
+  rescue JSON::ParserError
+    []
+  end
+
+  def equipment_array
+    JSON.parse(equipment || '[]')
+  rescue JSON::ParserError
+    []
+  end
+
+  def muscle_group_array
+    JSON.parse(muscle_group || '[]')
+  rescue JSON::ParserError
+    []
+  end
+
+  def extra_attributes_array
+    JSON.parse(extra_attributes || '[]')
+  rescue JSON::ParserError
+    []
+  end
 end

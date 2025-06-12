@@ -1,15 +1,6 @@
-modules = [
-  "nodejs-20",
-  "ruby-3.2",
-  "mysql",
-  "gcc",
-  "make",
-  "pkg-config",
-  "zlib",
-  "zstd",
-  "openssl",
-]
-run = "bundle exec rails assets:precompile && bundle exec rails server -p 5000 -b 0.0.0.0"
+modules = ["nodejs-20", "ruby-3.2", "web", "mysql"]
+
+run = "bundle exec rails db:migrate && bundle exec rails assets:precompile && bundle exec rails server -p 5000 -b 0.0.0.0"
 
 [nix]
 channel = "stable-24_05"
@@ -20,7 +11,6 @@ packages = [
   "mysql",
   "mysql.dev",
   "mariadb.dev",
-  "postgresql_16",
   "nodejs-20_x",
   "zlib",
   "gmp",
@@ -29,8 +19,7 @@ packages = [
   "gcc",
   "gnumake",
   "pkgconfig",
-  "mariadb.client",
-  "mariadb",
+  "pkg-config",
 ]
 
 [[ports]]
