@@ -35,10 +35,11 @@ test:
   database: portal_test
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  database: <%= ENV['DB_NAME'] %>
-  pool: 5
-  username: <%= ENV['DB_USER'] %>
-  password:  <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DATABASE_HOST'] %>
+  adapter: mysql2
+  database:  <%= ENV['SQL_DB_NAME'] %>
+  username: <%= ENV['SQL_DB_USER'] %> 
+  password: <%= ENV['SQL_DB_PASSWORD'] %> 
+  encoding: utf8mb4
+  prepared_statements: false
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV['SQL_HOST'] %>
