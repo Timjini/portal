@@ -1,6 +1,6 @@
 default: &default
-  adapter: postgresql
-  encoding: unicode
+  adapter: mysql2
+  encoding: utf8mb4
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -17,13 +17,14 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV['DB_NAME'] %>
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  encoding: unicode
+  adapter: mysql2
+  database:  <%= ENV['SQL_DB_NAME'] %>
+  username: <%= ENV['SQL_DB_USER'] %> 
+  password: <%= ENV['SQL_DB_PASSWORD'] %> 
+  encoding: utf8mb4
   prepared_statements: false
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: postgres
+  host: <%= ENV['SQL_HOST'] %>
 
 
 # Warning: The database defined as "test" will be erased and

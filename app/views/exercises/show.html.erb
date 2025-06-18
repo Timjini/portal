@@ -139,7 +139,7 @@
                 <div>
                     <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Equipment</h2>
                     <div class="flex flex-wrap gap-2">
-                        <% @exercise.equipment.each do |item| %>
+                        <% @exercise.equipment_array.each do |item| %>
                         <span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800">
                             <%= item.to_s.strip %>
                         </span>
@@ -148,11 +148,11 @@
                 </div>
                 <% end %>
 
-                <% if @exercise.movement_patterns.present? %>
+                <% if !@exercise.movement_patterns.empty? %>
                 <div>
                     <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Movement Patterns</h2>
                     <div class="flex flex-wrap gap-2">
-                        <% @exercise.movement_patterns.each do |pattern| %>
+                        <% @exercise.movement_patterns_array.each do |pattern| %>
                         <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
                             <%= pattern.to_s.strip %>
                         </span>
@@ -167,7 +167,7 @@
                 <div>
                     <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Muscle Group</h2>
                     <div class="flex flex-wrap gap-2">
-                        <% @exercise.muscle_group.each do |group| %>
+                        <% @exercise.muscle_group_array.each do |group| %>
                         <span class="inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-800">
                             <%= group.to_s.strip %>
                         </span>
@@ -195,7 +195,7 @@
                 <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Additional Information</h2>
                 <div class="bg-gray-50 p-4 rounded-lg">
                     <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
-                        <% @exercise.extra_attributes.each do |key, value| %>
+                        <% @exercise.extra_attributes_array.each do |key, value| %>
                         <% if value.present? %>
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500"><%= key.to_s.humanize %></dt>

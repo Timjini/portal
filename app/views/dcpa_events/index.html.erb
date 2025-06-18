@@ -37,7 +37,7 @@
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= event.coach %></td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900">
-                  <% event.dates.each do |date| %>
+                  <% event.dates_array.each do |date| %>
                     <div><%= date%></div>
                   <% end %>
                 </div>

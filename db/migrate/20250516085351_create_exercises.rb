@@ -30,17 +30,17 @@ class CreateExercises < ActiveRecord::Migration[7.1]
       # target
       t.string :muscle_group
       t.string :primary_focus
-      t.string :movement_patterns, array: true, default: []
-      t.string :equipment, array: true, default: []
+      t.json :movement_patterns, default: []
+      t.json :equipment, default: []
       # Flexible extra attributes stored here
-      t.jsonb :extra_attributes, default: {}
+      t.json :extra_attributes, default: []
 
       t.timestamps
     end
 
     # Index for jsonb column to optimize querying specific keys, if needed
-    execute <<-SQL.squish # rubocop:disable Rails/ReversibleMigration
-      CREATE INDEX index_exercises_on_extra_attributes ON exercises USING gin (extra_attributes);
-    SQL
+    # execute <<-SQL.squish
+    #   CREATE INDEX index_exercises_on_extra_attributes ON exercises USING gin (extra_attributes);
+    # SQL
   end
 end

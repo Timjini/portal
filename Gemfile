@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 
 ruby '3.2.2'
 
-gem 'pg'
+# gem 'pg'
+gem 'mysql2', '~> 0.5.5'
 gem 'puma', '>= 5.0'
 gem 'rails', '~> 7.1.2'
 

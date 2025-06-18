@@ -1,9 +1,26 @@
-modules = ["nodejs-20", "ruby-3.2", "web", "postgresql-17"]
-run = "bundle exec rails assets:precompile && bundle exec rails server -p 5000 -b 0.0.0.0"
+modules = ["nodejs-20", "ruby-3.2", "web", "mysql"]
+
+run = "bundle exec rails db:migrate && bundle exec rails assets:precompile && bundle exec rails server -p 5000 -b 0.0.0.0"
 
 [nix]
 channel = "stable-24_05"
-packages = ["libyaml", "postgresql_16", "nodejs-20_x", "zlib", "gmp", "yarn", "openssh"]
+packages = [
+  "libyaml",
+  "libyaml.dev",
+  "mysql.client",
+  "mysql",
+  "mysql.dev",
+  "mariadb.dev",
+  "nodejs-20_x",
+  "zlib",
+  "gmp",
+  "yarn",
+  "openssh",
+  "gcc",
+  "gnumake",
+  "pkgconfig",
+  "pkg-config",
+]
 
 [[ports]]
 localPort = 5000
