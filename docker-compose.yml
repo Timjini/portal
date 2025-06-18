@@ -14,9 +14,9 @@ services:
     env_file: .env
     environment:
     # DATABASE_URL: ${DATABASE_URL}
-      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+      # DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
       # DATABASE_URL: ${DATABASE_URL}
-      REDIS_URL: redis://redis:6379/0
+      # REDIS_URL: redis://redis:6379/0
       SEND_GRID_KEY: ${SEND_GRID_KEY}
       SEND_GRID_SECRET: ${SEND_GRID_SECRET}
       SENTRY_KEY: ${SENTRY_KEY}
@@ -24,22 +24,22 @@ services:
     # depends_on:
       # - postgres
       # - redis
-    networks:
-      - app-network
+  #   networks:
+  #     - app-network
 
-  postgres:
-    container_name: cfs_postgres_container
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - app-network
+  # postgres:
+  #   container_name: cfs_postgres_container
+  #   image: postgres:latest
+  #   environment:
+  #     POSTGRES_DB: ${DB_NAME}
+  #     POSTGRES_USER: ${DB_USER}
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD}
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   networks:
+  #     - app-network
 
   # sidekiq:
   #   build: .
@@ -62,9 +62,9 @@ services:
   #   networks:
   #     - app-network
 
-volumes:
-  postgres_data:
+# volumes:
+#   postgres_data:
 
-networks:
-  app-network:
-    driver: bridge
+# networks:
+#   app-network:
+#     driver: bridge
