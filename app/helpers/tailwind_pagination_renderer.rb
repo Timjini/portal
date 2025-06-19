@@ -1,3 +1,5 @@
+require 'will_paginate/view_helpers/action_view'
+
 class TailwindPaginationRenderer < WillPaginate::ActionView::LinkRenderer
   def container_attributes
     { class: "flex justify-center mt-4 space-x-1 text-sm" }
