@@ -100,7 +100,7 @@
                     </div>
                     <div class="flex items-center gap-2">
                       <span class="text-xs text-gray-500">Level:</span>
-                      <span><%= account.athlete_profile_data.level.humanize %></span>
+                      <span><%= account.athlete_profile_data.level&.humanize %></span>
                     </div>
                   <% else %>
                     <span class="text-xs text-gray-500">No profile data</span>
