@@ -263,7 +263,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
   end
 
   create_table "questions", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "content"
+    t.text "content"
     t.string "question_type"
     t.bigint "questionnaire_id", null: false
     t.datetime "created_at", null: false
