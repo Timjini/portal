@@ -1,6 +1,6 @@
 services:
-  production-app:
-    container_name: portal-production-app
+  staging-app:
+    container_name: portal-staging-app
     build: .
     command: >
       bash -c "rm -f /usr/src/app/tmp/pids/server.pid &&
@@ -9,10 +9,10 @@ services:
                RAILS_ENV=${RAILS_ENV} bundle exec rails assets:precompile &&
                RAILS_ENV=${RAILS_ENV} bundle exec rails server -b 0.0.0.0 -p 3001"
     volumes:
-      - portal-production-app-volume:/usr/src/app
+      - portal-staging-app-volume:/usr/src/app
     ports:
-      - "3000:3000"
-    env_file: .env.production
+      - "3001:3001"
+    env_file: .env.staging
 
 volumes:
-  portal-production-app-volume:
+  portal-staging-app-volume:
