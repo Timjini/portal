@@ -1,6 +1,4 @@
-        <%
-=begin%>
- <%= form_with(url: create_assessment_path, method: :post, local: true, class: "space-y-6 px-4 sm:px-6 lg:px-8 py-8") do |f| %>
+<%= form_with(url: create_assessment_path, method: :post, local: true, class: "space-y-6 px-4 sm:px-6 lg:px-8 py-8") do |f| %>
         <%= render 'components/info_cards/athlete' , athlete: @athlete %>
         <%= hidden_field_tag :athlete_id, @athlete.id %>
         <% if @kpi_categories.present? %>
@@ -92,5 +90,3 @@
         </div>
         <% end %>
         <%end%> 
-<%
-=end%>

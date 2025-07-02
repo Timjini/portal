@@ -3,6 +3,7 @@
 class KpiController < ApplicationController
   skip_forgery_protection only: %i[create destroy update]
   before_action :authenticate_user!
+  load_and_authorize_resource
 
   def index
     service = KpiService.new(params)

@@ -7,7 +7,7 @@ class CreateDcpaEvents < ActiveRecord::Migration[7.1]
     create_table :dcpa_events do |t|
       t.string :title
       t.string :coach
-      t.json :dates, default: []
+      t.json :dates
       t.time :time_start
       t.time :time_end
       t.string :location

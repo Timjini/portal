@@ -17,16 +17,22 @@ default: &default
 
 development:
   <<: *default
+  # adapter: mysql2
+  # database:  <%= ENV['SQL_DB_NAME'] %>
+  # username: <%= ENV['SQL_DB_USER'] %> 
+  # password: <%= ENV['SQL_DB_PASSWORD'] %> 
+  # encoding: utf8mb4
+  # prepared_statements: false
+  # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  # host: <%= ENV['SQL_HOST'] %>
+
   adapter: mysql2
-  database:  <%= ENV['SQL_DB_NAME'] %>
-  username: <%= ENV['SQL_DB_USER'] %> 
-  password: <%= ENV['SQL_DB_PASSWORD'] %> 
-  encoding: utf8mb4
-  prepared_statements: false
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: <%= ENV['SQL_HOST'] %>
-
-
+  encoding: utf8
+  database: portal_development
+  username: portal_admin
+  password: 150150@Hl
+  host: localhost
+  port: 3306
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.

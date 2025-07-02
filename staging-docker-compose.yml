@@ -8,11 +8,6 @@ services:
                RAILS_ENV=${RAILS_ENV} bundle exec rails db:seed &&
                RAILS_ENV=${RAILS_ENV} bundle exec rails assets:precompile &&
                RAILS_ENV=${RAILS_ENV} bundle exec rails server -b 0.0.0.0 -p 3001"
-    volumes:
-      - portal-staging-app-volume:/usr/src/app
     ports:
       - "3001:3001"
     env_file: .env.staging
-
-volumes:
-  portal-staging-app-volume:

@@ -1,27 +1,33 @@
-<ul class="flex flex-wrap text-sm font-medium text-center border-b border-gray-200 0">
-  <li class="me-2">
-    <%= link_to "/accounts/all_accounts", class: "inline-block p-4 #{'active'  if params[:role] == nil} rounded-t-lg" do %>
+<div class="max-w-4xl mx-auto mb-6">
+  <div class="flex flex-wrap justify-center gap-2">
+    <!-- All Users -->
+    <%= link_to all_accounts_accounts_path, 
+        class: "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 #{params[:role].blank? ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
       All Users
     <% end %>
-  </li>
-  <li class="me-2">
-    <%= link_to "/accounts/all_accounts?role=coach", class: "inline-block p-4 #{'active'  if params[:role] == 'coach'} rounded-t-lg" do %>
+    
+    <!-- Coaches -->
+    <%= link_to all_accounts_accounts_path(role: 'coach'), 
+        class: "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 #{params[:role] == 'coach' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
       Coaches
     <% end %>
-  </li>
-  <li class="me-2">
-    <%= link_to "/accounts/all_accounts?role=parent_user", class: "inline-block p-4 #{'active' if params[:role] == 'parent_user'} rounded-t-lg" do %>
+    
+    <!-- Parents -->
+    <%= link_to all_accounts_accounts_path(role: 'parent_user'), 
+        class: "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 #{params[:role] == 'parent_user' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
       Athlete's Parents
     <% end %>
-  </li>
-  <li class="me-2">
-    <%= link_to "/accounts/all_accounts?role=child_user", class: "inline-block p-4 #{'active' if params[:role] == 'child_user'} rounded-t-lg" do %>
+    
+    <!-- Junior Athletes -->
+    <%= link_to all_accounts_accounts_path(role: 'child_user'), 
+        class: "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 #{params[:role] == 'child_user' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
       Junior Athletes
     <% end %>
-  </li>
-  <li class="me-2">
-    <%= link_to "/accounts/all_accounts?role=athlete", class: "inline-block p-4 #{'active' if params[:role] == 'athlete'} rounded-t-lg" do %>
+    
+    <!-- Athletes -->
+    <%= link_to all_accounts_accounts_path(role: 'athlete'), 
+        class: "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 #{params[:role] == 'athlete' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
       Athletes
     <% end %>
-  </li>
-</ul>
+  </div>
+</div>

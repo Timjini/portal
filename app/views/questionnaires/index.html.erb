@@ -13,7 +13,7 @@
                 <p class="font-medium mb-4"><%= q.position %>. <%= q.content %></p>
                 <div class="space-y-3">
                     <% if q.question_type == 'radio' %>
-                    <% q.options.each do |option| %>
+                    <% q.parsed_options.each do |option| %>
                     <div class="flex items-center">
                         <input id="q<%= q.id %>_<%= option.parameterize %>" type="radio" name="answers[<%= q.id %>]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500" required>
                         <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
@@ -22,7 +22,7 @@
                     </div>
                     <% end %>
                     <% elsif q.question_type == 'multiple' %>
-                    <% q.options.each do |option| %>
+                    <% q.parsed_options.each do |option| %>
                     <div class="flex items-center">
                         <input id="q<%= q.id %>_<%= option.parameterize %>" type="checkbox" name="answers[<%= q.id %>][]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                         <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
@@ -45,7 +45,7 @@
                 <p class="font-medium mb-4"><%= q.position %>. <%= q.content %></p>
                 <div class="space-y-3">
                     <% if q.question_type == 'radio' %>
-                    <% q.options.each do |option| %>
+                    <% q.parsed_options.each do |option| %>
                     <div class="flex items-center">
                         <input id="q<%= q.id %>_<%= option.parameterize %>" type="radio" name="answers[<%= q.id %>]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500" required>
                         <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
@@ -54,7 +54,7 @@
                     </div>
                     <% end %>
                     <% elsif q.question_type == 'multiple' %>
-                    <% q.options.each do |option| %>
+                    <% q.parsed_options.each do |option| %>
                     <div class="flex items-center">
                         <input id="q<%= q.id %>_<%= option.parameterize %>" type="checkbox" name="answers[<%= q.id %>][]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                         <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
@@ -77,7 +77,7 @@
                 <p class="font-medium mb-4"><%= q.position %>. <%= q.content %></p>
                 <div class="space-y-3">
                     <% if q.question_type == 'radio' %>
-                    <% q.options.each do |option| %>
+                    <% q.parsed_options.each do |option| %>
                     <div class="flex items-center">
                         <input id="q<%= q.id %>_<%= option.parameterize %>" type="radio" name="answers[<%= q.id %>]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500" required>
                         <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
@@ -86,7 +86,7 @@
                     </div>
                     <% end %>
                     <% elsif q.question_type == 'multiple' %>
-                    <% q.options.each do |option| %>
+                    <% q.parsed_options.each do |option| %>
                     <div class="flex items-center">
                         <input id="q<%= q.id %>_<%= option.parameterize %>" type="checkbox" name="answers[<%= q.id %>][]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                         <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
@@ -109,7 +109,7 @@
                 <p class="font-medium mb-4"><%= q.position %>. <%= q.content %></p>
                 <div class="space-y-3">
                     <% if q.question_type == 'radio' %>
-                    <% q.options.each do |option| %>
+                    <% q.parsed_options.each do |option| %>
                     <div class="flex items-center">
                         <input id="q<%= q.id %>_<%= option.parameterize %>" type="radio" name="answers[<%= q.id %>]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500" required>
                         <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
@@ -118,7 +118,7 @@
                     </div>
                     <% end %>
                     <% elsif q.question_type == 'multiple' %>
-                    <% q.options.each do |option| %>
+                    <% q.parsed_options.each do |option| %>
                     <div class="flex items-center">
                         <input id="q<%= q.id %>_<%= option.parameterize %>" type="checkbox" name="answers[<%= q.id %>][]" value="<%= option %>" class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                         <label for="q<%= q.id %>_<%= option.parameterize %>" class="ml-3 block text-sm font-medium text-gray-700">
