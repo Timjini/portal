@@ -62,7 +62,10 @@ class AccountsController < ApplicationController
                   User.includes([:athlete_profile]).where(role: params[:role]).paginate(page: params[:page],
                                                                                         per_page: 10).includes([:avatar_attachment])
                 else
-                  User.includes([:athlete_profile]).all.paginate(page: params[:page], per_page: 10).includes([:coach_calendars, :avatar_attachment])
+                  User.includes([:athlete_profile]).all.paginate(page: params[:page],
+                                                                 per_page: 10).includes(%i[
+                                                                                          coach_calendars avatar_attachment
+                                                                                        ])
                 end
   end
 

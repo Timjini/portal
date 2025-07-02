@@ -30,10 +30,10 @@ class CreateExercises < ActiveRecord::Migration[7.1]
       # target
       t.string :muscle_group
       t.string :primary_focus
-      t.json :movement_patterns, default: []
-      t.json :equipment, default: []
+      t.json :movement_patterns
+      t.json :equipment
       # Flexible extra attributes stored here
-      t.json :extra_attributes, default: []
+      t.json :extra_attributes
 
       t.timestamps
     end

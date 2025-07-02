@@ -3,31 +3,43 @@ import { Controller } from "@hotwired/stimulus"
 import Swal from 'sweetalert2'
 
 export default class extends Controller {
-  static targets = ["form"]
+  static values = { kpiId: String }
+
+  connect() {
+    console.log('KPI Form Controller Initialized')
+  }
 
   async submit(event) {
     event.preventDefault()
     
-    const form = this.element
+    const form = event.currentTarget
     const formData = new FormData(form)
-    const kpiId = form.dataset.kpiId || '<%= @level.id %>'
-    const url = `/kpis/${kpiId}`
+    const kpiId = this.kpiIdValue
+
+    if (!kpiId) {
+      console.error('Missing KPI ID')
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Missing KPI ID',
+        confirmButtonColor: '#d33',
+      })
+      return
+    }
 
     // Convert checklist data to an array of objects
-    const checklistData = []
-    form.querySelectorAll('[name^="checklist_ids"]').forEach((idInput) => {
+    const checklistData = Array.from(form.querySelectorAll('[name="checklist_ids[]"]')).map((idInput) => {
       const titleInput = form.querySelector(`#check_list_${idInput.value}`)
-      checklistData.push({
+      return {
         id: idInput.value,
-        title: titleInput.value
-      })
+        title: titleInput?.value || ''
+      }
     })
 
-    // Append the JSON string to the form data
     formData.append('checklist_data', JSON.stringify(checklistData))
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(`/kpis/${kpiId}/edit`, {
         method: 'PATCH',
         body: formData,
         headers: {
@@ -55,7 +67,7 @@ export default class extends Controller {
       Swal.fire({
         icon: 'error',
         title: 'Error!',
-        text: 'Failed to update KPI. Please try again.',
+        text: error.message || 'Failed to update KPI. Please try again.',
         confirmButtonColor: '#d33',
       })
     }

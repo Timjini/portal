@@ -1,82 +1,113 @@
-<div class="p-4 rounded-lg">
-   <div class="flex flex-row gap-8 flex-wrap">
-      <div class="w-48">
-         <h3 class="text-md">Athlete's Profile</h3>
-         <%= image_tag(@athlete.user.avatar_thumbnail, class:"w-24 h-24 object-cover rounded-full")%>
-         <% if @athlete.user.answers.any?(&:health_issue?)%>
-         <div class="tooltip">
-            <span class="material-symbols-outlined text-red-500 animate-ping">
-            local_hospital
-            </span>
-            <span class="tooltiptext">
-               <ul>
-                  <%@athlete.user_illnesses.each do |illness| %>
-                  <li>
-                     <%= illness %>
-                  </li>
-                  <%end%>
-               </ul>
-            </span>
-         </div>
-         <%end%>
-
-         <span class="<%=@athlete.user.level%> text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-         <%=@athlete.user.level%> 
-         </span>
-         <%= render 'athlete_profiles/player_score'%>
+<div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
+  <!-- Header Section -->
+  <div class="flex flex-col md:flex-row gap-8 items-start">
+    <!-- Profile Picture & Basic Info -->
+    <div class="flex flex-col items-center w-full md:w-auto">
+      <div class="relative">
+        <div class="w-32 h-32 rounded-full border-4 border-blue-100 shadow-md overflow-hidden bg-gray-100">
+          <%= image_tag(@athlete.user.avatar_thumbnail, class: "w-full h-full object-cover", alt: "Athlete profile") %>
+        </div>
+        
+        <% if @athlete.user.answers.any?(&:health_issue?) %>
+        <div class="absolute -top-2 -right-2 group">
+          <div class="bg-red-500 text-white p-2 rounded-full shadow-lg cursor-help">
+            <span class="material-symbols-outlined">local_hospital</span>
+          </div>
+          <div class="absolute z-10 right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg p-3 hidden group-hover:block">
+            <h4 class="font-bold text-sm text-red-600 mb-1">Health Notes</h4>
+            <ul class="text-xs space-y-1">
+              <% @athlete.user_illnesses.each do |illness| %>
+                <li class="text-gray-700">• <%= illness %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <% end %>
       </div>
-      <div class="w-48">
-         <div>
-            <span class="font-bold text-md"> Contact Info: </span>
-         </div>
-         <div>
-            <strong class=" text-xs">Age :</strong><span class="text-xs"><%=@athlete.age%></span>
-         </div>
-         <div>
-            <strong class=" text-xs">Username :</strong><span class="text-xs"><%=@athlete.user.username%></span>
-         </div>
-         <div>
-            <strong class=" text-xs">School Name :</strong><span class="text-xs"> <%=@athlete.school_name%></span>
-         </div>
-         <div>
-            <strong class=" text-xs">Address :</strong><span class="text-xs"> <%=@athlete.user.address%></span>
-         </div>
+      
+      <div class="mt-4 text-center">
+        <h3 class="text-xl font-bold text-gray-800"><%= @athlete.user.username %></h3>
+        <span class="inline-block mt-1 px-3 py-1 text-xs font-semibold rounded-full 
+                    <%= @athlete.user.level.downcase == 'elite' ? 'bg-purple-100 text-purple-800' : 
+                        @athlete.user.level.downcase == 'advanced' ? 'bg-blue-100 text-blue-800' : 
+                        'bg-green-100 text-green-800' %>">
+          <%= @athlete.user.level %>
+        </span>
+        <%= render 'athlete_profiles/player_score' %>
       </div>
-      <div class="w-48">
-         <div>
-            <span class="font-bold text-md"> Contact Info: </span>
-         </div>
-         <div>
-            <strong class="text-xs">Height :</strong><span class="text-xs"><%=@athlete.height%>cm</span>
-         </div>
-         <div>
-            <strong class=" text-xs">Weight :</strong><span class="text-xs"><%=@athlete.weight%>Kg</span>
-         </div>
-         <div>
-            <strong class=" text-xs">Power Of ten :</strong><span class="text-xs"><%=@athlete.power_of_ten%></span>
-         </div>
-         <div>
-
-         <strong class=" text-xs">Level :</strong><span class="text-xs"> <%=@athlete.user.level%></span> 
-
-         </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Personal Info -->
+      <div class="bg-gray-50 p-4 rounded-lg">
+        <h4 class="font-bold text-gray-700 border-b pb-2 mb-3 flex items-center">
+          <span class="material-symbols-outlined mr-2 text-blue-500">person</span>
+          Personal Info
+        </h4>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">Age</span>
+            <span class="text-sm font-medium"><%= @athlete.age %></span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">School</span>
+            <span class="text-sm font-medium"><%= @athlete.school_name.presence || "N/A" %></span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">Location</span>
+            <span class="text-sm font-medium"><%= @athlete.user.address.presence || "N/A" %></span>
+          </div>
+        </div>
       </div>
-      <div class="w-48">
-      <div>
-            <span class="font-bold text-md"> PB's: </span>
-         </div>
-         <div>
-            <strong class="text-xs">60m :</strong><span class="text-xs"></span>
-         </div>
-         <div>
-            <strong class=" text-xs">100m :</strong><span class="text-xs"></span>
-         </div>
-         <div>
-            <strong class=" text-xs">200m :</strong><span class="text-xs"></span>
-         </div>
-         <div>
-            <span> <strong class=" text-xs">VJ:</strong class=" text-xs"></span> |  <span> <strong class=" text-xs">HJ:</strong class="text-xs"></span>
-         </div>
+      
+      <!-- Physical Stats -->
+      <div class="bg-gray-50 p-4 rounded-lg">
+        <h4 class="font-bold text-gray-700 border-b pb-2 mb-3 flex items-center">
+          <span class="material-symbols-outlined mr-2 text-green-500">fitness_center</span>
+          Physical Stats
+        </h4>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">Height</span>
+            <span class="text-sm font-medium"><%= @athlete.height.present? ? "#{@athlete.height} cm" : "N/A" %></span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">Weight</span>
+            <span class="text-sm font-medium"><%= @athlete.weight.present? ? "#{@athlete.weight} kg" : "N/A" %></span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">Power of 10</span>
+            <span class="text-sm font-medium"><%= @athlete.power_of_ten.presence || "N/A" %></span>
+          </div>
+        </div>
       </div>
-   </div>
+      
+      <!-- Personal Bests -->
+      <div class="bg-gray-50 p-4 rounded-lg">
+        <h4 class="font-bold text-gray-700 border-b pb-2 mb-3 flex items-center">
+          <span class="material-symbols-outlined mr-2 text-yellow-500">emoji_events</span>
+          Personal Bests
+        </h4>
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">60m</span>
+            <span class="text-sm font-medium">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">100m</span>
+            <span class="text-sm font-medium">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">200m</span>
+            <span class="text-sm font-medium">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">Vertical Jump</span>
+            <span class="text-sm font-medium">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

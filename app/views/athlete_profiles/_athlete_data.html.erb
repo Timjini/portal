@@ -1,39 +1,76 @@
-<%= render 'athlete_profiles/level_tab'%>
+<%= render 'athlete_profiles/level_tab' %>
+
 <turbo-frame id="accordion-frame">
-    <div id="accordion-collapse" data-accordion="collapse" class="">
-        <%filtered_levels = {}
-    if @levels.size > 25
-        filtered_levels = @levels.includes([:check_lists]).where(degree:@athlete.user.level).limit(5)
-        else
-        filtered_levels = @levels.includes([:check_lists])
-    end
-   %>
-        <!-- LEVEL -->
-        <% filtered_levels.each do |level|%>
-        <div class="mb-4">
-            <h2 id="accordion-collapse-heading-<%=level.id%>" class="<%if current_user.role != "coach" && current_user.role != "admin" && @athlete.level != level.degree %> inactive <%end%>">
-                <span class="<%=level.category%> text-xs font-medium me-2 px-2.5 py-0.5 rounded "><%=level.category.humanize%></span>
-                <button type="button" class="border flex items-center justify-between w-full p-5 font-medium text-left rounded-t-xl " data-accordion-target="#accordion-collapse-body-<%=level.id%>" aria-expanded="true" aria-controls="accordion-collapse-body-<%=level.id%>">
-                    <span class="font-sans uppercase" style=""><%= level.degree%></span>
-                    <%if current_user.role != "coach" && current_user.role != "admin" && @athlete.level != level.degree %>
-                    <span class="material-symbols-outlined">
-                        lock
-                    </span>
-                    <%else%>
-                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
-                    </svg>
-                    <%end%>
-                </button>
-            </h2>
-            <div id="accordion-collapse-body-<%=level.id%>" class="hidden" aria-labelledby="accordion-collapse-heading-<%=level.id%>">
-                <div class="p-5 border border-b-0 ">
-                    <%= render 'athlete_profiles/check_list' , level: level %>
-                </div>
-                <div>
-                </div>
-            </div>
+  <div class="space-y-4 max-w-4xl mx-auto">
+    <% filtered_levels = @levels.size > 25 ? @levels.includes([:check_lists]).where(degree: @athlete.user.level).limit(5) : @levels.includes([:check_lists]) %>
+    
+    <% filtered_levels.each do |level| %>
+      <% locked = current_user.role != "coach" && current_user.role != "admin" && @athlete.level != level.degree %>
+      
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 transition-all hover:shadow-md">
+        <button 
+          type="button" 
+          class="w-full p-5 flex items-center justify-between gap-4"
+          data-accordion-target="#accordion-collapse-body-<%= level.id %>" 
+          aria-expanded="<%= !locked %>" 
+          aria-controls="accordion-collapse-body-<%= level.id %>"
+          <%= 'disabled' if locked %>
+        >
+          <!-- Category Badge -->
+          <span class="<%= level.category %> text-xs font-medium px-3 py-1 rounded-full capitalize">
+            <%= level.category.humanize %>
+          </span>
+          
+          <!-- Level Title -->
+          <span class="flex-1 text-left font-medium text-gray-800 uppercase">
+            <%= level.degree %>
+          </span>
+          
+          <!-- Lock or Chevron Icon -->
+          <% if locked %>
+            <span class="material-symbols-outlined text-gray-400">
+              lock
+            </span>
+          <% else %>
+            <svg class="w-5 h-5 text-gray-500 transition-transform duration-200" 
+                 data-accordion-icon 
+                 xmlns="http://www.w3.org/2000/svg" 
+                 viewBox="0 0 20 20" 
+                 fill="currentColor">
+              <path fill-rule="evenodd" 
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" 
+                    clip-rule="evenodd" />
+            </svg>
+          <% end %>
+        </button>
+        
+        <!-- Content Panel -->
+        <div id="accordion-collapse-body-<%= level.id %>" 
+             class="hidden border-t border-gray-100 bg-gray-50" 
+             aria-labelledby="accordion-collapse-heading-<%= level.id %>">
+          <div class="p-5">
+            <%= render 'athlete_profiles/check_list', level: level %>
+          </div>
         </div>
-        <%end%>
-    </div>
+      </div>
+    <% end %>
+  </div>
 </turbo-frame>
+
+<style>
+  /* Category Badge Colors - customize as needed */
+  .speed { background-color: #DBEAFE; color: #1E40AF; }
+  .strength { background-color: #D1FAE5; color: #065F46; }
+  .endurance { background-color: #FEE2E2; color: #991B1B; }
+  .technique { background-color: #EFF6FF; color: #1E40AF; }
+  .flexibility { background-color: #ECFDF5; color: #047857; }
+  
+  button[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  button[aria-expanded="true"] svg[data-accordion-icon] {
+    transform: rotate(180deg);
+  }
+</style>

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Coaches::AssessmentsController < ApplicationController # rubocop:disable Style/ClassAndModuleChildren
+  rescue_from Errors::QueryError, with: :handle_query_error
   def index
     @kpi_categories = KpiCategory.order(:id)
     @structured_data = ExerciseStructureQuery.new.call
@@ -8,7 +9,11 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
 
   def show
     @kpi_categories = KpiCategory.order(:id)
-    @structured_data = ExerciseStructureQuery.new.call
+    begin
+      @structured_data = ExerciseStructureQuery.new.call
+    rescue QueryError => e
+      render json: { error: e.message }, status: :internal_server_error
+    end
     @athlete = User.find(params[:id])
     @steps = Step.all
     @assessments = Assessment.where(athlete_id: @athlete.id).order(created_at: :desc)

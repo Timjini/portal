@@ -1,42 +1,31 @@
-<style>
-  .active {
-    color: blue;
-  }
-  .swal2-confirm{
-    background-color:#AC312C;
-  }
-</style>
-
-<!-- Degree Selection -->
-<ul class="flex flex-wrap text-sm font-medium text-center border-b border-gray-200">
-  <!-- 'All' option link -->
-  <%
-=begin%>
- <li class="me-2">
-    <%= link_to athlete_profile_path(@athlete, degree: nil), class: "inline-block p-4 #{'active' if params[:degree].nil?} rounded-t-lg" do %>
-      All
-    <% end %>
-  </li> 
-<%
-=end%>
-
-  <!-- Dynamically generate degree links -->
-  <% @levels.degrees.each do |degree| %>
-    <li class="me-2">
-      <%= link_to athlete_profile_path(@athlete, degree: degree[0], step: 1), class: "inline-block p-4 #{'active' if params[:degree] == degree[0]} rounded-t-lg" do %>
-        <%= degree[0].capitalize %>
+<div class="mb-6 max-w-4xl mx-auto">
+  <!-- Degree Selection -->
+  <div class="flex flex-col items-center space-y-4">
+    <div class="flex flex-wrap justify-center gap-2">
+      <% @levels.degrees.each do |degree| %>
+        <%= link_to athlete_profile_path(@athlete, degree: degree[0], step: 1), 
+            class: "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 #{params[:degree] == degree[0] ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" do %>
+          <%= degree[0].capitalize %>
+        <% end %>
       <% end %>
-    </li>
-  <% end %>
-</ul>
+    </div>
 
-<!-- Step Selection Based on Degree -->
-<% if params[:degree].present? %>
-  <div class="flex border-b border-gray-200  flex-wrap gap-4 mt-4">
-    <% (1..5).each do |step| %> <!-- Assuming steps range from 1 to 5 -->
-      <%= link_to athlete_profile_path(@athlete, degree: params[:degree], step: step), class: "inline-block p-4 #{'active' if params[:step].to_i == step} rounded-t-lg" do %>
-        Level <%= step %>
-      <% end %>
+    <!-- Step Selection -->
+    <% if params[:degree].present? %>
+      <div class="flex flex-wrap justify-center gap-2">
+        <% (1..5).each do |step| %>
+          <%= link_to athlete_profile_path(@athlete, degree: params[:degree], step: step), 
+              class: "px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 #{params[:step].to_i == step ? 'bg-blue-100 text-blue-700 border border-blue-300' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}" do %>
+            Level <%= step %>
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
   </div>
-<% end %>
+</div>
+
+<style>
+  .swal2-confirm {
+    background-color: #AC312C !important;
+  }
+</style>

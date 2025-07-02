@@ -13,9 +13,23 @@ class Ability
       can :manage, Exercise
       can :read, CoachCalendar
       # add more coach-specific rules
-    else # rubocop:disable Style/EmptyElse
-      # default for athletes
-      # can :read, Exercise
+    else
+      # Default for athlete, child_user, or parent
+
+      # Allow user to read/update their own user record
+      can %i[read update], User, id: user.id
+
+      if user.role == 'parent_user'
+        can %i[read update], User, id: user.id
+
+        can %i[read update], User, parent_id: user.id
+
+      elsif user.role == 'child_user'
+        can %i[read update], User, id: user.id
+        can :read, User, id: user.parent_id if user.parent_id.present?
+      end
+
+      # Add any other athlete-specific permissions here
     end
 
     # Define abilities for the user here. For example:

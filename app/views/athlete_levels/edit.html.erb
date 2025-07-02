@@ -1,18 +1,13 @@
 <% content_for :title, "Editing athlete level" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing athlete level</h1>
+<div class="min-h-screen flex flex-col items-center justify-center p-4 ">
+  <div class="max-w-4xl w-full rounded-xl  p-8">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">Edit Athlete Level</h1>
+      <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
+    </div>
 
-  <%= render "form", athlete_level: @athlete_level %>
+    <%= render "form", athlete_level: @athlete_level %>
 
-  <%
-=begin%>
- <%= link_to "Show this athlete level", @athlete_level, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %> 
-<%
-=end%>
-  <%
-=begin%>
- <%= link_to "Back to athlete levels", athlete_levels_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %> 
-<%
-=end%>
+  </div>
 </div>

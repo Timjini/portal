@@ -1,92 +1,125 @@
-<%= render 'components/back_button'%>
-<div class="relative rounded-lg shadow ">
-   <div class="px-6 py-6 lg:px-8">
-      <h3 class="mb-4 text-xl font-medium ">Create Child Athlete Account.</h3>
-      <form class="space-y-6" id="account-form">
-         <div class="mb-5 " data-controller="avatar">
-            <div class="ml-4 w-28 h-28 mb-2 border rounded-full relative bg-gray-100 mb-4 shadow-inset" >
-               <div data-loading-indicator-target="loadingIndicator" class="loading-indicator hidden">
-                  <div role="status">
-                     <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-                     </svg>
-                     <span class="sr-only">Loading...</span>
-                  </div>
-               </div>
-               <img id="image" class="object-cover w-full h-28 rounded-full" src="/assets/user-5d0a17a1a8c6db61a57ce05ef2b6c77a97a706da7cf250f27964a31a89df1414.png" alt="Avatar Preview" data-avatar-target="image">
+<%= render 'components/back_button' %>
+
+<div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+  <div class="p-8">
+    <div class="text-center mb-8">
+      <h2 class="text-2xl font-bold text-gray-800">Create Child Athlete Account</h2>
+      <p class="text-gray-600 mt-2">Fill in your child's details to get started</p>
+    </div>
+
+    <form class="space-y-6" id="account-form">
+      <!-- Avatar Section -->
+      <div class="mb-8 text-center" data-controller="avatar">
+        <div class="mx-auto w-32 h-32 mb-4 rounded-full relative bg-gradient-to-br from-blue-50 to-gray-100 shadow-lg border-4 border-white">
+          <div data-loading-indicator-target="loadingIndicator" class="loading-indicator hidden absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 rounded-full">
+            <div role="status">
+              <svg aria-hidden="true" class="w-8 h-8 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+              </svg>
+              <span class="sr-only">Loading...</span>
             </div>
+          </div>
+          <div class="panzoom-container absolute inset-0 overflow-hidden rounded-full">
+            <img id="image" class="w-full h-full object-cover" 
+              src="/assets/user.png" 
+              alt="Avatar Preview" 
+              data-avatar-target="image">
+          </div>
+        </div>
+        
+        <label for="avatarInput" type="button" class="cursor-pointer inline-flex justify-center items-center focus:outline-none border border-gray-300 py-2 px-6 rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50 font-medium transition-colors duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-5 h-5 mr-2" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+            <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"></path>
+            <circle cx="12" cy="13" r="3"></circle>
+          </svg>
+          Browse Photo
+        </label>
+        <div class="text-gray-500 text-sm mt-2">Click to add profile picture</div>
+         <input type="file" 
+         name="avatar" 
+         id="avatarInput" 
+         class="hidden" 
+         accept="image/*" 
+         data-avatar-target="input" 
+         data-action="change->avatar#handleFileSelect">
+      </div>
+
+      <!-- Form Fields -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Basic Info -->
+        <div class="space-y-4">
+          <div>
+            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Child's Username</label>
+            <input type="text" name="username" id="username" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="username" required>
+          </div>
+          
+          <div>
+            <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+            <input type="text" name="first_name" id="first_name" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="first name" required>
+          </div>
+          
+          <div>
+            <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+            <input type="text" name="last_name" id="last_name" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="last name" required>
+          </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="space-y-4">
+          <div>
+            <label for="dob" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+            <input type="date" name="dob" id="dob" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" required>
+          </div>
+          
+          <div>
+            <label for="school" class="block text-sm font-medium text-gray-700 mb-1">School Name (optional)</label>
+            <input type="text" name="school_name" id="school_name" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="school name">
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4">
             <div>
-               <label for="avatarInput" type="button" class="cursor-pointer inline-flex justify-between items-center focus:outline-none border py-2 px-4 rounded-lg shadow-sm text-left text-gray-600 bg-white hover:bg-gray-100 font-medium">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="inline-flex flex-shrink-0 w-6 h-6 -mt-1 mr-1" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                     <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-                     <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"></path>
-                     <circle cx="12" cy="13" r="3"></circle>
-                  </svg>
-                  Browse Photo
-               </label>
+              <label for="height" class="block text-sm font-medium text-gray-700 mb-1">Height (cm)</label>
+              <input type="number" name="height" id="height" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="height">
             </div>
-            <div class=" w-48 text-gray-500 text-xs text-center mt-1">Click to add profile picture</div>
-            <input type="file" name="avatar" id="avatarInput" data-avatar-target="input" class="hidden">
-         </div>
-         <div class="flex flex-row mb-5  gap-4 flex-wrap ">
-            <div class="inputDiv">
-               <label for="username" class="block mb-2 text-sm font-medium ">Child's Username</label>
-               <input type="text" name="username" id="username" class=" border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="username" style="color:gray;" required>
+            
+            <div>
+              <label for="weight" class="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
+              <input type="number" name="weight" id="weight" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="weight">
             </div>
-            <div class="inputDiv">
-               <label for="firstName" class="block mb-2 text-sm font-medium ">Child's First Name</label>
-               <input type="text" name="first_name" id="first_name" class="bg-gray-50  border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="first name" style="color:gray;" required>
-            </div>
-            <div class="inputDiv">
-               <label for="lastName" class="block mb-2 text-sm font-medium ">Child's Last Name</label>
-               <input type="text" name="last_name" id="last_name" class="bg-gray-50  border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="last name" style="color:gray;" required>
-            </div>
-         </div>
-         <div class="flex flex-row mb-5  gap-4 flex-wrap ">
-            <div class="inputDiv">
-               <label for="dob" class="block mb-2 text-sm font-medium ">Child's Date of Birth</label>
-               <input type="date" name="dob" id="dob" class=" bg-gray-50  border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="date of birth" style="color:gray;" required>
-            </div>
-            <div class="inputDiv">
-               <label for="school" class=" block mb-2 text-sm font-medium ">School Name (optional)</label>
-               <input type="text" name="school_name" id="school_name" class="bg-gray-50  border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="school name" style="color:gray;">
-            </div>
-            <div class="inputDiv">
-               <label for="height" class="block mb-2 text-sm font-medium ">Child's Height CM (optional)</label>
-               <input type="number" name="height" id="height" class="bg-gray-50  border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="enter height in cm" style="color:gray;">
-            </div>
-            <div class="inputDiv">
-               <label for="weight" class="block mb-2 text-sm font-medium ">Child's Weight KG (optional)</label>
-               <input type="number" name="weight" id="weight" class="bg-gray-50  border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="enter weight in kg" style="color:gray;">
-            </div>
-         </div>
-         <div class="flex flex-row mb-5  gap-4 flex-wrap">
-            <div class="inputDiv" data-controller="visibility">
-               <label for="password" class="block mb-2 text-sm font-medium ">Child's password</label>
-                  <div class="relative">
-                  <input type="password" name="password" id="password" placeholder="••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" data-visibility-target="password">                     
-                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer eye-icon" data-action="click->visibility#toggleVisibility">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-gray-500 ">
-                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 17.121a9 9 0 01-12.677-12.677M2 12a10 10 0 0120 0m-7-2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                     </div>
-                  </div>
-            </div>
-         </div>
-         <div class="flex flex-row mb-5  gap-4 flex-wrap inputDiv">
-            <button type="submit" class=" focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center btn">Create Child's account</button>
-         </div>
-      </form>
-   </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="pt-2" data-controller="visibility">
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <div class="relative">
+          <input type="password" name="password" id="password" placeholder="••••••" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all pr-10" data-visibility-target="password">
+          <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" data-action="click->visibility#toggleVisibility">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 hover:text-gray-700 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-4">
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+          Create Child's Account
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <script>
   document.addEventListener('turbo:load', () => {
-    // Initialize modal functionality
     const url = "/accounts/create_child_user"
     console.log(url);
-
 
     const form = document.getElementById('account-form');
 
@@ -107,7 +140,7 @@
           console.log(resData);
 
           if (resData.status === 'success') {
-            window.location.href = '/accounts';
+            window.location.href = '/';
           }
         } catch (err) {
           console.error('Error:', err);
@@ -115,4 +148,4 @@
       });
     }
   });
-  </script>
+</script>
