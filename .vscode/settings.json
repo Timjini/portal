@@ -5,6 +5,7 @@
         "hotwired",
         "ILIKE",
         "msapplication",
+        "progname",
         "rgba"
     ]
 }

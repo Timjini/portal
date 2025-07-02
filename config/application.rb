@@ -39,7 +39,10 @@ module Portal
     # require 'dotenv/load' if (ENV['RUBY_ENV'] == "development" || ENV['RUBY_ENV'] == "test")
 
     # load paths
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths += %W[
+      #{config.root}/app/errors
+      #{config.root}/app/queries
+    ]
 
     # production
     # config.action_controller.default_url_options = { host: 'chambersforsport.net' }

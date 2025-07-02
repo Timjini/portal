@@ -6,5 +6,4 @@ class Coaches::DashboardController < ApplicationController
     # @students = current_user&.students.includes(:courses).order(:name) || []
     # @courses = current_user&.courses.order(:title) || []
   end
-
 end
