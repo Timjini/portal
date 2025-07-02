@@ -1,17 +1,34 @@
-<% content_for :title, "Showing kpi category" %>
+<% content_for :title, "Showing KPI Category" %>
 
-<div class="md:w-2/3 w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
+<div class="min-h-screen flex items-center justify-center  p-4">
+  <div class="w-full max-w-4xl bg-white rounded-xl shadow-md overflow-hidden">
+    <% if notice.present? %>
+      <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
+        <p class="font-medium" id="notice"><%= notice %></p>
+      </div>
+    <% end %>
 
-  <h1 class="font-bold text-4xl">Showing kpi category</h1>
+    <div class="p-8">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">KPI Category Details</h1>
+        <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
+      </div>
 
-  <%= render @kpi_category %>
+      <div class="mb-8">
+        <%= render @kpi_category %>
+      </div>
 
-  <%= link_to "Edit this kpi category", edit_kpi_category_path(@kpi_category), class: "mt-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to kpi categories", kpi_categories_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <div class="inline-block ml-2">
-    <%= button_to "Destroy this kpi category", @kpi_category, method: :delete, class: "mt-2 rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium" %>
+      <div class="flex flex-wrap justify-center gap-4 pt-6 border-t border-gray-200">
+        <%= link_to "Edit Category", edit_kpi_category_path(@kpi_category), 
+                   class: "px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors" %>
+        
+        <%= link_to "Back to Categories", kpi_categories_path, 
+                   class: "px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg shadow-sm transition-colors" %>
+        
+        <%= button_to "Delete Category", @kpi_category, method: :delete,
+                    data: { turbo_confirm: "Are you sure you want to delete this category?" },
+                    class: "px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg shadow-sm transition-colors" %>
+      </div>
+    </div>
   </div>
 </div>

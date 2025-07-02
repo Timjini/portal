@@ -13,22 +13,24 @@ class ExerciseStructureQuery
 
   private
 
-  def execute_query # rubocop:disable Metrics/MethodLength
-    @query = ActiveRecord::Base.connection.execute(<<-SQL.squish)
-      SELECT#{' '}
-        athlete_levels.name AS athlete_level_name,
-        kpi_categories.name AS kpi_category_name,
-        steps.step_number,
-        step_exercises.order,
-        exercises.*
-      FROM athlete_level_categories
-      JOIN steps ON athlete_level_categories.id = steps.athlete_level_category_id
-      JOIN step_exercises ON steps.id = step_exercises.step_id
-      JOIN exercises ON step_exercises.exercise_id = exercises.id
-      JOIN athlete_levels ON athlete_level_categories.athlete_level_id = athlete_levels.id
-      JOIN kpi_categories ON athlete_level_categories.kpi_category_id = kpi_categories.id
-      ORDER BY(step_exercises.order)
-    SQL
+  def execute_query
+    @query = ActiveRecord::Base.connection.execute(
+      ActiveRecord::Base.sanitize_sql([<<-SQL.squish])
+        SELECT
+          athlete_levels.name AS athlete_level_name,
+          kpi_categories.name AS kpi_category_name,
+          steps.step_number,
+          step_exercises.order AS exercise_order,
+          exercises.*
+        FROM athlete_level_categories
+        JOIN steps ON athlete_level_categories.id = steps.athlete_level_category_id
+        JOIN step_exercises ON steps.id = step_exercises.step_id
+        JOIN exercises ON step_exercises.exercise_id = exercises.id
+        JOIN athlete_levels ON athlete_level_categories.athlete_level_id = athlete_levels.id
+        JOIN kpi_categories ON athlete_level_categories.kpi_category_id = kpi_categories.id
+        ORDER BY step_exercises.order
+      SQL
+    )
   end
 
   def structure_data # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength

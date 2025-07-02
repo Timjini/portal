@@ -1,10 +1,21 @@
-<% content_for :title, "Editing kpi category" %>
+<% content_for :title, "Editing KPI Category" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing kpi category</h1>
+<div class="min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-4xl bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="p-8">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Edit KPI Category</h1>
+        <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
+      </div>
 
-  <%= render "form", kpi_category: @kpi_category %>
+      <%= render "form", kpi_category: @kpi_category %>
 
-  <%= link_to "Show this kpi category", @kpi_category, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to kpi categories", kpi_categories_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+      <div class="flex flex-wrap justify-center gap-4 mt-8 pt-6 border-t border-gray-200">
+        <%= link_to "View Category", @kpi_category, 
+                   class: "px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg shadow-sm transition-colors" %>
+        <%= link_to "Back to Categories", kpi_categories_path, 
+                   class: "px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg shadow-sm transition-colors" %>
+      </div>
+    </div>
+  </div>
 </div>
