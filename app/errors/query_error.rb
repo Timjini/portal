@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class QueryError
+class QueryError < StandardError
   attr_reader :sql
 
   def initialize(message, sql, original = nil)

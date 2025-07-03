@@ -60,5 +60,8 @@ module Portal
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
     # config.eager_load_paths << Rails.root.join("extras")
+    # 
+    # Disable the generation of system test files.
+    config.autoload_paths -= %W[#{config.root}/app/disabled]
   end
 end
