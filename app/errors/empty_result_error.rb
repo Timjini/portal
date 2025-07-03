@@ -1,2 +1,0 @@
-class EmptyResultError < StandardError
-end
