@@ -126,75 +126,51 @@
           </span>
           Progress Timeline
         </h2>
-        <select class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
-        <% if !current_user.child_users.nil?%>
-          <% current_user.child_users.each do |child|%>
-          <option><%=child.full_name%></option>
-          <%end %>
-        <%end%>
-        </select>
+        <% if @children&.any? %>
+          <select class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+            <% @children.each do |child| %>
+              <option value="<%= child.id %>"><%= child.full_name %></option>
+            <% end %>
+          </select>
+        <% end %>
       </div>
       
-      <div class="hidden relative pl-6 pb-6 border-l-2 border-gray-200 space-y-6">
-        <!-- Milestone 1 -->
-        <div class="relative">
-          <div class="absolute -left-7 w-5 h-5 rounded-full bg-blue-500 border-4 border-white flex items-center justify-center">
-            <span class="material-symbols-outlined text-white text-sm">military_tech</span>
-          </div>
-          <div class="bg-blue-50 rounded-lg p-4">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="font-medium">Level Up: Intermediate 2</p>
-                <p class="text-sm text-gray-600 mt-1">May 15, 2024</p>
+      <% if @milestones&.any? %>
+        <div class="relative pl-6 pb-6 border-l-2 border-gray-200 space-y-6">
+          <% @milestones.each do |milestone| %>
+            <div class="relative">
+              <div class="absolute -left-7 w-5 h-5 rounded-full <%= milestone[:color_class] %> border-4 border-white flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-sm"><%= milestone[:icon] %></span>
               </div>
-              <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Achievement</span>
-            </div>
-            <p class="text-sm mt-2">Emma advanced to Intermediate 2 with excellent dribbling skills and improved teamwork.</p>
-          </div>
-        </div>
-        
-        <!-- Milestone 2 -->
-        <div class="relative">
-          <div class="absolute -left-7 w-5 h-5 rounded-full bg-green-500 border-4 border-white flex items-center justify-center">
-            <span class="material-symbols-outlined text-white text-sm">emoji_events</span>
-          </div>
-          <div class="bg-green-50 rounded-lg p-4">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="font-medium">Tournament Champions</p>
-                <p class="text-sm text-gray-600 mt-1">May 5, 2024</p>
+              <div class="<%= milestone[:bg_class] %> rounded-lg p-4">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <p class="font-medium"><%= milestone[:title] %></p>
+                    <p class="text-sm text-gray-600 mt-1"><%= milestone[:date] %></p>
+                  </div>
+                  <span class="text-xs <%= milestone[:badge_bg_class] %> <%= milestone[:badge_text_class] %> px-2 py-1 rounded-full">
+                    <%= milestone[:badge_text] %>
+                  </span>
+                </div>
+                <p class="text-sm mt-2"><%= milestone[:description] %></p>
+                <% if milestone[:actions]&.any? %>
+                  <% milestone[:actions].each do |action| %>
+                    <button class="mt-2 <%= action[:text_class] %> text-sm flex items-center gap-1">
+                      <span class="material-symbols-outlined text-sm"><%= action[:icon] %></span>
+                      <%= action[:label] %>
+                    </button>
+                  <% end %>
+                <% end %>
               </div>
-              <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Team Event</span>
             </div>
-            <p class="text-sm mt-2">Blue Dragons won the Spring Cup with Emma scoring 2 goals in finals.</p>
-            <button class="mt-2 text-green-600 text-sm flex items-center gap-1">
-              <span class="material-symbols-outlined text-sm">photo_library</span>
-              View Tournament Photos
-            </button>
-          </div>
+          <% end %>
         </div>
-        
-        <!-- Milestone 3 -->
-        <div class="relative">
-          <div class="absolute -left-7 w-5 h-5 rounded-full bg-purple-500 border-4 border-white flex items-center justify-center">
-            <span class="material-symbols-outlined text-white text-sm">monitoring</span>
-          </div>
-          <div class="bg-purple-50 rounded-lg p-4">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="font-medium">Skills Evaluation</p>
-                <p class="text-sm text-gray-600 mt-1">April 20, 2024</p>
-              </div>
-              <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">Assessment</span>
-            </div>
-            <p class="text-sm mt-2">Shooting accuracy improved by 15% since last evaluation. Passing needs more consistency.</p>
-            <button class="mt-2 text-purple-600 text-sm flex items-center gap-1">
-              <span class="material-symbols-outlined text-sm">description</span>
-              View Full Report
-            </button>
-          </div>
+      <% else %>
+        <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+          <span class="material-symbols-outlined text-gray-400">timeline</span>
+          <p class="text-sm text-gray-500 mt-2">No milestones recorded yet</p>
         </div>
-      </div>
+      <% end %>
     </div>
 
     <!-- Upcoming Events -->
@@ -209,53 +185,39 @@
         <button class="text-blue-600 text-sm font-medium">View Calendar</button>
       </div>
       
-      <div class="space-y-4 hidden">
-        <!-- Event 1 -->
-        <div class="border-l-4 border-blue-500 pl-4 py-2">
-          <div class="flex justify-between">
-            <p class="font-medium">Summer Skills Evaluation</p>
-            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Emma</span>
-          </div>
-          <p class="text-sm text-gray-600 mt-1">June 5, 2024 · 4:00 PM</p>
-          <p class="text-sm mt-1">Mandatory for all U10 players</p>
-          <button class="mt-2 text-blue-600 text-sm flex items-center gap-1">
-            <span class="material-symbols-outlined text-sm">location_on</span>
-            Main Field
-          </button>
+      <% if @upcoming_events&.any? %>
+        <div class="space-y-4">
+          <% @upcoming_events.each do |event| %>
+            <div class="border-l-4 <%= event[:border_class] %> pl-4 py-2">
+              <div class="flex justify-between">
+                <p class="font-medium"><%= event[:title] %></p>
+                <span class="text-xs <%= event[:badge_bg_class] %> <%= event[:badge_text_class] %> px-2 py-1 rounded-full">
+                  <%= event[:child_name] %>
+                </span>
+              </div>
+              <p class="text-sm text-gray-600 mt-1"><%= event[:date_time] %></p>
+              <p class="text-sm mt-1"><%= event[:description] %></p>
+              <% if event[:actions]&.any? %>
+                <% event[:actions].each do |action| %>
+                  <button class="mt-2 <%= action[:text_class] %> text-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm"><%= action[:icon] %></span>
+                    <%= action[:label] %>
+                  </button>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
         </div>
-        
-        <!-- Event 2 -->
-        <div class="border-l-4 border-green-500 pl-4 py-2">
-          <div class="flex justify-between">
-            <p class="font-medium">Regional Tournament</p>
-            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Both</span>
-          </div>
-          <p class="text-sm text-gray-600 mt-1">June 15-16, 2024</p>
-          <p class="text-sm mt-1">Travel required - hotel info sent</p>
-          <button class="mt-2 text-green-600 text-sm flex items-center gap-1">
-            <span class="material-symbols-outlined text-sm">hotel</span>
-            View Accommodations
-          </button>
+      <% else %>
+        <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+          <span class="material-symbols-outlined text-gray-400">event_available</span>
+          <p class="text-sm text-gray-500 mt-2">No upcoming events scheduled</p>
         </div>
-        
-        <!-- Event 3 -->
-        <div class="border-l-4 border-purple-500 pl-4 py-2">
-          <div class="flex justify-between">
-            <p class="font-medium">Parent-Coach Meeting</p>
-            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">Liam</span>
-          </div>
-          <p class="text-sm text-gray-600 mt-1">June 8, 2024 · 6:30 PM</p>
-          <p class="text-sm mt-1">Season planning discussion</p>
-          <button class="mt-2 text-purple-600 text-sm flex items-center gap-1">
-            <span class="material-symbols-outlined text-sm">rsvp</span>
-            Confirm Attendance
-          </button>
-        </div>
-      </div>
+      <% end %>
     </div>
 
     <!-- Messages & Feedback -->
-    <div class="bg-white rounded-xl shadow-sm p-6">
+     <div class="bg-white rounded-xl shadow-sm p-6">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
           <span class="text-amber-500">
@@ -266,74 +228,40 @@
         <button class="text-blue-600 text-sm font-medium">Message Coaches</button>
       </div>
       
-      <div class="space-y-4 hidden">
-        <!-- Message 1 -->
-        <div class="bg-blue-50 rounded-lg p-4">
-          <div class="flex items-start gap-3">
-            <div class="flex-shrink-0">
-              <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
-                <span class="material-symbols-outlined">sports_soccer</span>
+      <% if @coach_feedback&.any? %>
+        <div class="space-y-4">
+          <% @coach_feedback.each do |feedback| %>
+            <div class="<%= feedback[:bg_class] %> rounded-lg p-4">
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0">
+                  <div class="w-10 h-10 rounded-full <%= feedback[:avatar_bg_class] %> <%= feedback[:avatar_text_class] %> flex items-center justify-center">
+                    <span class="material-symbols-outlined"><%= feedback[:avatar_icon] %></span>
+                  </div>
+                </div>
+                <div>
+                  <p class="font-medium"><%= feedback[:coach_name] %> · <span class="text-sm text-gray-600"><%= feedback[:date] %></span></p>
+                  <p class="text-sm mt-1">"<%= feedback[:message] %>"</p>
+                  <% if feedback[:actions]&.any? %>
+                    <div class="mt-2 flex gap-2">
+                      <% feedback[:actions].each do |action| %>
+                        <button class="<%= action[:text_class] %> text-sm flex items-center gap-1">
+                          <span class="material-symbols-outlined text-sm"><%= action[:icon] %></span>
+                          <%= action[:label] %>
+                        </button>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
               </div>
             </div>
-            <div>
-              <p class="font-medium">Coach Williams · <span class="text-sm text-gray-600">May 18</span></p>
-              <p class="text-sm mt-1">"Emma showed great leadership in practice today helping newer players learn passing drills."</p>
-              <div class="mt-2 flex gap-2">
-                <button class="text-blue-600 text-sm flex items-center gap-1">
-                  <span class="material-symbols-outlined text-sm">thumb_up</span>
-                  Like
-                </button>
-                <button class="text-blue-600 text-sm flex items-center gap-1">
-                  <span class="material-symbols-outlined text-sm">reply</span>
-                  Reply
-                </button>
-              </div>
-            </div>
-          </div>
+          <% end %>
         </div>
-        
-        <!-- Message 2 -->
-        <div class="bg-green-50 rounded-lg p-4">
-          <div class="flex items-start gap-3">
-            <div class="flex-shrink-0">
-              <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
-                <span class="material-symbols-outlined">sports_basketball</span>
-              </div>
-            </div>
-            <div>
-              <p class="font-medium">Coach Taylor · <span class="text-sm text-gray-600">May 15</span></p>
-              <p class="text-sm mt-1">"Liam's shooting form has improved dramatically! See the video analysis I shared in his portal."</p>
-              <div class="mt-2 flex gap-2">
-                <button class="text-green-600 text-sm flex items-center gap-1">
-                  <span class="material-symbols-outlined text-sm">play_circle</span>
-                  View Video
-                </button>
-              </div>
-            </div>
-          </div>
+      <% else %>
+        <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+          <span class="material-symbols-outlined text-gray-400">forum</span>
+          <p class="text-sm text-gray-500 mt-2">No recent coach feedback</p>
         </div>
-        
-        <!-- Message 3 -->
-        <div class="bg-amber-50 rounded-lg p-4">
-          <div class="flex items-start gap-3">
-            <div class="flex-shrink-0">
-              <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">
-                <span class="material-symbols-outlined">warning</span>
-              </div>
-            </div>
-            <div>
-              <p class="font-medium">Coach Williams · <span class="text-sm text-gray-600">May 10</span></p>
-              <p class="text-sm mt-1">"Emma seemed tired at practice today. Might need an extra rest day before Saturday's game."</p>
-              <div class="mt-2 flex gap-2">
-                <button class="text-amber-600 text-sm flex items-center gap-1">
-                  <span class="material-symbols-outlined text-sm">hotel</span>
-                  Rest Suggestions
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <% end %>
     </div>
 
     <!-- Attendance & Notifications -->
@@ -343,36 +271,44 @@
         <div>
           <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
             <span class="text-green-600">
-              <span class="material-symbols-outlined">event</span>
+              <span class="material-symbols-outlined">event_available</span>
             </span>
             Attendance
           </h2>
           
-          <div class="space-y-4">
-          <% if !current_user.child_users.nil?%>
-          <% current_user.child_users.each do |child|%>
-          <div>
-              <div class="flex justify-between mb-2">
-                <p class="font-medium"><%=child.full_name%></p>
-                <p class="text-sm font-medium text-green-600">95%</p>
-              </div>
-              <div class="flex gap-1">
-                <div class="h-2 flex-1 bg-green-400 rounded"></div>
-                <div class="h-2 flex-1 bg-green-400 rounded"></div>
-                <div class="h-2 flex-1 bg-green-400 rounded"></div>
-                <div class="h-2 flex-1 bg-green-400 rounded"></div>
-                <div class="h-2 flex-1 bg-gray-200 rounded"></div>
-              </div>
-              <p class="text-xs text-gray-500 mt-1">1 missed session (May 3)</p>
+          <% if @children_attendance&.any? %>
+            <div class="space-y-4">
+              <% @children_attendance.each do |attendance| %>
+                <div>
+                  <div class="flex justify-between mb-2">
+                    <p class="font-medium"><%= attendance[:child_name] %></p>
+                    <p class="text-sm font-medium <%= attendance[:percentage_class] %>">
+                      <%= attendance[:percentage] %>%
+                    </p>
+                  </div>
+                  <div class="flex gap-1">
+                    <% attendance[:attendance_bars].each do |bar| %>
+                      <div class="h-2 flex-1 <%= bar[:class] %> rounded"></div>
+                    <% end %>
+                  </div>
+                  <p class="text-xs text-gray-500 mt-1">
+                    <%= attendance[:missed_sessions] %> missed session<%= attendance[:missed_sessions] == 1 ? '' : 's' %>
+                    <%= attendance[:last_missed] ? "(last #{attendance[:last_missed]})" : '' %>
+                  </p>
+                </div>
+              <% end %>
+              
+              <button class="w-full mt-4 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-sm">download</span>
+                Download Attendance Records
+              </button>
             </div>
-          <%end %>
-        <%end%>
-            
-            <button class="w-full mt-4 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
-              <span class="material-symbols-outlined text-sm">download</span>
-              Download Attendance Records
-            </button>
-          </div>
+          <% else %>
+            <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+              <span class="material-symbols-outlined text-gray-400">event_available</span>
+              <p class="text-sm text-gray-500 mt-2">No attendance data available</p>
+            </div>
+          <% end %>
         </div>
         
         <!-- Notifications -->
@@ -384,39 +320,30 @@
             Recent Alerts
           </h2>
           
-          <div class="space-y-3">
-            <div class="flex items-start gap-3 p-3 bg-red-50 rounded-lg">
-              <span class="material-symbols-outlined text-red-500 mt-0.5">emergency</span>
-              <div>
-                <p class="font-medium">Injury Report</p>
-                <p class="text-sm text-gray-600">Emma reported minor ankle soreness after practice</p>
-                <p class="text-xs text-gray-500 mt-1">May 18 · Coach Williams</p>
-              </div>
+          <% if @recent_alerts&.any? %>
+            <div class="space-y-3">
+              <% @recent_alerts.each do |alert| %>
+                <div class="flex items-start gap-3 p-3 <%= alert[:bg_class] %> rounded-lg">
+                  <span class="material-symbols-outlined <%= alert[:icon_class] %> mt-0.5"><%= alert[:icon] %></span>
+                  <div>
+                    <p class="font-medium"><%= alert[:title] %></p>
+                    <p class="text-sm text-gray-600"><%= alert[:message] %></p>
+                    <p class="text-xs text-gray-500 mt-1"><%= alert[:date] %> · <%= alert[:source] %></p>
+                  </div>
+                </div>
+              <% end %>
+              
+              <button class="w-full mt-2 bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-sm">notifications_active</span>
+                Notification Settings
+              </button>
             </div>
-            
-            <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
-              <span class="material-symbols-outlined text-green-500 mt-0.5">military_tech</span>
-              <div>
-                <p class="font-medium">Goal Achieved!</p>
-                <p class="text-sm text-gray-600">Liam reached his free throw target (75%)</p>
-                <p class="text-xs text-gray-500 mt-1">May 15 · Coach Taylor</p>
-              </div>
+          <% else %>
+            <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+              <span class="material-symbols-outlined text-gray-400">notifications_off</span>
+              <p class="text-sm text-gray-500 mt-2">No recent alerts</p>
             </div>
-            
-            <div class="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
-              <span class="material-symbols-outlined text-blue-500 mt-0.5">payments</span>
-              <div>
-                <p class="font-medium">Payment Reminder</p>
-                <p class="text-sm text-gray-600">Summer program fees due June 1</p>
-                <p class="text-xs text-gray-500 mt-1">May 14 · System</p>
-              </div>
-            </div>
-            
-            <button class="w-full mt-2 bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
-              <span class="material-symbols-outlined text-sm">notifications_active</span>
-              Notification Settings
-            </button>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>
