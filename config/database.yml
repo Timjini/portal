@@ -21,6 +21,6 @@ production:
   database: <%= ENV['SQL_DB_NAME'] %>
   username: <%= ENV['SQL_DB_USER'] %>
   password: <%= ENV['SQL_DB_PASSWORD'] %>
-  encoding: <%= ENV['SQL_DB_ENCODE'] %>
+  encoding: <%= ENV['DB_ENCODE'] %>
   prepared_statements: false
   host: <%= ENV['SQL_HOST'] %>
