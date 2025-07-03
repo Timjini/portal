@@ -10,7 +10,4 @@ module Errors
       set_backtrace(original.backtrace) if original
     end
   end
-
-  class EmptyResultError < QueryError; end
-  class InvalidResultError < QueryError; end
 end
