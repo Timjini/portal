@@ -167,13 +167,13 @@
 
     <!-- Footer - More Compact -->
     <div class="sidebar-footer pt-4 border-t border-gray-100 mt-auto">
-        <div class="flex items-center gap-2 mb-3 p-1 rounded-md hover:bg-gray-50 transition-colors">
+        <a href="/users/<%= current_user.id%>" class="flex items-center gap-2 mb-3 p-1 rounded-md hover:bg-gray-50 transition-colors">
             <%= image_tag(current_user.avatar_thumbnail, class:"w-7 h-7 rounded-full shadow-sm object-cover border border-gray-200") if current_user.avatar_thumbnail.present? %>
             <div class="user-info">
                 <div class="user-name text-xs font-medium text-gray-700"><%= current_user.full_name %></div>
                 <div class="user-role text-[11px] text-gray-400 capitalize"><%= current_user.role %></div>
             </div>
-        </div>
+        </a>
         
         <div class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors cursor-pointer">
             <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-red-500">
