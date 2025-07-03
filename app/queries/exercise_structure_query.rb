@@ -9,8 +9,8 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
     @query = execute_query
     structure_data
     @structured_data
-  rescue Errors::QueryError => e
-    { error: e.message }
+  # rescue Errors::QueryError => e
+  #   { error: e.message }
   end
 
   private
