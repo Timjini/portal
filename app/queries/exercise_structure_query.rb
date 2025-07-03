@@ -16,7 +16,7 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
   private
 
   def execute_query # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    begin # rubocop:disable Style/RedundantBegin
+    # begin # rubocop:disable Style/RedundantBegin
       verify_database_connection!
       sql = build_structure_query
       QUERY_LOGGER.info('Executing structure query')
@@ -27,19 +27,19 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
 
       validate_query_result(result)
       result
-    rescue ActiveRecord::ConnectionNotEstablished => e
-      log_and_reconnect(e)
-      retry
-    rescue ActiveRecord::StatementInvalid, Mysql2::Error => e
-      log_query_error(e, sql)
-      raise Errors::QueryError.new('Database query failed', sql, e)
-    rescue Timeout::Error => e
-      log_timeout_error(sql)
-      raise Errors::QueryError.new('Query timed out', sql, e)
-    rescue StandardError => e
-      log_unexpected_error(e, sql)
-      raise Errors::QueryError.new('Unexpected error', sql, e)
-    end
+    # rescue ActiveRecord::ConnectionNotEstablished => e
+    #   log_and_reconnect(e)
+    #   retry
+    # rescue ActiveRecord::StatementInvalid, Mysql2::Error => e
+    #   log_query_error(e, sql)
+    #   raise Errors::QueryError.new('Database query failed', sql, e)
+    # rescue Timeout::Error => e
+    #   log_timeout_error(sql)
+    #   raise Errors::QueryError.new('Query timed out', sql, e)
+    # rescue StandardError => e
+    #   log_unexpected_error(e, sql)
+    #   raise Errors::QueryError.new('Unexpected error', sql, e)
+    # end
   end
 
   def structure_data # rubocop:disable Metrics/MethodLength
