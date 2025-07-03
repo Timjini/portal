@@ -1,2 +1,0 @@
-class InvalidResultError < StandardError
-end
