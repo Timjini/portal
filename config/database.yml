@@ -1,51 +1,26 @@
 default: &default
   adapter: mysql2
   encoding: utf8mb4
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
-# development:
-#   adapter: postgresql
-#   encoding: unicode
-#   database: 
-#   pool: 5
-#   username: 
-#   password: 
-#   host: localhost
-#   port: 5433 
 
 development:
   <<: *default
-  # adapter: mysql2
-  # database:  <%= ENV['SQL_DB_NAME'] %>
-  # username: <%= ENV['SQL_DB_USER'] %> 
-  # password: <%= ENV['SQL_DB_PASSWORD'] %> 
-  # encoding: utf8mb4
-  # prepared_statements: false
-  # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  # host: <%= ENV['SQL_HOST'] %>
-
-  adapter: mysql2
-  encoding: utf8
   database: <%= ENV['DB_NAME'] %>
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>
-  host: localhost
-  port: 3306
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
+  encoding: <%= ENV['DB_ENCODE'] %>
+  prepared_statements: false
+  host: <%= ENV['DB_HOST'] %>
+
 test:
   <<: *default
   database: portal_test
 
 production:
-  adapter: mysql2
-  database:  <%= ENV['SQL_DB_NAME'] %>
-  username: <%= ENV['SQL_DB_USER'] %> 
-  password: <%= ENV['SQL_DB_PASSWORD'] %> 
-  encoding: utf8mb4
+  <<: *default
+  database: <%= ENV['SQL_DB_NAME'] %>
+  username: <%= ENV['SQL_DB_USER'] %>
+  password: <%= ENV['SQL_DB_PASSWORD'] %>
+  encoding: <%= ENV['SQL_DB_ENCODE'] %>
   prepared_statements: false
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: <%= ENV['SQL_HOST'] %>

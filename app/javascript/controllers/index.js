@@ -2,79 +2,82 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from './application'
+import { application } from "./application"
 
-import AddressAutocompleteController from './address_autocomplete_controller'
-application.register('address-autocomplete', AddressAutocompleteController)
+import AddressAutocompleteController from "./address_autocomplete_controller"
+application.register("address-autocomplete", AddressAutocompleteController)
 
-import AvatarController from './avatar_controller'
-application.register('avatar', AvatarController)
+import AvatarController from "./avatar_controller"
+application.register("avatar", AvatarController)
 
-import CalendarController from './calendar_controller'
-application.register('calendar', CalendarController)
+import CalendarController from "./calendar_controller"
+application.register("calendar", CalendarController)
 
-import ColorPickerController from './color_picker_controller'
-application.register('color-picker', ColorPickerController)
+import ColorPickerController from "./color_picker_controller"
+application.register("color-picker", ColorPickerController)
 
-import KpiTableController from './kpi_table_controller'
-application.register('controller', KpiTableController)
+import DatesController from "./dates_controller"
+application.register("dates", DatesController)
 
-import DrawerController from './drawer_controller'
-application.register('drawer', DrawerController)
+import DrawerController from "./drawer_controller"
+application.register("drawer", DrawerController)
 
-import EditableFieldController from './editable_field_controller'
-application.register('editable-field', EditableFieldController)
+import EditableFieldController from "./editable_field_controller"
+application.register("editable-field", EditableFieldController)
 
-import ExerciseSearchController from './exercise_search_controller'
-application.register('exercise-search', ExerciseSearchController)
+import ExerciseSearchController from "./exercise_search_controller"
+application.register("exercise-search", ExerciseSearchController)
 
-import FlashController from './flash_controller'
-application.register('flash', FlashController)
+import FlashController from "./flash_controller"
+application.register("flash", FlashController)
 
-import HelloController from './hello_controller'
-application.register('hello', HelloController)
+import HelloController from "./hello_controller"
+application.register("hello", HelloController)
 
-import LevelController from './level_controller'
-application.register('level', LevelController)
+import ImagePreviewController from "./image_preview_controller"
+application.register("image-preview", ImagePreviewController)
 
-import MultiSelectController from './multi_select_controller'
-application.register('multi-select', MultiSelectController)
+import KpiFormController from "./kpi_form_controller"
+application.register("kpi-form", KpiFormController)
 
-import QuestionnaireController from './questionnaire_controller'
-application.register('questionnaire', QuestionnaireController)
+import KpiTableController from "./kpi_table_controller"
+application.register("kpi-table", KpiTableController)
 
-import QuestionnaireSubmitController from './questionnaire_submit_controller'
-application.register('questionnaire-submit', QuestionnaireSubmitController)
+import LevelController from "./level_controller"
+application.register("level", LevelController)
 
-import RecurrenceToggleController from './recurrence_toggle_controller'
-application.register('recurrence-toggle', RecurrenceToggleController)
+import MobileMenuController from "./mobile_menu_controller"
+application.register("mobile-menu", MobileMenuController)
 
-import SearchController from './search_controller'
-application.register('search', SearchController)
+import MultiSelectController from "./multi_select_controller"
+application.register("multi-select", MultiSelectController)
 
-import SidebarController from './sidebar_controller'
-application.register('sidebar', SidebarController)
+import QuestionnaireController from "./questionnaire_controller"
+application.register("questionnaire", QuestionnaireController)
 
-import SignupValidationController from './signup_validation_controller'
-application.register('signup-validation', SignupValidationController)
+import QuestionnaireSubmitController from "./questionnaire_submit_controller"
+application.register("questionnaire-submit", QuestionnaireSubmitController)
 
-import ThemeController from './theme_controller'
-application.register('theme', ThemeController)
+import RecurrenceToggleController from "./recurrence_toggle_controller"
+application.register("recurrence-toggle", RecurrenceToggleController)
 
-import UserSearchController from './user_search_controller'
-application.register('user-search', UserSearchController)
+import SearchController from "./search_controller"
+application.register("search", SearchController)
 
-import VisibilityController from './visibility_controller'
-application.register('visibility', VisibilityController)
+import SidebarController from "./sidebar_controller"
+application.register("sidebar", SidebarController)
 
-import KpiFormController from './kpi_form_controller'
-application.register('kpi-form', KpiFormController)
+import SignupValidationController from "./signup_validation_controller"
+application.register("signup-validation", SignupValidationController)
 
-import UserTableController from './user_table_controller'
-application.register('user-table', UserTableController)
+import ThemeController from "./theme_controller"
+application.register("theme", ThemeController)
 
-import DatesController from './dates_controller'
-application.register('dates', DatesController)
+import UserSearchController from "./user_search_controller"
+application.register("user-search", UserSearchController)
 
-import ImagePreviewController from './image_preview_controller'
-application.register('image-preview', ImagePreviewController)
+import UserTableController from "./user_table_controller"
+application.register("user-table", UserTableController)
+
+import VisibilityController from "./visibility_controller"
+application.register("visibility", VisibilityController)
