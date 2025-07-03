@@ -1,0 +1,2 @@
+class InvalidResultError < StandardError
+end

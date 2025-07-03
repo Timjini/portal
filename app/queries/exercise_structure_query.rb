@@ -85,32 +85,32 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
   private # rubocop:disable Lint/UselessAccessModifier
 
   def verify_database_connection!
-    unless ActiveRecord::Base.connected?
-      Rails.logger.warn("Database connection lost - reconnecting...")
-      ActiveRecord::Base.establish_connection
-    end
+    return if ActiveRecord::Base.connected?
+
+    Rails.logger.warn('Database connection lost - reconnecting...')
+    ActiveRecord::Base.establish_connection
   end
-  
-  def with_query_timeout(seconds, &block)
-    Timeout.timeout(seconds, &block)
-  rescue Timeout::Error 
+
+  def with_query_timeout(seconds, &)
+    Timeout.timeout(seconds, &)
+  rescue Timeout::Error
     ActiveRecord::Base.connection.reconnect!
     raise
   end
-  
+
   def validate_query_result(result)
     if result.blank?
-      Rails.logger.warn("Query returned empty results")
-      raise EmptyResultError, "No data found"
+      Rails.logger.warn('Query returned empty results')
+      raise EmptyResultError, 'No data found'
     end
-  
+
     required_columns = %w[athlete_level_name kpi_category_name step_number order]
     missing = required_columns - result.columns
-    unless missing.empty?
-      raise InvalidResultError, "Missing required columns: #{missing.join(', ')}"
-    end
+    return if missing.empty?
+
+    raise InvalidResultError, "Missing required columns: #{missing.join(', ')}"
   end
-  
+
   def log_query_error(error, sql)
     Rails.logger.error(<<~ERROR)
       SQL Error: #{error.message}
@@ -119,7 +119,7 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
       #{error.backtrace.take(5).join("\n")}
     ERROR
   end
-  
+
   def log_timeout_error(sql)
     Rails.logger.error(<<~ERROR)
       Query timed out after 10 seconds
@@ -127,7 +127,7 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
       Consider optimizing this query or increasing timeout
     ERROR
   end
-  
+
   def log_unexpected_error(error, sql)
     Rails.logger.error(<<~ERROR)
       Unexpected Error: #{error.message}
@@ -150,7 +150,7 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
   end
 
   def find_or_create_athlete_level(name)
-    @structured_data['athlete_levels'].find { |al| al['meta']['display_name'] == name } || 
+    @structured_data['athlete_levels'].find { |al| al['meta']['display_name'] == name } ||
       create_new_athlete_level(name)
   end
 
@@ -217,7 +217,7 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
 
   def log_structure_creation_success
     Rails.logger.info(
-      "Successfully structured data: " +
+      'Successfully structured data: ' +
       "#{@structured_data['athlete_levels'].size} athlete levels, " +
       "#{@structured_data['athlete_levels'].sum { |al| al['kpi_categories'].size }} KPI categories"
     )
