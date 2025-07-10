@@ -1,6 +1,7 @@
 <%= form_with(url: create_assessment_path, method: :post, local: true, class: "space-y-6 px-4 sm:px-6 lg:px-8 py-8") do |f| %>
         <%= render 'components/info_cards/athlete' , athlete: @athlete %>
         <%= hidden_field_tag :athlete_id, @athlete.id %>
+        <%= hidden_field_tag :kpi_data, @structured_data.to_json %>
         <% if @kpi_categories.present? %>
         <div id="kpi-sections">
             <div class="mb-6">
@@ -54,10 +55,10 @@
                     <div>
                         <div class="flex justify-between mb-1">
                             <span class="text-sm font-medium text-gray-700"><%= step.full_breadcrumb %></span>
-                            <span class="text-sm font-medium text-gray-700">1/<%= step&.exercises&.count %> complete</span>
+                            <span class="text-sm font-medium text-gray-700">0/<%= step&.exercises&.count %> complete</span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: 50%"></div>
+                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
                         </div>
                     </div>
                     <% end %>

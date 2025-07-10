@@ -9,11 +9,11 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
 
   def show
     @kpi_categories = KpiCategory.order(:id)
-    # begin
+    begin
       @structured_data = ExerciseStructureQuery.new.call
-    # rescue QueryError => e
-    #   render json: { error: e.message }, status: :internal_server_error
-    # end
+    rescue StandardError => e
+      render json: { error: e.message }, status: :internal_server_error
+    end
     @athlete = User.find(params[:id])
     @steps = Step.all
     @assessments = Assessment.where(athlete_id: @athlete.id).order(created_at: :desc)
@@ -29,13 +29,25 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   def create
     Rails.logger.info "Assessment creation started with params: #{params.permit!.to_h}"
 
-    #   @athlete = User.find(params[:athlete_id])
-    #   @assessment = Assessment.new(
-    #     notes: params[:notes],
-    #     recommendation: params[:recommendation],
-    #     athlete_id: @athlete.id,
-    #     coach_id: current_user.id
-    #   )
+    @athlete = User.find(params[:athlete_id])
+    Rails.logger.info "Athlete found===>: #{@athlete.inspect}"
+
+    @raw_assesemnts = JSON.parse(params[:kpi_data].to_json) if params[:kpi_data].present?
+    Rails.logger.info "Assessment raw data: #{params[:kpi_data].inspect}"
+
+    begin
+      @assessment = Assessment.new(
+        notes: params[:notes],
+        kpi_data: @raw_assesemnts,
+        recommendation: params[:recommendation],
+        athlete_id: @athlete.id,
+        coach_id: current_user.id
+      )
+      @assessment.save!
+      Rails.logger.info "Assessment object created: #{@assessment.inspect}"
+    rescue StandardError => e
+      Rails.logger.error "Error creating assessment: #{e.message}"
+    end
 
     #   if @assessment.save
     #     Rails.logger.info "Assessment created successfully: #{@assessment.attributes}"
