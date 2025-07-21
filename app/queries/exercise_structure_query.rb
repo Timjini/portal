@@ -8,25 +8,28 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
   def call
     @query = execute_query
     structure_data
+
+    raise EmptyResultError, 'No athlete levels data found' if @structured_data['athlete_levels'].blank?
+
     @structured_data
-  # rescue Errors::QueryError => e
-  #   { error: e.message }
+  rescue StandardError => e
+    { error: e.message }
   end
 
   private
 
-  def execute_query # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    # begin # rubocop:disable Style/RedundantBegin
-      verify_database_connection!
-      sql = build_structure_query
-      QUERY_LOGGER.info('Executing structure query')
+  def execute_query
+    # begin
+    verify_database_connection!
+    sql = build_structure_query
+    QUERY_LOGGER.info('Executing structure query')
 
-      result = with_query_timeout(10) do
-        ActiveRecord::Base.connection.exec_query(sql)
-      end
+    result = with_query_timeout(10) do
+      ActiveRecord::Base.connection.exec_query(sql)
+    end
 
-      validate_query_result(result)
-      result
+    validate_query_result(result)
+    result
     # rescue ActiveRecord::ConnectionNotEstablished => e
     #   log_and_reconnect(e)
     #   retry
