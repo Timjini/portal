@@ -81,3 +81,6 @@ application.register("user-table", UserTableController)
 
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
+
+import AttendanceController from "./attendance_controller"
+application.register("attendance", AttendanceController)
