@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <%= form_with url: attendance_index_path, method: :post, local: true, data: { controller: "attendance" } do |form| %>
+    <%= form_with url: attendance_index_path(page: params[:page]), method: :post, local: true, data: { controller: "attendance" } do |form| %>
     <%= csrf_meta_tags %>
 
     <!-- Step 2: Athlete List -->
@@ -51,7 +51,7 @@
                 <div class="flex items-center space-x-4">
                 <label class="flex items-center space-x-2">
                     <%= hidden_field_tag "attendance[users][#{user.id}]", "0" %>
-                    <%= check_box_tag "attendance[users][#{user.id}]", "1", user.attended_today?, class: "attendance-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+                    <%= check_box_tag "temp", "1", user.attended_today?, class: "attendance-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500", data: { action: "change->attendance#toggleCheckbox" } %>
                     <span>Present</span>
                 </label>
                 </div>
