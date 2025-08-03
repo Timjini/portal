@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
-  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+ActiveRecord::Schema[7.1].define(version: 2025_08_03_225959) do
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -33,13 +33,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "answers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id", null: false
     t.bigint "question_id", null: false
@@ -50,20 +50,29 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
-  create_table "assessments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "app_errors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "error_type"
+    t.text "message"
+    t.text "backtrace"
+    t.datetime "occurred_at"
+    t.json "context"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "assessments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "athlete_id", null: false
     t.bigint "coach_id", null: false
-    t.text "kpi_data", size: :long, collation: "utf8mb4_bin"
+    t.json "kpi_data"
     t.string "recommendation"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["athlete_id"], name: "index_assessments_on_athlete_id"
     t.index ["coach_id"], name: "index_assessments_on_coach_id"
-    t.check_constraint "json_valid(`kpi_data`)", name: "kpi_data"
   end
 
-  create_table "athlete_level_categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "athlete_level_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "athlete_level_id", null: false
     t.bigint "kpi_category_id", null: false
     t.datetime "created_at", null: false
@@ -73,7 +82,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["kpi_category_id"], name: "index_athlete_level_categories_on_kpi_category_id"
   end
 
-  create_table "athlete_levels", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "athlete_levels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.integer "position", default: 0, null: false
     t.text "description"
@@ -86,7 +95,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["name"], name: "index_athlete_levels_on_name", unique: true
   end
 
-  create_table "athlete_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "athlete_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.date "dob"
@@ -106,7 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_athlete_profiles_on_user_id"
   end
 
-  create_table "attendances", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "attendances", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "attended_at", null: false
     t.string "status", default: "present", null: false
@@ -115,7 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
-  create_table "check_lists", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "check_lists", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.bigint "level_id", null: false
     t.datetime "created_at", null: false
@@ -123,14 +132,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["level_id"], name: "index_check_lists_on_level_id"
   end
 
-  create_table "coach_calendars", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "coach_calendars", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_coach_calendars_on_user_id"
   end
 
-  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "body"
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
@@ -141,10 +150,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "dcpa_events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "dcpa_events", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.string "coach"
-    t.text "dates", size: :long, collation: "utf8mb4_bin"
+    t.json "dates"
     t.time "time_start"
     t.time "time_end"
     t.string "location"
@@ -156,10 +165,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.check_constraint "json_valid(`dates`)", name: "dates"
   end
 
-  create_table "exercises", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "exercises", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
     t.integer "reps"
@@ -175,17 +183,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.string "notes"
     t.string "muscle_group"
     t.string "primary_focus"
-    t.text "movement_patterns", size: :long, collation: "utf8mb4_bin"
-    t.text "equipment", size: :long, collation: "utf8mb4_bin"
-    t.text "extra_attributes", size: :long, collation: "utf8mb4_bin"
+    t.json "movement_patterns"
+    t.json "equipment"
+    t.json "extra_attributes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.check_constraint "json_valid(`equipment`)", name: "equipment"
-    t.check_constraint "json_valid(`extra_attributes`)", name: "extra_attributes"
-    t.check_constraint "json_valid(`movement_patterns`)", name: "movement_patterns"
   end
 
-  create_table "forms", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "forms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "title"
     t.string "name", null: false
@@ -197,14 +202,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "kpi_categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "kpi_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "levels", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "levels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -213,7 +218,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.integer "step"
   end
 
-  create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "body"
     t.boolean "viewed"
     t.string "notifiable_type", null: false
@@ -224,7 +229,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
-  create_table "pricing_packages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "pricing_packages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.decimal "price_per_session", precision: 8, scale: 2
     t.decimal "monthly_fee", precision: 8, scale: 2
@@ -244,7 +249,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "qr_codes", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "qr_codes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.boolean "scanned", default: false
     t.string "data"
     t.bigint "user_id", null: false
@@ -254,7 +259,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_qr_codes_on_user_id"
   end
 
-  create_table "questionnaires", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "questionnaires", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -262,20 +267,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_questionnaires_on_user_id"
   end
 
-  create_table "questions", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "questions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "content"
     t.string "question_type"
     t.bigint "questionnaire_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "options", size: :long, collation: "utf8mb4_bin"
+    t.json "options"
     t.integer "position"
     t.string "illness_tag"
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
-    t.check_constraint "json_valid(`options`)", name: "options"
   end
 
-  create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "coach_id", null: false
     t.text "comment", null: false
@@ -288,7 +292,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
-  create_table "step_exercises", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "step_exercises", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "step_id", null: false
     t.bigint "exercise_id", null: false
     t.integer "order"
@@ -299,7 +303,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["step_id"], name: "index_step_exercises_on_step_id"
   end
 
-  create_table "steps", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "steps", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "athlete_level_category_id", null: false
     t.integer "step_number", null: false
     t.datetime "created_at", null: false
@@ -308,7 +312,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["athlete_level_category_id"], name: "index_steps_on_athlete_level_category_id"
   end
 
-  create_table "subscriptions", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "subscriptions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "pricing_package_id", null: false
     t.string "status", default: "active", null: false
@@ -325,7 +329,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
-  create_table "taster_session_bookings", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "taster_session_bookings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.string "first_name"
     t.string "last_name"
@@ -341,7 +345,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_taster_session_bookings_on_user_id"
   end
 
-  create_table "time_slots", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "time_slots", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "date"
     t.time "start_time"
     t.time "end_time"
@@ -350,13 +354,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.string "recurrence_rule"
     t.datetime "recurrence_end"
     t.string "slot_type", default: "CoachTimeSlot"
-    t.text "group_types", size: :long, collation: "utf8mb4_bin"
+    t.json "group_types"
     t.string "title"
     t.bigint "coach_calendar_id"
-    t.check_constraint "json_valid(`group_types`)", name: "group_types"
   end
 
-  create_table "training_bookings", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "training_bookings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "training_package_id"
     t.string "first_name"
@@ -377,7 +380,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_training_bookings_on_user_id"
   end
 
-  create_table "training_packages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "training_packages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
     t.text "features"
@@ -389,13 +392,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.string "status", default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "extra", size: :long, collation: "utf8mb4_bin"
+    t.json "extra"
     t.date "start_date"
     t.date "ending_date"
-    t.check_constraint "json_valid(`extra`)", name: "extra"
   end
 
-  create_table "user_checklists", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "user_checklists", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_level_id", null: false
     t.bigint "check_list_id", null: false
     t.bigint "user_id", null: false
@@ -408,7 +410,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_level_id"], name: "index_user_checklists_on_user_level_id"
   end
 
-  create_table "user_levels", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "user_levels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "level_id", null: false
     t.string "status", default: "not_started", null: false
@@ -419,7 +421,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_user_levels_on_user_id"
   end
 
-  create_table "user_logins", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "user_logins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "login_at"
     t.datetime "created_at", null: false
@@ -427,7 +429,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.index ["user_id"], name: "index_user_logins_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: ""
     t.string "username"
     t.string "first_name"
