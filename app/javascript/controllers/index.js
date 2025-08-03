@@ -7,6 +7,9 @@ import { application } from "./application"
 import AddressAutocompleteController from "./address_autocomplete_controller"
 application.register("address-autocomplete", AddressAutocompleteController)
 
+import AttendanceController from "./attendance_controller"
+application.register("attendance", AttendanceController)
+
 import AvatarController from "./avatar_controller"
 application.register("avatar", AvatarController)
 
@@ -40,6 +43,9 @@ application.register("image-preview", ImagePreviewController)
 import KpiFormController from "./kpi_form_controller"
 application.register("kpi-form", KpiFormController)
 
+import KpiSearchInputController from "./kpi_search_input_controller"
+application.register("kpi-search-input", KpiSearchInputController)
+
 import KpiTableController from "./kpi_table_controller"
 application.register("kpi-table", KpiTableController)
 
@@ -70,6 +76,9 @@ application.register("sidebar", SidebarController)
 import SignupValidationController from "./signup_validation_controller"
 application.register("signup-validation", SignupValidationController)
 
+import TestController from "./test_controller"
+application.register("test", TestController)
+
 import ThemeController from "./theme_controller"
 application.register("theme", ThemeController)
 
@@ -82,5 +91,5 @@ application.register("user-table", UserTableController)
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
 
-import AttendanceController from "./attendance_controller"
-application.register("attendance", AttendanceController)
+import kpi_search_input_controller from "./kpi_search_input_controller"
+application.register("kpi-search-input", kpi_search_input_controller)

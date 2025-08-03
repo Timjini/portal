@@ -177,7 +177,7 @@ Rails.application.routes.draw do
 
   resources :kpi_categories
   resources :athlete_levels
-  resources :attendance, only: %i[index create update destroy]
+  resources :attendance, only: %i[index create]
 
   namespace :admin do
     resources :content, only: %i[index edit update]

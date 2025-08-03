@@ -5,40 +5,38 @@ class AttendanceController < ApplicationController
 
   # load_and_authorize_resource
   def index
-    @users = User.where(role: %i[child_user athlete_user])
+    @users = User.where(role: %i[child_user athlete_user]).paginate(page: params[:page], per_page: 10)
   end
 
-  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    attendances_data = params[:attendance]
-    date = params[:date]
-    session = params[:session]
-    custom_time = params[:custom_time]
-  
-    attendances_saved = attendances_data.all? do |att|
-      attended_at = if session == 'custom'
-                      "#{date} #{custom_time}"
-                    else
-                      # Optional mapping for session times
-                      time_map = {
-                        'morning' => '08:00',
-                        'afternoon' => '14:00',
-                        'evening' => '18:00'
-                      }
-                      "#{date} #{time_map[session]}"
-                    end
-  
-      Attendance.create(
-        user_id: att[:user_id],
-        attended_at: attended_at,
-        status: att[:present] ? 'present' : 'absent'
+  def create # rubocop:disable Metrics/MethodLength,Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+    users_status = params.dig(:attendance, :users) || {}
+
+    if params[:attendance].blank? || users_status.blank?
+      render json: { error: 'No attendance data provided.' }, status: :unprocessable_entity
+      return
+    end
+
+    users_status = params.dig(:attendance, :users) || {}
+    if users_status.empty?
+      render json: { error: 'No users selected for attendance.' }, status: :unprocessable_entity
+      return
+    end
+    users_status.each do |user_id, present_value|
+      status = present_value == '1' ? 'present' : 'absent'
+
+      # If you have unique attendance per day, find or create
+      attendance = Attendance.find_or_initialize_by(
+        user_id: user_id,
+        attended_at: Time.zone.today.all_day
       )
+      attendance.status = status
+      attendance.attended_at ||= Time.zone.now
+      attendance.save!
     end
 
-    if attendances_saved
-      render json: { message: 'Attendance recorded.' }, status: :created
-    else
-      render json: { error: 'Failed to record some attendance entries.' }, status: :unprocessable_entity
-    end
+    render json: { message: 'Attendance recorded successfully.' }, status: :created
+  rescue StandardError => e
+    Rails.logger.error "Error recording attendance: #{e.message}"
+    render json: { error: "Failed to record attendance. #{e.message}" }, status: :unprocessable_entity
   end
-
 end

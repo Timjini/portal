@@ -174,7 +174,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def attended_today?
-    attendance.exists?(['DATE(attended_at) = ?', Time.zone.today])
+    attendance.exists?(['DATE(attended_at) = ? AND status = ?', Time.zone.today, 'present'])
   end
 
   # Private Methods

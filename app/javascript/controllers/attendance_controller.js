@@ -1,53 +1,62 @@
 import { Controller } from "@hotwired/stimulus"
+import Swal from 'sweetalert2'
+
 
 export default class extends Controller {
-  static targets = ["row"]
+  static targets = ["row", "checkbox"]
 
   connect() {
+    // console.log("AttendanceController connected")
+  }
+
+  markAllPresent() {
     this.rowTargets.forEach(row => {
-      const checkbox = row.querySelector('.attendance-checkbox')
-      const timeInput = row.querySelector('.time-input')
-      const notesTextarea = row.querySelector('.notes-container textarea')
-
-      checkbox.addEventListener('change', () => {
-        const checked = checkbox.checked
-        timeInput.classList.toggle('hidden', !checked)
-        notesTextarea.classList.toggle('hidden', !checked)
-
-        if (checked && !timeInput.value) {
-          const now = new Date()
-          timeInput.value = now.toTimeString().slice(0, 5)
-        }
-      })
-
-      // Trigger initial state
-      checkbox.dispatchEvent(new Event('change'))
+      const checkbox = row.querySelector(".attendance-checkbox")
+      if (checkbox) checkbox.checked = true
     })
   }
 
-  submit() {
-    const data = this.rowTargets.map(row => {
-      return {
-        user_id: row.dataset.userId,
-        present: row.querySelector('.attendance-checkbox').checked,
-        time: row.querySelector('.time-input').value,
-        notes: row.querySelector('.notes-container textarea').value
-      }
-    })
+  async submitForm(event) {
+    event.preventDefault()
 
-    fetch("/attendances", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
-      },
-      body: JSON.stringify({ attendance: data })
-    }).then(response => {
+    const form = this.element
+    const formData = new FormData(form)
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "X-CSRF-Token": document.querySelector("meta[name=csrf-token]").content
+        },
+        body: formData
+      })
+
+      const data = await response.json()
+
       if (response.ok) {
-        alert("Attendance saved successfully.")
+        await Swal.fire({
+                  icon: 'success',
+                  title: 'Success!',
+                  text: data.message || "Attendance saved successfully.",
+                  confirmButtonColor: '#3085d6',
+                })
       } else {
-        alert("Failed to save attendance.")
+        await Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: data.error || "Something went wrong.",
+          confirmButtonColor: '#d33',
+        })
       }
-    })
+    } catch (err) {
+      console.error("Error submitting attendance:", err)
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: "An unexpected error occurred.",
+        confirmButtonColor: '#d33',
+      })
+    }
   }
 }

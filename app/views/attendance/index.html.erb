@@ -1,20 +1,17 @@
-<div class="container mx-auto px-4 py-8 max-w-4xl">
-    <%= @users[0].attended_today? %>
-    <!-- Header -->
+<div class="container mx-auto px-8 py-8 max-w-3xl">
     <header class="mb-8">
         <h1 class="text-2xl font-bold text-gray-800">Daily Attendance</h1>
         <p class="text-gray-600">Track your athletes' attendance</p>
     </header>
-
-    <!-- Step 1: Date and Session Selector -->
+      <!-- Step 1: Date and Session Selector -->
     <div class="bg-white rounded-lg shadow p-6 mb-6">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="w-full md:w-auto">
                 <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                <input type="date" id="date" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                <span> <%= Time.zone.now.strftime("%B %d, %Y") %> </span>
             </div>
 
-            <div class="w-full md:w-auto">
+            <div class="w-full md:w-auto hidden">
                 <label for="session" class="block text-sm font-medium text-gray-700 mb-1">Session</label>
                 <select id="session" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
                     <option value="morning">Morning</option>
@@ -23,69 +20,53 @@
                     <option value="custom">Custom Time</option>
                 </select>
             </div>
-
-            <div class="w-full md:w-auto hidden" id="custom-time-container">
-                <label for="custom-time" class="block text-sm font-medium text-gray-700 mb-1">Custom Time</label>
-                <input type="time" id="custom-time" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-            </div>
         </div>
     </div>
+    <%= form_with url: attendance_index_path, method: :post, local: true, data: { controller: "attendance" } do |form| %>
+    <%= csrf_meta_tags %>
 
     <!-- Step 2: Athlete List -->
     <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
         <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 class="font-medium text-gray-800">Athletes</h2>
-            <button id="mark-all" class="text-sm text-blue-600 hover:text-blue-800 font-medium">Mark All Present</button>
+        <h2 class="font-medium text-gray-800">Athletes</h2>
+        <button id="mark-all"
+                class="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                type="button"
+                data-action="attendance#markAllPresent">
+                Mark All Present
+        </button>
         </div>
 
-        <div data-controller="attendance">
-            <div class="space-y-2">
-                <% @users.each do |user| %>
-                <div class="flex items-center justify-between p-4 bg-white rounded shadow athlete-row" data-attendance-target="row" data-user-id="<%= user.id %>">
-                    <div class="flex items-center space-x-4">
-                        <div class="text-lg font-semibold"><%= user.full_name %></div>
-                        <div class="text-gray-500 text-sm">ID: <%= user.id %></div>
-                    </div>
-
-                    <div class="flex items-center space-x-4">
-                        <label class="flex items-center space-x-2">
-                            <input type="checkbox" class="attendance-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" <%= 'checked' if user.attended_today? %> />
-                            <span>Present</span>
-                        </label>
-
-                        <input type="time" class="time-input hidden border border-gray-300 rounded px-2 py-1" value="<%= user.attended_today? ? user.attendances.where('DATE(attended_at) = ?', Time.zone.today).first&.attended_at&.strftime('%H:%M') : '' %>" />
-
-                        <div class="notes-container">
-                            <textarea class="border border-gray-300 rounded px-2 py-1 hidden" placeholder="Notes..."></textarea>
-                        </div>
-                    </div>
+        <div>
+        <div class="space-y-2">
+            <% @users.each do |user| %>
+            <div class="flex items-center justify-between p-4 bg-white rounded shadow athlete-row"
+                data-attendance-target="row"
+                data-user-id="<%= user.id %>">
+                <div class="flex items-center space-x-4">
+                <div class="text-lg font-semibold"><%= user.full_name %></div>
+                <div class="text-gray-500 text-sm">ID: <%= user.id %></div>
                 </div>
-                <% end %>
+
+                <div class="flex items-center space-x-4">
+                <label class="flex items-center space-x-2">
+                    <%= hidden_field_tag "attendance[users][#{user.id}]", "0" %>
+                    <%= check_box_tag "attendance[users][#{user.id}]", "1", user.attended_today?, class: "attendance-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+                    <span>Present</span>
+                </label>
+                </div>
             </div>
-
+            <% end %>
         </div>
-
+        <div class="flex justify-center my-4 ">
+                <%= will_paginate @users, renderer: TailwindPaginationRenderer %>
+              </div>
+        </div>
     </div>
 
     <!-- Step 3: Save Button -->
     <div class="bg-white rounded-lg shadow p-6">
-        <button data-action="attendance#submit" id="save-btn" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150 ease-in-out">
-            Save Attendance
-        </button>
+        <%= form.submit "Save Attendance", id: "save-btn", data: { action: "attendance#submitForm" }, class: "w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150 ease-in-out" %>
     </div>
-</div>
-
-<!-- Toast Notification (hidden by default) -->
-<div id="toast" class="fixed bottom-4 right-4 hidden">
-    <div class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2">
-        <i class="fas fa-check-circle"></i>
-        <span>Attendance saved successfully!</span>
-    </div>
-</div>
-
-<!-- Auto-save Timer -->
-<div id="timer" class="fixed bottom-4 left-4 hidden">
-    <div class="bg-yellow-500 text-white px-4 py-2 rounded-full text-sm shadow">
-        Auto-saving in <span id="countdown">30</span>s
-    </div>
+    <% end %>
 </div>

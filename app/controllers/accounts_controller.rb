@@ -9,7 +9,8 @@ class AccountsController < ApplicationController
   def index
     @accounts = if current_user.role == 'parent_user'
                   User.where(parent_id: current_user.id)
-                      .includes(:athlete_profile, avatar_attachment: :blob)
+                      .includes(:athlete_profile, :coach_calendars, avatar_attachment: :blob)
+                      .paginate(page: params[:page], per_page: 10)
                 end
   end
 
@@ -57,13 +58,13 @@ class AccountsController < ApplicationController
     end
   end
 
-  def all_accounts
+  def all_accounts # rubocop:disable Metrics/AbcSize
     @accounts = if params[:role].present?
                   User.includes([:athlete_profile]).where(role: params[:role]).paginate(page: params[:page],
-                                                                                        per_page: 10).includes([:avatar_attachment])
+                                                                                        per_page: 10).includes(%i[avatar_attachment coach_calendars]) # rubocop:disable Layout/LineLength
                 else
                   User.includes([:athlete_profile]).all.paginate(page: params[:page],
-                                                                 per_page: 10).includes(%i[avatar_attachment])
+                                                                 per_page: 10).includes(%i[avatar_attachment coach_calendars]) # rubocop:disable Layout/LineLength
                 end
   end
 
