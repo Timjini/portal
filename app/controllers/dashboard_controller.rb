@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
 
   def index # rubocop:disable Metrics/AbcSize
     safe_action(:index) do
-      @children = User.where(parent_id: current_user.id)
+      @children = User.where(parent_id: current_user.id).includes(:athlete_profile, avatar_attachment: :blob)
       @notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User', viewed: false)
       @displayed_notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User',
                                                     viewed: false).last(5)

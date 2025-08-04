@@ -2,8 +2,8 @@
 
 class AppErrorsController < ApplicationController
   # before_action :authenticate_user!
-  # before_action :authenticate_user!
-  # load_and_authorize_resource
+  before_action :authenticate_user!
+  load_and_authorize_resource
 
   def index
     @errors = AppError.order(created_at: :desc).paginate(page: params[:page], per_page: 10)

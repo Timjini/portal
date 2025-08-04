@@ -35,6 +35,25 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: 'You are not authorized to access this page.' # rubocop:disable Rails/I18nLocaleTexts
   end
 
+  def safe_action(action_name = nil)
+    yield
+  rescue StandardError => e
+    Rails.logger.error "Error in #{controller_name}##{action_name || action_name_from_caller}: #{e.message}"
+    ErrorLogger.log(e, context: {
+                      controller: controller_name,
+                      action: action_name || action_name_from_caller,
+                      params: params.to_unsafe_h,
+                      user_id: current_user&.id
+                    })
+    raise
+  end
+
+  private
+
+  def action_name_from_caller
+    caller_locations(1, 1)[0].label
+  end
+
   # def set_dashboard_root_path
   #   redirect_to dashboard_url
   # end

@@ -27,33 +27,48 @@ class AccountsController < ApplicationController
     redirect_to accounts_path
   end
 
-  def create_child_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    @account = User.new
-    @account.email = current_user.email
-    @account.parent_id = current_user.id
-    @account.first_name = params[:first_name]
-    @account.last_name = params[:last_name]
-    @account.username = params[:username].downcase
-    @account.password = params[:password]
-    @account.avatar = params[:avatar]
-    @account.address = current_user.address
-    @account.role = 'child_user'
+  # this shouldn't be here :(
+  def create_child_user
+    safe_action(:create_child_user) do
+      @account = User.new(
+        email: current_user.email,
+        parent_id: current_user.id,
+        first_name: params[:first_name],
+        last_name: params[:last_name],
+        username: params[:username].downcase,
+        password: params[:password],
+        avatar: params[:avatar],
+        address: current_user.address,
+        role: 'child_user'
+      )
 
-    if @account.save
-      create_athlete_child_profile(@account.id, params[:dob], params[:school_name], params[:password],
-                                   params[:height], params[:weight])
-      flash[:success] = 'Child user created!' # rubocop:disable Rails/I18nLocaleTexts
+      if @account.save
+        create_athlete_child_profile(
+          @account.id,
+          params[:dob],
+          params[:school_name],
+          params[:password],
+          params[:height],
+          params[:weight]
+        )
 
-      respond_to do |format|
-        # format.html { redirect_to accounts_path }
-        format.json { render json: { status: 'success', message: 'Child user created!' } }
-      end
-    else
-      flash[:alert] = 'Oops, something went wrong!' # rubocop:disable Rails/I18nLocaleTexts
-
-      respond_to do |format|
-        format.html { render 'new' }
-        format.json { render json: { status: 'error', message: 'Oops, something went wrong!' } }
+        respond_to do |format|
+          format.html { redirect_to root_path, notice: 'Child created successfully' }
+          format.json { render json: { status: 'success' } }
+        end
+      else
+        respond_to do |format|
+          format.html do
+            flash.now[:alert] = @account.errors.full_messages.to_sentence || 'Failed to create child user.'
+            redirect_to add_child_accounts_path, alert: 'Failed to create child user.'
+          end
+          format.json do
+            render json: {
+              status: 'error',
+              errors: @account.errors.full_messages
+            }, status: :unprocessable_entity
+          end
+        end
       end
     end
   end
