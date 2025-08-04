@@ -193,3 +193,48 @@ if TrainingPackage.count.zero?
     )
   end
 end
+
+
+
+require 'faker'
+
+ROLES = %w[coach parent_user child_user athlete].freeze
+TOTAL_USERS = 1000
+PASSWORD = 'password'
+
+# Store created parents for child_user/athlete relation
+parent_users = []
+
+puts 'Seeding users...'
+
+TOTAL_USERS.times do |i|
+  role = ROLES[i % ROLES.size] # Distribute roles evenly
+
+  parent = nil
+  if %w[child_user athlete].include?(role)
+    parent ||= parent_users.sample
+  end
+
+  user = User.create!(
+    email: Faker::Internet.unique.email,
+    username: Faker::Internet.unique.username(specifier: 4..8, separators: %w[_]).concat("_#{i}"),
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    role: role,
+    password: PASSWORD,
+    password_confirmation: PASSWORD,
+    phone: Faker::PhoneNumber.phone_number,
+    address: Faker::Address.full_address,
+    parent_id: parent&.id,
+    auth_token: SecureRandom.hex(10),
+    apple_id: Faker::Alphanumeric.alpha(number: 10),
+    google_id: Faker::Alphanumeric.alpha(number: 10),
+    color: Faker::Color.hex_color
+  )
+
+  parent_users << user if role == 'parent_user'
+
+  Rails.logger.debug { "Created #{role} user #{i + 1}" } if ((i + 1) % 100).zero?
+end
+
+Rails.logger.debug { "✅ Done seeding #{TOTAL_USERS} users." }

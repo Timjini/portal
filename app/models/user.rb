@@ -30,6 +30,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :user_logins, dependent: :destroy
   has_many :assessments, dependent: :destroy
   has_one :athlete_level
+  has_many :attendance, dependent: :destroy
 
   # Scopes
   scope :coaches, -> { where(role: 'coach') }
@@ -84,6 +85,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return 'Unknown' unless first_name.present? && last_name.present?
 
     "#{first_name.capitalize} #{last_name.capitalize}"
+  end
+
+  def initials
+    return 'N/A' unless first_name.present? && last_name.present?
+
+    "#{first_name[0].upcase}#{last_name[0].upcase}"
   end
 
   def athlete_profile_data
@@ -164,6 +171,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     else
       ''
     end
+  end
+
+  def attended_today?
+    attendance.exists?(['DATE(attended_at) = ? AND status = ?', Time.zone.today, 'present'])
   end
 
   # Private Methods

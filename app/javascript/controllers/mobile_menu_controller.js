@@ -6,6 +6,7 @@ export default class extends Controller {
   toggle() {
     this.menuTarget.classList.toggle("translate-x-full")
     this.menuTarget.classList.toggle("translate-x-0")
+    this.menuTarget.classList.toggle("hidden")
 
     // Animate hamburger icon
     this.bar1Target.classList.toggle("transform")

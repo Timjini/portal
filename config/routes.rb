@@ -177,9 +177,12 @@ Rails.application.routes.draw do
 
   resources :kpi_categories
   resources :athlete_levels
+  resources :attendance, only: %i[index create]
 
   namespace :admin do
     resources :content, only: %i[index edit update]
   end
   post 'assessments/create', to: 'coaches/assessments#create', as: 'create_assessment'
+
+  resources :app_errors, only: %i[index show destroy]
 end

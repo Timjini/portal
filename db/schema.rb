@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_03_232728) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -48,6 +48,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
     t.string "explination"
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
+  end
+
+  create_table "app_errors", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "error_type"
+    t.text "message"
+    t.text "backtrace"
+    t.datetime "occurred_at"
+    t.text "context", size: :long, collation: "utf8mb4_bin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.check_constraint "json_valid(`context`)", name: "context"
   end
 
   create_table "assessments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -116,7 +127,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_151451) do
   end
 
   create_table "check_lists", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "title"
+    t.text "title"
     t.bigint "level_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
