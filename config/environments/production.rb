@@ -126,10 +126,10 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  config.action_mailer.default_url_options = { 
-  host: 'club.chambersforsport.com', 
-  protocol: 'https' 
-}
+  config.action_mailer.default_url_options = {
+    host: 'club.chambersforsport.com',
+    protocol: 'https'
+  }
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com

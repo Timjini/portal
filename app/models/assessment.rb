@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/assessment.rb
 class Assessment < ApplicationRecord
   belongs_to :athlete, class_name: 'User'
@@ -9,8 +11,6 @@ class Assessment < ApplicationRecord
     repeat: 'repeat'
   }, prefix: true
 
-  validates :athlete_id, presence: true
-  validates :coach_id, presence: true
   validate :coach_must_have_coach_role
 
   private

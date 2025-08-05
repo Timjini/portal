@@ -3,7 +3,7 @@
 module Admin
   class DashboardController < ApplicationController
     before_action :authenticate_user!
-    authorize_resource class: false 
+    authorize_resource class: false
 
     def index # rubocop:disable Metrics/MethodLength
       @recent_logins = User.where.not(last_login_at: nil)

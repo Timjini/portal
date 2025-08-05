@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @profile = @user.athlete_profile || @user.build_athlete_profile
     if @user.update(user_params) && @profile.update(athlete_profile_params)
-      puts "User updated successfully: #{@user.inspect}"
+      Rails.logger.debug { "User updated successfully: #{@user.inspect}" }
       redirect_to root_path, notice: 'Profile updated successfully' # rubocop:disable Rails/I18nLocaleTexts
     else
       flash[:alert] = @user.errors.full_messages.to_sentence

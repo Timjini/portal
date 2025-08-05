@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class DashboardController < ApplicationController
   before_action :authenticate_user!
 
-  # def index # rubocop:disable Metrics/AbcSize
+  # def index
   #   safe_action(:index) do
   #     @children = User.where(parent_id: current_user.id).includes(:athlete_profile, avatar_attachment: :blob)
   #     @notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User', viewed: false)

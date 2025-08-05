@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Ability
   include CanCan::Ability
 
   def initialize(user)
-    return unless user.present? # Not logged in? No permissions
+    return if user.blank? # Not logged in? No permissions
 
     if user.admin?
       can :manage, :all

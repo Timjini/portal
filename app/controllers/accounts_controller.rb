@@ -28,8 +28,8 @@ class AccountsController < ApplicationController
   end
 
   # this shouldn't be here :(
-  def create_child_user
-    safe_action(:create_child_user) do
+  def create_child_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+    safe_action(:create_child_user) do # rubocop:disable Metrics/BlockLength
       @account = User.new(
         email: current_user.email,
         parent_id: current_user.id,
@@ -53,14 +53,14 @@ class AccountsController < ApplicationController
         )
 
         respond_to do |format|
-          format.html { redirect_to root_path, notice: 'Child created successfully' }
+          format.html { redirect_to root_path, notice: 'Child created successfully' } # rubocop:disable Rails/I18nLocaleTexts
           format.json { render json: { status: 'success' } }
         end
       else
         respond_to do |format|
           format.html do
             flash.now[:alert] = @account.errors.full_messages.to_sentence || 'Failed to create child user.'
-            redirect_to add_child_accounts_path, alert: 'Failed to create child user.'
+            redirect_to add_child_accounts_path, alert: 'Failed to create child user.' # rubocop:disable Rails/I18nLocaleTexts
           end
           format.json do
             render json: {
@@ -73,30 +73,24 @@ class AccountsController < ApplicationController
     end
   end
 
-  def all_accounts
+  def all_accounts # rubocop:disable Metrics/AbcSize
     Rails.logger.info "Fetching accounts with params: #{params.inspect}"
-  
+
     base_scope = User.includes(:athlete_profile, :avatar_attachment)
-  
-    if params[:role].present?
-      base_scope = base_scope.where(role: params[:role])
-    end
-  
-    if params[:role].nil? || params[:role] == 'coach'
-      base_scope = base_scope.with_coach_calendars
-    end
-  
+
+    base_scope = base_scope.where(role: params[:role]) if params[:role].present?
+
+    base_scope = base_scope.with_coach_calendars if params[:role].nil? || params[:role] == 'coach'
+
     if params[:search].present?
       search_accounts(params)
       Rails.logger.info "Search results: #{@accounts.inspect}"
     end
-  
+
     @accounts = base_scope.paginate(page: params[:page], per_page: 10)
-
   end
-  
 
-  def search_accounts(params)
+  def search_accounts(params) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     Rails.logger.info "Searching accounts with params: #{params[:search].inspect}"
     @accounts = User.includes(:athlete_profile, :avatar_attachment)
                     .where('first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ?',
@@ -104,10 +98,10 @@ class AccountsController < ApplicationController
                     .paginate(page: params[:page], per_page: 10)
     Rails.logger.info "Search results: #{@accounts.inspect}"
     if @accounts.empty?
-      flash.now[:alert] = 'No accounts found matching your search criteria.'
+      flash.now[:alert] = 'No accounts found matching your search criteria.' # rubocop:disable Rails/I18nLocaleTexts
       redirect_to all_accounts_accounts_path
     end
-    flash.now[:alert] = 'No accounts found matching your search criteria.'
+    flash.now[:alert] = 'No accounts found matching your search criteria.' # rubocop:disable Rails/I18nLocaleTexts
     redirect_to all_accounts_accounts_path
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # # frozen_string_literal: true
 
 # # Ensure the existence of records required to run the application
@@ -193,8 +195,6 @@
 #     )
 #   end
 # end
-
-
 
 # require 'faker'
 

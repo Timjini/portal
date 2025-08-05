@@ -37,8 +37,8 @@ module Users
       if @user.persisted?
         handle_successful_creation
       else
-        Rails.logger.debug {" User params: #{@user.errors.messages.inspect}" }
-        flash[:alert] = "Oops, something went wrong: #{@user.errors.full_messages.to_sentence}" # rubocop:disable Rails/I18nLocaleTexts
+        Rails.logger.debug { " User params: #{@user.errors.messages.inspect}" }
+        flash[:alert] = "Oops, something went wrong: #{@user.errors.full_messages.to_sentence}"
         redirect_to new_user_registration_path
       end
     end

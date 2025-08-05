@@ -188,7 +188,5 @@ Rails.application.routes.draw do
   post 'assessments/create', to: 'coaches/assessments#create', as: 'create_assessment'
 
   resources :app_errors, only: %i[index show destroy]
-  resources :test, only: %i[index new create destroy]
-  get 'test/test_action', to: 'test#test_action', as: 'test_action'
   post 'accounts/search_accounts', to: 'accounts#search_accounts', as: 'search_accounts'
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddActivityTrackingToUsers < ActiveRecord::Migration[7.1]
   def change
     add_column :users, :active, :boolean, default: true # rubocop:disable Rails/BulkChangeTable,Rails/ThreeStateBooleanColumn

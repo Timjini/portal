@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAppErrors < ActiveRecord::Migration[7.1]
   def change
     create_table :app_errors do |t|

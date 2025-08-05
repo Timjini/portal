@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AssessmentsHelper
   def recommendation_icon(recommendation)
     case recommendation

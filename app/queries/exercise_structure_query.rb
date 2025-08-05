@@ -220,15 +220,15 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
 
   def log_structure_creation_success
     Rails.logger.info(
-      'Successfully structured data: ' +
-      "#{@structured_data['athlete_levels'].size} athlete levels, " +
+      'Successfully structured data: ' \
+      "#{@structured_data['athlete_levels'].size} athlete levels, " \
       "#{@structured_data['athlete_levels'].sum { |al| al['kpi_categories'].size }} KPI categories"
     )
   end
 
   def log_structure_error(error)
     Rails.logger.error(
-      "Failed to structure data: #{error.message}\n" +
+      "Failed to structure data: #{error.message}\n" \
       "Backtrace:\n#{error.backtrace.take(5).join("\n")}"
     )
   end
