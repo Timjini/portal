@@ -75,6 +75,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     role == 'parent_user'
   end
 
+  def admin?
+    role == 'admin'
+  end
+
   def child_users
     User.where(parent_id: id)
   end

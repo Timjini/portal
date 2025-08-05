@@ -1,0 +1,272 @@
+<div class="min-h-screen bg-gradient-to-b from-blue-50 to-purple-50 p-4 md:p-6">
+    <!-- Header with Avatar & Progress -->
+    <div class=" rounded-2xl shadow-sm p-6 mb-6 flex flex-col md:flex-row items-center gap-6">
+        <!-- Avatar Section -->
+        <div class="text-center">
+            <div class="relative mx-auto w-24 h-24 sm:w-32 sm:h-32">
+                <div class="relative w-full h-full overflow-hidden rounded-full border-4 border-blue-400 bg-yellow-200 shadow-sm">
+                    <%= image_tag current_user.avatar_thumbnail, 
+                        class: "w-full h-full object-cover", 
+                        alt: "Profile picture" %>
+                </div>
+                <% if current_user.level %>
+                    <div class="absolute -bottom-2 left-0 right-0 mx-auto bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full w-max">
+                        <%= current_user.level %>
+                    </div>
+                <% end %>
+            </div>
+            <h2 class="mt-3 text-xl font-bold text-gray-900"><%= current_user.full_name %></h2>
+        </div>
+
+        <!-- Progress & Medals -->
+        <div class="flex-1 w-full">
+                <% @season_progress = {'percentage'=> '0'} %>
+            <% if @season_progress %>
+                <div class="mb-4">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-sm font-medium text-blue-700">Season Progress</span>
+                        <span class="text-sm font-medium text-blue-700"><%= @season_progress[:percentage] %>%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div class="bg-gradient-to-r from-blue-400 to-purple-400 h-4 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            <% end %>
+            
+            <% if @badges&.any? %>
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <% @badges.each do |badge| %>
+                        <div class="<%= badge[:bg_color] %> p-2 rounded-lg flex items-center gap-1">
+                            <span class="material-symbols-outlined <%= badge[:icon_color] %>"><%= badge[:icon] %></span>
+                            <span class="text-xs font-bold"><%= badge[:count] %> <%= badge[:type] %></span>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- My Goals Card -->
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <span class="text-yellow-500">
+                    <span class="material-symbols-outlined">flag</span>
+                </span>
+                My Goals
+            </h3>
+
+            <% if @goals&.any? %>
+                <div class="space-y-4">
+                    <% @goals.each do |goal| %>
+                        <div class="<%= goal[:bg_color] %> p-4 rounded-xl border-l-4 <%= goal[:border_color] %>">
+                            <div class="flex items-start gap-3">
+                                <span class="material-symbols-outlined <%= goal[:icon_color] %> mt-0.5"><%= goal[:icon] %></span>
+                                <div>
+                                    <p class="font-medium"><%= goal[:title] %></p>
+                                    <p class="text-sm text-gray-600 mt-1"><%= goal[:subtitle] %></p>
+                                    <% if goal[:progress_type] == 'bar' %>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="<%= goal[:progress_bar_color] %> h-2 rounded-full" style="width: <%= goal[:progress] %>%"></div>
+                                            </div>
+                                            <span class="text-xs font-bold <%= goal[:progress_text_color] %>"><%= goal[:progress] %>%</span>
+                                        </div>
+                                    <% else %>
+                                        <div class="flex gap-2 mt-2">
+                                            <% goal[:progress_steps].each do |step| %>
+                                                <span class="w-6 h-6 <%= step[:bg_color] %> <%= step[:text_color] %> rounded-full flex items-center justify-center text-sm"><%= step[:content] %></span>
+                                            <% end %>
+                                        </div>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            <% else %>
+                <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-gray-400">flag</span>
+                    <p class="text-sm text-gray-500 mt-2">No goals set yet</p>
+                </div>
+            <% end %>
+        </div>
+
+        <!-- Today's Tasks Card -->
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <span class="text-red-500">
+                    <span class="material-symbols-outlined">format_list_bulleted</span>
+                </span>
+                Today's Tasks
+            </h3>
+
+            <% if @tasks&.any? %>
+                <div class="space-y-3">
+                    <% @tasks.each do |task| %>
+                        <div class="flex items-start gap-3 p-3 <%= task[:bg_color] %> rounded-lg">
+                            <span class="material-symbols-outlined <%= task[:icon_color] %> mt-0.5"><%= task[:icon] %></span>
+                            <div>
+                                <p class="font-medium"><%= task[:title] %></p>
+                                <p class="text-sm text-gray-600"><%= task[:description] %></p>
+                            </div>
+                            <% if task[:progress_type] == 'check' %>
+                                <button class="ml-auto <%= task[:button_color] %>">
+                                    <span class="material-symbols-outlined">check_circle</span>
+                                </button>
+                            <% else %>
+                                <div class="ml-auto flex gap-1">
+                                    <% task[:progress_steps].each do |step| %>
+                                        <span class="w-5 h-5 <%= step[:bg_color] %> rounded-full"></span>
+                                    <% end %>
+                                </div>
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+
+                <% if @all_tasks_completed %>
+                    <button class="w-full mt-4 bg-gradient-to-r from-blue-400 to-purple-400 hover:from-blue-500 hover:to-purple-500 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">celebration</span>
+                        I Did Them All!
+                    </button>
+                <% end %>
+            <% else %>
+                <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-gray-400">format_list_bulleted</span>
+                    <p class="text-sm text-gray-500 mt-2">No tasks for today</p>
+                </div>
+            <% end %>
+        </div>
+
+        <!-- KPI Highlights Card -->
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <span class="text-green-500">
+                    <span class="material-symbols-outlined">star</span>
+                </span>
+                My Super Skills
+            </h3>
+
+            <% if @skills&.any? %>
+                <div class="grid grid-cols-2 gap-4">
+                    <% @skills.each do |skill| %>
+                        <div class="<%= skill[:bg_color] %> p-3 rounded-xl text-center">
+                            <div class="w-12 h-12 <%= skill[:icon_bg_color] %> rounded-full flex items-center justify-center mx-auto mb-2">
+                                <span class="material-symbols-outlined <%= skill[:icon_color] %>"><%= skill[:icon] %></span>
+                            </div>
+                            <p class="font-medium text-sm"><%= skill[:name] %></p>
+                            <div class="flex justify-center gap-1 mt-1">
+                                <% skill[:stars].times do %>
+                                    <span class="text-yellow-400 material-symbols-outlined text-sm">star</span>
+                                <% end %>
+                                <% (5 - skill[:stars]).times do %>
+                                    <span class="text-gray-300 material-symbols-outlined text-sm">star</span>
+                                <% end %>
+                            </div>
+                            <% if skill[:special_label] %>
+                                <span class="text-xs <%= skill[:label_color] %> font-bold mt-1"><%= skill[:special_label] %></span>
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+            <% else %>
+                <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-gray-400">star</span>
+                    <p class="text-sm text-gray-500 mt-2">Skill data not available</p>
+                </div>
+            <% end %>
+        </div>
+
+        <!-- Shoutouts & Videos Row -->
+        <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <span class="text-red-500">
+                    <span class="material-symbols-outlined">celebration</span>
+                </span>
+                Shoutouts & Leaderboards
+            </h3>
+
+            <% if @shoutouts || @leaderboard %>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <% if @shoutouts&.any? %>
+                        <div class="bg-blue-50 rounded-xl p-4">
+                            <h4 class="font-medium text-blue-800 mb-3 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">military_tech</span>
+                                Your Badges
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                <% @shoutouts.each do |badge| %>
+                                    <div class="bg-white p-2 rounded-lg flex items-center gap-2 shadow-xs">
+                                        <span class="<%= badge[:icon_color] %> material-symbols-outlined"><%= badge[:icon] %></span>
+                                        <span class="text-xs font-bold"><%= badge[:title] %></span>
+                                    </div>
+                                <% end %>
+                            </div>
+                        </div>
+                    <% end %>
+
+                    <% if @leaderboard&.any? %>
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-medium text-purple-800 mb-3 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">leaderboard</span>
+                                Team Top 3
+                            </h4>
+                            <div class="space-y-2">
+                                <% @leaderboard.each_with_index do |player, index| %>
+                                    <div class="flex items-center gap-2 bg-white p-2 rounded-lg">
+                                        <span class="w-6 h-6 <%= player[:rank_bg_color] %> rounded-full flex items-center justify-center text-xs font-bold"><%= index + 1 %></span>
+                                        <span class="font-medium text-sm"><%= player[:name] %><%= player[:is_current_user] ? ' (You!)' : '' %></span>
+                                        <span class="ml-auto text-xs <%= player[:score_bg_color] %> <%= player[:score_text_color] %> px-2 py-1 rounded-full"><%= player[:score] %> pts</span>
+                                    </div>
+                                <% end %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            <% else %>
+                <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-gray-400">celebration</span>
+                    <p class="text-sm text-gray-500 mt-2">No shoutouts or leaderboard data</p>
+                </div>
+            <% end %>
+        </div>
+
+        <!-- Coach Videos -->
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <span class="text-green-500">
+                    <span class="material-symbols-outlined">play_circle</span>
+                </span>
+                Coach's Tips
+            </h3>
+
+            <% if @coach_videos&.any? %>
+                <div class="space-y-4">
+                    <% @coach_videos.each do |video| %>
+                        <div class="bg-gray-50 rounded-xl overflow-hidden">
+                            <div class="aspect-video <%= video[:bg_color] %> flex items-center justify-center <%= video[:icon_color] %>">
+                                <span class="material-symbols-outlined text-6xl">play_circle</span>
+                            </div>
+                            <div class="p-3">
+                                <p class="font-medium"><%= video[:title] %></p>
+                                <p class="text-xs text-gray-500"><%= video[:coach_name] %> • <%= video[:duration] %></p>
+                            </div>
+                        </div>
+                    <% end %>
+
+                    <button class="w-full mt-2 bg-gradient-to-r from-green-400 to-blue-400 hover:from-green-500 hover:to-blue-500 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 text-sm">
+                        <span class="material-symbols-outlined">video_library</span>
+                        More Videos
+                    </button>
+                </div>
+            <% else %>
+                <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-gray-400">play_circle</span>
+                    <p class="text-sm text-gray-500 mt-2">No coach videos available</p>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>

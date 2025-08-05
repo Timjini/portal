@@ -1,16 +1,28 @@
 class DashboardController < ApplicationController
   before_action :authenticate_user!
 
-  def index # rubocop:disable Metrics/AbcSize
-    safe_action(:index) do
-      @children = User.where(parent_id: current_user.id).includes(:athlete_profile, avatar_attachment: :blob)
-      @notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User', viewed: false)
-      @displayed_notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User',
-                                                    viewed: false).last(5)
-      @daily_logins = UserLogin
-                      .where(login_at: 7.days.ago.beginning_of_day..Time.current.end_of_day)
-                      .order('DATE(login_at) DESC')
-                      .count
+  # def index # rubocop:disable Metrics/AbcSize
+  #   safe_action(:index) do
+  #     @children = User.where(parent_id: current_user.id).includes(:athlete_profile, avatar_attachment: :blob)
+  #     @notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User', viewed: false)
+  #     @displayed_notifications = Notification.where(notifiable_id: current_user.id, notifiable_type: 'User',
+  #                                                   viewed: false).last(5)
+  #     @daily_logins = UserLogin
+  #                     .where(login_at: 7.days.ago.beginning_of_day..Time.current.end_of_day)
+  #                     .order('DATE(login_at) DESC')
+  #                     .count
+  #     @system_alerts_count = AppError.count
+  #   end
+  # end
+
+  def index
+    case current_user.role
+    when 'admin'  then redirect_to admin_dashboard_index_path
+    when 'coach'  then redirect_to coaches_dashboard_index_path
+    when 'parent_user' then redirect_to parents_dashboard_index_path
+    when 'child_user'  then redirect_to juniors_dashboard_index_path
+    when 'athlete' then redirect_to athletes_dashboard_index_path
+    else render 'dashboard'
     end
   end
 

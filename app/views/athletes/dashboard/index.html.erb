@@ -1,0 +1,301 @@
+<% questionnaire_filled = Question.includes(:answers).where(answers: { user_id: current_user.id }).exists? %>
+<div class="min-h-screen p-4 md:p-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 flex items-center gap-2">
+                <span class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                    <span class="material-symbols-outlined">sports</span>
+                </span>
+                Athlete Dashboard
+            </h1>
+            <p class="text-gray-600 mt-1">Track your performance, training, and progress</p>
+        </div>
+
+        <div class="mt-4 md:mt-0 flex flex-col items-end gap-3">
+            <% unless questionnaire_filled %>
+            <div class="w-full flex-wrap bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg flex items-center gap-3">
+                <span class="material-symbols-outlined text-red-500">warning</span>
+                <div>
+                    <p class="font-medium">Questionnaire Required</p>
+                    <p class="text-sm">Complete to unlock full dashboard features</p>
+                </div>
+                <a href="/questionnaires?user_id=<%= current_user.id %>" class="ml-auto bg-red-600 hover:bg-red-700 text-white px-4 py-1.5 rounded-md text-sm font-medium whitespace-nowrap">
+                    Complete Now
+                </a>
+            </div>
+            <% end %>
+
+            <a href="/users/<%=current_user.id%>" class="p-3 rounded-lg shadow-sm flex items-center gap-3 bg-white">
+                <%= image_tag(current_user.avatar_thumbnail, class:"w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white")%>
+                <div>
+                    <p class="font-medium text-gray-900"><%= current_user.full_name%></p>
+                    <p class="text-xs text-gray-500"><%= current_user.level%> Program</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Performance Snapshot -->
+        <div class="lg:col-span-2 rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <span class="text-blue-600">
+                        <span class="material-symbols-outlined">monitoring</span>
+                    </span>
+                    Performance Snapshot
+                </h2>
+                <select class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+                    <option>Last 4 Weeks</option>
+                    <option>Last 8 Weeks</option>
+                    <option>Season to Date</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <% if @performance_metrics %>
+                  <% @performance_metrics.each do |metric| %>
+                    <div class="<%= metric[:bg_color] %> p-4 rounded-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm text-gray-600"><%= metric[:name] %></p>
+                                <p class="text-2xl font-bold text-gray-900"><%= metric[:value] %></p>
+                            </div>
+                            <span class="<%= metric[:trend_color] %> material-symbols-outlined"><%= metric[:trend_icon] %></span>
+                        </div>
+                        <div class="mt-2 h-2 <%= metric[:bar_bg_color] %> rounded-full">
+                            <div class="h-2 <%= metric[:bar_color] %> rounded-full" style="width: <%= metric[:progress] %>%"></div>
+                        </div>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <div class="bg-gray-50 p-4 rounded-lg flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-gray-400">data_alert</span>
+                    <p class="text-sm text-gray-500 mt-2">Performance data not available</p>
+                  </div>
+                <% end %>
+            </div>
+
+            <% if @performance_chart_data %>
+              <div class="bg-gray-50 rounded-lg h-64">
+                <!-- Chart would render here -->
+              </div>
+            <% else %>
+              <div class="bg-gray-50 rounded-lg h-64 flex flex-col items-center justify-center text-gray-400">
+                <span class="material-symbols-outlined text-4xl mb-2">data_alert</span>
+                <p>Performance data not available</p>
+              </div>
+            <% end %>
+        </div>
+
+        <!-- Training Schedule -->
+        <div class="rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <span class="text-orange-500">
+                        <span class="material-symbols-outlined">calendar_month</span>
+                    </span>
+                    Training Schedule
+                </h2>
+                <button class="text-blue-600 text-sm font-medium cursor-not-allowed" disabled>View All</button>
+            </div>
+
+            <% if @upcoming_sessions&.any? %>
+              <div class="space-y-4">
+                <% @upcoming_sessions.each do |session| %>
+                  <div class="border-l-4 <%= session[:border_color] %> pl-4 py-2">
+                      <div class="flex justify-between">
+                          <p class="font-medium"><%= session[:title] %></p>
+                          <span class="text-xs <%= session[:intensity_bg_color] %> <%= session[:intensity_text_color] %> px-2 py-1 rounded-full"><%= session[:intensity] %></span>
+                      </div>
+                      <p class="text-sm text-gray-600 mt-1"><%= session[:time] %></p>
+                      <p class="text-sm mt-1"><%= session[:description] %></p>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+                <span class="material-symbols-outlined text-gray-400">schedule</span>
+                <p class="text-sm text-gray-500 mt-2">No upcoming sessions scheduled</p>
+              </div>
+            <% end %>
+
+            <button class="w-full mt-6 bg-gray-400 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 cursor-not-allowed opacity-60" disabled>
+                <span class="material-symbols-outlined">add</span>
+                Add Personal Session
+            </button>
+        </div>
+
+        <!-- KPI Feedback & Coach Comments -->
+        <div class="rounded-xl shadow-sm p-6">
+            <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+                <span class="text-yellow-500">
+                    <span class="material-symbols-outlined">insights</span>
+                </span>
+                KPI Feedback Summary
+            </h2>
+
+            <% if @kpi_feedback %>
+              <div class="space-y-4">
+                  <div>
+                      <p class="font-medium text-gray-900">Strengths</p>
+                      <ul class="list-disc list-inside text-sm text-gray-700 mt-1 space-y-1">
+                        <% @kpi_feedback[:strengths].each do |strength| %>
+                          <li><%= strength %></li>
+                        <% end %>
+                      </ul>
+                  </div>
+
+                  <div>
+                      <p class="font-medium text-gray-900">Areas to Improve</p>
+                      <ul class="list-disc list-inside text-sm text-gray-700 mt-1 space-y-1">
+                        <% @kpi_feedback[:improvements].each do |improvement| %>
+                          <li><%= improvement %></li>
+                        <% end %>
+                      </ul>
+                  </div>
+              </div>
+            <% else %>
+              <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+                <span class="material-symbols-outlined text-gray-400">feedback</span>
+                <p class="text-sm text-gray-500 mt-2">No KPI feedback available</p>
+              </div>
+            <% end %>
+
+            <% if @coach_comments&.any? %>
+              <div class="mt-8">
+                  <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-4">
+                      <span class="text-red-500">
+                          <span class="material-symbols-outlined">record_voice_over</span>
+                      </span>
+                      Coach Comments
+                  </h2>
+
+                  <% @coach_comments.each do |comment| %>
+                    <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <div class="flex-shrink-0">
+                                <%= image_tag(comment[:coach_avatar], class: "w-10 h-10 rounded-full") %>
+                            </div>
+                            <div>
+                                <p class="font-medium"><%= comment[:coach_name] %> • <span class="text-sm text-gray-600"><%= comment[:time_ago] %></span></p>
+                                <p class="text-sm mt-1"><%= comment[:text] %></p>
+                                <% if comment[:has_media] %>
+                                  <div class="mt-2 flex gap-2">
+                                      <button class="text-blue-600 text-sm flex items-center gap-1">
+                                          <span class="material-symbols-outlined text-base">play_circle</span>
+                                          View Video
+                                      </button>
+                                      <button class="text-blue-600 text-sm flex items-center gap-1">
+                                          <span class="material-symbols-outlined text-base">reply</span>
+                                          Reply
+                                      </button>
+                                  </div>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                  <% end %>
+              </div>
+            <% end %>
+        </div>
+
+        <!-- Goal Progress -->
+        <div class="rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <span class="text-green-600">
+                        <span class="material-symbols-outlined">flag</span>
+                    </span>
+                    Goal Progress
+                </h2>
+                <button class="text-blue-600 text-sm font-medium cursor-not-allowed" disabled>Set New Goal</button>
+            </div>
+
+            <% if @goals&.any? %>
+              <div class="space-y-4">
+                <% @goals.each do |goal| %>
+                  <div>
+                      <div class="flex justify-between mb-1">
+                          <p class="font-medium"><%= goal[:name] %></p>
+                          <p class="text-sm text-gray-600"><%= goal[:completion] %>% complete</p>
+                      </div>
+                      <div class="w-full bg-gray-200 rounded-full h-2.5">
+                          <div class="h-2.5 <%= goal[:bar_color] %> rounded-full" style="width: <%= goal[:completion] %>%"></div>
+                      </div>
+                      <p class="text-xs text-gray-500 mt-1"><%= goal[:status_text] %></p>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+                <span class="material-symbols-outlined text-gray-400">flag</span>
+                <p class="text-sm text-gray-500 mt-2">No active goals set</p>
+              </div>
+            <% end %>
+        </div>
+
+        <!-- Health & Recovery -->
+        <div class="lg:col-span-2 rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <span class="text-teal-600">
+                        <span class="material-symbols-outlined">favorite</span>
+                    </span>
+                    Health & Recovery
+                </h2>
+                <div class="flex gap-2">
+                    <button class="text-blue-600 text-sm font-medium cursor-not-allowed" disabled>Log Health Data</button>
+                    <button class="text-blue-600 text-sm font-medium cursor-not-allowed" disabled>View History</button>
+                </div>
+            </div>
+
+            <% if @health_metrics %>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="bg-red-50 p-4 rounded-lg">
+                      <div class="flex items-center gap-2 mb-2">
+                          <span class="text-red-500 material-symbols-outlined">emergency</span>
+                          <p class="font-medium">Injury Status</p>
+                      </div>
+                      <p class="text-sm"><%= @health_metrics[:injury_status] %></p>
+                      <p class="text-xs text-gray-500 mt-2"><%= @health_metrics[:last_injury] %></p>
+                  </div>
+
+                  <div class="bg-amber-50 p-4 rounded-lg">
+                      <div class="flex items-center gap-2 mb-2">
+                          <span class="text-amber-500 material-symbols-outlined">bedtime</span>
+                          <p class="font-medium">Recovery Days</p>
+                      </div>
+                      <p class="text-sm"><%= @health_metrics[:recovery_days] %></p>
+                      <p class="text-xs text-gray-500 mt-2"><%= @health_metrics[:last_recovery] %></p>
+                  </div>
+
+                  <div class="bg-green-50 p-4 rounded-lg">
+                      <div class="flex items-center gap-2 mb-2">
+                          <span class="text-green-500 material-symbols-outlined">nutrition</span>
+                          <p class="font-medium">Nutrition Notes</p>
+                      </div>
+                      <p class="text-sm"><%= @health_metrics[:nutrition_status] %></p>
+                      <p class="text-xs text-gray-500 mt-2"><%= @health_metrics[:hydration_status] %></p>
+                  </div>
+              </div>
+
+              <% if @recovery_chart_data %>
+                <div class="mt-6">
+                    <p class="font-medium mb-2">Weekly Recovery Metrics</p>
+                    <div class="bg-gray-50 rounded-lg h-48">
+                        <!-- Chart would render here -->
+                    </div>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+                <span class="material-symbols-outlined text-gray-400">favorite</span>
+                <p class="text-sm text-gray-500 mt-2">Health data not available</p>
+              </div>
+            <% end %>
+        </div>
+    </div>
+</div>

@@ -24,7 +24,7 @@
                 
                 <!-- Accounts Section -->
                 <div class="space-y-0.5">
-                    <a href="/accounts/all_accounts?page=1" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
+                    <a href="/accounts/all_accounts?page=2" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
                         <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
                             manage_accounts
                         </span>
@@ -107,7 +107,7 @@
                 <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2">Coach Tools</div>
                 
                 <div class="space-y-0.5">
-                    <a href="/accounts/all_accounts?page=1" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
+                    <a href="/accounts/all_accounts" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
                         <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
                             manage_accounts
                         </span>
@@ -137,7 +137,7 @@
                 
                 <div class="space-y-0.5">
                     <% if !current_user.athlete_profile.nil? %>
-                    <a href="/athlete_profiles/<%=current_user.athlete_profile.id%>" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
+                    <a href="/athlete_profiles/<%=current_user.athlete_profile&.id%>" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
                         <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
                             bar_chart
                         </span>
@@ -160,7 +160,7 @@
                 <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2">Athlete Tools</div>
                 
                 <div class="space-y-0.5">
-                    <a href="/athlete_profiles/<%=current_user.athlete_profile.id%>" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
+                    <a href="/athlete_profiles/<%=current_user.athlete_profile&.id%>" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
                         <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
                             account_circle
                         </span>

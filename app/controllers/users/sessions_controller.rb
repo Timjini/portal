@@ -25,6 +25,8 @@ module Users
     end
 
     def track_login
+      return unless current_user && response.successful?
+
       LoginTracker.record_login(current_user)
     end
   end

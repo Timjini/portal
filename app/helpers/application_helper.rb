@@ -3,7 +3,7 @@
 module ApplicationHelper
   def render_coach_dashboard_if_coach(user) # rubocop:disable Metrics/MethodLength
     if user&.admin?
-      render 'dashboard/admin_dashboard'
+      render 'admin/dashboard'
     elsif user&.coach?
       render 'dashboard/coach_dashboard'
     elsif user.role == 'parent_user'

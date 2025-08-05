@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from StandardError, with: :render_error
+  after_action :track_login, if: :should_track_login?
 
   protected
 
@@ -52,6 +53,25 @@ class ApplicationController < ActionController::Base
 
   def action_name_from_caller
     caller_locations(1, 1)[0].label
+  end
+
+  def should_track_login?
+    user_signed_in? &&
+      controller_name == 'sessions' &&
+      action_name == 'create' &&
+      response.status == 200
+  end
+
+  def track_login
+    LoginTracker.record_login(current_user)
+  end
+
+  def after_sign_in_path_for(resource)
+    if resource.admin?
+      admins_dashboard_path
+    else
+      stored_location_for(resource) || authenticated_root_path
+    end
   end
 
   # def set_dashboard_root_path

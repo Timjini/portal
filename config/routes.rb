@@ -142,19 +142,21 @@ Rails.application.routes.draw do
   end
 
   # Child Routes
-  namespace :children do
+  namespace :juniors do
     resources :profiles, only: [:show]
     resources :training, only: %i[index show]
     resources :achievements, only: %i[index show]
     resources :learning, only: %i[index show]
+    resources :dashboard, only: [:index]
   end
 
   # Adult Athlete Routes
-  namespace :adult_athletes do
+  namespace :athletes do
     resources :performance, only: [:index]
     resources :training_plans, only: %i[index show]
     resources :goals, only: %i[index show]
     resources :feedback, only: %i[index show]
+    resources :dashboard, only: [:index]
   end
 
   # Coach Routes
@@ -180,6 +182,7 @@ Rails.application.routes.draw do
   resources :attendance, only: %i[index create]
 
   namespace :admin do
+    resources :dashboard, only: [:index]
     resources :content, only: %i[index edit update]
   end
   post 'assessments/create', to: 'coaches/assessments#create', as: 'create_assessment'

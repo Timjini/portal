@@ -86,7 +86,7 @@
                         <span class="material-symbols-outlined text-2xl">home</span>
                         <span class="text-lg font-medium">Home</span>
                       </a>
-                      <a href="/athlete_profiles/<%= current_user.athlete_profile.id %>" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
+                      <a href="/athlete_profiles/<%= current_user&.athlete_profile&.id %>" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
                         <span class="material-symbols-outlined text-2xl">bar_chart</span>
                         <span class="text-lg font-medium">Progress</span>
                       </a>
@@ -95,7 +95,7 @@
                         <span class="material-symbols-outlined text-2xl">home</span>
                         <span class="text-lg font-medium">Home</span>
                       </a>
-                      <a href="/athlete_profiles/<%= current_user.athlete_profile.id %>" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
+                      <a href="/athlete_profiles/<%= current_user&.athlete_profile&.id %>" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
                         <span class="material-symbols-outlined text-2xl">account_circle</span>
                         <span class="text-lg font-medium">Profile</span>
                       </a>
