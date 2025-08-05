@@ -1,8 +1,16 @@
-<div class="px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+ <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <div class="flex items-center gap-4">
+            <%= render 'components/back_button' %>
+            <div class="inline-flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 mb-4">
+            <h1 class="text-2xl font-bold text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200">Time Slots</h1>
+            </div>
+        </div>
+    </div>
   <% if notice.present? %>
     <p class="text-green-600 mb-2"><%= notice %></p>
   <% end %>
-  <h1 class="font-extrabold text-2xl text-gray-800 mb-4">Time Slots</h1>
 <% if @time_slots.present? %>
   <div class="w-full rounded-lg bg-white shadow-sm p-4">
     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4 gap-4">
@@ -11,14 +19,15 @@
         <span>Add Slot</span>
       </a>
 
-      <div class="w-full md:w-24">
+
+      <!--div class="w-full md:w-24">
         <input
           type="text"
           id="kpiSearchInput"
           class="w-64 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
           placeholder="Search..."
         />
-      </div>
+      </div -->
     </div>
 
     <div class="overflow-x-auto">
@@ -44,13 +53,13 @@
               <td class="px-6 py-4">
                 <div class="flex gap-3 text-gray-700">
                   <a href="/time_slots/<%= time_slot.id %>" class="hover:text-blue-600">
-                    <span class="material-symbols-outlined">visibility</span>
+                    <%= render 'icons/eye' %>
                   </a>
                   <a href="/time_slots/<%= time_slot.id %>/edit" class="hover:text-yellow-600">
-                    <span class="material-symbols-outlined">edit</span>
+                    <%= render 'icons/edit' %>
                   </a>
                   <%= button_to time_slot, method: :delete, data: { confirm: 'Are you sure?' }, class: "hover:text-red-600" do %>
-                    <span class="material-symbols-outlined">delete</span>
+                    <%= render 'icons/trash' %>
                   <% end %>
                 </div>
               </td>

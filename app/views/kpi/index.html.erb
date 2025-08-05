@@ -1,3 +1,12 @@
-<%=render 'components/back_button'%>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
+ <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <div class="flex items-center gap-4 ">
+            <%= render 'components/back_button' %>
+            <div class="inline-flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 mb-4">
+            <h1 class="text-2xl font-bold text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 mx-auto">KPI Management</h1>
+            </div>
+        </div>
+    </div>
 <%= render 'kpi/levels_table'%>
+</div>

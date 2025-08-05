@@ -65,7 +65,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Virtual Attributes
   attr_accessor :dob
 
-  # Instance Methods
+  # scopes Methods
+  scope :with_coach_calendars, lambda {
+    includes(:coach_calendars)
+  }
 
   ## Role Methods
   def parent_user?

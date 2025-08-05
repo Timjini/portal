@@ -1,0 +1,3 @@
+<%= form_with url: test_index_path, method: :post, data: { controller: "test", action: "ajax:beforeSend->test#loading ajax:success->test#success ajax:error->test#error" } do |form| %>
+  <%= form.submit "Submit", data: { form_target: "submit" } %>
+<% end %>

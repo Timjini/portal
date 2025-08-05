@@ -93,5 +93,4 @@ application.register('user-table', UserTableController)
 
 import VisibilityController from './visibility_controller'
 application.register('visibility', VisibilityController)
-import CreatChildController from './create_child_controller'
-application.register('create-child', CreatChildController)
+

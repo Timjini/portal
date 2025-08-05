@@ -1,14 +1,28 @@
-<div class="w-full">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
 
-  <% content_for :title, "DCPA Events" %>
+<div class="px-4 sm:px-6 lg:px-8 py-8 flex justify-between items-center border-b border-gray-100">
+  <div class="flex items-center gap-4">
+    <%= link_to :back, class: "inline-flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 border border-gray-200 shadow-xs" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+      </svg>
+      <span>Back</span>
+    <% end %>
+    
+    <h1 class="text-2xl font-semibold text-gray-800">DCPA Events</h1>
+  </div>
 
-  <div class="px-4 sm:px-6 lg:px-8 py-8 flex justify-between items-center">
-    <h1 class="font-bold text-4xl">DCPA Events</h1>
+  <div>
     <%= link_to "New DCPA Event", new_dcpa_event_path, class: "btn" %>
   </div>
+</div>
+
+  <% content_for :title, "DCPA Events" %>
+
+
 
   <% if @dcpa_events.present? %>
     <div class="overflow-x-auto bg-white rounded-lg shadow">
@@ -83,9 +97,6 @@
       </svg>
       <h3 class="mt-2 text-sm font-medium text-gray-900">No DCPA events found</h3>
       <p class="mt-1 text-sm text-gray-500">Create your first event to get started</p>
-      <div class="mt-6">
-        <%= link_to "New DCPA Event", new_dcpa_event_path, class: "btn" %>
-      </div>
     </div>
   <% end %>
 </div>

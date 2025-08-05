@@ -37,8 +37,9 @@ module Users
       if @user.persisted?
         handle_successful_creation
       else
-        flash[:alert] = 'Oops, something went wrong!' # rubocop:disable Rails/I18nLocaleTexts
-        render 'new'
+        Rails.logger.debug {" User params: #{@user.errors.messages.inspect}" }
+        flash[:alert] = "Oops, something went wrong: #{@user.errors.full_messages.to_sentence}" # rubocop:disable Rails/I18nLocaleTexts
+        redirect_to new_user_registration_path
       end
     end
 
@@ -59,6 +60,7 @@ module Users
         UserMailer.welcome_email(@user).deliver_now
       rescue Exception => e # rubocop:disable Lint/RescueException
         Rails.logger.debug { "Error sending email: #{e.message}" }
+        ErrorLogger.log(e, context: { user_id: @user.id, action: 'send_welcome_email' })
       end
 
       flash[:success] = 'Athlete Profile created!' # rubocop:disable Rails/I18nLocaleTexts

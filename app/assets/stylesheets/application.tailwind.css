@@ -8,12 +8,16 @@
 :root[data-theme="light"] {
     --bg: #f0f0fc;
     --text: #05061B;
-    --primary: #AC312C;
+    --primary: #c04a45;
     --secondary: #DBF0F0;
     --accent: #bbccdd;
     --static-color: rgba(253, 253, 253, 0.03);
     --shadow: rgba(99, 99, 99, 0.5) 0px 2px 8px 0px;
     --hover: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    --primary-hover: #b03c37;
+    --primary-bg-hover: #f0f0fc;
+    --primary-dark: #9c2f2b;
+    --primary-border: #c04a45;
     /* --special-color: conic-gradient(from 90deg at 40% -25%, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700); */
     --logo: url('./cfs-dark.png');
   }
@@ -35,38 +39,39 @@
 
 
 .btn {
-    background-color: var(--primary);
-    color: var(--secondary);
-    padding: 0.75rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
-    cursor: pointer;
-    border-radius: 0.25rem;
-    min-width: 150px;
-  }
-  
-  .btn:hover {
-    background-color: var(--static-color);
-    color: var(--primary);
-  
-  }
-  
-  .btnSecondary {
-    background-color: var(--secondary);
-    color: var(--primary);
-    padding: 0.75rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
-    cursor: pointer;
-    border-radius: 0.25rem;
-    min-width: 150px;
-  
-  }
-  
-  .btnSecondary:hover {
-    background-color: var(--static-color);
-    color: var(--primary);
-  }
+  @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-lg focus:outline-none focus:ring-4 transition-all duration-200 shadow-sm hover:shadow-md;
+  background-color: var(--primary);
+  color: var(--secondary);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium bg-white rounded-lg border focus:outline-none focus:ring-4 transition-all duration-200 shadow-sm hover:shadow-md;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-hover);
+  color: var(--primary-hover);
+}
+
+.btn-cancel {
+  @apply inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium rounded-lg transition-all duration-150 hover:shadow-sm;
+  color: var(--primary);
+  background-color: white;
+  border: 1px solid var(--primary-border);
+}
+
+.btn-cancel:hover {
+  background-color: var(--primary-bg-hover);
+  color: var(--primary-dark);
+}
 
 /* User Profile */
 

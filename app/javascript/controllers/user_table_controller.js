@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = ["row"]
   static values = { 
     deleteUrl: { type: String, default: '/delete_user' },
-    redirectUrl: { type: String, default: '/all_accounts' }
+    redirectUrl: { type: String, default: '/all_accounts?page=1' }
   }
 
   search(event) {
