@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class AdultAthletes::FeedbackController < ApplicationController # rubocop:disable Style/ClassAndModuleChildren
+class Athletes::FeedbackController < ApplicationController # rubocop:disable Style/ClassAndModuleChildren
   def index; end
 end
