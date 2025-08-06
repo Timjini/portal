@@ -1,0 +1,74 @@
+ <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+     <div class="flex justify-between items-center mb-6">
+         <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+             <span class="text-blue-600">
+                 <span class="material-symbols-outlined">monitoring</span>
+             </span>
+             Platform Activity
+         </h2>
+         <select class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500">
+             <option>Last 7 Days</option>
+             <option>Last 30 Days</option>
+             <option>This Quarter</option>
+         </select>
+     </div>
+
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+         <% if @platform_activity[:daily_logins] %>
+         <div class="bg-blue-50 p-3 rounded-lg">
+             <p class="text-sm text-gray-600">Daily Logins</p>
+             <p class="text-xl font-bold"><%= @platform_activity[:daily_logins] %>/ day</p>
+             <div class="h-2 bg-blue-200 rounded-full mt-2">
+                 <div class="h-2 bg-blue-600 rounded-full" style="width: <%= @login_trend %>%"></div>
+             </div>
+         </div>
+         <% else %>
+         <div class="bg-gray-50 p-3 rounded-lg flex flex-col items-center justify-center h-full">
+             <span class="material-symbols-outlined text-gray-400">data_alert</span>
+             <p class="text-sm text-gray-500 mt-1">Login data not available</p>
+         </div>
+         <% end %>
+
+         <% if @platform_activity[:assessments_per_day] %>
+         <div class="bg-green-50 p-3 rounded-lg">
+             <p class="text-sm text-gray-600">Assessments/Day</p>
+             <p class="text-xl font-bold"><%= @platform_activity[:assessments_per_day] %> avg</p>
+             <div class="h-2 bg-green-200 rounded-full mt-2">
+                 <div class="h-2 bg-green-600 rounded-full" style="width: <%= @assessment_trend %>%"></div>
+             </div>
+         </div>
+         <% else %>
+         <div class="bg-gray-50 p-3 rounded-lg flex flex-col items-center justify-center h-full">
+             <span class="material-symbols-outlined text-gray-400">data_alert</span>
+             <p class="text-sm text-gray-500 mt-1">Assessment data not available</p>
+         </div>
+         <% end %>
+
+         <% if @platform_activity[:feedback_sent] %>
+         <div class="bg-purple-50 p-3 rounded-lg">
+             <p class="text-sm text-gray-600">Feedback Sent</p>
+             <p class="text-xl font-bold"><%= @platform_activity[:feedback_sent] %>/day</p>
+             <div class="h-2 bg-purple-200 rounded-full mt-2">
+                 <div class="h-2 bg-purple-600 rounded-full" style="width: <%= @feedback_trend %>%"></div>
+             </div>
+         </div>
+         <% else %>
+         <div class="bg-gray-50 p-3 rounded-lg flex flex-col items-center justify-center h-full">
+             <span class="material-symbols-outlined text-gray-400">data_alert</span>
+             <p class="text-sm text-gray-500 mt-1">Feedback data not available</p>
+         </div>
+         <% end %>
+     </div>
+
+     <% if @platform_activity[:activity_data] %>
+     <div class="bg-gray-50 rounded-lg h-64">
+         <!-- Chart would render here -->
+     </div>
+     <% else %>
+     <div class="bg-gray-50 rounded-lg h-64 flex flex-col items-center justify-center text-gray-400">
+         <span class="material-symbols-outlined text-4xl mb-2">data_alert</span>
+         <p>Activity data not available</p>
+         <p class="text-sm mt-1">Check back later or contact support</p>
+     </div>
+     <% end %>
+ </div>

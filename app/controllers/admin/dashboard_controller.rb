@@ -20,6 +20,11 @@ module Admin
       }
 
       @system_alerts_count = AppError.count
+      @active_users_count = User.where(active: true).count
+      @inactive_accounts_count = User.where(active: false).count
+      @assessments_completed = Assessment.where(completed: true).count
+      @pending_approvals = 0
+      
     end
 
     private
