@@ -1,4 +1,4 @@
- <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+<div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
      <div class="flex justify-between items-center mb-6">
          <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
              <span class="text-blue-600">
@@ -14,10 +14,10 @@
      </div>
 
      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-         <% if @platform_activity[:daily_logins] %>
+         <% if platform_activity[:daily_logins] %>
          <div class="bg-blue-50 p-3 rounded-lg">
              <p class="text-sm text-gray-600">Daily Logins</p>
-             <p class="text-xl font-bold"><%= @platform_activity[:daily_logins] %>/ day</p>
+             <p class="text-xl font-bold"><%= platform_activity[:daily_logins] %>/ day</p>
              <div class="h-2 bg-blue-200 rounded-full mt-2">
                  <div class="h-2 bg-blue-600 rounded-full" style="width: <%= @login_trend %>%"></div>
              </div>
@@ -28,11 +28,10 @@
              <p class="text-sm text-gray-500 mt-1">Login data not available</p>
          </div>
          <% end %>
-
-         <% if @platform_activity[:assessments_per_day] %>
+         <% if platform_activity[:assessments_per_day] %>
          <div class="bg-green-50 p-3 rounded-lg">
              <p class="text-sm text-gray-600">Assessments/Day</p>
-             <p class="text-xl font-bold"><%= @platform_activity[:assessments_per_day] %> avg</p>
+             <p class="text-xl font-bold"><%= platform_activity[:assessments_per_day] %> avg</p>
              <div class="h-2 bg-green-200 rounded-full mt-2">
                  <div class="h-2 bg-green-600 rounded-full" style="width: <%= @assessment_trend %>%"></div>
              </div>
@@ -43,11 +42,10 @@
              <p class="text-sm text-gray-500 mt-1">Assessment data not available</p>
          </div>
          <% end %>
-
-         <% if @platform_activity[:feedback_sent] %>
+         <% if platform_activity[:feedback_sent] %>
          <div class="bg-purple-50 p-3 rounded-lg">
              <p class="text-sm text-gray-600">Feedback Sent</p>
-             <p class="text-xl font-bold"><%= @platform_activity[:feedback_sent] %>/day</p>
+             <p class="text-xl font-bold"><%= platform_activity[:feedback_sent] %>/day</p>
              <div class="h-2 bg-purple-200 rounded-full mt-2">
                  <div class="h-2 bg-purple-600 rounded-full" style="width: <%= @feedback_trend %>%"></div>
              </div>
@@ -60,10 +58,22 @@
          <% end %>
      </div>
 
-     <% if @platform_activity[:activity_data] %>
-     <div class="bg-gray-50 rounded-lg h-64">
-         <!-- Chart would render here -->
-     </div>
+     <% if platform_activity[:activity_data] %>
+                     <% if platform_activity[:activity_data] %>
+                       <% platform_activity[:activity_data].each do |key, dataset| %>
+                         <% next unless dataset.is_a?(Hash) && dataset.any? %>
+                         <div class="mb-6">
+                           <h3 class="text-lg font-semibold mb-2 capitalize"><%= key %> per Day</h3>
+                           <div class="bg-white rounded-lg shadow p-4">
+                             <canvas 
+                               data-controller="chart"
+                               data-chart-data-value="<%= dataset.transform_keys(&:to_s).to_json %>"
+                               data-chart-label-value="<%= key.to_s.humanize %>"
+                             ></canvas>
+                           </div>
+                         </div>
+                       <% end %>
+                     <% end %>
      <% else %>
      <div class="bg-gray-50 rounded-lg h-64 flex flex-col items-center justify-center text-gray-400">
          <span class="material-symbols-outlined text-4xl mb-2">data_alert</span>

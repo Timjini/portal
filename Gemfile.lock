@@ -199,6 +199,8 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    groupdate (6.7.0)
+      activesupport (>= 7.1)
     guard (2.19.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -548,6 +550,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   ffi (~> 1.9, >= 1.9.10)
+  groupdate
   guard-livereload (~> 2.5)
   image_processing (~> 1.2)
   jbuilder

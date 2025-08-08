@@ -57,6 +57,7 @@ gem 'rqrcode'
 gem 'searchkick'
 gem 'sendgrid-ruby'
 gem 'will_paginate'
+gem 'groupdate'
 
 # dev tools
 gem 'guard-livereload', '~> 2.5', require: false

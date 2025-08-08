@@ -11,12 +11,13 @@ class DashboardMetricsService
   def platform_activity
     {
       daily_logins: daily_logins,
-      assessments_per_day: assessments_per_day,
+      # assessments_per_day: assessments_per_day,
+      assessments_per_day: 0,
       feedback_sent: feedback_sent,
       activity_data: activity_data,
       login_trend: login_trend,
       assessment_trend: assessment_trend,
-      feedback_trend: feedback_trend
+      feedback_trend: 0
     }
   end
 
@@ -32,45 +33,57 @@ class DashboardMetricsService
   end
 
   def daily_logins
-    UserLogin.where(created_at: @start_date..@end_date)
-             .group_by_day(:created_at)
-             .count
+    UserLogin.where(login_at: @start_date..@end_date)
+             .group_by { |u| u.login_at.in_time_zone('Europe/London').to_date }
+             .transform_values(&:count)
              .values
              .then { |vals| vals.sum / vals.size.to_f }
              .round(1)
-  rescue StandardError
+  rescue StandardError => e
+    Rails.logger.error("Error calculating daily logins: #{e.message}")
     nil
   end
 
   def assessments_per_day
     Assessment.where(completed_at: @start_date..@end_date)
-              .group_by_day(:completed_at)
-              .count
+              .group_by { |a| a.completed_at.to_date }
+              .transform_values(&:count)
               .values
               .then { |vals| vals.sum / vals.size.to_f }
               .round(1)
-  rescue StandardError
+  rescue StandardError => e
+    Rails.logger.error("Error calculating assessments per day: #{e.message}")
     nil
   end
 
   def feedback_sent
-    Feedback.where(created_at: @start_date..@end_date)
-            .group_by_day(:created_at)
-            .count
-            .values
-            .then { |vals| vals.sum / vals.size.to_f }
-            .round(1)
+    # Feedback.where(created_at: @start_date..@end_date)
+    #         .group_by_day(:created_at)
+    #         .count
+    #         .values
+    #         .then { |vals| vals.sum / vals.size.to_f }
+    #         .round(1)
+    0
   rescue StandardError
     nil
   end
 
   def activity_data
     {
-      logins: UserLogin.where(created_at: @start_date..@end_date).group_by_day(:created_at).count,
-      assessments: Assessment.where(completed_at: @start_date..@end_date).group_by_day(:completed_at).count,
-      feedback: Feedback.where(created_at: @start_date..@end_date).group_by_day(:created_at).count
+      logins: UserLogin.where(created_at: @start_date..@end_date)
+                       .group_by { |u| u.created_at.to_date }
+                       .transform_values(&:count)
+                       .transform_keys { |d| d.strftime('%Y-%m-%d') },
+
+      assessments: Assessment.where(completed_at: @start_date..@end_date)
+                             .group_by { |a| a.completed_at.to_date }
+                             .transform_values(&:count)
+                             .transform_keys { |d| d.strftime('%Y-%m-%d') },
+
+      feedback: 0
     }
-  rescue StandardError
+  rescue StandardError => e
+    Rails.logger.error("Error calculating activity data: #{e.message}")
     nil
   end
 
@@ -82,9 +95,9 @@ class DashboardMetricsService
     calculate_trend(Assessment, :completed_at)
   end
 
-  def feedback_trend
-    calculate_trend(Feedback, :created_at)
-  end
+  # def feedback_trend
+  #   calculate_trend(Feedback, :created_at)
+  # end
 
   def calculate_trend(model, date_column)
     current_period = model.where(date_column => @start_date..@end_date).count
