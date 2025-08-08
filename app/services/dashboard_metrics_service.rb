@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/services/dashboard_metrics_service.rb
 class DashboardMetricsService
   def initialize(time_range = '7d')

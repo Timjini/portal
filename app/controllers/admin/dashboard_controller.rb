@@ -5,7 +5,7 @@ module Admin
     before_action :authenticate_user!
     authorize_resource class: false
 
-    def index # rubocop:disable Metrics/MethodLength
+    def index # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
       @recent_logins = User.where.not(last_login_at: nil)
                            .order(last_login_at: :desc)
                            .limit(10)

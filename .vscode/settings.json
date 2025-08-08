@@ -3,12 +3,14 @@
         "ALLOWFROM",
         "antiquewhite",
         "cancancan",
+        "checkin",
         "hotwired",
         "iframed",
         "ILIKE",
         "msapplication",
         "progname",
         "replit",
-        "rgba"
+        "rgba",
+        "sslca"
     ]
 }

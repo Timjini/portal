@@ -1,0 +1,78 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+    <div class="flex items-center gap-4">
+      <%= render 'components/back_button' %>
+      <div class="inline-flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 mb-4">
+        <h1 class="text-2xl font-bold text-gray-700">Taster Sessions</h1>
+      </div>
+    </div>
+  </div>
+
+  <% if @taster_bookings.present? %>
+    <div class="bg-white rounded-xl shadow-md overflow-auto">
+      <table class="min-w-full divide-y divide-gray-200 text-sm">
+        <thead class="bg-blue-50 text-blue-700 uppercase text-xs font-medium">
+          <tr>
+            <th class="px-4 py-3 text-left">Child Info</th>
+            <th class="px-4 py-3 text-left">Parent Info</th>
+            <th class="px-4 py-3 text-left">Booking Info</th>
+            <th class="px-4 py-3 text-left">Status</th>
+            <th class="px-4 py-3 text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @taster_bookings.each do |booking| %>
+            <tr class="hover:bg-gray-50 align-top">
+              <!-- Child Info -->
+              <td class="px-4 py-3 whitespace-nowrap">
+                <div><strong>Name:</strong> <%= booking.childFullName.presence || '-' %></div>
+                <div><strong>Birthdate:</strong> <%= booking.childBirthDate&.strftime('%d %b %Y') || '-' %></div>
+              </td>
+
+              <!-- Parent Info -->
+              <td class="px-4 py-3 whitespace-nowrap">
+                <div><strong>Name:</strong> <%= "#{booking.parentFirstName} #{booking.parentLastName}" %></div>
+                <div><strong>Email:</strong> <%= booking.parentEmail %></div>
+                <div><strong>Phone:</strong> <%= booking.parentPhone %></div>
+              </td>
+
+              <!-- Booking Info -->
+              <td class="px-4 py-3 whitespace-nowrap">
+                <div><strong>Email:</strong> <%= booking.email %></div>
+                <div><strong>Date:</strong> <%= booking.dateSelect&.strftime('%d %b %Y') %></div>
+                <div><strong>Submitted:</strong> <%= booking.timestamp&.strftime('%d %b %Y, %H:%M') %></div>
+                <div><strong>Registered:</strong> <%= booking.registrationConfirmation ? 'Yes' : 'No' %></div>
+                <div><strong>Agreed:</strong> <%= booking.policyAgreement ? 'Yes' : 'No' %></div>
+                <div><strong>Health:</strong> <%= truncate(booking.healthIssues, length: 40) %></div>
+              </td>
+
+              <!-- Status -->
+              <td class="px-4 py-3 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold">
+                  <%= status_badge(booking.status) %>
+                </span>
+              </td>
+
+              <!-- Actions -->
+              <td class="px-4 py-3 whitespace-nowrap">
+                <div class="flex flex-col space-y-1">
+                  <%= link_to 'Show', admin_taster_booking_path(booking), class: 'text-blue-600 hover:underline' %>
+                  <%= link_to 'Edit', edit_admin_taster_booking_path(booking), class: 'text-yellow-600 hover:underline' %>
+                  <%= link_to 'Delete', admin_taster_booking_path(booking), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-600 hover:underline' %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-center my-4">
+      <%= will_paginate @taster_bookings, renderer: TailwindPaginationRenderer %>
+    </div>
+  <% else %>
+    <div class="bg-white rounded-lg shadow p-6 text-center">
+      <p class="text-gray-500">No taster sessions found</p>
+    </div>
+  <% end %>
+</div>
