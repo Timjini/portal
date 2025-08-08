@@ -1,0 +1,119 @@
+<% input_style = "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" %>
+<%= form_with model: @taster_booking, url: admin_taster_booking_path(@taster_booking), local: true do |form| %>
+<div class="max-w-4xl mx-auto p-6 general_card rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">TASTER SESSION DETAILS</h2>
+
+    <div class="flex flex-col md:flex-row gap-8">
+        <!-- Main Form Fields -->
+        <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Athlete Information -->
+            <div class="space-y-4 md:col-span-2">
+                <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Athlete Information</h3>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                <%= form.text_field :firstName, class: input_style %>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                <%= form.text_field :lastName, class: input_style %>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <%= form.email_field :email, class: input_style %>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <%= form.telephone_field :phone, class: input_style %>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Birth Date</label>
+                <%= form.date_field :athleteBirthDate, class: input_style %>
+            </div>
+            
+            <!-- Session Information -->
+            <div class="space-y-4 md:col-span-2">
+                <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 mt-4">Session Details</h3>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Selected Date</label>
+                <%= form.date_field :dateSelect, class: input_style %>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <%= form.select :status, options_for_select(['pending', 'confirmed', 'cancelled'], @taster_booking.status), {}, class: input_style %>
+            </div>
+            
+            <!-- Parent/Guardian Information -->
+            <div class="space-y-4 md:col-span-2">
+                <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 mt-4">Parent/Guardian Information</h3>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Parent First Name</label>
+                <%= form.text_field :parentFirstName, class: input_style %>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Parent Last Name</label>
+                <%= form.text_field :parentLastName, class: input_style %>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Parent Email</label>
+                <%= form.email_field :parentEmail, class: input_style %>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Parent Phone</label>
+                <%= form.telephone_field :parentPhone, class: input_style %>
+            </div>
+            
+            <!-- Child Information (if applicable) -->
+            <div class="space-y-4 md:col-span-2">
+                <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 mt-4">Child Information (if applicable)</h3>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Child Full Name</label>
+                <%= form.text_field :childFullName, class: input_style %>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Child Birth Date</label>
+                <%= form.date_field :childBirthDate, class: input_style %>
+            </div>
+            
+            <!-- Additional Information -->
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Health Issues/Notes</label>
+                <%= form.text_area :healthIssues, rows: 3, class: input_style %>
+            </div>
+            
+            <div class="md:col-span-2 flex items-center space-x-4">
+                <div class="flex items-center">
+                    <%= form.check_box :registrationConfirmation, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" %>
+                    <label class="ml-2 text-sm font-medium text-gray-700">Registration Confirmed</label>
+                </div>
+                
+                <div class="flex items-center">
+                    <%= form.check_box :policyAgreement, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" %>
+                    <label class="ml-2 text-sm font-medium text-gray-700">Policy Agreement</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-8 flex justify-end space-x-4">
+        <%= link_to "Cancel", admin_taster_booking_index_path, class: "btn-cancel" %>
+        <%= form.submit "Save Booking", class: "btn" %>
+    </div>
+</div>
+<% end %>

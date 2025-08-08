@@ -1,0 +1,130 @@
+<!-- app/views/admin/taster_bookings/show.html.erb -->
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Taster Session Details</h1>
+    <%= link_to 'Back to List', admin_taster_booking_index_path, class: "btn-cancel" %>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-md overflow-hidden general_card">
+    <!-- Status Header -->
+    <div class="px-6 py-4 border-b flex justify-between items-center <%= status_bg_color(@taster_booking.status) %>">
+      <div>
+        <span class="text-lg font-semibold <%= status_text_color(@taster_booking.status) %>">
+          Booking #<%= @taster_booking.id %>
+        </span>
+      </div>
+      <div>
+        <%= render 'status_badge', status: @taster_booking.status %>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
+      <!-- Athlete Information -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-gray-700 border-b pb-2">Athlete Information</h2>
+        
+        <div>
+          <p class="text-sm text-gray-500">Full Name</p>
+          <p class="font-medium"><%= @taster_booking.firstName %> <%= @taster_booking.lastName %></p>
+        </div>
+        
+        <div>
+          <p class="text-sm text-gray-500">Email</p>
+          <p class="font-medium"><%= @taster_booking.email %></p>
+        </div>
+        
+        <div>
+          <p class="text-sm text-gray-500">Phone</p>
+          <p class="font-medium"><%= @taster_booking.phone %></p>
+        </div>
+        
+        <div>
+          <p class="text-sm text-gray-500">Birth Date</p>
+          <p class="font-medium"><%= @taster_booking.athleteBirthDate.strftime("%B %d, %Y") if @taster_booking.athleteBirthDate %></p>
+        </div>
+      </div>
+
+      <!-- Session Information -->
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-gray-700 border-b pb-2">Session Details</h2>
+        
+        <div>
+          <p class="text-sm text-gray-500">Scheduled Date</p>
+          <p class="font-medium"><%= @taster_booking.dateSelect.strftime("%A, %B %d, %Y") if @taster_booking.dateSelect %></p>
+        </div>
+        
+        <div>
+          <p class="text-sm text-gray-500">Health Notes</p>
+          <p class="font-medium"><%= @taster_booking.healthIssues.presence || "None reported" %></p>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center">
+            <%= check_icon(@taster_booking.registrationConfirmation) %>
+            <span class="ml-2">Registration Confirmed</span>
+          </div>
+          <div class="flex items-center">
+            <%= check_icon(@taster_booking.policyAgreement) %>
+            <span class="ml-2">Policy Agreement</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parent/Guardian Information -->
+      <div class="space-y-4 md:col-span-2 border-t pt-6">
+        <h2 class="text-lg font-semibold text-gray-700 border-b pb-2">Parent/Guardian Information</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-sm text-gray-500">Name</p>
+            <p class="font-medium"><%= @taster_booking.parentFirstName %> <%= @taster_booking.parentLastName %></p>
+          </div>
+          
+          <div>
+            <p class="text-sm text-gray-500">Email</p>
+            <p class="font-medium"><%= @taster_booking.parentEmail %></p>
+          </div>
+          
+          <div>
+            <p class="text-sm text-gray-500">Phone</p>
+            <p class="font-medium"><%= @taster_booking.parentPhone %></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Child Information (if applicable) -->
+      <% if @taster_booking.childFullName.present? %>
+        <div class="space-y-4 md:col-span-2 border-t pt-6">
+          <h2 class="text-lg font-semibold text-gray-700 border-b pb-2">Child Information</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <p class="text-sm text-gray-500">Full Name</p>
+              <p class="font-medium"><%= @taster_booking.childFullName %></p>
+            </div>
+            
+            <div>
+              <p class="text-sm text-gray-500">Birth Date</p>
+              <p class="font-medium"><%= @taster_booking.childBirthDate.strftime("%B %d, %Y") if @taster_booking.childBirthDate %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="px-6 py-4 border-t flex justify-end space-x-3">
+      <%= link_to 'Edit', edit_admin_taster_booking_path(@taster_booking), class: "btn-cancel" %>
+      <%
+=begin%>
+ <%= link_to 'Cancel Booking', 
+                  admin_taster_booking_path(@taster_booking, taster_booking: { status: 'cancelled' }), 
+                  method: :patch, 
+                  data: { confirm: 'Are you sure you want to cancel this booking?' },
+                  class: "btn btn-danger" unless @taster_booking.cancelled? %> 
+<%
+=end%>
+    </div>
+  </div>
+</div>

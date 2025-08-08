@@ -45,8 +45,11 @@
                         <!-- Main Content Grid -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             <!-- Platform Activity -->
-                            <!-- render 'partials/_platform_activity', platform_activity: @platform_activity -->
-
+                            <%
+=begin%>
+ <%= render 'admin/dashboard/partials/platform_activity', platform_activity: @platform_activity %> 
+<%
+=end%>
                             <!-- User Management -->
                             <div class="bg-white rounded-xl shadow-sm p-6">
                                 <div class="flex justify-between items-center mb-6">

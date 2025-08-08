@@ -84,16 +84,16 @@
                 </div>
                 
                 <!-- Events Section -->
-                <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2 mt-3">Events</div>
+                <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2 mt-3">CFS</div>
                 
                 <div class="space-y-0.5">
-                    <a href="/taster_session_bookings" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            sprint
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Taster Sessions</span>
-                    </a>
-                    
+                    <%= link_to admin_taster_booking_index_path(page: 1), class: "group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item" do %>
+                    <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
+                        sprint
+                    </span>
+                    <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Taster Sessions</span>
+                    <% end %>
+                                        
                     <a href="/dcpa_events" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
                         <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">event</span>
                         <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Events</span>
