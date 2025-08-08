@@ -96,6 +96,9 @@
                     <a href="/coaches/assessments/<%= account.id %>" class="text-indigo-600 hover:text-indigo-900" title="Calendar">
                       <%= render 'icons/calendar' %>
                     </a>
+                    <a href="/athlete_profiles/<%= account.athlete_profile&.id %>" class="text-indigo-600 hover:text-indigo-900" title="Assessments">
+                      <%= render 'icons/assessment' %>
+                    </a>
                   <% end %>
 
                   <button data-action="click->user-table#deleteUser" 
