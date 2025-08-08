@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/services/dashboard_metrics_service.rb
 class DashboardMetricsService
   def initialize(time_range = '7d')
@@ -36,7 +38,7 @@ class DashboardMetricsService
              .values
              .then { |vals| vals.sum / vals.size.to_f }
              .round(1)
-  rescue
+  rescue StandardError
     nil
   end
 
@@ -47,7 +49,7 @@ class DashboardMetricsService
               .values
               .then { |vals| vals.sum / vals.size.to_f }
               .round(1)
-  rescue
+  rescue StandardError
     nil
   end
 
@@ -58,7 +60,7 @@ class DashboardMetricsService
             .values
             .then { |vals| vals.sum / vals.size.to_f }
             .round(1)
-  rescue
+  rescue StandardError
     nil
   end
 
@@ -68,7 +70,7 @@ class DashboardMetricsService
       assessments: Assessment.where(completed_at: @start_date..@end_date).group_by_day(:completed_at).count,
       feedback: Feedback.where(created_at: @start_date..@end_date).group_by_day(:created_at).count
     }
-  rescue
+  rescue StandardError
     nil
   end
 
@@ -87,11 +89,11 @@ class DashboardMetricsService
   def calculate_trend(model, date_column)
     current_period = model.where(date_column => @start_date..@end_date).count
     previous_period = model.where(date_column => (@start_date - (@end_date - @start_date))..@start_date).count
-    
+
     return 0 if previous_period.zero?
-    
+
     ((current_period - previous_period).to_f / previous_period * 100).round
-  rescue
+  rescue StandardError
     0
   end
 end

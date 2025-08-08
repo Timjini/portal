@@ -24,7 +24,6 @@ module Admin
       @inactive_accounts_count = User.where(active: false).count
       @assessments_completed = Assessment.where(completed: true).count
       @pending_approvals = 0
-      
     end
 
     private
