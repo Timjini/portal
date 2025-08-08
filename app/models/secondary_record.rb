@@ -11,8 +11,8 @@ class SecondaryRecord < ApplicationRecord
     password: ENV.fetch('DB_SECONDARY_PASSWORD', nil),
     database: ENV.fetch('DB_SECONDARY_NAME', nil),
     port: ENV.fetch('DB_SECONDARY_PORT', nil),
-    ssl_mode: :verify_identity,
-    sslca: '/etc/ssl/cert.pem',
+    # ssl_mode: :verify_identity,
+    # sslca: '/etc/ssl/cert.pem',
     connect_timeout: 10,
     pool: ENV.fetch('RAILS_MAX_THREADS', 5).to_i
   )
