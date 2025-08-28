@@ -1,10 +1,15 @@
-<turbo-frame id="checkbox-frame-<%= level.id %>">
+<turbo-frame id="checkbox-frame-<%= level.id %>" 
+             data-controller="checklist" 
+             data-checklist-user-id-value="<%= @athlete.user_id %>">
     <% list = level.check_lists %>
     <% if current_user.role != 'admin' && current_user.role != 'coach' %>
     <% level.check_lists.each do |checklist| %>
     <div class="flex items-center mb-4">
         <div class="tooltip">
-            <input <%= checklist.checked_user_item(@athlete.user_id) %> data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4" disabled>
+            <input <%= checklist.checked_user_item(@athlete.user_id) %>   data-checklist-id="<%= checklist.id %>"
+          data-action="click->checklist#handleCheckboxClick"
+          data-checklist-target="checkbox"
+ type="checkbox" value="" class="w-4 h-4" disabled>
             <label for="checklist-<%= checklist.id %>" class="ml-2 text-sm font-medium"><%= checklist.title %></label>
             <span class="tooltiptext">Checked when approved !</span>
         </div>
@@ -13,7 +18,10 @@
     <% else %>
     <% level.check_lists.each do |checklist| %>
     <div class="flex items-center mb-4">
-        <input <%= checklist.checked_user_item(@athlete.user_id) %> data-user-id="<%= @athlete.user_id %>" data-checkbox-target="checklist-<%= checklist.id %>" data-checklist-id="<%= checklist.id %>" type="checkbox" value="" class="w-4 h-4">
+        <input <%= checklist.checked_user_item(@athlete.user_id) %>   data-checklist-id="<%= checklist.id %>"
+          data-action="click->checklist#handleCheckboxClick"
+          data-checklist-target="checkbox"
+ type="checkbox" value="" class="w-4 h-4">
         <label for="checklist-<%= checklist.id %>" class="ml-2 text-sm font-medium"><%= checklist.title %></label>
     </div>
     <% end %>
@@ -23,78 +31,3 @@
     <%=render 'athlete_profiles/reviews/form', status: @status , level:level, athlete: @athlete %>
     <% end %>
 </turbo-frame>
-
-
-
-
-<!-- This script should be move later -->
-<script>
-    document.addEventListener('turbo:load', () => {
-        const levels = document.querySelectorAll('[id^="checkbox-frame-"]');
-
-        levels.forEach(level => {
-            const checkboxes = level.querySelectorAll('[data-checkbox-target]');
-
-            checkboxes.forEach(checkbox => {
-                // Remove any existing event listeners to avoid duplicates
-                checkbox.removeEventListener('click', checkboxClickHandler);
-
-                // Attach a new event listener
-                checkbox.addEventListener('click', checkboxClickHandler);
-            });
-        });
-    });
-
-    function checkboxClickHandler() {
-        const checklistId = this.getAttribute('data-checklist-id');
-        const userId = this.getAttribute('data-user-id');
-        const completed = this.checked;
-
-        const postData = {
-            checklist_item: {
-                checklist_id: checklistId,
-                user_id: userId,
-                completed: completed,
-            },
-        };
-
-        const url = '/checklist_items';
-
-        fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(postData),
-            })
-            .then(response => {
-                console.log('response=-=====>', response)
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const contentType = response.headers.get('Content-Type');
-                if (contentType && contentType.includes('application/json')) {
-                    return response.json(); // Parse JSON if available
-                }
-                return {};
-            })
-            .then(data => {
-                console.log(`successful:`, data);
-                const successMessage = completed ? 'Checklist item added!' : 'Checklist item removed!';
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: successMessage,
-                });
-            })
-            .catch(error => {
-                console.error(`Error during performing request:`, error);
-                const errorMessage = completed ? 'Something went wrong adding checklist item!' : 'Something went wrong removing checklist item!';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: errorMessage,
-                });
-            });
-    }
-</script>

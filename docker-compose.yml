@@ -7,7 +7,7 @@ services:
                RAILS_ENV=${RAILS_ENV} bundle exec rails db:migrate &&
                RAILS_ENV=${RAILS_ENV} bundle exec rails db:seed &&
                RAILS_ENV=${RAILS_ENV} bundle exec rails assets:precompile &&
-               RAILS_ENV=${RAILS_ENV} bundle exec rails server -b 0.0.0.0 -p 3001"
+               RAILS_ENV=${RAILS_ENV} bundle exec rails server -b 0.0.0.0 -p 3000"
     volumes:
       - portal-production-app-volume:/usr/src/app
     ports:

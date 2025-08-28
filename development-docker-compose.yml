@@ -1,0 +1,18 @@
+services:
+  development-app:
+    container_name: portal-development-app
+    build: .
+    command: >
+      bash -c "rm -f /usr/src/app/tmp/pids/server.pid &&
+               bundle exec rails db:migrate &&
+               bundle exec rails db:seed &&
+               bundle exec rails assets:precompile &&
+               bundle exec rails server -b 0.0.0.0 -p 3000"
+    env_file: .env.local
+    volumes:
+      - portal-development-app-volume:/usr/src/app
+    ports:
+      - "3000:3000"
+
+volumes:
+  portal-development-app-volume:

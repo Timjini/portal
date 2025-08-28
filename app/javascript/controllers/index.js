@@ -96,3 +96,6 @@ application.register("user-table", UserTableController)
 
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
+
+import ChecklistController from "./checklist_controller"
+application.register("checklist", ChecklistController)

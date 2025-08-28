@@ -3,10 +3,23 @@ import { Controller } from "@hotwired/stimulus"
 import Swal from 'sweetalert2'
 
 export default class extends Controller {
-  static values = { id: String }
-
   async delete(event) {
     event.preventDefault()
+    
+    // Get the ID from the data attribute
+    const id = this.element.dataset.id || this.element.dataset.levelIdValue
+    
+    if (!id) {
+      console.error("No ID found for deletion")
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Cannot delete: missing ID',
+      })
+      return
+    }
+
+    console.log("Deleting level with ID:", id);
     
     const confirmation = await Swal.fire({
       title: "Are you sure?",
@@ -20,17 +33,19 @@ export default class extends Controller {
 
     if (confirmation.isConfirmed) {
       try {
-        console.log("Deleting level with ID:", this.idValue);
-        const response = await fetch(`/kpis/${this.idValue}`, {
+        const response = await fetch(`/kpis/${id}`, {
           method: 'DELETE',
           headers: {
-            'Accept': 'text/vnd.turbo-stream.html',
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+            'Accept': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+            'Content-Type': 'application/json'
           }
         })
 
         if (response.ok) {
-          Turbo.visit('/kpis', { action: 'replace' })
+          // Remove the element from the DOM
+          this.element.closest('tr').remove()
+          
           Swal.fire({
             icon: 'success',
             title: 'Success!',
@@ -38,13 +53,14 @@ export default class extends Controller {
             timer: 1500
           })
         } else {
-          throw new Error('Deletion failed')
+          const errorData = await response.json()
+          throw new Error(errorData.message || 'Deletion failed')
         }
       } catch (error) {
         Swal.fire({
           icon: 'error',
           title: 'Oops!',
-          text: 'Level deletion failed. Please try again.',
+          text: error.message || 'Level deletion failed. Please try again.',
         })
       }
     }

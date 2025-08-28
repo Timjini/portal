@@ -97,7 +97,8 @@ Rails.application.routes.draw do
 
   # KPI Routes
   get '/kpis', to: 'kpi#index'
-  post '/kpis_create', to: 'kpi#create'
+  get '/kpis/new', to: 'kpi#new', as: 'new_kpi'
+  post '/kpis_create', to: 'kpi#create', as: 'kpis_create'
   delete '/kpis/:id', to: 'kpi#destroy'
   get 'kpis/:id/edit', to: 'kpi#edit', as: 'edit_kpi'
   patch '/kpis/:id/edit', to: 'kpi#update', as: 'update_kpi'

@@ -85,7 +85,11 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   ## Profile Methods
   def avatar_thumbnail
-    avatar.attached? ? avatar : 'user.png'
+    if avatar.attached?
+      avatar
+    else
+      'user.png'
+    end
   end
 
   def full_name

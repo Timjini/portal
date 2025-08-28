@@ -5,12 +5,14 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV['DB_NAME'] %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  database: <%= ENV['SQL_DB_NAME'] %>
+  username: <%= ENV['SQL_DB_USER'] %>
+  password: <%= ENV['SQL_DB_PASSWORD'] %>
   encoding: <%= ENV['DB_ENCODE'] %>
   prepared_statements: false
-  host: <%= ENV['DB_HOST'] %>
+  host: 89.117.139.1
+  pool: 10
+
 
 test:
   <<: *default
@@ -24,3 +26,4 @@ production:
   encoding: <%= ENV['DB_ENCODE'] %>
   prepared_statements: false
   host: <%= ENV['SQL_HOST'] %>
+  pool: 10

@@ -73,38 +73,47 @@ class AccountsController < ApplicationController
     end
   end
 
-  def all_accounts # rubocop:disable Metrics/AbcSize
+  def all_accounts
     Rails.logger.info "Fetching accounts with params: #{params.inspect}"
-
+  
     base_scope = User.includes(:athlete_profile, :avatar_attachment)
-
     base_scope = base_scope.where(role: params[:role]) if params[:role].present?
-
     base_scope = base_scope.with_coach_calendars if params[:role].nil? || params[:role] == 'coach'
-
+  
     if params[:search].present?
-      search_accounts(params)
-      Rails.logger.info "Search results: #{@accounts.inspect}"
+      @accounts = search_accounts(params)
+    else
+      @accounts = base_scope.paginate(page: params[:page], per_page: 10)
     end
-
-    @accounts = base_scope.paginate(page: params[:page], per_page: 10)
-  end
-
-  def search_accounts(params) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    Rails.logger.info "Searching accounts with params: #{params[:search].inspect}"
-    @accounts = User.includes(:athlete_profile, :avatar_attachment)
-                    .where('first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ?',
-                           "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
-                    .paginate(page: params[:page], per_page: 10)
-    Rails.logger.info "Search results: #{@accounts.inspect}"
-    if @accounts.empty?
-      flash.now[:alert] = 'No accounts found matching your search criteria.' # rubocop:disable Rails/I18nLocaleTexts
-      redirect_to all_accounts_accounts_path
+  
+    respond_to do |format|
+      format.html
+      format.js 
     end
-    flash.now[:alert] = 'No accounts found matching your search criteria.' # rubocop:disable Rails/I18nLocaleTexts
-    redirect_to all_accounts_accounts_path
   end
+  
+  
 
+  def search_accounts(params)
+    search_term = params[:search].to_s.strip.downcase
+    Rails.logger.info "Searching accounts with params: #{search_term.inspect}"
+  
+    if search_term.blank?
+      @accounts = User.includes(:athlete_profile, :avatar_attachment)
+                      .paginate(page: params[:page], per_page: 10)
+    else
+      term = "%#{search_term}%"
+      @accounts = User.includes(:athlete_profile, :avatar_attachment)
+                      .where("LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ? OR LOWER(email) LIKE ?",
+                             term, term, term)
+                      .paginate(page: params[:page], per_page: 10)
+    end
+  
+    @accounts
+  end
+  
+  
+  
   def add_child; end
 
   private

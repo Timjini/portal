@@ -2,6 +2,7 @@
 
 class KpiController < ApplicationController
   skip_forgery_protection only: %i[create destroy update]
+  skip_before_action :verify_authenticity_token, only: [:create] 
   before_action :authenticate_user!
   load_and_authorize_resource
 
@@ -17,18 +18,29 @@ class KpiController < ApplicationController
     @check_list = data[:checklists]
   end
 
-  def create # rubocop:disable Metrics/MethodLength
+  def new
+  end
+
+  def create
+    Rails.logger.info "KPI Create Params: #{params.inspect}"
+    
     service = KpiService.new(params)
     result = service.create_level
-
+  
+    Rails.logger.info "KPI Service Result: #{result.inspect}"
+  
     if result[:success]
-      respond_to do |format|
-        format.json { render json: { status: 'success', message: 'Level created!' } }
-      end
+      render json: { 
+        status: 'success', 
+        message: 'Level created!',
+        level: result[:level] 
+      }, status: :ok
     else
-      respond_to do |format|
-        format.json { render json: { status: 'error', message: result[:errors].join(', ') } }
-      end
+      Rails.logger.error "KPI Creation Failed: #{result[:errors]}"
+      render json: { 
+        status: 'error', 
+        message: result[:errors].join(', ') 
+      }, status: :unprocessable_entity
     end
   end
 

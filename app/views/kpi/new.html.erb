@@ -1,0 +1,112 @@
+<%= form_with url: kpis_create_path, method: :post, class: "space-y-6 p-4 flex flex-col", id: "kpi-form", style: "min-height:70vh;" do |form| %>
+    <div class="flex flex-row gap-4">
+      <div>
+        <%= form.label :degree, "Group", class: "block mb-2 text-sm font-medium" %>
+        <%= form.select :degree, 
+            options_for_select([
+              ['Choose a Group', ''],
+              ['development', '0'],
+              ['intermediate', '1'], 
+              ['advanced', '2']
+            ]), 
+            {}, 
+            class: "w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+        %>
+      </div>
+      <div>
+        <%= form.label :level, "Level", class: "block mb-2 text-sm font-medium" %>
+        <%= form.select :step, 
+            options_for_select([
+              ['Choose a Level', ''],
+              ['1', '1'],
+              ['2', '2'],
+              ['3', '3'],
+              ['4', '4'],
+              ['5', '5']
+            ]), 
+            {}, 
+            class: "w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+        %>
+      </div>
+    </div>
+    
+    <div class="w-36">
+      <%= form.label :category, "Level's Category", class: "block mb-2 text-sm font-medium" %>
+      <%= form.select :category, 
+          options_for_select([
+            ['Choose a Category', ''],
+            ['INFORMATION MANAGEMENT', '0'],
+            ['TECHNICAL ABILITY', '1'],
+            ['PHYSICAL STRENGTH', '2'],
+            ['COORDINATION', '3'],
+            ['PERFORMANCE TIME', '4']
+          ]), 
+          {}, 
+          class: "w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+      %>
+    </div>
+    
+    <%= form.hidden_field :title, id: "title" %>
+    
+    <div id="checklist-container">
+      <div class="checklist-item pb-2">
+        <%= form.label :checklist, "description/Item(s)", class: "block mb-2 text-sm font-medium" %>
+        <%= text_area_tag "checklist[]", nil, 
+            rows: 4, 
+            class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", 
+            placeholder: "Write your check list item here...", 
+            required: true 
+        %>
+      </div>
+    </div>
+    
+    <a class="flex flex-col hover:bg-gray-300" onclick="addTask()">
+      <span class="mx-auto">click here Add another item</span>
+      <span class="material-symbols-outlined mx-auto hover:text-green-500">
+        add_circle
+      </span>
+    </a>
+    
+    <div class="grid grid-cols-2 gap-10"> 
+      <%= form.submit "Create Kpi Level", class: "btn" %>
+      <button type="button" onclick="toggleDrawer('add-kpi-form')" aria-controls="add-kpi-form" class="btnSecondary">
+        Cancel
+      </button>
+    </div>
+  <% end %>
+  
+  <script>
+  // JavaScript to handle dynamic checklist items and title generation
+  function addTask() {
+    const container = document.getElementById('checklist-container');
+    const newItem = document.createElement('div');
+    newItem.className = 'checklist-item pb-2';
+    newItem.innerHTML = `
+      <label class="block mb-2 text-sm font-medium">description/Item(s)</label>
+      <textarea type="text" name="checklist[]" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Write your check list item here..." required></textarea>
+    `;
+    container.appendChild(newItem);
+  }
+  
+  // Auto-generate title based on selections
+  document.addEventListener('DOMContentLoaded', function() {
+    const degreeSelect = document.getElementById('degree');
+    const stepSelect = document.getElementById('step');
+    const categorySelect = document.getElementById('category');
+    const titleField = document.getElementById('title');
+    
+    function updateTitle() {
+      const degree = degreeSelect.options[degreeSelect.selectedIndex].text;
+      const step = stepSelect.options[stepSelect.selectedIndex].text;
+      const category = categorySelect.options[categorySelect.selectedIndex].text;
+      
+      if (degree && step && category && degree !== 'Choose a Group' && step !== 'Choose a Level' && category !== 'Choose a Category') {
+        titleField.value = `${degree} Level ${step} - ${category}`;
+      }
+    }
+    
+    degreeSelect.addEventListener('change', updateTitle);
+    stepSelect.addEventListener('change', updateTitle);
+    categorySelect.addEventListener('change', updateTitle);
+  });
+  </script>

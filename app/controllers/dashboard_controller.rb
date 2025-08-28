@@ -64,7 +64,7 @@ class DashboardController < ApplicationController
       degree = row['degree'].to_i
       category = row['category'].to_i
       checklist = row['checklist']&.split(',')
-      service = KpiService.new(title: title, degree: degree, checklist: checklist, category: category, level: step)
+      service = KpiService.new(title: title, degree: degree, checklist: checklist, category: category, step: step)
       result = service.create_level
 
       if result[:success]

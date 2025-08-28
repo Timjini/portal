@@ -12,20 +12,26 @@ class KpiService
   def create_level # rubocop:disable Metrics/MethodLength
     title = @params[:title]
     degree = @params[:degree].to_i
-    checklist_items = @params[:checklist]
+    checklist_items = @params[:checklist] || []  # Handle nil case
     category = @params[:category].to_i
-    step = @params[:level].to_i
-
+    step = @params[:step].to_i  # Fixed parameter name
+  
     level = Level.new(title: title, degree: degree, category: category, step: step)
-
+  
     if level.save
+      # Create checklist items only if they exist and are not empty
       checklist_items.each do |item|
-        CheckList.create!(title: item, level_id: level.id)
+        if item.present? && item.strip.present?
+          CheckList.create!(title: item.strip, level_id: level.id)
+        end
       end
       { success: true, level: level }
     else
       { success: false, errors: level.errors.full_messages }
     end
+  rescue => e
+    # Add error handling for any exceptions
+    { success: false, errors: ["An error occurred: #{e.message}"] }
   end
 
   def update_level # rubocop:disable Metrics/AbcSize,Metrics/MethodLength

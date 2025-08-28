@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby '3.2.2'
 
 # gem 'pg'
-gem 'mysql2', '~> 0.5.5'
+gem 'mysql2', '~> 0.5.4'
 gem 'puma', '>= 5.0'
 gem 'rails', '~> 7.1.2'
 
@@ -49,12 +49,10 @@ gem 'sentry-ruby'
 
 # Utilities
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
-gem 'elasticsearch'
 gem 'mailtrap', '~> 0.1.0'
 gem 'rack-cors'
 gem 'recurrence', '~> 1.3'
 gem 'rqrcode'
-gem 'searchkick'
 gem 'sendgrid-ruby'
 gem 'will_paginate'
 gem 'groupdate'
@@ -70,9 +68,14 @@ gem 'bootsnap', require: false
 gem 'ffi', '~> 1.9', '>= 1.9.10'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 
+# Search
+gem 'elasticsearch', '~> 8.8'
+gem 'searchkick', '~> 5.5', '>= 5.5.2'
+
 group :development, :test do
   gem 'brakeman', require: false
   gem 'bullet'
+  gem 'rack-mini-profiler'
   gem 'bundler-audit', require: false
   gem 'byebug'
   gem 'debug', platforms: %i[mri windows]
