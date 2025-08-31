@@ -186,6 +186,7 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index]
     resources :content, only: %i[index edit update]
     resources :taster_booking, only: %i[index show new create edit update destroy]
+    resources :assessment, only: %i[index]
   end
   post 'assessments/create', to: 'coaches/assessments#create', as: 'create_assessment'
 
