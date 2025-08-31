@@ -11,7 +11,7 @@ module Admin
     before_action :set_taster_booking, only: %i[show edit update destroy]
 
     def index
-      @taster_bookings = TasterBooking.all.paginate(page: params[:page], per_page: 10)
+      @taster_bookings = TasterBooking.where("dateSelect >= ?", Date.today).paginate(page: params[:page], per_page: 10)
     end
 
     def show; end
@@ -35,7 +35,7 @@ module Admin
     def update
       if @taster_booking.update(taster_booking_params)
         flash[:notice] = 'Taster booking was successfully updated.' # rubocop:disable Rails/I18nLocaleTexts
-        redirect_to @taster_booking
+        redirect_to edit_admin_taster_booking_path(@taster_booking)
       else
         render :edit
       end

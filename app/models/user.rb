@@ -188,6 +188,15 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     attendance.exists?(['DATE(attended_at) = ? AND status = ?', Time.zone.today, 'present'])
   end
 
+  
+  def health_issue
+    Answer.joins(:question)
+    .where(user_id: self.id, content: 'Yes')
+    .where.not(questions: { illness_tag: nil })
+    .distinct
+    .pluck('questions.illness_tag')
+  end
+
   # Private Methods
   private
 

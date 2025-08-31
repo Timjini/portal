@@ -4,11 +4,11 @@ class QuestionnairesController < ApplicationController
   def index
     @questionnaire = Questionnaire.last
     # @questions = Question.where(questionnaire_id: @questionnaire.id)
-    @questions = Question.order(id: :asc)
+    @questions = Question.order(id: :asc).paginate(page: params[:page], per_page: 10)
   end
 
   def reports
-    @reports = User.joins(:answers).distinct.paginate(page: params[:page], per_page: 5)
+    @reports = User.joins(:answers).includes(avatar_attachment: :blob).distinct.paginate(page: params[:page], per_page: 10)
   end
 
   def show

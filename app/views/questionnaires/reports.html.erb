@@ -44,13 +44,19 @@
                       <span class="text-gray-500 text-sm"><%= report.email %></span>
                     </div>
                   </td>
-                  <td class="px-3 py-4 text-sm text-gray-900">
-                    <ul class="text-gray-700">
-                      <li><%= report.athlete_profile&.user_illnesses.presence || "None" %></li>
-                    </ul>
-                    <% if report.answers.any?(&:health_issue?) %>
-                      <span class="material-symbols-outlined text-red-500 animate-ping mt-1 block">local_hospital</span>
-                    <% end %>
+                  <td class="px-3 py-4">
+                    <div class="flex items-start gap-2">
+                      <!-- Medical information -->
+                      <div class="flex-1 min-w-0">
+                        <div class="text-gray-700 text-sm <%= report.health_issue.present? ? 'bg-amber-50 px-2 py-1 rounded border border-amber-200' : '' %>">
+                          <%=report.health_issue.join(' , ') || ' ' %>
+                        </div>
+                      </div>
+    
+                      <% if !report.health_issue.empty? %>
+                        <%= render 'shared/common/alert_sign' %>
+                      <% end %>
+                    </div>
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-700">
                     <%= report.level %>
@@ -76,9 +82,9 @@
           </table>
         </div>
 
-        <div class="mt-4">
-          <%= will_paginate @reports, renderer: WillPaginate::ActionView::LinkRenderer, class: "pagination" %>
-        </div>
+      <div class="flex justify-center my-4">
+        <%= will_paginate @reports, renderer: TailwindPaginationRenderer %>
+      </div>
       </div>
     </div>
   </div>

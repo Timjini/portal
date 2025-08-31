@@ -10,7 +10,7 @@ development:
   password: <%= ENV['SQL_DB_PASSWORD'] %>
   encoding: <%= ENV['DB_ENCODE'] %>
   prepared_statements: false
-  host: 89.117.139.1
+  host: <%= ENV['SQL_HOST'] %>
   pool: 10
 
 
