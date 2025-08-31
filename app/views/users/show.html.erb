@@ -1,81 +1,494 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
-<%= render 'components/back_button' %>
-
-<div class="max-w-4xl mx-auto p-4 sm:p-6">
-  <!-- Profile Card -->
-  <div class=" rounded-xl shadow-md overflow-hidden">
-    <!-- Profile Header with Edit Button -->
-    <div class="p-6 sm:p-8 border-b border-gray-100 flex justify-between items-start">
-      <div class="flex flex-col sm:flex-row items-center gap-6">
-        <%= image_tag(@user.avatar_thumbnail, class: "w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-blue-50 object-cover shadow-sm") %>
-        <div class="text-center sm:text-left mt-4 sm:mt-0">
-          <h1 class="text-2xl sm:text-3xl font-bold text-gray-900"><%= @user.full_name %></h1>
-          <div class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-            <%= @user.role.humanize %>
-          </div>
-          <p class="mt-2 text-gray-500">@<%= @user.username %></p>
-        </div>
-      </div>
-      <%= link_to "Edit Profile", edit_path(@user), class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .tab-active {
+      border-bottom: 3px solid #dc2626;
+      color: #dc2626;
+      font-weight: 600;
+    }
+    .notification-dot {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: white;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chat-bubble {
+      max-width: 70%;
+      border-radius: 1rem;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0;
+    }
+    .chat-bubble.self {
+      background-color: #dc2626;
+      color: white;
+      margin-left: auto;
+    }
+    .chat-bubble.other {
+      background-color: #f3f4f6;
+      color: #4b5563;
+    }
+    .animate-pulse {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<div class="min-h-screen">
+  <div class="max-w-4xl mx-auto p-4 sm:p-6">
+    <!-- Back Button -->
+    <div class="mb-6">
+      <button class="flex items-center text-red-700 hover:text-red-800 font-medium">
+        <i class="fas fa-arrow-left mr-2"></i> Back
+      </button>
     </div>
 
-    <!-- Profile Details Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 sm:p-8">
-      <!-- Account Information -->
-      <div class="bg-gray-50 p-5 rounded-lg">
-        <h2 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Account Information</h2>
-        <div class="space-y-3">
-          <div class="flex justify-between">
-            <span class="text-gray-600 font-medium">Username</span>
-            <span class="text-gray-900"><%= @user.username %></span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-600 font-medium">Role</span>
-            <span class="text-gray-900"><%= @user.role.humanize %></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contact Information -->
-      <div class="bg-gray-50 p-5 rounded-lg">
-        <h2 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Contact Information</h2>
-        <div class="space-y-3">
-          <div class="flex justify-between">
-            <span class="text-gray-600 font-medium">Email</span>
-            <span class="text-gray-900 break-all"><%= @user.email %></span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-600 font-medium">Phone</span>
-            <span class="text-gray-900"><%= @user.phone %></span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-600 font-medium">Address</span>
-            <span class="text-gray-900 text-right"><%= @user.address %></span>
+    <!-- Profile Card -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+      <!-- Profile Header with Edit Button -->
+      <div class="p-6 sm:p-8 border-b border-gray-100 flex justify-between items-start">
+        <div class="flex flex-col sm:flex-row items-center gap-6">
+         <%= image_tag(@user.avatar_thumbnail, class: "w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-blue-50 object-cover shadow-sm") %>
+          <div class="text-center sm:text-left mt-4 sm:mt-0">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900"><%= @user.full_name %></h1>
+            <div class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+              <%= @user.role.humanize%>
+            </div>
+            <p class="mt-2 text-gray-500">@<%=@user.username%></p>
           </div>
         </div>
+        <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+          Edit Profile
+        </button>
       </div>
 
-      <!-- Children Section (Conditional) -->
-      <% if @user.role == 'parent_user' %>
-        <div class="bg-gray-50 p-5 rounded-lg md:col-span-2">
-          <h2 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Children</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-            <% User.where(parent_id: @user.id).each do |child| %>
-              <a href="/athlete_profiles/<%= child.athlete_profile.id %>" 
-                 class="block p-3 hover:bg-blue-50 rounded-lg transition-colors duration-150">
-                <div class="flex items-center gap-3">
-                  <%= image_tag(child.avatar_thumbnail, class: "w-10 h-10 rounded-full object-cover") %>
-                  <span class="font-medium text-blue-600 hover:text-blue-800 transition-colors duration-150">
-                    <%= child.full_name %>
-                  </span>
+      <!-- Tabs Navigation -->
+      <div class="border-b border-gray-200">
+        <nav class="flex space-x-8 px-6 sm:px-8" aria-label="Tabs">
+          <button data-tab="profile" class="tab-button py-4 px-1 text-center border-b-2 font-medium text-sm whitespace-nowrap tab-active">
+            <i class="fas fa-user mr-2"></i>Profile
+          </button>
+          <button data-tab="notifications" class="tab-button py-4 px-1 text-center border-b-2 font-medium text-sm whitespace-nowrap">
+            <i class="fas fa-bell mr-2"></i>Notifications
+            <span class="notification-dot">3</span>
+          </button>
+          <button data-tab="settings" class="tab-button py-4 px-1 text-center border-b-2 font-medium text-sm whitespace-nowrap">
+            <i class="fas fa-cog mr-2"></i>Settings
+          </button>
+          <button data-tab="chats" class="tab-button py-4 px-1 text-center border-b-2 font-medium text-sm whitespace-nowrap">
+            <i class="fas fa-comments mr-2"></i>Chats
+            <span class="notification-dot">1</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Tab Contents -->
+      <div class="p-6 sm:p-8">
+        <!-- Profile Tab Content -->
+        <div id="tab-profile" class="tab-content">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Account Information -->
+            <div class="bg-gray-50 p-5 rounded-lg">
+              <h2 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Account Information</h2>
+              <div class="space-y-3">
+                <div class="flex justify-between">
+                  <span class="text-gray-600 font-medium">Username</span>
+                  <span class="text-gray-900">johnanderson</span>
                 </div>
-              </a>
-            <% end %>
+                <div class="flex justify-between">
+                  <span class="text-gray-600 font-medium">Role</span>
+                  <span class="text-gray-900">Parent User</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="bg-gray-50 p-5 rounded-lg">
+              <h2 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Contact Information</h2>
+              <div class="space-y-3">
+                <div class="flex justify-between">
+                  <span class="text-gray-600 font-medium">Email</span>
+                  <span class="text-gray-900 break-all">john.anderson@example.com</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600 font-medium">Phone</span>
+                  <span class="text-gray-900">(555) 123-4567</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600 font-medium">Address</span>
+                  <span class="text-gray-900 text-right">123 Main St, Anytown, USA</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Children Section -->
+            <div class="bg-gray-50 p-5 rounded-lg md:col-span-2">
+              <h2 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Children</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                <a href="#" class="block p-3 hover:bg-blue-50 rounded-lg transition-colors duration-150">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-10 h-10 rounded-full object-cover">
+                    <span class="font-medium text-blue-600 hover:text-blue-800 transition-colors duration-150">
+                      Michael Anderson
+                    </span>
+                  </div>
+                </a>
+                <a href="#" class="block p-3 hover:bg-blue-50 rounded-lg transition-colors duration-150">
+                  <div class="flex items-center gap-3">
+                    <%= image_tag(@user.avatar_thumbnail, class: "w-10 h-10 rounded-full object-cover") %>
+                    <span class="font-medium text-blue-600 hover:text-blue-800 transition-colors duration-150">
+                      Sarah Anderson
+                    </span>
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      <% end %>
+
+        <!-- Notifications Tab Content -->
+        <div id="tab-notifications" class="tab-content hidden">
+          <h2 class="text-xl font-semibold text-gray-800 mb-6">Notifications</h2>
+          
+          <div class="space-y-4">
+            <!-- Notification Item -->
+            <div class="p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-md">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 pt-0.5">
+                    <i class="fas fa-calendar-check text-blue-500 text-lg"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">New training session scheduled</p>
+                    <p class="mt-1 text-sm text-gray-600">Coach Smith scheduled a new session for Friday at 4:00 PM</p>
+                    <p class="mt-1 text-xs text-gray-500">2 hours ago</p>
+                  </div>
+                </div>
+                <button class="ml-4 text-gray-400 hover:text-gray-500">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Notification Item -->
+            <div class="p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded-r-md">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 pt-0.5">
+                    <i class="fas fa-exclamation-circle text-yellow-500 text-lg"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">Payment reminder</p>
+                    <p class="mt-1 text-sm text-gray-600">Your monthly subscription will renew in 3 days</p>
+                    <p class="mt-1 text-xs text-gray-500">Yesterday</p>
+                  </div>
+                </div>
+                <button class="ml-4 text-gray-400 hover:text-gray-500">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Notification Item -->
+            <div class="p-4 bg-green-50 border-l-4 border-green-500 rounded-r-md">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start">
+                  <div class="flex-shrink-0 pt-0.5">
+                    <i class="fas fa-trophy text-green-500 text-lg"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">Achievement unlocked!</p>
+                    <p class="mt-1 text-sm text-gray-600">Michael completed his 50th training session</p>
+                    <p class="mt-1 text-xs text-gray-500">3 days ago</p>
+                  </div>
+                </div>
+                <button class="ml-4 text-gray-400 hover:text-gray-500">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-8">
+            <h3 class="text-lg font-medium text-gray-800 mb-4">Notification Settings</h3>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium text-gray-900">Email Notifications</p>
+                  <p class="text-sm text-gray-600">Receive notifications via email</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer" checked>
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                </label>
+              </div>
+              
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium text-gray-900">SMS Notifications</p>
+                  <p class="text-sm text-gray-600">Receive notifications via text message</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                </label>
+              </div>
+              
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium text-gray-900">Training Reminders</p>
+                  <p class="text-sm text-gray-600">Get reminders about upcoming sessions</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer" checked>
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Tab Content -->
+        <div id="tab-settings" class="tab-content hidden">
+          <h2 class="text-xl font-semibold text-gray-800 mb-6">Account Settings</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Privacy Settings -->
+            <div class="bg-gray-50 p-5 rounded-lg">
+              <h3 class="text-lg font-semibold text-gray-800 mb-4">Privacy Settings</h3>
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="font-medium text-gray-900">Profile Visibility</p>
+                    <p class="text-sm text-gray-600">Who can see your profile</p>
+                  </div>
+                  <select class="rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                    <option>Public</option>
+                    <option>Coaches Only</option>
+                    <option>Private</option>
+                  </select>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="font-medium text-gray-900">Activity Status</p>
+                    <p class="text-sm text-gray-600">Show when you're online</p>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer" checked>
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Communication Preferences -->
+            <div class="bg-gray-50 p-5 rounded-lg">
+              <h3 class="text-lg font-semibold text-gray-800 mb-4">Communication Preferences</h3>
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="font-medium text-gray-900">Email Frequency</p>
+                    <p class="text-sm text-gray-600">How often we email you</p>
+                  </div>
+                  <select class="rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                    <option>Weekly Digest</option>
+                    <option>Daily Summary</option>
+                    <option>Immediate</option>
+                  </select>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="font-medium text-gray-900">Newsletter</p>
+                    <p class="text-sm text-gray-600">Receive our monthly newsletter</p>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Security Settings -->
+            <div class="bg-gray-50 p-5 rounded-lg md:col-span-2">
+              <h3 class="text-lg font-semibold text-gray-800 mb-4">Security Settings</h3>
+              <div class="space-y-4">
+                <div>
+                  <button class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    Change Password
+                  </button>
+                </div>
+                
+                <div>
+                  <button class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    Two-Factor Authentication
+                  </button>
+                </div>
+                
+                <div>
+                  <button class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    Connected Devices
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chats Tab Content -->
+        <div id="tab-chats" class="tab-content hidden">
+          <h2 class="text-xl font-semibold text-gray-800 mb-6">Your Conversations</h2>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Chat List -->
+            <div class="lg:col-span-1 bg-gray-50 rounded-lg p-4">
+              <div class="relative mb-4">
+                <input type="text" placeholder="Search conversations..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 pl-10">
+                <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+              </div>
+              
+              <div class="space-y-2 max-h-96 overflow-y-auto">
+                <!-- Chat List Item -->
+                <div class="p-3 bg-white rounded-md shadow-sm border border-gray-200 cursor-pointer">
+                  <div class="flex items-center">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-12 h-12 rounded-full object-cover">
+                    <div class="ml-3">
+                      <h4 class="font-medium text-gray-900">Coach Smith</h4>
+                      <p class="text-sm text-gray-500 truncate">Looking forward to our session on Friday</p>
+                    </div>
+                    <div class="ml-auto text-right">
+                      <span class="text-xs text-gray-500">2:30 PM</span>
+                      <span class="block h-5 w-5 rounded-full bg-red-600 text-white text-xs flex items-center justify-center ml-auto mt-1">1</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Chat List Item -->
+                <div class="p-3 bg-white rounded-md shadow-sm border border-gray-200 cursor-pointer">
+                  <div class="flex items-center">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=988&q=80" class="w-12 h-12 rounded-full object-cover">
+                    <div class="ml-3">
+                      <h4 class="font-medium text-gray-900">Team Support</h4>
+                      <p class="text-sm text-gray-500 truncate">Your request has been processed</p>
+                    </div>
+                    <div class="ml-auto text-right">
+                      <span class="text-xs text-gray-500">Yesterday</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Chat List Item -->
+                <div class="p-3 bg-white rounded-md shadow-sm border border-gray-200 cursor-pointer">
+                  <div class="flex items-center">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-12 h-12 rounded-full object-cover">
+                    <div class="ml-3">
+                      <h4 class="font-medium text-gray-900">Coach Johnson</h4>
+                      <p class="text-sm text-gray-500 truncate">Great progress this week!</p>
+                    </div>
+                    <div class="ml-auto text-right">
+                      <span class="text-xs text-gray-500">Aug 15</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Active Chat -->
+            <div class="lg:col-span-2 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <div class="border-b border-gray-200 pb-4 mb-4">
+                <div class="flex items-center">
+                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-10 h-10 rounded-full object-cover">
+                  <div class="ml-3">
+                    <h4 class="font-medium text-gray-900">Coach Smith</h4>
+                    <p class="text-sm text-gray-500">Online</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Chat Messages -->
+              <div class="space-y-4 mb-4 max-h-96 overflow-y-auto p-2">
+                <!-- Message from other -->
+                <div class="flex items-start">
+                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-8 h-8 rounded-full object-cover mt-1">
+                  <div class="ml-3">
+                    <div class="chat-bubble other">
+                      <p>Hi John, looking forward to our session on Friday. Michael has been making great progress!</p>
+                    </div>
+                    <span class="text-xs text-gray-500 block mt-1">2:15 PM</span>
+                  </div>
+                </div>
+                
+                <!-- Message from self -->
+                <div class="flex items-start justify-end">
+                  <div class="mr-3 text-right">
+                    <div class="chat-bubble self">
+                      <p>Thanks Coach! He's really enjoying the training. What time should we arrive?</p>
+                    </div>
+                    <span class="text-xs text-gray-500 block mt-1">2:25 PM</span>
+                  </div>
+                  <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="w-8 h-8 rounded-full object-cover mt-1">
+                </div>
+                
+                <!-- Message from other -->
+                <div class="flex items-start">
+                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-8 h-8 rounded-full object-cover mt-1">
+                  <div class="ml-3">
+                    <div class="chat-bubble other">
+                      <p>Let's aim for 4:00 PM. I've prepared some new drills that I think he'll enjoy.</p>
+                    </div>
+                    <span class="text-xs text-gray-500 block mt-1">2:30 PM</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Message Input -->
+              <div class="flex items-center">
+                <input type="text" placeholder="Type your message..." class="flex-1 rounded-l-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <button class="bg-red-700 text-white px-4 py-2.5 rounded-r-md hover:bg-red-800">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Tab switching functionality
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const tabId = button.getAttribute('data-tab');
+          
+          // Update button states
+          tabButtons.forEach(btn => btn.classList.remove('tab-active'));
+          button.classList.add('tab-active');
+          
+          // Update content visibility
+          tabContents.forEach(content => content.classList.add('hidden'));
+          document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+        });
+      });
+      
+      // Simulate loading for demo purposes
+      setTimeout(() => {
+        document.querySelector('[data-tab="notifications"] .notification-dot').classList.add('animate-pulse');
+      }, 1000);
+    });
+  </script>
