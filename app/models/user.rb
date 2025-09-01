@@ -70,6 +70,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     includes(:coach_calendars)
   }
 
+  scope :with_level, ->(level) {
+    joins(:athlete_profile).where(athlete_profiles: { level: level })
+  }
+
   ## Role Methods
   def parent_user?
     role == 'parent_user'
@@ -133,6 +137,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     l.level
   end
+  
 
   def age # rubocop:disable Metrics/AbcSize
     profile = AthleteProfile.find_by(user_id: id)

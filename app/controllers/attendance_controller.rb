@@ -5,7 +5,25 @@ class AttendanceController < ApplicationController
 
   # load_and_authorize_resource
   def index
-    @users = User.where(role: %i[child_user athlete_user]).paginate(page: params[:page], per_page: 10).order(username: :asc)
+    @users = User.where(role: %i[child_user athlete_user])
+                 .paginate(page: params[:page], per_page: 10)
+                 .order(username: :asc)
+
+
+    
+    if params[:level].present?
+      @users = @users.with_level(params[:level])
+    end
+
+   
+    if params[:name].present?
+
+      user_name = params[:name].strip.downcase
+      @users = @users.where(
+        "users.first_name LIKE :q OR users.last_name LIKE :q OR users.username LIKE :q OR users.email LIKE :q",
+        q: "%#{user_name}%"
+      )
+    end
   end
 
   def create # rubocop:disable Metrics/MethodLength,Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
@@ -39,4 +57,5 @@ class AttendanceController < ApplicationController
     Rails.logger.error "Error recording attendance: #{e.message}"
     render json: { error: "Failed to record attendance. #{e.message}" }, status: :unprocessable_entity
   end
+  
 end

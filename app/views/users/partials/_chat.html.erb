@@ -1,0 +1,115 @@
+<div id="tab-chats" class="tab-content hidden">
+  <h2 class="text-xl font-semibold text-gray-800 mb-6">Your Conversations</h2>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Chat List -->
+    <div class="lg:col-span-1 bg-gray-50 rounded-lg p-4">
+      <div class="relative mb-4">
+        <input type="text" placeholder="Search conversations..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 pl-10">
+        <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+      </div>
+
+      <div class="space-y-2 max-h-96 overflow-y-auto">
+        <!-- Chat List Item -->
+        <div class="p-3 bg-white rounded-md shadow-sm border border-gray-200 cursor-pointer">
+          <div class="flex items-center">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-12 h-12 rounded-full object-cover">
+            <div class="ml-3">
+              <h4 class="font-medium text-gray-900">Coach Smith</h4>
+              <p class="text-sm text-gray-500 truncate">Looking forward to our session on Friday</p>
+            </div>
+            <div class="ml-auto text-right">
+              <span class="text-xs text-gray-500">2:30 PM</span>
+              <span class="block h-5 w-5 rounded-full bg-red-600 text-white text-xs flex items-center justify-center ml-auto mt-1">1</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat List Item -->
+        <div class="p-3 bg-white rounded-md shadow-sm border border-gray-200 cursor-pointer">
+          <div class="flex items-center">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=988&q=80" class="w-12 h-12 rounded-full object-cover">
+            <div class="ml-3">
+              <h4 class="font-medium text-gray-900">Team Support</h4>
+              <p class="text-sm text-gray-500 truncate">Your request has been processed</p>
+            </div>
+            <div class="ml-auto text-right">
+              <span class="text-xs text-gray-500">Yesterday</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat List Item -->
+        <div class="p-3 bg-white rounded-md shadow-sm border border-gray-200 cursor-pointer">
+          <div class="flex items-center">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-12 h-12 rounded-full object-cover">
+            <div class="ml-3">
+              <h4 class="font-medium text-gray-900">Coach Johnson</h4>
+              <p class="text-sm text-gray-500 truncate">Great progress this week!</p>
+            </div>
+            <div class="ml-auto text-right">
+              <span class="text-xs text-gray-500">Aug 15</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Chat -->
+    <div class="lg:col-span-2 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div class="border-b border-gray-200 pb-4 mb-4">
+        <div class="flex items-center">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-10 h-10 rounded-full object-cover">
+          <div class="ml-3">
+            <h4 class="font-medium text-gray-900">Coach Smith</h4>
+            <p class="text-sm text-gray-500">Online</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Messages -->
+      <div class="space-y-4 mb-4 max-h-96 overflow-y-auto p-2">
+        <!-- Message from other -->
+        <div class="flex items-start">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-8 h-8 rounded-full object-cover mt-1">
+          <div class="ml-3">
+            <div class="chat-bubble other">
+              <p>Hi John, looking forward to our session on Friday. Michael has been making great progress!</p>
+            </div>
+            <span class="text-xs text-gray-500 block mt-1">2:15 PM</span>
+          </div>
+        </div>
+
+        <!-- Message from self -->
+        <div class="flex items-start justify-end">
+          <div class="mr-3 text-right">
+            <div class="chat-bubble self">
+              <p>Thanks Coach! He's really enjoying the training. What time should we arrive?</p>
+            </div>
+            <span class="text-xs text-gray-500 block mt-1">2:25 PM</span>
+          </div>
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="w-8 h-8 rounded-full object-cover mt-1">
+        </div>
+
+        <!-- Message from other -->
+        <div class="flex items-start">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" class="w-8 h-8 rounded-full object-cover mt-1">
+          <div class="ml-3">
+            <div class="chat-bubble other">
+              <p>Let's aim for 4:00 PM. I've prepared some new drills that I think he'll enjoy.</p>
+            </div>
+            <span class="text-xs text-gray-500 block mt-1">2:30 PM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message Input -->
+      <div class="flex items-center">
+        <input type="text" placeholder="Type your message..." class="flex-1 rounded-l-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+        <button class="bg-red-700 text-white px-4 py-2.5 rounded-r-md hover:bg-red-800">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
