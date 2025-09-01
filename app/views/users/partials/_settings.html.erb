@@ -1,0 +1,87 @@
+<div id="tab-settings" class="tab-content hidden">
+  <h2 class="text-xl font-semibold text-gray-800 mb-6">Account Settings</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Privacy Settings -->
+    <div class="bg-gray-50 p-5 rounded-lg">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Privacy Settings</h3>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="font-medium text-gray-900">Profile Visibility</p>
+            <p class="text-sm text-gray-600">Who can see your profile</p>
+          </div>
+          <select class="rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+            <option>Public</option>
+            <option>Coaches Only</option>
+            <option>Private</option>
+          </select>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="font-medium text-gray-900">Activity Status</p>
+            <p class="text-sm text-gray-600">Show when you're online</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" checked>
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Communication Preferences -->
+    <div class="bg-gray-50 p-5 rounded-lg">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Communication Preferences</h3>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="font-medium text-gray-900">Email Frequency</p>
+            <p class="text-sm text-gray-600">How often we email you</p>
+          </div>
+          <select class="rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+            <option>Weekly Digest</option>
+            <option>Daily Summary</option>
+            <option>Immediate</option>
+          </select>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="font-medium text-gray-900">Newsletter</p>
+            <p class="text-sm text-gray-600">Receive our monthly newsletter</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer">
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Settings -->
+    <div class="bg-gray-50 p-5 rounded-lg md:col-span-2">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Security Settings</h3>
+      <div class="space-y-4">
+        <div>
+          <button class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+            Change Password
+          </button>
+        </div>
+
+        <div>
+          <button class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+            Two-Factor Authentication
+          </button>
+        </div>
+
+        <div>
+          <button class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+            Connected Devices
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
