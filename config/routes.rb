@@ -1,8 +1,6 @@
 # frozen_string_literal: true
-
-require 'sidekiq/web'
-
 Rails.application.routes.draw do
+  mount MissionControl::Jobs::Engine, at: "/jobs"
   resources :athlete_level_categories
   resources :step_exercises
   resources :exercises do
@@ -11,7 +9,6 @@ Rails.application.routes.draw do
     end
   end
   resources :steps
-  mount Sidekiq::Web => '/sidekiq'
 
   # Common Routes
   resources :dcpa_events

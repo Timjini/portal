@@ -1,29 +1,48 @@
 default: &default
   adapter: mysql2
   encoding: utf8mb4
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
-  database: <%= ENV['SQL_DB_NAME'] %>
-  username: <%= ENV['SQL_DB_USER'] %>
-  password: <%= ENV['SQL_DB_PASSWORD'] %>
-  encoding: <%= ENV['DB_ENCODE'] %>
-  prepared_statements: false
-  host: <%= ENV['SQL_HOST'] %>
-  pool: 10
+  primary:
+    <<: *default
+    database: <%= ENV['SQL_DB_NAME'] %>
+    username: <%= ENV['SQL_DB_USER'] %>
+    password: <%= ENV['SQL_DB_PASSWORD'] %>
+    encoding: <%= ENV['DB_ENCODE'] %>
+    prepared_statements: false
+    host: <%= ENV['SQL_HOST'] %>
+    pool: 10
+  queue:
+    <<: *default
+    database: <%= ENV['SQL_QUEUE_DB_NAME'] %>
+    username: <%= ENV['SQL_QUEUE_DB_USER'] %>
+    password: <%= ENV['SQL_DB_PASSWORD'] %>
+    encoding: <%= ENV['DB_ENCODE'] %>
+    host: <%= ENV['SQL_HOST'] %>
+    migrations_paths: db/queue_migrate
 
 
 test:
   <<: *default
   database: portal_test
+  username: <%= ENV['TEST_DB_USER'] %>
+  password: <%= ENV['TEST_DB_PASSWORD'] %>
 
 production:
-  <<: *default
-  database: <%= ENV['SQL_DB_NAME'] %>
-  username: <%= ENV['SQL_DB_USER'] %>
-  password: <%= ENV['SQL_DB_PASSWORD'] %>
-  encoding: <%= ENV['DB_ENCODE'] %>
-  prepared_statements: false
-  host: <%= ENV['SQL_HOST'] %>
-  pool: 10
+  primary:
+    <<: *default
+    database: <%= ENV['SQL_DB_NAME'] %>
+    username: <%= ENV['SQL_DB_USER'] %>
+    password: <%= ENV['SQL_DB_PASSWORD'] %>
+    encoding: <%= ENV['DB_ENCODE'] %>
+    prepared_statements: false
+    host: <%= ENV['SQL_HOST'] %>
+    pool: 10
+  queue:
+    <<: *default
+    database: <%= ENV['SQL_QUEUE_DB_NAME'] %>
+    username: <%= ENV['SQL_QUEUE_DB_USER'] %>
+    password: <%= ENV['SQL_DB_PASSWORD'] %>
+    encoding: <%= ENV['DB_ENCODE'] %>
+    host: <%= ENV['SQL_HOST'] %>
+    migrations_paths: db/queue_migrate

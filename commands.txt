@@ -1,0 +1,2 @@
+# fetch queue db commands
+ bin/rails -T | grep queue  

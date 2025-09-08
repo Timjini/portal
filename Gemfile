@@ -72,6 +72,10 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'elasticsearch', '~> 8.8'
 gem 'searchkick', '~> 5.5', '>= 5.5.2'
 
+# Cron Jobs
+gem 'solid_queue'
+gem 'mission_control-jobs'
+
 group :development, :test do
   gem 'brakeman', require: false
   gem 'bullet'
