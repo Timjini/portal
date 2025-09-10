@@ -5,11 +5,9 @@ class AttendanceController < ApplicationController
 
   # load_and_authorize_resource
   def index
-    @users = User.where(role: %i[child_user athlete_user])
+    @users = User.where(role: %i[child_user athlete])
                  .paginate(page: params[:page], per_page: 10)
                  .order(username: :asc)
-
-
     
     if params[:level].present?
       @users = @users.with_level(params[:level])

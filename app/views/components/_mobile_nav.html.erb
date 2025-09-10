@@ -60,6 +60,21 @@
                         <span class="material-symbols-outlined text-2xl">manage_accounts</span>
                         <span class="text-lg font-medium">All Users</span>
                       </a>
+
+                      <a href="/attendance" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
+                        <span class="material-symbols-outlined text-2xl">fact_check</span>
+                        <span class="text-lg font-medium">Attendance</span>
+                      </a>
+
+                      <a href="/questionnaires/reports" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
+                      <span class="material-symbols-outlined text-2xl">description</span>
+                        <span class="text-lg font-medium">Reports</span>
+                      </a>
+
+                      <a href="/admin/content" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
+                      <span class="material-symbols-outlined text-2xl">folder</span>
+                        <span class="text-lg font-medium">Content</span>
+                      </a>
                       <a href="/users/<%= current_user.id %>" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
                         <%= image_tag(current_user.avatar_thumbnail, class: "h-8 w-8 object-cover rounded-full") %>
                         <span class="text-lg font-medium">My Profile</span>
