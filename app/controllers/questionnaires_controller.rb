@@ -4,7 +4,7 @@ class QuestionnairesController < ApplicationController
   def index
     @questionnaire = Questionnaire.last
     # @questions = Question.where(questionnaire_id: @questionnaire.id)
-    @questions = Question.order(id: :asc).paginate(page: params[:page], per_page: 10)
+    @questions = Question.order(:position)
   end
 
   def reports

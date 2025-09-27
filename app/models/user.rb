@@ -36,7 +36,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :coaches, -> { where(role: 'coach') }
   scope :by_role, ->(role) { role.present? ? where(role: role) : all }
   scope :parents, -> { where(role: 'parent_user') }
-  scope :children, -> { where(role: 'child_user') }
+  has_many :children, -> { where(role: 'child_user') }, class_name: 'User', foreign_key: 'parent_id'
+
 
   # Enums
   enum role: ROLE_TYPES # rubocop:disable Rails/EnumSyntax
