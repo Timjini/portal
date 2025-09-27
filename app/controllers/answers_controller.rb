@@ -11,7 +11,6 @@ class AnswersController < ApplicationController
       answer.content = answer_params[:content]
       answer.save!
     end
-
     render json: { status: 'success', message: 'Answers created successfully' }
   rescue StandardError => e
     render json: { status: 'error', message: e.message }, status: :unprocessable_entity

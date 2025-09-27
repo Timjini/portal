@@ -1,3 +1,6 @@
+<style>
+    .hidden{display:none;}
+</style>
 <div class="max-w-3xl mx-auto p-6" data-controller="questionnaire questionnaire-submit" data-questionnaire-total-steps-value="4" data-questionnaire-submit-submit-url-value="<%= answers_path %>" data-questionnaire-submit-user-id-value="<%= params[:user_id] %>">
     <!-- Progress bar -->
     <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
@@ -135,7 +138,7 @@
         </div>
 
         <!-- Navigation buttons -->
-        <div class="flex justify-between pt-6">
+        <div class="flex justify-end gap-6 pt-6">
             <button type="button" data-action="click->questionnaire#prev" data-questionnaire-target="prevButton" class="hidden px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
                 Previous
             </button>
@@ -143,8 +146,8 @@
             <button type="button" data-action="click->questionnaire#next" data-questionnaire-target="nextButton" class="btn">
                 Next
             </button>
-
-            <button type="submit" data-questionnaire-target="submitButton" class="btn">
+                        
+            <button type="submit" data-questionnaire-target="submitButton" data-questionnaire-submit-target="submitButton" class="btn hidden" >
                 Submit
             </button>
         </div>

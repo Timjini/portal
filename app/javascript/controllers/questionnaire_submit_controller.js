@@ -8,19 +8,19 @@ export default class extends Controller {
     userId: String
   }
 
-  static targets = ["form"]
+  static targets = ["form", "submitButton"];
 
   connect() {
-    console.log("form target",this.formTarget);
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content
   }
 
   async submit(e) {
     e.preventDefault()
+    this.submitButtonTarget.textContent = 'loading...'
+
     
     try {
       const answers = this.collectAnswers()
-      console.log("submitted answers", answers);
       const response = await this.sendData(answers)
       const data = await response.json()
 
