@@ -123,6 +123,7 @@ Rails.application.routes.draw do
         post 'sign-up', on: :collection, to: 'auth#sign_up'
         post 'check_token', on: :collection, to: 'auth#check_token'
       end
+      resources :questions, only: [:index]
     end
 
     namespace :v2 do
@@ -165,7 +166,9 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index]
     resources :athletes, only: %i[index show]
     resources :sessions, only: %i[new create index]
-    resources :assessments, only: %i[new show create index]
+    resources :assessments do 
+       post 'get-kpis', on: :collection, to: 'assessments#get_kpis'
+    end
     resources :messages, only: %i[index show create]
   end
 

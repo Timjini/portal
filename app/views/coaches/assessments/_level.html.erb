@@ -1,0 +1,43 @@
+<% if @levels.present?%>
+<div class="mt-6 max-w-xl mx-auto bg-white rounded-2xl shadow-md p-6 space-y-5">
+  <!-- Header -->
+  <div class="border-b pb-4">
+    <h2 class="text-xl font-semibold text-gray-800">Athlete KPI Checklist</h2>
+    <p class="text-sm text-gray-500 mt-1">
+      Select the KPIs that have been successfully achieved during the session. 
+      This helps track progress and ensures consistency in performance evaluation.
+    </p>
+  </div>
+
+  <!-- Checklist -->
+  <div class="space-y-3 py-4">
+    <% @levels.check_lists.each do |l| %>
+      <div class="flex items-start space-x-3">
+        <%= hidden_field_tag "level[checklists][#{l.id}]", "0" %>
+        <%= check_box_tag "level[checklists][#{l.id}]", "1", false,
+          class: "h-5 w-5 mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500 flex-shrink-0" %>
+        <label class="text-gray-800 leading-relaxed cursor-pointer">
+          <%= l.title %>
+        </label>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Footer note -->
+  <div class="pt-4 border-t">
+    <p class="text-xs text-gray-400">
+      * Checked items will be saved to the athlete’s performance records.
+    </p>
+  </div>
+</div>
+
+<%else%>
+<div class="flex flex-col items-center justify-center py-10 text-center border border-dashed border-gray-300 rounded-lg bg-gray-50 mt-6">
+    <svg class="w-10 h-10 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 17v-6h6v6m2 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v8m12 0h-4m-6 0H5" />
+    </svg>
+    <p class="text-gray-600 font-medium">No parameters selected</p>
+    <p class="text-sm text-gray-400">Choose parameters to begin tracking KPIs.</p>
+</div>
+<%end%>

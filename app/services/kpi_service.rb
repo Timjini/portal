@@ -9,17 +9,20 @@ class KpiService
     Level.includes([:check_lists]).all.paginate(page: page, per_page: per_page).order(:degree)
   end
 
+  def fetch_level_by_params
+    Level.where( degree: @params[:degree].to_i,category: @params[:category].to_i , step: @params[:step].to_i).first
+  end
+
   def create_level # rubocop:disable Metrics/MethodLength
     title = @params[:title]
     degree = @params[:degree].to_i
     checklist_items = @params[:checklist] || []  # Handle nil case
     category = @params[:category].to_i
-    step = @params[:step].to_i  # Fixed parameter name
+    step = @params[:step].to_i 
   
     level = Level.new(title: title, degree: degree, category: category, step: step)
   
     if level.save
-      # Create checklist items only if they exist and are not empty
       checklist_items.each do |item|
         if item.present? && item.strip.present?
           CheckList.create!(title: item.strip, level_id: level.id)

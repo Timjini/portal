@@ -12,13 +12,13 @@ module Api
       def login # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
         user = User.where('lower(email) = ?', params[:user][:email].downcase).first
         if user.nil?
-          api_error(status: 404, errors: ["Sorry we didn't find you on CFS."])
+          api_error(errors: "Sorry we didn't find you on CFS.")
         elsif user&.valid_password?(params[:user][:password])
           token_expire = Time.zone.today + 365.days
           user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: token_expire.to_time.to_i })
           user_data = ActiveModelSerializers::SerializableResource.new(user,
                                                                       each_serializer: Api::V1::UsersSerializer) # rubocop:disable Layout/ArgumentAlignment
-          result = { type: 'Success', data: user_data, message: ['User signin successfully.'], status: 200 }
+          result = { type: 'Success', data: user_data, message: 'User signed in successfully.', status: 200 }
           render json: result
           nil
         else
@@ -59,6 +59,7 @@ module Api
       end
 
       def check_token
+        puts @current_user.inspect
         render json: @current_user
         nil
       end

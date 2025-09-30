@@ -26,6 +26,21 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
     @structured_data = ExerciseStructureQuery.new.call
   end
 
+  def get_kpis
+    service = KpiService.new(params)
+    @levels = service.fetch_level_by_params
+
+    if !@levels.nil?
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("levels", partial: "coaches/assessments/level", locals: { levels: @levels }),
+          ]
+        end
+      end
+    end
+  end
+
   def create
     Rails.logger.info "Assessment creation started with params: #{params.permit!.to_h}"
 

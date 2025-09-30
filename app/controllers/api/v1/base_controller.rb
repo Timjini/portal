@@ -32,7 +32,7 @@ module Api
       end
 
       def load_current_user!
-        # puts"Loading current user: #{payload}"
+        puts"Loading current user: #{payload}"
         return false if request.headers['Authorization'].blank?
 
         token = request.headers['Authorization'].split.last
