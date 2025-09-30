@@ -19,6 +19,12 @@ application.register("calendar", CalendarController)
 import ChartController from "./chart_controller"
 application.register("chart", ChartController)
 
+import CheckAllController from "./check_all_controller"
+application.register("check-all", CheckAllController)
+
+import ChecklistController from "./checklist_controller"
+application.register("checklist", ChecklistController)
+
 import ColorPickerController from "./color_picker_controller"
 application.register("color-picker", ColorPickerController)
 
@@ -96,6 +102,3 @@ application.register("user-table", UserTableController)
 
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
-
-import ChecklistController from "./checklist_controller"
-application.register("checklist", ChecklistController)

@@ -1,43 +1,75 @@
-<% if @levels.present?%>
-<div class="mt-6 max-w-xl mx-auto bg-white rounded-2xl shadow-md p-6 space-y-5">
-  <!-- Header -->
-  <div class="border-b pb-4">
-    <h2 class="text-xl font-semibold text-gray-800">Athlete KPI Checklist</h2>
-    <p class="text-sm text-gray-500 mt-1">
-      Select the KPIs that have been successfully achieved during the session. 
-      This helps track progress and ensures consistency in performance evaluation.
-    </p>
-  </div>
+<% if @levels.present? %>
+<%= form_with url: coaches_assessments_path, method: :post, class: "space-y-6" do |form| %>
 
-  <!-- Checklist -->
-  <div class="space-y-3 py-4">
-    <% @levels.check_lists.each do |l| %>
-      <div class="flex items-start space-x-3">
-        <%= hidden_field_tag "level[checklists][#{l.id}]", "0" %>
-        <%= check_box_tag "level[checklists][#{l.id}]", "1", false,
-          class: "h-5 w-5 mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500 flex-shrink-0" %>
-        <label class="text-gray-800 leading-relaxed cursor-pointer">
-          <%= l.title %>
-        </label>
+  <!-- KPI Checklist Card -->
+  <div class="mt-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-6 space-y-5" data-controller="check-all">
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b pb-4">
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800">Athlete KPI Checklist</h2>
+        <p class="text-sm text-gray-500 mt-1">
+          Select the KPIs that have been successfully achieved during the session. 
+          This helps track progress and ensures consistency in performance evaluation.
+        </p>
       </div>
-    <% end %>
+      <!-- Toggle Buttons -->
+      <div class="flex space-x-2">
+        <button type="button" data-action="click->check-all#markAllKpis"
+          class="text-xs px-3 py-1 rounded bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition">
+          Check All
+        </button>
+
+        <button type="button" data-action="click->check-all#unmarkAllKpis"
+          class="text-xs px-3 py-1 rounded bg-gray-100 text-gray-700 font-medium shadow hover:bg-gray-200 transition">
+          Uncheck All
+        </button>
+      </div>
+    </div>
+
+    <!-- Checklist -->
+    <div class="space-y-3 py-4" id="kpi-checklist">
+    <%= hidden_field_tag "level[data]", @levels.to_json %>
+      <% @levels.check_lists.each do |l| %>
+        <div class="flex items-start space-x-3" data-check-all-target="row">
+          <%= hidden_field_tag "level[checklists][#{l.id}]", "0" %>
+          <%= check_box_tag "level[checklists][#{l.id}]", "1", false,
+            class: "kpi-checkbox h-5 w-5 mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500 flex-shrink-0",
+            data: { check_all_target: "checkbox" } %>
+          <label class="text-gray-800 leading-relaxed cursor-pointer">
+            <%= l.title %>
+          </label>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Footer note -->
+    <div class="pt-4 border-t">
+      <p class="text-xs text-gray-400">
+        * Checked items will be saved to the athlete’s performance records.
+      </p>
+    </div>
   </div>
 
-  <!-- Footer note -->
-  <div class="pt-4 border-t">
-    <p class="text-xs text-gray-400">
-      * Checked items will be saved to the athlete’s performance records.
-    </p>
-  </div>
-</div>
+  <!-- Athlete Selection Card -->
+  <div class="mt-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-6 space-y-5">
+    <div>
+      <h2 class="text-xl font-semibold text-gray-800">Add Athletes</h2>
+      <p class="text-sm text-gray-500 mt-1">
+        Search and select athletes to include in this session.
+      </p>
+    </div>
 
-<%else%>
-<div class="flex flex-col items-center justify-center py-10 text-center border border-dashed border-gray-300 rounded-lg bg-gray-50 mt-6">
-    <svg class="w-10 h-10 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 17v-6h6v6m2 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v8m12 0h-4m-6 0H5" />
-    </svg>
-    <p class="text-gray-600 font-medium">No parameters selected</p>
-    <p class="text-sm text-gray-400">Choose parameters to begin tracking KPIs.</p>
-</div>
-<%end%>
+    <!-- Search box -->
+    <div class="mt-4">
+      <%= render partial: 'users/user_search', locals: { users: @users } %>
+    </div>
+
+    <!-- Standout submit button -->
+    <div class="pt-4">
+      <%= form.submit "Assign KPIs",
+        class: "w-full text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-lg shadow-md py-3 transition" %>
+    </div>
+  </div>
+
+<% end %>
+<% end %>
