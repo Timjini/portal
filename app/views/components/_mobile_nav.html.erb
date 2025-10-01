@@ -31,6 +31,11 @@
                         <span class="material-symbols-outlined text-2xl">manage_accounts</span>
                         <span class="text-lg font-medium">All Users</span>
                       </a>
+
+                      <%= link_to coaches_assessments_path , class:"flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600" do %>
+                          <%= render partial:'icons/assessment' %>
+                          <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Assessment</span>
+                      <% end%>
                       <a href="/subscriptions" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600 hidden">
                         <span class="material-symbols-outlined text-2xl">wallet</span>
                         <span class="text-lg font-medium">Subscriptions</span>
@@ -65,6 +70,11 @@
                         <span class="material-symbols-outlined text-2xl">fact_check</span>
                         <span class="text-lg font-medium">Attendance</span>
                       </a>
+
+                      <%= link_to coaches_assessments_path , class:"flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600" do %>
+                          <%= render partial:'icons/assessment' %>
+                          <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Assessment</span>
+                      <% end%>
 
                       <a href="/questionnaires/reports" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
                       <span class="material-symbols-outlined text-2xl">description</span>

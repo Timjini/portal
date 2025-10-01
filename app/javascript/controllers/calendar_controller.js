@@ -4,6 +4,7 @@ import { Calendar } from '@fullcalendar/core'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
+
 export default class extends Controller {
   static values = { userId: String }
   static targets = ["calendar"]
@@ -34,32 +35,26 @@ export default class extends Controller {
         const timeText = arg.timeText
         const coachName = arg.event.extendedProps.coach || 'No coach'
         const groups = arg.event.extendedProps.groups || ''
-        const backgroundColor = arg.event.extendedProps.backgroundColor
-        
+      
         const eventEl = document.createElement('div')
-        eventEl.className = 'fc-event-main flex flex-col p-1'
-        
+        eventEl.className = 'flex flex-col p-2 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 bg-white'
+      
         const timeEl = document.createElement('div')
-        timeEl.className = 'fc-event-time text-xs font-semibold'
+        timeEl.className = 'text-xs font-semibold text-gray-500'
         timeEl.textContent = timeText
-        
-        const titleEl = document.createElement('div')
-        titleEl.className = 'fc-event-title flex flex-col'
-        
-        const coachEl = document.createElement('span')
-        coachEl.className = 'font-medium truncate'
+      
+        const coachEl = document.createElement('div')
+        coachEl.className = 'font-medium truncate text-gray-800'
         coachEl.textContent = coachName
-        
-        const groupEl = document.createElement('span')
-        groupEl.className = 'text-xs opacity-75 truncate'
+      
+        const groupEl = document.createElement('div')
+        groupEl.className = 'text-xs text-gray-400 truncate'
         groupEl.textContent = groups.replace(/^,\s*/, '')
-        
-        titleEl.appendChild(coachEl)
-        titleEl.appendChild(groupEl)
-        
+      
         eventEl.appendChild(timeEl)
-        eventEl.appendChild(titleEl)
-        
+        eventEl.appendChild(coachEl)
+        eventEl.appendChild(groupEl)
+      
         return { domNodes: [eventEl] }
       },
       eventDidMount: (info) => {
