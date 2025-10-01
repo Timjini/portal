@@ -47,7 +47,42 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   end
 
   def create
-    Rails.logger.info "-------> #{params.inspect}"
+
+    level_data = JSON.parse(params['level']['data'])
+    check_lists = CheckList.where(level_id: level_data['id'])
+    user_ids = params['user_ids'].split(',')
+    begin
+      user_ids.each do |u_id|
+        
+        @assessment = Assessment.find_or_initialize_by(
+          athlete_id: u_id,
+          coach_id: current_user.id,
+          level_id: level_data['id']
+        )
+        
+        @assessment.assign_attributes(
+          notes: "",
+          kpi_data: level_data,
+          completed: true,
+          completed_at: Time.now
+        )
+        @assessment.save!
+
+        check_lists.each do |l|
+          AssessmentChecklist.find_or_create_by!(
+            assessment_id: @assessment.id,
+            check_list_id: l.id
+          )
+        end
+      end
+
+
+        rescue StandardError => e
+          Rails.logger.error "Error creating assessment: #{e.message}"
+        end
+    
+        redirect_to coaches_assessments_path, notice: 'Assessment saved successfully'
+
   end
 
   # def create
