@@ -11,6 +11,7 @@ class Ability
 
     elsif user.coach?
       can :manage, Exercise
+      can :manage, Assessment
       can :read, CoachCalendar
       can %i[read update edit update_user], User # Coaches can edit user profiles (optional, based on your logic)
     

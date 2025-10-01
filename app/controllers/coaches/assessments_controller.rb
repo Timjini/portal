@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Coaches::AssessmentsController < ApplicationController # rubocop:disable Style/ClassAndModuleChildren
+  before_action :authenticate_user!
+  load_and_authorize_resource
   # rescue_from Errors::QueryError, with: :handle_query_error
   def index
     @kpi_categories = KpiCategory.order(:id)
