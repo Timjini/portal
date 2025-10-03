@@ -23,8 +23,6 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   end
 
   def new
-
-    puts "---------> #{params.inspect}"
     # @athlete = User.find(params[:athlete_id])
     # @assessment = @athlete.assessments.new
     # @kpi_categories = KpiCategory.order(:id)
@@ -35,13 +33,14 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
     service = KpiService.new(params)
     @levels = service.fetch_level_by_params
 
+    Rails.logger.info "=========================>#{@levels.inspect}"
     # this is a terrible way of doing this !!
     @users = User.where(role: %i[athlete child_user])
     if !@levels.nil?
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.replace("levels", partial: "coaches/assessments/level", locals: { levels: @levels, users: @users }),
+            turbo_stream.update("levels", partial: "coaches/assessments/level", locals: { levels: @levels, users: @users }),
           ]
         end
       end

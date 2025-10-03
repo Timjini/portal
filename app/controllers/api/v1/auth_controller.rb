@@ -12,7 +12,7 @@ module Api
       def login # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
         user = User.where('lower(email) = ?', params[:user][:email].downcase).first
         if user.nil?
-          api_error(errors: "Sorry we didn't find you on CFS.")
+          render json: { type: 'Error', message: 'Account not found' }, status: :not_found
         elsif user&.valid_password?(params[:user][:password])
           token_expire = Time.zone.today + 365.days
           user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: token_expire.to_time.to_i })
@@ -22,7 +22,7 @@ module Api
           render json: result
           nil
         else
-          api_error(status: 500, errors: ['Your password is incorrect.'])
+          render json: { type: 'Error', message: 'Password or Email incorrect' }, status: :unauthorized
         end
       end
 
