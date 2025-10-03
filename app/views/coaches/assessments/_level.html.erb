@@ -1,5 +1,5 @@
 <% if @levels.present? %>
-<%= form_with url: coaches_assessments_path, method: :post, class: "space-y-6" do |form| %>
+<%= form_with url: coaches_assessments_path, method: :post, class: "space-y-6" , data: {turbo: false} do |form| %>
 
   <!-- KPI Checklist Card -->
   <div class="mt-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-6 space-y-5" data-controller="check-all">
@@ -28,11 +28,11 @@
 
     <!-- Checklist -->
     <div class="space-y-3 py-4" id="kpi-checklist">
-    <%= hidden_field_tag "level[data]", @levels.to_json %>
+    <%= hidden_field_tag "assessment[kpi_data]", @levels.to_json %>
       <% @levels.check_lists.each do |l| %>
         <div class="flex items-start space-x-3" data-check-all-target="row">
-          <%= hidden_field_tag "level[checklists][#{l.id}]", "0" %>
-          <%= check_box_tag "level[checklists][#{l.id}]", "1", false,
+          <%= hidden_field_tag "assessment[checklists][#{l.id}]", "0" %>
+          <%= check_box_tag "assessment[checklists][#{l.id}]", "1", false,
             class: "kpi-checkbox h-5 w-5 mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500 flex-shrink-0",
             data: { check_all_target: "checkbox" } %>
           <label class="text-gray-800 leading-relaxed cursor-pointer">
