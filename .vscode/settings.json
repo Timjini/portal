@@ -12,8 +12,8 @@
   "editor.defaultFormatter": "Shopify.ruby-lsp",
   "rubyLsp.testFramework": "rspec",
   "rubyLsp.rspecCommand": "bundle exec rspec",
-  // "rubyLsp.rspecOptions": [
-  //   "--format",
-  //   "documentation"
-  // ],
+  "rubyLsp.rspecOptions": [
+    "--format",
+    "documentation"
+  ],
 }

@@ -11,6 +11,7 @@
    <!-- Main navigation -->
    <nav class="flex-1 flex flex-col space-y-1" role="navigation" aria-label="Primary">
       <!-- Role-specific -->
+      <% if current_user.role == 'admin' %>
       <% nav_items_for_current_user.each do |item| %>
       <div class="nav-group">
          <div
@@ -19,12 +20,48 @@
             <!-- Main Link -->
             <%= link_to item[:path], class: "flex items-center gap-2 flex-1" do %>
             <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-            <%= render partial: "icons/#{item[:icon]}" %>
+            <%= render partial: "icons/#{item['icon']}" %>
             </span>
-            <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900"><%= item[:name] %></span>
+            <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900"><%= item['name'] %></span>
             <% end %>
             <!-- Arrow Toggle -->
-            <% if item[:children] %>
+            <% if item["children"] %>
+            <span class="ml-auto material-symbols-outlined arrow transition-transform duration-200 cursor-pointer"
+               onclick="this.closest('.nav-group').querySelector('.children').classList.toggle('hidden'); this.classList.toggle('rotate-90')">
+            keyboard_arrow_right
+            </span>
+            <% end %>
+         </div>
+         <!-- Children Links -->
+         <% if item["children"] %>
+         <div class="children ml-6 flex-col space-y-1 mt-1 hidden">
+            <% item["children"].each do |child| %>
+            <%= link_to child[:path],
+               class: "group flex items-center gap-2 py-1 px-2 rounded-md transition-colors nav_item #{'bg-blue-100 font-semibold' if request.path == child[:path]} hover:bg-gray-50" do %>
+            <span class="material-symbols-outlined text-gray-400 text-[18px] group-hover:text-gray-600">
+            <%= render partial: "icons/#{child['icon']}" %>
+            </span>
+            <span class="text-sm font-normal text-gray-500 group-hover:text-gray-700"><%= child['name'] %></span>
+            <% end %>
+            <% end %>
+         </div>
+         <% end %>
+      </div>
+      <% end %>
+      <% elsif current_user.role == 'coach' %>
+      <% nav_items_for_current_user.each do |item| %>
+      <div class="nav-group">
+         <div
+            class="flex items-center gap-2 py-2 px-2 rounded-md transition-colors nav_item
+            <%= 'bg-blue-200 font-semibold' if request.path == item[:path] %>">
+            <!-- Main Link -->
+            <%= link_to item[:path], class: "flex items-center gap-2 flex-1" do %>
+            <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
+            <%= render partial: "icons/#{item['icon']}" %>
+            </span>
+            <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900"><%= item['name'] %></span>
+            <% end %>
+            <% if item["children"] %>
             <span class="ml-auto material-symbols-outlined arrow transition-transform duration-200 cursor-pointer"
                onclick="this.closest('.nav-group').querySelector('.children').classList.toggle('hidden'); this.classList.toggle('rotate-90')">
             keyboard_arrow_right
@@ -45,7 +82,39 @@
          </div>
          <% end %>
       </div>
-      <%end%>
+      <% end %>
+      <% elsif current_user.role == 'parent_user' %>
+      <div class="mb-2">
+         <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2">Parent Tools</div>
+         <!-- add parent items here -->
+      </div>
+      <% elsif current_user.role == 'child_user' %>
+      <div class="mb-2">
+         <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2">My Profile</div>
+         <div class="space-y-0.5">
+            <% if current_user.athlete_profile.present? %>
+            <a href="/athlete_profiles/<%= current_user.athlete_profile.id %>" class="nav_item group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1">
+            <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">bar_chart</span>
+            <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Progress</span>
+            </a>
+            <% end %>
+            <a href="/users/<%= current_user.id %>" class="nav_item group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1">
+            <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">face</span>
+            <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Profile</span>
+            </a>
+         </div>
+      </div>
+      <% elsif current_user.role == 'athlete' %>
+      <div class="mb-2">
+         <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2">Athlete Tools</div>
+         <div class="space-y-0.5">
+            <a href="/athlete_profiles/<%= current_user.athlete_profile&.id %>" class="nav_item group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1">
+            <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">account_circle</span>
+            <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Profile</span>
+            </a>
+         </div>
+      </div>
+      <% end %>
    </nav>
    <!-- Footer -->
    <div class="sidebar-footer pt-4 border-t border-gray-100 mt-auto px-1">

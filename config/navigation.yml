@@ -36,3 +36,36 @@ admin:
   # - name: Events
     # path_helper: dcpa_events_path
     # icon: folder
+coach:
+  - name: Dashboard
+    path_helper: coaches_dashboard_index_path
+    icon: dashboard
+  - name: Accounts 
+    path_helper: all_accounts_accounts_path
+    icon: users
+  - name: Coach Calendar 
+    path_helper: coach_calendar_index_path
+    icon: calendar
+  - name: Attendance
+    path_helper: attendance_index_path
+    icon: attendance
+  - name: Assessments
+    path_helper: coaches_assessments_path
+    icon: assessment
+  - name: Reports
+    path_helper: reports_questionnaires_path
+    icon: reports
+  - name: Content
+    path_helper: admin_content_index_path
+    icon: folder
+    children:
+      - name: Competitions
+        path_helper: admin_competitions_path
+        icon: ticket
+athlete:
+  - name: Dashboard
+    path_helper: athletes_dashboard_index_path
+    icon: dashboard
+  - name: Profile
+    path_helper: athlete_profile_path
+    icon:

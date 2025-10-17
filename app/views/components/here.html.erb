@@ -19,12 +19,12 @@
             <!-- Main Link -->
             <%= link_to item[:path], class: "flex items-center gap-2 flex-1" do %>
             <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-            <%= render partial: "icons/#{item[:icon]}" %>
+            <%= render partial: "icons/#{item['icon']}" %>
             </span>
-            <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900"><%= item[:name] %></span>
+            <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900"><%= item['name'] %></span>
             <% end %>
             <!-- Arrow Toggle -->
-            <% if item[:children] %>
+            <% if item["children"] %>
             <span class="ml-auto material-symbols-outlined arrow transition-transform duration-200 cursor-pointer"
                onclick="this.closest('.nav-group').querySelector('.children').classList.toggle('hidden'); this.classList.toggle('rotate-90')">
             keyboard_arrow_right

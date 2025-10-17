@@ -8,14 +8,13 @@ class AthleteProfilesController < ApplicationController
   def index
     @users = User.where(role: %w[child_user athlete])
     @athletes = if params[:level].present?
-                  AthleteProfile.includes(user: [:avatar_attachment]).where(user_id: @users.ids).where(level: params[:level]) # rubocop:disable Layout/LineLength
+                  AthleteProfile.includes(user: [:avatar_attachment]).where(user_id: @users.ids).where(level: params[:level])
                 else
                   AthleteProfile.includes(user: [:avatar_attachment]).where(user_id: @users.ids)
                 end
   end
 
-  def show # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
-    Rails.logger.info("params -->, #{params}")
+  def show
     service = CheckListService.new(params)
     result = service.show_athlete_status
     @athlete = result[:athlete]
@@ -42,7 +41,7 @@ class AthleteProfilesController < ApplicationController
     @athlete = AthleteProfile.find(params[:id])
   end
 
-  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  def create
     params[:athlete_profile][:level] = params[:level].to_i
 
     user = User.find_by(id: params[:athlete_profile][:user_id])
@@ -77,7 +76,7 @@ class AthleteProfilesController < ApplicationController
   def autocomplete
     term = params[:term].downcase
     users = User.where(role: %w[athlete child_user])
-                .where('LOWER(username) ILIKE ? OR LOWER(email) ILIKE ? OR LOWER(first_name) ILIKE ? OR LOWER(last_name) ILIKE ?', "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%") # rubocop:disable Layout/LineLength
+                .where('LOWER(username) ILIKE ? OR LOWER(email) ILIKE ? OR LOWER(first_name) ILIKE ? OR LOWER(last_name) ILIKE ?', "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%")
                 .pluck(:id, :username, :email, :first_name, :last_name)
 
     render json: users.map { |user|
