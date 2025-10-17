@@ -8,7 +8,8 @@ class QuestionnairesController < ApplicationController
   end
 
   def reports
-    @reports = User.joins(:answers).includes(avatar_attachment: :blob).distinct.paginate(page: params[:page], per_page: 10)
+    @reports = User.joins(:answers).includes(avatar_attachment: :blob).distinct.paginate(page: params[:page],
+                                                                                         per_page: 10)
   end
 
   def show

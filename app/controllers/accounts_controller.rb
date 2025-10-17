@@ -4,6 +4,7 @@ class AccountsController < ApplicationController
   skip_forgery_protection only: [:create_child_user]
   before_action :authenticate_user!
   include AthleteProfilesHelper
+
   # load_and_authorize_resource
 
   def index
@@ -73,47 +74,43 @@ class AccountsController < ApplicationController
     end
   end
 
-  def all_accounts
+  def all_accounts # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     Rails.logger.info "Fetching accounts with params: #{params.inspect}"
-  
+
     base_scope = User.includes(:athlete_profile, avatar_attachment: :blob)
     base_scope = base_scope.where(role: params[:role]) if params[:role].present?
     base_scope = base_scope.with_coach_calendars if params[:role].nil? || params[:role] == 'coach'
-  
-    if params[:search].present?
-      @accounts = search_accounts(params)
-    else
-      @accounts = base_scope.paginate(page: params[:page], per_page: 10)
-    end
-  
+
+    @accounts = if params[:search].present?
+                  search_accounts(params)
+                else
+                  base_scope.paginate(page: params[:page], per_page: 10)
+                end
+
     respond_to do |format|
       format.html
-      format.js 
+      format.js
     end
   end
-  
-  
 
   def search_accounts(params)
     search_term = params[:search].to_s.strip.downcase
     Rails.logger.info "Searching accounts with params: #{search_term.inspect}"
-  
+
     if search_term.blank?
       @accounts = User.includes(:athlete_profile, :avatar_attachment)
                       .paginate(page: params[:page], per_page: 10)
     else
       term = "%#{search_term}%"
       @accounts = User.includes(:athlete_profile, :avatar_attachment)
-                      .where("LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ? OR LOWER(email) LIKE ?",
+                      .where('LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ? OR LOWER(email) LIKE ?',
                              term, term, term)
                       .paginate(page: params[:page], per_page: 10)
     end
-  
+
     @accounts
   end
-  
-  
-  
+
   def add_child; end
 
   private

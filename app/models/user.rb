@@ -38,7 +38,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :parents, -> { where(role: 'parent_user') }
   has_many :children, -> { where(role: 'child_user') }, class_name: 'User', foreign_key: 'parent_id'
 
-
   # Enums
   enum role: ROLE_TYPES # rubocop:disable Rails/EnumSyntax
 
@@ -71,7 +70,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     includes(:coach_calendars)
   }
 
-  scope :with_level, ->(level) {
+  scope :with_level, lambda { |level|
     joins(:athlete_profile).where(athlete_profiles: { level: level })
   }
 
@@ -138,7 +137,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     l.level
   end
-  
 
   def age # rubocop:disable Metrics/AbcSize
     profile = AthleteProfile.find_by(user_id: id)
@@ -194,13 +192,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     attendance.exists?(['DATE(attended_at) = ? AND status = ?', Time.zone.today, 'present'])
   end
 
-  
   def health_issue
     Answer.joins(:question)
-    .where(user_id: self.id, content: 'Yes')
-    .where.not(questions: { illness_tag: nil })
-    .distinct
-    .pluck('questions.illness_tag')
+          .where(user_id: id, content: 'Yes')
+          .where.not(questions: { illness_tag: nil })
+          .distinct
+          .pluck('questions.illness_tag')
   end
 
   # Private Methods

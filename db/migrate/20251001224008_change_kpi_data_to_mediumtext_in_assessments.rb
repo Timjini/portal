@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeKpiDataToMediumtextInAssessments < ActiveRecord::Migration[7.1]
   def up
     change_column :assessments, :kpi_data, :mediumtext

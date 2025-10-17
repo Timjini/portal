@@ -1,16 +1,26 @@
 {
-    "cSpell.words": [
-        "ALLOWFROM",
-        "antiquewhite",
-        "cancancan",
-        "checkin",
-        "hotwired",
-        "iframed",
-        "ILIKE",
-        "msapplication",
-        "progname",
-        "replit",
-        "rgba",
-        "sslca"
-    ]
+  "cSpell.words": [
+    "ALLOWFROM",
+    "antiquewhite",
+    "cancancan",
+    "checkin",
+    "hotwired",
+    "iframed",
+    "ILIKE",
+    "msapplication",
+    "progname",
+    "replit",
+    "rgba",
+    "sslca"
+  ],
+  "files.associations": {
+    "*.html.erb": "html"
+  },
+  "rubyLsp.enabledFeatures": {
+    "diagnostics": true,
+    "formatting": true
+  },
+  "rubyLsp.rubocop.enabled": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "Shopify.ruby-lsp"
 }

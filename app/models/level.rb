@@ -6,7 +6,6 @@ class Level < ApplicationRecord
   has_many :reviews, as: :reviewable, dependent: :destroy
   has_many :assessments
 
-
   enum :degree, { development: 0, intermediate: 1, advanced: 2 }
   enum :category, { information_management: 0, physical_strength: 1, motor_skills: 2, technical_ability: 3,
                     performance_time: 4 }

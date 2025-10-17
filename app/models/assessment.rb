@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/assessment.rb
 class Assessment < ApplicationRecord
   belongs_to :athlete, class_name: 'User'
@@ -13,8 +15,6 @@ class Assessment < ApplicationRecord
   }, prefix: true
 
   # --- Validations ---
-  validates :athlete, presence: true
-  validates :coach, presence: true
   validates :recommendation, inclusion: { in: recommendations.keys }, allow_nil: true
   validates :notes, length: { maximum: 1000 }, allow_blank: true
   validates :kpi_data, presence: true
@@ -35,8 +35,8 @@ class Assessment < ApplicationRecord
   end
 
   def completed_at_required_if_completed
-    if completed? && completed_at.blank?
-      errors.add(:completed_at, 'must be set when assessment is marked as completed')
-    end
+    return unless completed? && completed_at.blank?
+
+    errors.add(:completed_at, 'must be set when assessment is marked as completed')
   end
 end

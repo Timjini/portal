@@ -11,7 +11,8 @@ module Admin
     before_action :set_taster_booking, only: %i[show edit update destroy]
 
     def index
-      @taster_bookings = TasterBooking.where("dateSelect >= ?", Date.today).paginate(page: params[:page], per_page: 10)
+      @taster_bookings = TasterBooking.where(dateSelect: Time.zone.today..).paginate(page: params[:page],
+                                                                                     per_page: 10)
     end
 
     def show; end

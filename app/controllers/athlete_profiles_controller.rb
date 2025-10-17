@@ -4,6 +4,7 @@ class AthleteProfilesController < ApplicationController
   before_action :authenticate_user!
   skip_forgery_protection only: %i[create checked_items]
   include NotificationHelper
+
   def index
     @users = User.where(role: %w[child_user athlete])
     @athletes = if params[:level].present?

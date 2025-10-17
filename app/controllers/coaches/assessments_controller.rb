@@ -36,43 +36,43 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
     Rails.logger.info "=========================>#{@levels.inspect}"
     # this is a terrible way of doing this !!
     @users = User.where(role: %i[athlete child_user])
-    if !@levels.nil?
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.update("levels", partial: "coaches/assessments/level", locals: { levels: @levels, users: @users }),
-          ]
-        end
+    return if @levels.nil?
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update('levels', partial: 'coaches/assessments/level',
+                                        locals: { levels: @levels, users: @users })
+        ]
       end
     end
   end
 
   def create
     Rails.logger.level = Logger::DEBUG
-    Rails.logger.debug "DEBUG LOG: creating assessment..."
+    Rails.logger.debug 'DEBUG LOG: creating assessment...'
     Rails.logger.info "INFO LOG: assessment params: #{params.inspect}"
-    Rails.logger.error "ERROR LOG: something went wrong..."
+    Rails.logger.error 'ERROR LOG: something went wrong...'
     begin
-      
       level_data = JSON.parse(params['assessment']['kpi_data'])
       check_lists = CheckList.where(level_id: level_data['id'])
       user_ids = params['user_ids'].split(',')
-  
+
       user_ids.each do |u_id|
         @assessment = Assessment.find_or_initialize_by(
           athlete_id: u_id,
           coach_id: current_user.id,
           level_id: level_data['id']
         )
-  
+
         @assessment.assign_attributes(
-          notes: "Coach assessment",
+          notes: 'Coach assessment',
           kpi_data: level_data,
           completed: true,
           completed_at: Time.current
         )
         @assessment.save!
-  
+
         check_lists.each do |l|
           AssessmentChecklist.find_or_create_by!(
             assessment_id: @assessment.id,
@@ -80,23 +80,20 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
           )
         end
       end
-  
+
       redirect_to coaches_assessments_path, notice: 'Assessment saved successfully'
-  
     rescue JSON::ParserError => e
       Rails.logger.error "Invalid JSON for level data: #{e.message}"
-      redirect_to coaches_assessments_path, alert: "Invalid level data provided."
-  
+      redirect_to coaches_assessments_path, alert: 'Invalid level data provided.'
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error "Validation failed: #{e.message}"
-      redirect_to coaches_assessments_path, alert: "Assessment could not be saved: #{e.record.errors.full_messages.to_sentence}"
-  
+      redirect_to coaches_assessments_path,
+                  alert: "Assessment could not be saved: #{e.record.errors.full_messages.to_sentence}"
     rescue StandardError => e
       Rails.logger.error "Unexpected error creating assessment: #{e.message}"
-      redirect_to coaches_assessments_path, alert: "An unexpected error occurred. Please try again."
+      redirect_to coaches_assessments_path, alert: 'An unexpected error occurred. Please try again.'
     end
   end
-  
 
   # def create
   #   Rails.logger.info "------------------>, #{@levels.inspect}"

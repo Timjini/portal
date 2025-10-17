@@ -59,7 +59,7 @@ module Api
       end
 
       def check_token
-        puts @current_user.inspect
+        Rails.logger.debug @current_user.inspect
         render json: @current_user
         nil
       end

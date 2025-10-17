@@ -31,7 +31,7 @@ class AthleteChecklistStatusService
     permitted_params = %w[title degree category step]
     hash = @params.to_unsafe_h
     cleaned_params = hash.slice(*permitted_params).compact
-    
+
     # Add index if you frequently filter by these columns
     Level.where(cleaned_params).order(:degree, :step, :category)
   end
@@ -49,12 +49,12 @@ class AthleteChecklistStatusService
   def determine_level_status(levels)
     # Preload all completed athlete levels in one query
     completed_level_ids = @athlete.athlete_levels
-                                 .where(status: 'completed')
-                                 .pluck(:level_id)
-                                 .to_set
-    
+                                  .where(status: 'completed')
+                                  .pluck(:level_id)
+                                  .to_set
+
     status = {}
-    
+
     if completed_level_ids.empty? && levels.present?
       status[levels.first.id] = 'enabled'
       levels[1..].each { |level| status[level.id] = 'disabled' }
@@ -70,10 +70,10 @@ class AthleteChecklistStatusService
   def completed_checklist_items
     # Optimized query with proper indexing
     completed_level_ids = UserLevel.where(
-      user_id: @athlete.user_id, 
+      user_id: @athlete.user_id,
       status: 'completed'
     ).select(:id)
-    
+
     UserChecklist.where(
       user_id: @athlete.user_id,
       user_level_id: completed_level_ids,

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAssessmentChecklists < ActiveRecord::Migration[7.1]
   def change
     create_table :assessment_checklists do |t|
@@ -10,6 +12,6 @@ class CreateAssessmentChecklists < ActiveRecord::Migration[7.1]
     add_foreign_key :assessment_checklists, :assessments
     add_foreign_key :assessment_checklists, :check_lists
 
-    add_index :assessment_checklists, [:assessment_id, :check_list_id], unique: true
+    add_index :assessment_checklists, %i[assessment_id check_list_id], unique: true
   end
 end

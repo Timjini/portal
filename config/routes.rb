@@ -3,6 +3,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :competitions
   resources :athlete_level_categories
   resources :step_exercises
   resources :exercises do
@@ -166,8 +167,8 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index]
     resources :athletes, only: %i[index show]
     resources :sessions, only: %i[new create index]
-    resources :assessments do 
-       post 'get-kpis', on: :collection, to: 'assessments#get_kpis'
+    resources :assessments do
+      post 'get-kpis', on: :collection, to: 'assessments#get_kpis'
     end
     resources :messages, only: %i[index show create]
   end

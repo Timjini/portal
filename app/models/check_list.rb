@@ -5,7 +5,6 @@ class CheckList < ApplicationRecord
   has_many :user_checklists, dependent: :destroy
   has_many :user_levels, through: :user_checklists
 
-
   def checked_user_item(id)
     item = UserChecklist.find_by(check_list_id: self.id, user_id: id, completed: true)
 

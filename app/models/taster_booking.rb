@@ -3,11 +3,11 @@
 class TasterBooking < SecondaryRecord
   self.table_name = 'booking_data'
 
-  enum status: {
+  enum :status, {
     pending: 'pending',
     confirmed: 'confirmed',
     cancelled: 'cancelled'
-  }, _prefix: true
+  }, prefix: true
 
   # Optional: Add scopes for convenience
   scope :active, -> { where(status: %w[pending confirmed]) }

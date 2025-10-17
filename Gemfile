@@ -49,13 +49,13 @@ gem 'sentry-ruby'
 
 # Utilities
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
+gem 'groupdate'
 gem 'mailtrap', '~> 0.1.0'
 gem 'rack-cors'
 gem 'recurrence', '~> 1.3'
 gem 'rqrcode'
 gem 'sendgrid-ruby'
 gem 'will_paginate'
-gem 'groupdate'
 
 # dev tools
 gem 'guard-livereload', '~> 2.5', require: false
@@ -75,12 +75,12 @@ gem 'searchkick', '~> 5.5', '>= 5.5.2'
 group :development, :test do
   gem 'brakeman', require: false
   gem 'bullet'
-  gem 'rack-mini-profiler'
   gem 'bundler-audit', require: false
   gem 'byebug'
   gem 'debug', platforms: %i[mri windows]
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'rack-mini-profiler'
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 5.0'
 end
