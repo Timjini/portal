@@ -27,11 +27,5 @@ module Admin
 
       @metrics = DashboardMetricsService.new(params[:time_range]).platform_activity
     end
-
-    private
-
-    def check_admin
-      redirect_to root_path, alert: 'Access denied' unless current_user.admin? # rubocop:disable Rails/I18nLocaleTexts
-    end
   end
 end

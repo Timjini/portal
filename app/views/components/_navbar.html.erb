@@ -31,15 +31,15 @@
             </span>
             <% end %>
          </div>
-         <% if item["children"] %>
+         <% if item[:children] %>
          <div class="children ml-6 flex-col space-y-1 mt-1 hidden">
-            <% item["children"].each do |child| %>
+            <% item[:children].each do |child| %>
             <%= link_to child[:path],
                class: "group flex items-center gap-2 py-1 px-2 rounded-md transition-colors nav_item #{'bg-blue-100 font-semibold' if request.path == child[:path]} hover:bg-gray-50" do %>
             <span class="material-symbols-outlined text-gray-400 text-[18px] group-hover:text-gray-600">
-            <%= render partial: "icons/#{child['icon']}" %>
+            <%= render partial: "icons/#{child[:icon]}" %>
             </span>
-            <span class="text-sm font-normal text-gray-500 group-hover:text-gray-700"><%= child['name'] %></span>
+            <span class="text-sm font-normal text-gray-500 group-hover:text-gray-700"><%= child[:name] %></span>
             <% end %>
             <% end %>
          </div>

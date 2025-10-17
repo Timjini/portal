@@ -3,7 +3,7 @@
 module Admin
   class CompetitionsController < ApplicationController
     before_action :set_competition, only: %i[show edit update destroy]
-     before_action :authenticate_user!
+    load_and_authorize_resource
 
     # GET /competitions or /competitions.json
     def index
@@ -27,7 +27,10 @@ module Admin
 
       respond_to do |format|
         if @competition.save
-          format.html { redirect_to admin_competition_path(@competition), notice: 'Competition was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
+          # rubocop:disable Rails/I18nLocaleTexts
+          format.html do
+            redirect_to admin_competition_path(@competition), notice: 'Competition was successfully created.'
+          end
           format.json { render :show, status: :created, location: @competition }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +43,10 @@ module Admin
     def update
       respond_to do |format|
         if @competition.update(competition_params)
-          format.html { redirect_to admin_competition_path(@competition), notice: 'Competition was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
+          # rubocop:disable Rails/I18nLocaleTexts
+          format.html do
+            redirect_to admin_competition_path(@competition), notice: 'Competition was successfully updated.'
+          end
           format.json { render :show, status: :ok, location: @competition }
         else
           format.html { render :edit, status: :unprocessable_entity }
