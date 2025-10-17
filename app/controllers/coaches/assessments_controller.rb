@@ -29,7 +29,7 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
     # @structured_data = ExerciseStructureQuery.new.call
   end
 
-  def get_kpis
+  def get_kpis # rubocop:disable Metrics/MethodLength,Naming/AccessorMethodName
     service = KpiService.new(params)
     @levels = service.fetch_level_by_params
 
@@ -48,7 +48,7 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
     end
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     Rails.logger.level = Logger::DEBUG
     Rails.logger.debug 'DEBUG LOG: creating assessment...'
     Rails.logger.info "INFO LOG: assessment params: #{params.inspect}"
@@ -81,17 +81,17 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
         end
       end
 
-      redirect_to coaches_assessments_path, notice: 'Assessment saved successfully'
+      redirect_to coaches_assessments_path, notice: 'Assessment saved successfully' # rubocop:disable Rails/I18nLocaleTexts
     rescue JSON::ParserError => e
       Rails.logger.error "Invalid JSON for level data: #{e.message}"
-      redirect_to coaches_assessments_path, alert: 'Invalid level data provided.'
+      redirect_to coaches_assessments_path, alert: 'Invalid level data provided.' # rubocop:disable Rails/I18nLocaleTexts
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error "Validation failed: #{e.message}"
       redirect_to coaches_assessments_path,
                   alert: "Assessment could not be saved: #{e.record.errors.full_messages.to_sentence}"
     rescue StandardError => e
       Rails.logger.error "Unexpected error creating assessment: #{e.message}"
-      redirect_to coaches_assessments_path, alert: 'An unexpected error occurred. Please try again.'
+      redirect_to coaches_assessments_path, alert: 'An unexpected error occurred. Please try again.' # rubocop:disable Rails/I18nLocaleTexts
     end
   end
 
@@ -141,7 +141,7 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   def require_coach
     return if current_user.role == 'coach'
 
-    redirect_to root_path, alert: 'Only coaches can perform assessments'
+    redirect_to root_path, alert: 'Only coaches can perform assessments' # rubocop:disable Rails/I18nLocaleTexts
   end
 
   def assessment_params

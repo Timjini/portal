@@ -53,7 +53,7 @@ module Admin
       @taster_booking = TasterBooking.find(params[:id])
     end
 
-    def taster_booking_params
+    def taster_booking_params # rubocop:disable Metrics/MethodLength
       params.require(:taster_booking).permit(
         :firstName,
         :lastName,

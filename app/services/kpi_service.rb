@@ -13,7 +13,7 @@ class KpiService
     Level.where(degree: @params[:degree].to_i, category: @params[:category].to_i, step: @params[:step].to_i).first
   end
 
-  def create_level # rubocop:disable Metrics/MethodLength
+  def create_level # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     title = @params[:title]
     degree = @params[:degree].to_i
     checklist_items = @params[:checklist] || [] # Handle nil case

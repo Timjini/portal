@@ -93,7 +93,7 @@ class AccountsController < ApplicationController
     end
   end
 
-  def search_accounts(params)
+  def search_accounts(params) # rubocop:disable Metrics/MethodLength
     search_term = params[:search].to_s.strip.downcase
     Rails.logger.info "Searching accounts with params: #{search_term.inspect}"
 

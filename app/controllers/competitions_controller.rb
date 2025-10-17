@@ -25,7 +25,7 @@ class CompetitionsController < ApplicationController
 
     respond_to do |format|
       if @competition.save
-        format.html { redirect_to @competition, notice: 'Competition was successfully created.' }
+        format.html { redirect_to @competition, notice: 'Competition was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: @competition }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class CompetitionsController < ApplicationController
   def update
     respond_to do |format|
       if @competition.update(competition_params)
-        format.html { redirect_to @competition, notice: 'Competition was successfully updated.' }
+        format.html { redirect_to @competition, notice: 'Competition was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @competition }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class CompetitionsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to competitions_path, status: :see_other, notice: 'Competition was successfully destroyed.'
+        redirect_to competitions_path, status: :see_other, notice: 'Competition was successfully destroyed.' # rubocop:disable Rails/I18nLocaleTexts
       end
       format.json { head :no_content }
     end

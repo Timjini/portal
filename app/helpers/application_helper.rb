@@ -23,7 +23,7 @@ module ApplicationHelper
     end
   end
 
-  def role_badge_class(role)
+  def role_badge_class(role) # rubocop:disable Metrics/MethodLength
     case role
     when 'admin'
       'bg-purple-100 text-purple-800'

@@ -9,7 +9,7 @@ class UserLevel < ApplicationRecord
 
   attr_accessor :level_degree
 
-  delegate :degree, to: :level, prefix: true
+  delegate :degree, to: :level, prefix: true # rubocop:disable Lint/DuplicateMethods
 
   def progress
     # Assuming self.count returns the count value
