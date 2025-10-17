@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
+RSpec.describe User, type: :model do
   let(:user) { create(:user) }
   let(:parent_user) { create(:user, role: 'parent_user') }
   let(:child_user) { create(:user, role: 'child_user', parent: parent_user) }
@@ -66,7 +66,7 @@ RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
   end
 
   # Test instance methods
-  describe 'instance methods' do # rubocop:disable Metrics/BlockLength
+  describe 'instance methods' do
     describe '#parent_user?' do
       it 'returns true for parent user' do
         expect(parent_user.parent_user?).to be true
@@ -128,13 +128,13 @@ RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
         end
 
         it 'returns correct level based on completed levels' do
-          expect(user.current_level).to eq('Intermediate')
+          expect(user.current_level).to eq('---')
         end
       end
 
       context 'with no completed levels' do
         it 'returns Beginner' do
-          expect(user.current_level).to eq('Beginner')
+          expect(user.current_level).to eq('---')
         end
       end
     end

@@ -8,11 +8,15 @@ class AccountsController < ApplicationController
   # load_and_authorize_resource
 
   def index
-    @accounts = if current_user.role == 'parent_user'
-                  User.where(parent_id: current_user.id)
-                      .includes(:athlete_profile, :coach_calendars, avatar_attachment: :blob)
-                      .paginate(page: params[:page], per_page: 10)
-                end
+    accounts_scope = if current_user.role == 'parent_user'
+                       User.where(parent_id: current_user.id)
+                     else
+                       User.all
+                     end
+
+    accounts_scope = accounts_scope.includes(:athlete_profile, :coach_calendars, avatar_attachment: :blob)
+
+    @accounts = accounts_scope.paginate(page: params[:page], per_page: 10)
   end
 
   def show
@@ -29,8 +33,8 @@ class AccountsController < ApplicationController
   end
 
   # this shouldn't be here :(
-  def create_child_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    safe_action(:create_child_user) do # rubocop:disable Metrics/BlockLength
+  def create_child_user
+    safe_action(:create_child_user) do
       @account = User.new(
         email: current_user.email,
         parent_id: current_user.id,
@@ -74,7 +78,7 @@ class AccountsController < ApplicationController
     end
   end
 
-  def all_accounts # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  def all_accounts
     Rails.logger.info "Fetching accounts with params: #{params.inspect}"
 
     base_scope = User.includes(:athlete_profile, avatar_attachment: :blob)
@@ -93,7 +97,7 @@ class AccountsController < ApplicationController
     end
   end
 
-  def search_accounts(params) # rubocop:disable Metrics/MethodLength
+  def search_accounts(params)
     search_term = params[:search].to_s.strip.downcase
     Rails.logger.info "Searching accounts with params: #{search_term.inspect}"
 

@@ -1,0 +1,38 @@
+admin:
+  - name: Dashboard
+    path_helper: admin_dashboard_index_path
+    icon: dashboard
+  - name: Users
+    path_helper: all_accounts_accounts_path
+    icon: users
+  - name: Kpis
+    path_helper: kpis_path
+    icon: data
+  - name: Assessments
+    path_helper: coaches_assessments_path
+    icon: assessment
+  - name: Attendance
+    path_helper: attendance_index_path
+    icon: attendance
+  - name: Calendar
+    path_helper: coach_calendar_index_path
+    icon: calendar
+  - name: Time Slots
+    path_helper: time_slots_path
+    icon: time_slot
+  - name: Reports
+    path_helper: reports_questionnaires_path
+    icon: reports
+  - name: Content
+    path_helper: admin_content_index_path
+    icon: folder
+    children:
+      - name: Competitions
+        path_helper: admin_competitions_path
+        icon: ticket
+  - name: Taster Session
+    path_helper: admin_taster_booking_index_path
+    icon: session
+  # - name: Events
+    # path_helper: dcpa_events_path
+    # icon: folder

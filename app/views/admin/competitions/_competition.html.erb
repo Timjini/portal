@@ -19,17 +19,17 @@
 
   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-700">
     <div class="flex items-center gap-2">
-        <%= link_to competition_path(competition),
+        <%= link_to admin_competition_path(competition),
             class: "text-blue-600 hover:text-blue-800 font-medium" do %>
             <%= render 'icons/eye' %>
         <% end %>
 
-        <%= link_to edit_competition_path(competition),
+        <%= link_to edit_admin_competition_path(competition),
             class: "text-yellow-600 hover:text-yellow-700 font-medium" do %>
             <%= render 'icons/edit' %>
         <% end %>
 
-        <%= button_to competition_path(competition),
+        <%= button_to admin_competition_path(competition),
             method: :delete,
             data: { turbo_confirm: "Are you sure you want to delete this competition?" },
             class: "text-red-600 hover:text-red-700 font-medium bg-transparent border-none" do %>

@@ -3,7 +3,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :competitions
   resources :athlete_level_categories
   resources :step_exercises
   resources :exercises do
@@ -191,6 +190,7 @@ Rails.application.routes.draw do
     resources :content, only: %i[index edit update]
     resources :taster_booking, only: %i[index show new create edit update destroy]
     resources :assessment, only: %i[index]
+    resources :competitions
   end
   post 'assessments/create', to: 'coaches/assessments#create', as: 'create_assessment'
 

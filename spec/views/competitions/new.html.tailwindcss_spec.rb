@@ -10,7 +10,7 @@ RSpec.describe 'competitions/new', type: :view do
   it 'renders new competition form' do
     render
 
-    assert_select 'form[action=?][method=?]', competitions_path, 'post' do # rubocop:disable Lint/EmptyBlock
+    assert_select 'form[action=?][method=?]', admin_competitions_path, 'post' do
     end
   end
 end

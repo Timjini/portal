@@ -1,18 +1,5 @@
 {
-  "cSpell.words": [
-    "ALLOWFROM",
-    "antiquewhite",
-    "cancancan",
-    "checkin",
-    "hotwired",
-    "iframed",
-    "ILIKE",
-    "msapplication",
-    "progname",
-    "replit",
-    "rgba",
-    "sslca"
-  ],
+  "cSpell.words": ["ALLOWFROM","antiquewhite","cancancan","checkin","hotwired","iframed","ILIKE","msapplication","progname","replit","rgba","sslca"],
   "files.associations": {
     "*.html.erb": "html"
   },
@@ -22,5 +9,11 @@
   },
   "rubyLsp.rubocop.enabled": true,
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "Shopify.ruby-lsp"
+  "editor.defaultFormatter": "Shopify.ruby-lsp",
+  "rubyLsp.testFramework": "rspec",
+  "rubyLsp.rspecCommand": "bundle exec rspec",
+  // "rubyLsp.rspecOptions": [
+  //   "--format",
+  //   "documentation"
+  // ],
 }
