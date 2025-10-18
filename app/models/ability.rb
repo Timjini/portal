@@ -3,7 +3,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user) # rubocop:disable Metrics/MethodLength
+  def initialize(user) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     return if user.blank? # Not logged in? No permissions
 
     if user.admin?
@@ -18,6 +18,7 @@ class Ability
 
     elsif user.parent_user?
       can :manage, User
+      can :read, Competition
 
     else
       # Default for athlete, child_user

@@ -8,6 +8,7 @@ module NavigationHelper
     when 'coach'   then coach_nav_items
     when 'athlete' then athlete_nav_items
     when 'parent_user' then parent_nav_items
+    when 'child_user' then child_nav_items
     else []
     end
   end
@@ -73,7 +74,19 @@ module NavigationHelper
 
   def parent_nav_items
     [
-      { name: 'Dashboard', path: athletes_dashboard_index_path, icon: 'dashboard' },
+      { name: 'Dashboard', path: parents_dashboard_index_path, icon: 'dashboard' },
+      {
+        name: 'Competitions',
+        path: competitions_path,
+        icon: 'ticket',
+        tag: 'new'
+      }
+    ]
+  end
+
+  def child_nav_items
+    [
+      { name: 'Dashboard', path: juniors_dashboard_index_path, icon: 'dashboard' },
       { name: 'Profile', path: athlete_profile_path(current_user.athlete_profile), icon: 'user' }
     ]
   end

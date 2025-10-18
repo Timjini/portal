@@ -172,6 +172,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["competition_id"], name: "index_competition_entries_on_competition_id"
+    t.index ["user_id", "competition_id"], name: "index_competition_entries_on_user_id_and_competition_id", unique: true
     t.index ["user_id"], name: "index_competition_entries_on_user_id"
   end
 

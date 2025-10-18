@@ -19,120 +19,65 @@
                 data-mobile-menu-target="menu"
                 class="hidden absolute inset-0 bg-white z-40 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-8 bg-gradient-to-b from-blue-50 via-blue-100 to-gray-50"
               >
-                <!-- Menu Content -->
-                <div class="flex-1 overflow-y-auto pt-12">
-                  <div class="mobile-nav-items flex flex-col gap-6">
-                    <% if current_user.role == 'admin' %>
-                      <a class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600" href="/">
-                        <span class="material-symbols-outlined text-2xl">home</span> 
-                        <span class="text-lg font-medium">Dashboard</span>
-                      </a>
-                      <a href="/accounts/all_accounts?page=1" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <span class="material-symbols-outlined text-2xl">manage_accounts</span>
-                        <span class="text-lg font-medium">All Users</span>
-                      </a>
-
-                      <%= link_to coaches_assessments_path , class:"flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600" do %>
-                          <%= render partial:'icons/assessment' %>
-                          <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Assessment</span>
-                      <% end%>
-                      <a href="/subscriptions" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600 hidden">
-                        <span class="material-symbols-outlined text-2xl">wallet</span>
-                        <span class="text-lg font-medium">Subscriptions</span>
-                      </a>
-                      <a href="/kpis" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <span class="material-symbols-outlined text-2xl">data_exploration</span>
-                        <span class="text-lg font-medium">Kpis</span>
-                      </a>
-                      <a href="/questionnaires/reports" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <span class="material-symbols-outlined text-2xl">description</span>
-                        <span class="text-lg font-medium">Reports</span>
-                      </a>
-                      <a href="/taster_session_bookings" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <span class="material-symbols-outlined text-2xl">sprint</span>
-                        <span class="text-lg font-medium">Taster bookings</span>
-                      </a>
-                      <a href="/dcpa_events" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <span class="material-symbols-outlined text-2xl">event</span>
-                        <span class="text-lg font-medium">Events</span>
-                      </a>
-                    <% elsif current_user.role == 'coach' %>
-                      <a class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600" href="/">
-                        <span class="material-symbols-outlined text-2xl">home</span>
-                        <span class="text-lg font-medium">Dashboard</span>
-                      </a>
-                      <a href="/accounts/all_accounts?page=1" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <span class="material-symbols-outlined text-2xl">manage_accounts</span>
-                        <span class="text-lg font-medium">All Users</span>
-                      </a>
-
-                      <a href="/attendance" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <span class="material-symbols-outlined text-2xl">fact_check</span>
-                        <span class="text-lg font-medium">Attendance</span>
-                      </a>
-
-                      <%= link_to coaches_assessments_path , class:"flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600" do %>
-                          <%= render partial:'icons/assessment' %>
-                          <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Assessment</span>
-                      <% end%>
-
-                      <a href="/questionnaires/reports" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                      <span class="material-symbols-outlined text-2xl">description</span>
-                        <span class="text-lg font-medium">Reports</span>
-                      </a>
-
-                      <a href="/admin/content" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                      <span class="material-symbols-outlined text-2xl">folder</span>
-                        <span class="text-lg font-medium">Content</span>
-                      </a>
-                      <a href="/users/<%= current_user.id %>" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <%= image_tag(current_user.avatar_thumbnail, class: "h-8 w-8 object-cover rounded-full") %>
-                        <span class="text-lg font-medium">My Profile</span>
-                      </a>
-                    <% elsif current_user.role == 'parent_user' %>
-                      <a class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600" href="/">
-                        <span class="material-symbols-outlined text-2xl">home</span>
-                        <span class="text-lg font-medium">Home</span>
-                      </a>
-
-                      <a href="#" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600 hidden">
-                        <span class="material-symbols-outlined text-2xl">credit_card</span>
-                        <span class="text-lg font-medium">Subscription</span>
-                      </a>
-                      <a href="/users/<%= current_user.id %>" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <%= image_tag(current_user.avatar_thumbnail, class: "h-8 w-8 object-cover rounded-full") %>
-                        <span class="text-lg font-medium">My Profile</span>
-                      </a>
-                    <% elsif current_user.role == 'child_user' %>
-                      <a class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600" href="/">
-                        <span class="material-symbols-outlined text-2xl">home</span>
-                        <span class="text-lg font-medium">Home</span>
-                      </a>
-                      <a href="/athlete_profiles/<%= current_user&.athlete_profile&.id %>" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <span class="material-symbols-outlined text-2xl">bar_chart</span>
-                        <span class="text-lg font-medium">Progress</span>
-                      </a>
-                    <% elsif current_user.role == 'athlete' %>
-                      <a class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600" href="/">
-                        <span class="material-symbols-outlined text-2xl">home</span>
-                        <span class="text-lg font-medium">Home</span>
-                      </a>
-                      <a href="/athlete_profiles/<%= current_user&.athlete_profile&.id %>" class="flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-indigo-600">
-                        <span class="material-symbols-outlined text-2xl">account_circle</span>
-                        <span class="text-lg font-medium">Profile</span>
-                      </a>
+              <div class="mt-24">
+                <% nav_items_for_current_user.each do |item| %>
+              <div class="nav-group">
+                 <div
+                    class="flex items-center gap-2 py-2 px-2 rounded-md transition-colors nav_item
+                    <%= 'bg-blue-200 font-semibold' if request.path == item[:path] %>">
+                    <!-- Main Link -->
+                    <%= link_to item[:path], class: "flex items-center gap-2 flex-1" do %>
+                    <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
+                    <%= render partial: "icons/#{item[:icon]}" %>
+                    </span>
+                    <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900"><%= item[:name] %></span>
+                    <% if item[:tag] %>
+                    <span class="inline-flex items-center rounded-md bg-green-500/10 px-2 py-1 text-xs font-medium bg-green-600 text-white animate-pulse ring-1 ring-inset ring-green-500/20">
+                       <%=item[:tag]%>
+                     </span>
+                    <%end%>
                     <% end %>
-                  </div>
-                </div>
+                    <!-- Arrow Toggle -->
+                    <% if item[:children] %>
+                    <span class="ml-auto material-symbols-outlined arrow transition-transform duration-200 cursor-pointer"
+                       onclick="this.closest('.nav-group').querySelector('.children').classList.toggle('hidden'); this.classList.toggle('rotate-90')">
+                    keyboard_arrow_right
+                    </span>
+                    <% end %>
+                 </div>
+                 <% if item[:children] %>
+                 <div class="children ml-6 flex-col space-y-1 mt-1 hidden">
+                    <% item[:children].each do |child| %>
+                    <%= link_to child[:path],
+                       class: "group flex items-center gap-2 py-1 px-2 rounded-md transition-colors nav_item #{'bg-blue-100 font-semibold' if request.path == child[:path]} hover:bg-gray-50" do %>
+                    <span class="material-symbols-outlined text-gray-400 text-[18px] group-hover:text-gray-600">
+                    <%= render partial: "icons/#{child[:icon]}" %>
+                    </span>
+                    <span class="text-sm font-normal text-gray-500 group-hover:text-gray-700"><%= child[:name] %></span>
+                    <% end %>
+                    <% end %>
+                 </div>
+                 <% end %>
+              </div>
+              <%end%>
+              </div>
 
                 <!-- Logout Button -->
-                <div class="pt-4 border-t border-gray-100">
-                  <%= button_to destroy_user_session_path, method: :delete, 
-                      class: "flex gap-4 items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-gray-800 hover:text-red-600 w-full" do %>
-                    <span class="material-symbols-outlined text-2xl">logout</span>
-                    <span class="text-lg font-medium">Logout</span>
-                  <% end %>
-                </div>
+                <div class="sidebar-footer pt-4 border-t border-gray-100 mt-auto px-1">
+                  <a href="/users/<%= current_user.id %>" class="flex items-center gap-2 mb-3 p-1 rounded-md hover:bg-gray-50 transition-colors">
+                     <% if current_user.avatar_thumbnail.present? %>
+                     <%= image_tag(current_user.avatar_thumbnail, alt: "#{current_user.full_name} avatar", class: "w-7 h-7 rounded-full shadow-sm object-cover border border-gray-200") %>
+                     <% end %>
+                     <div class="user-info">
+                        <div class="user-name text-xs font-medium text-gray-700"><%= current_user.full_name %></div>
+                        <div class="user-role text-[11px] text-gray-400 capitalize"><%= current_user.role %></div>
+                     </div>
+                  </a>
+                  <div class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors">
+                     <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-red-500">logout</span>
+                     <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "text-sm font-normal text-gray-600 group-hover:text-red-500 bg-transparent border-none cursor-pointer p-0" %>
+                  </div>
+               </div>
               </div>
             </div>
 

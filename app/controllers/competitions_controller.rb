@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 class CompetitionsController < ApplicationController
-  before_action :set_competition, only: %i[show edit update destroy]
+  # before_action :set_competition, only: %i[show edit update destroy]
   load_and_authorize_resource
+  before_action :authenticate_user!
 
   # GET /competitions or /competitions.json
   def index
-    @competitions = Competition.where('date > ?', Time.zone.today)
+    @competitions = Competition.where('date > ?',
+                                      Time.zone.today).where(status: 'active').includes(%i[competition_entries
+                                                                                           image_attachment])
   end
 
   # GET /competitions/1 or /competitions/1.json
@@ -67,11 +70,6 @@ class CompetitionsController < ApplicationController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_competition
-    @competition = Competition.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def competition_params

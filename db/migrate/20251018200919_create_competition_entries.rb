@@ -9,5 +9,7 @@ class CreateCompetitionEntries < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
+
+    add_index :competition_entries, %i[user_id competition_id], unique: true
   end
 end

@@ -21,4 +21,8 @@ class Competition < ApplicationRecord
   def participants
     competition_entries.count
   end
+
+  def subscribed?(user)
+    competition_entries.exists?(user: user)
+  end
 end
