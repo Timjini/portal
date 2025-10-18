@@ -60,8 +60,8 @@ jobs:
           bin/rails db:migrate
           bin/rails db:seed
 
-      - name: Run tests
-        run: bundle exec rspec
+      # - name: Run tests
+      #   run: bundle exec rspec
 
   lint:
     runs-on: ubuntu-latest

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/navigation_helper.rb
 module NavigationHelper
   def nav_items_for_current_user
@@ -28,7 +30,7 @@ module NavigationHelper
         path: admin_content_index_path,
         icon: 'folder',
         children: [
-          { name: 'Competitions', path: admin_competitions_path, icon: 'ticket' }
+          { name: 'Competitions', path: competitions_path, icon: 'ticket' }
         ]
       },
       { name: 'Taster Session', path: admin_taster_booking_index_path, icon: 'session' }
@@ -49,7 +51,7 @@ module NavigationHelper
         path: admin_content_index_path,
         icon: 'ticket',
         children: [
-          { name: 'Competitions', path: admin_competitions_path, icon: 'ticket' }
+          { name: 'Competitions', path: competitions_path, icon: 'ticket' }
         ]
       }
     ]
@@ -62,7 +64,7 @@ module NavigationHelper
       { name: 'Profile', path: athlete_profile_path(current_user.athlete_profile), icon: 'user' },
       {
         name: 'Competitions',
-        path: admin_competitions_path,
+        path: competitions_path,
         icon: 'ticket',
         tag: 'new'
       }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_17_072826) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -165,10 +165,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_17_072826) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "competition_entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "competition_id", null: false
+    t.string "status", default: "subscribed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_competition_entries_on_competition_id"
+    t.index ["user_id"], name: "index_competition_entries_on_user_id"
+  end
+
   create_table "competitions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
+    t.string "description"
     t.date "date"
     t.string "link"
+    t.string "status", default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -506,6 +518,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_17_072826) do
   add_foreign_key "check_lists", "levels"
   add_foreign_key "coach_calendars", "users"
   add_foreign_key "comments", "users"
+  add_foreign_key "competition_entries", "competitions"
+  add_foreign_key "competition_entries", "users"
   add_foreign_key "qr_codes", "users"
   add_foreign_key "questionnaires", "users"
   add_foreign_key "questions", "questionnaires"

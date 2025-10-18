@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   # Common Routes
   resources :dcpa_events
   resources :time_slots
+  resources :competition_entries
+  resources :competitions
+
   resources :coach_calendar, only: %i[index create update destroy show] do
     get 'data/:user_id', on: :collection, to: 'coach_calendar#calendar_data'
     get 'data', on: :collection, to: 'coach_calendar#all_calendars'
@@ -190,7 +193,6 @@ Rails.application.routes.draw do
     resources :content, only: %i[index edit update]
     resources :taster_booking, only: %i[index show new create edit update destroy]
     resources :assessment, only: %i[index]
-    resources :competitions
   end
   post 'assessments/create', to: 'coaches/assessments#create', as: 'create_assessment'
 

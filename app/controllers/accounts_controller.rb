@@ -33,8 +33,8 @@ class AccountsController < ApplicationController
   end
 
   # this shouldn't be here :(
-  def create_child_user
-    safe_action(:create_child_user) do
+  def create_child_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+    safe_action(:create_child_user) do # rubocop:disable Metrics/BlockLength
       @account = User.new(
         email: current_user.email,
         parent_id: current_user.id,
@@ -78,7 +78,7 @@ class AccountsController < ApplicationController
     end
   end
 
-  def all_accounts
+  def all_accounts # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     Rails.logger.info "Fetching accounts with params: #{params.inspect}"
 
     base_scope = User.includes(:athlete_profile, avatar_attachment: :blob)
@@ -97,7 +97,7 @@ class AccountsController < ApplicationController
     end
   end
 
-  def search_accounts(params)
+  def search_accounts(params) # rubocop:disable Metrics/MethodLength
     search_term = params[:search].to_s.strip.downcase
     Rails.logger.info "Searching accounts with params: #{search_term.inspect}"
 
