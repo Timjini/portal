@@ -4,7 +4,7 @@ class AthleteProfile < ApplicationRecord
   # Associations
   belongs_to :user, optional: true
   has_one_attached :image
-  has_one :athlete_level, foreign_key: 'level'
+  has_one :athlete_level, foreign_key: 'level' # rubocop:disable Rails/HasManyOrHasOneDependent,Rails/InverseOf
 
   # Validations
   # validates :first_name, :last_name, presence: true

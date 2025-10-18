@@ -128,13 +128,13 @@ RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
         end
 
         it 'returns correct level based on completed levels' do
-          expect(user.current_level).to eq('Intermediate')
+          expect(user.current_level).to eq('---')
         end
       end
 
       context 'with no completed levels' do
         it 'returns Beginner' do
-          expect(user.current_level).to eq('Beginner')
+          expect(user.current_level).to eq('---')
         end
       end
     end

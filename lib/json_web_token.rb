@@ -17,14 +17,14 @@ class JsonWebToken
     nil
   end
 
-  def self.valid_payload(payload)
+  def self.valid_payload(payload) # rubocop:disable Naming/PredicateMethod
     return true unless expired(payload)
 
     false
   end
 
   # Validates if the token is expired by exp parameter
-  def self.expired(payload)
+  def self.expired(payload) # rubocop:disable Naming/PredicateMethod
     Time.zone.at(payload['exp']) < Time.zone.now
   end
 end

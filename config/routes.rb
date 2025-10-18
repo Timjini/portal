@@ -3,7 +3,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :competitions
   resources :athlete_level_categories
   resources :step_exercises
   resources :exercises do
@@ -17,6 +16,11 @@ Rails.application.routes.draw do
   # Common Routes
   resources :dcpa_events
   resources :time_slots
+  resources :competition_entries
+  resources :competitions do
+    resources :competition_entries, only: %i[create]
+  end
+
   resources :coach_calendar, only: %i[index create update destroy show] do
     get 'data/:user_id', on: :collection, to: 'coach_calendar#calendar_data'
     get 'data', on: :collection, to: 'coach_calendar#all_calendars'

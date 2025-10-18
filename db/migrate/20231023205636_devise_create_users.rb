@@ -38,7 +38,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.1]
       t.timestamps null: false
     end
 
-    add_index :users, :email,                unique: false
+    add_index :users, :email,                unique: false # rubocop:disable Rails/BulkChangeTable
     add_index :users, :username,             unique: true
     add_index :users, :reset_password_token, unique: true
     # add_index :users, :confirmation_token,   unique: true

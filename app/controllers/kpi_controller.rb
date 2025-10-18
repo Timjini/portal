@@ -20,7 +20,7 @@ class KpiController < ApplicationController
     @check_list = data[:checklists]
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     Rails.logger.info "KPI Create Params: #{params.inspect}"
 
     service = KpiService.new(params)

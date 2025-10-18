@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class CompetitionsController < ApplicationController
-  before_action :set_competition, only: %i[show edit update destroy]
+  # before_action :set_competition, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :authenticate_user!
 
   # GET /competitions or /competitions.json
   def index
-    @competitions = Competition.all
+    @competitions = Competition.where('date > ?',
+                                      Time.zone.today).where(status: 'active').includes(%i[competition_entries
+                                                                                           image_attachment])
   end
 
   # GET /competitions/1 or /competitions/1.json
@@ -20,12 +24,15 @@ class CompetitionsController < ApplicationController
   def edit; end
 
   # POST /competitions or /competitions.json
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     @competition = Competition.new(competition_params)
 
     respond_to do |format|
       if @competition.save
-        format.html { redirect_to @competition, notice: 'Competition was successfully created.' }
+        # rubocop:disable Rails/I18nLocaleTexts
+        format.html do
+          redirect_to competition_path(@competition), notice: 'Competition was successfully created.'
+        end
         format.json { render :show, status: :created, location: @competition }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -35,10 +42,13 @@ class CompetitionsController < ApplicationController
   end
 
   # PATCH/PUT /competitions/1 or /competitions/1.json
-  def update
+  def update # rubocop:disable Metrics/MethodLength
     respond_to do |format|
       if @competition.update(competition_params)
-        format.html { redirect_to @competition, notice: 'Competition was successfully updated.' }
+        # rubocop:disable Rails/I18nLocaleTexts,Lint/MissingCopEnableDirective
+        format.html do
+          redirect_to competition_path(@competition), notice: 'Competition was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @competition }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +63,7 @@ class CompetitionsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to competitions_path, status: :see_other, notice: 'Competition was successfully destroyed.'
+        redirect_to competitions_path, status: :see_other, notice: 'Competition was successfully destroyed.' # rubocop:disable Rails/I18nLocaleTexts
       end
       format.json { head :no_content }
     end
@@ -61,13 +71,8 @@ class CompetitionsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_competition
-    @competition = Competition.find(params[:id])
-  end
-
   # Only allow a list of trusted parameters through.
   def competition_params
-    params.require(:competition).permit(:title, :date, :link)
+    params.require(:competition).permit(:title, :date, :link, :image, :status)
   end
 end

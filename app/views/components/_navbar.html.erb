@@ -1,238 +1,113 @@
-<div class="hidden lg:flex fixed h-screen w-56 flex-col pt-8 pb-6 px-3  shadow-sm z-10 bg-gradient-to-b from-blue-50 via-blue-100 to-gray-50" id="sidebar">
-    <!-- Logo - More Minimal -->
-    <div class="mb-8 pl-1">
-        <a class="md_dashboard_logo" href="/">
-            <%= image_tag('cfs-dark.png', class:'h-auto w-10 hover:opacity-80 transition-opacity') %>
-        </a>
-    </div>
-
-    <!-- Main Navigation - Slimmer Design -->
-    <nav class="flex-1 flex flex-col overflow-y-auto space-y-1">
-        <!-- Dashboard -->
-        <a href="/" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
+<aside id="sidebar"
+   aria-label="Main sidebar"
+   class="hidden lg:flex fixed left-0 top-0 h-screen w-56 flex-col pt-8 pb-6 px-3 shadow-sm z-10 overflow-y-auto"
+   >
+   <!-- Logo -->
+   <div class="mb-8 pl-1">
+      <a class="md_dashboard_logo" href="/">
+      <%= image_tag('cfs-dark.png', alt: "Logo", class: 'h-auto w-10 hover:opacity-80 transition-opacity') %>
+      </a>
+   </div>
+   <!-- Main navigation -->
+   <nav class="flex-1 flex flex-col space-y-1" role="navigation" aria-label="Primary">
+      <!-- Role-specific -->
+      <% nav_items_for_current_user.each do |item| %>
+      <div class="nav-group">
+         <div
+            class="flex items-center gap-2 py-2 px-2 rounded-md transition-colors nav_item
+            <%= 'bg-blue-200 font-semibold' if request.path == item[:path] %>">
+            <!-- Main Link -->
+            <%= link_to item[:path], class: "flex items-center gap-2 flex-1" do %>
             <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                dashboard
+            <%= render partial: "icons/#{item[:icon]}" %>
             </span>
-            <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Dashboard</span>
-        </a>
-
-        <!-- Role-Specific Sections -->
-        <% if current_user.role == 'admin' %>
-            <!-- Admin Mega Menu - More Compact -->
-            <div class="mb-2">
-                <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2">Administration</div>
-                
-                <!-- Accounts Section -->
-                <div class="space-y-0.5">
-                    <a href="/accounts/all_accounts?page=1" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <%= render partial:'icons/users' %>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Accounts</span>
-                    </a>
-                    
-                    <a href="/kpis" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <%= render partial:'icons/data' %>
-
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">KPI's</span>
-                    </a>
-                    <%= link_to coaches_assessments_path , class:"group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item" do %>
-                        <%= render partial:'icons/assessment' %>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Assessment</span>
-                    <% end%>
-                </div>
-                
-                <!-- Scheduling Section -->
-                <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2 mt-3">Scheduling</div>
-                
-                <div class="space-y-0.5">
-                    <a href="/attendance" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            fact_check
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Attendance</span>
-                    </a>
-                    <a href="/coach_calendar" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            calendar_month
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Calendars</span>
-                    </a>
-                    
-                    <a href="/time_slots" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            work_history
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Time Slots</span>
-                    </a>
-                </div>
-                
-                <!-- Content Section -->
-                <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2 mt-3">Content</div>
-                
-                <div class="space-y-0.5">
-                    <a href="/questionnaires/reports" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            description
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Reports</span>
-                    </a>
-                    
-                    <a href="/admin/content" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            folder
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Content</span>
-                    </a>
-                </div>
-                
-                <!-- Events Section -->
-                <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2 mt-3">CFS</div>
-                
-                <div class="space-y-0.5">
-                    <%= link_to admin_taster_booking_index_path(page: 1), class: "group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item" do %>
-                    <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                        sprint
-                    </span>
-                    <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Taster Sessions</span>
-                    <% end %>
-                                        
-                    <a href="/dcpa_events" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">event</span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Events</span>
-                    </a>
-                </div>
-            </div>
-
-        <% elsif current_user.role == 'coach' %>
-            <!-- Coach Mega Menu -->
-            <div class="mb-2">
-                <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2">Coach Tools</div>
-                
-                <div class="space-y-0.5">
-                    <a href="/accounts/all_accounts" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            manage_accounts
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Accounts</span>
-                    </a>
-                    
-                    <a href="/coach_calendar" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            calendar_month
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Calendar</span>
-                    </a>
-
-                     <a href="/attendance" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            fact_check
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Attendance</span>
-                    </a>
-
-                    <%= link_to coaches_assessments_path , class:"group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item" do %>
-                        <%= render partial:'icons/assessment' %>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Assessment</span>
-                    <% end%>
-                </div>
-            </div>
-            
-
-        <% elsif current_user.role == 'parent_user' %>
-            <!-- Parent User Menu -->
-            <div class="mb-2">
-                <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2">Parent Tools</div>
-                <!-- Add parent-specific items here -->
-            </div>
-
-        <% elsif current_user.role == 'child_user' %>
-            <!-- Child User Menu -->
-            <div class="mb-2">
-                <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2">My Profile</div>
-                
-                <div class="space-y-0.5">
-                    <% if !current_user.athlete_profile.nil? %>
-                    <a href="/athlete_profiles/<%=current_user.athlete_profile&.id%>" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            bar_chart
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Progress</span>
-                    </a>
-                    <% end %>
-                    
-                    <a href="/users/<%=current_user.id%>" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            face
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Profile</span>
-                    </a>
-                </div>
-            </div>
-
-        <% elsif current_user.role == 'athlete' %>
-            <!-- Athlete Menu -->
-            <div class="mb-2">
-                <div class="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 py-2">Athlete Tools</div>
-                
-                <div class="space-y-0.5">
-                    <a href="/athlete_profiles/<%=current_user.athlete_profile&.id%>" class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors nav_item">
-                        <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                            account_circle
-                        </span>
-                        <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900">Profile</span>
-                    </a>
-                </div>
-            </div>
-        <% end %>
-    </nav>
-
-    <!-- Footer - More Compact -->
-    <div class="sidebar-footer pt-4 border-t border-gray-100 mt-auto">
-        <a href="/users/<%= current_user.id%>" class="flex items-center gap-2 mb-3 p-1 rounded-md hover:bg-gray-50 transition-colors">
-            <%= image_tag(current_user.avatar_thumbnail, class:"w-7 h-7 rounded-full shadow-sm object-cover border border-gray-200") if current_user.avatar_thumbnail.present? %>
-            <div class="user-info">
-                <div class="user-name text-xs font-medium text-gray-700"><%= current_user.full_name %></div>
-                <div class="user-role text-[11px] text-gray-400 capitalize"><%= current_user.role %></div>
-            </div>
-        </a>
-        
-        <div class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors cursor-pointer">
-            <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-red-500">
-                logout
+            <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900"><%= item[:name] %></span>
+            <% if item[:tag] %>
+            <span class="inline-flex items-center rounded-md bg-green-500/10 px-2 py-1 text-xs font-medium bg-green-600 text-white animate-pulse ring-1 ring-inset ring-green-500/20">
+               <%=item[:tag]%>
+             </span>
+            <%end%>
+            <% end %>
+            <!-- Arrow Toggle -->
+            <% if item[:children] %>
+            <span class="ml-auto material-symbols-outlined arrow transition-transform duration-200 cursor-pointer"
+               onclick="this.closest('.nav-group').querySelector('.children').classList.toggle('hidden'); this.classList.toggle('rotate-90')">
+            keyboard_arrow_right
             </span>
-            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "text-sm font-normal text-gray-600 group-hover:text-red-500 bg-transparent border-none cursor-pointer" %>
-        </div>
-    </div>
-</div>
-
+            <% end %>
+         </div>
+         <% if item[:children] %>
+         <div class="children ml-6 flex-col space-y-1 mt-1 hidden">
+            <% item[:children].each do |child| %>
+            <%= link_to child[:path],
+               class: "group flex items-center gap-2 py-1 px-2 rounded-md transition-colors nav_item #{'bg-blue-100 font-semibold' if request.path == child[:path]} hover:bg-gray-50" do %>
+            <span class="material-symbols-outlined text-gray-400 text-[18px] group-hover:text-gray-600">
+            <%= render partial: "icons/#{child[:icon]}" %>
+            </span>
+            <span class="text-sm font-normal text-gray-500 group-hover:text-gray-700"><%= child[:name] %></span>
+            <% end %>
+            <% end %>
+         </div>
+         <% end %>
+      </div>
+      <%end%>
+   </nav>
+   <!-- Footer -->
+   <div class="sidebar-footer pt-4 border-t border-gray-100 mt-auto px-1">
+      <a href="/users/<%= current_user.id %>" class="flex items-center gap-2 mb-3 p-1 rounded-md hover:bg-gray-50 transition-colors">
+         <% if current_user.avatar_thumbnail.present? %>
+         <%= image_tag(current_user.avatar_thumbnail, alt: "#{current_user.full_name} avatar", class: "w-7 h-7 rounded-full shadow-sm object-cover border border-gray-200") %>
+         <% end %>
+         <div class="user-info">
+            <div class="user-name text-xs font-medium text-gray-700"><%= current_user.full_name %></div>
+            <div class="user-role text-[11px] text-gray-400 capitalize"><%= current_user.role %></div>
+         </div>
+      </a>
+      <div class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors">
+         <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-red-500">logout</span>
+         <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "text-sm font-normal text-gray-600 group-hover:text-red-500 bg-transparent border-none cursor-pointer p-0" %>
+      </div>
+   </div>
+</aside>
 <style>
-    #sidebar {
-        scrollbar-width: thin;
-        scrollbar-color: #e5e7eb transparent;
-    }
-    
-    #sidebar::-webkit-scrollbar {
-        width: 4px;
-        height: 4px;
-    }
-    
-    #sidebar::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    
-    #sidebar::-webkit-scrollbar-thumb {
-        background-color: #e5e7eb;
-        border-radius: 4px;
-    }
-    
-    .nav_item {
-        transition: all 0.15s ease;
-    }
-    
-    .nav_item:hover {
-        transform: translateX(1px);
-    }
-    
-    .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
-    }
+   :root {
+   /* brand color — change this value to switch the sidebar accent / gradient */
+   --brand-rgb: 77, 168, 218; /* rgb(77,168,218) */
+   }
+   /* gradient background for the sidebar using the brand variable */
+   #sidebar {
+   background: linear-gradient(to bottom,
+   rgba(var(--brand-rgb), 0.06) 0%,
+   rgba(var(--brand-rgb), 0.12) 40%,
+   rgba(239, 246, 255, 1) 100%);
+   }
+   /* Thinner custom scroller */
+   #sidebar {
+   scrollbar-width: thin;
+   scrollbar-color: #e5e7eb transparent;
+   }
+   #sidebar::-webkit-scrollbar {
+   width: 6px;
+   height: 6px;
+   }
+   #sidebar::-webkit-scrollbar-track {
+   background: transparent;
+   }
+   #sidebar::-webkit-scrollbar-thumb {
+   background-color: #e5e7eb;
+   border-radius: 999px;
+   }
+   /* nav item micro-interaction */
+   .nav_item {
+   transition: transform 0.12s ease, background-color 0.12s ease;
+   }
+   .nav_item:hover { transform: translateX(2px); }
+   /* keyboard focus style (keeps accessibility) */
+   .nav_item:focus { outline: none; box-shadow: 0 0 0 3px rgba(77,168,218,0.12); }
+   /* material symbols weight (keeps visual parity) */
+   .material-symbols-outlined {
+   font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+   }
+   /* make sure the footer sticks at bottom */
+   .sidebar-footer { box-sizing: border-box; }
 </style>

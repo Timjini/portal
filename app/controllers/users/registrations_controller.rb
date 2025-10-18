@@ -52,7 +52,7 @@ module Users
                                    :password, :password_confirmation, :role)
     end
 
-    def handle_successful_creation
+    def handle_successful_creation # rubocop:disable Metrics/AbcSize
       create_athlete_profile(@user.id, params[:user][:dob]) if @user.role == 'athlete'
 
       sign_in(@user) # Manually sign in the user

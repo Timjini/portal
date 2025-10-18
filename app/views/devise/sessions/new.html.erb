@@ -6,7 +6,7 @@
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow rounded-lg sm:px-10">
         <div class="space-y-6">
           <div>
             <%= f.label :email, "Email address", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
@@ -45,7 +45,7 @@
           </div>
 
           <div>
-            <%= f.submit "Sign in", class: "flex w-full btn" %>
+            <%= f.submit "Sign in", class: "flex w-full btn" , data: { turbo_submits_with: "Loading..." }  %>
           </div>
         </div>
 

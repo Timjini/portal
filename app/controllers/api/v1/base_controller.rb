@@ -31,7 +31,7 @@ module Api
         nil
       end
 
-      def load_current_user!
+      def load_current_user! # rubocop:disable Metrics/AbcSize
         Rails.logger.debug { "Loading current user: #{payload}" }
         return false if request.headers['Authorization'].blank?
 

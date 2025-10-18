@@ -28,7 +28,7 @@ class DashboardMetricsService
     when '7d' then @end_date - 7.days
     when '30d' then @end_date - 30.days
     when 'quarter' then @end_date - 3.months
-    else @end_date - 7.days
+    else @end_date - 7.days # rubocop:disable Lint/DuplicateBranch
     end
   end
 
@@ -68,7 +68,7 @@ class DashboardMetricsService
     nil
   end
 
-  def activity_data
+  def activity_data # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength
     {
       logins: UserLogin.where(created_at: @start_date..@end_date)
                        .group_by { |u| u.created_at.to_date }

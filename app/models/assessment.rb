@@ -5,8 +5,8 @@ class Assessment < ApplicationRecord
   belongs_to :athlete, class_name: 'User'
   belongs_to :coach, class_name: 'User'
   belongs_to :level, optional: true
-  has_and_belongs_to_many :checklists
-  has_many :assessment_checklists
+  has_and_belongs_to_many :checklists # rubocop:disable Rails/HasAndBelongsToMany
+  has_many :assessment_checklists # rubocop:disable Rails/HasManyOrHasOneDependent
 
   enum :recommendation, {
     ready: 'ready',

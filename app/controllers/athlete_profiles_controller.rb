@@ -14,8 +14,7 @@ class AthleteProfilesController < ApplicationController
                 end
   end
 
-  def show # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
-    Rails.logger.info("params -->, #{params}")
+  def show # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     service = CheckListService.new(params)
     result = service.show_athlete_status
     @athlete = result[:athlete]

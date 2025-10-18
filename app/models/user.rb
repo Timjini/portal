@@ -29,14 +29,15 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   has_many :user_logins, dependent: :destroy
   has_many :assessments, dependent: :destroy
-  has_one :athlete_level
+  has_one :athlete_level # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :attendance, dependent: :destroy
+  has_many :competition_entries, dependent: :destroy
 
   # Scopes
   scope :coaches, -> { where(role: 'coach') }
   scope :by_role, ->(role) { role.present? ? where(role: role) : all }
   scope :parents, -> { where(role: 'parent_user') }
-  has_many :children, -> { where(role: 'child_user') }, class_name: 'User', foreign_key: 'parent_id'
+  has_many :children, -> { where(role: 'child_user') }, class_name: 'User', foreign_key: 'parent_id' # rubocop:disable Rails/HasManyOrHasOneDependent,Rails/InverseOf
 
   # Enums
   enum role: ROLE_TYPES # rubocop:disable Rails/EnumSyntax

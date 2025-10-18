@@ -77,19 +77,18 @@ group :development, :test do
   gem 'bullet'
   gem 'bundler-audit', require: false
   gem 'byebug'
+  gem 'capybara'
   gem 'debug', platforms: %i[mri windows]
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rack-mini-profiler'
   gem 'rspec-rails'
+  gem 'ruby-lsp', '~> 0.26.1', require: false
+  gem 'ruby-lsp-rails', require: false
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development do
   gem 'web-console'
-end
-
-group :test do
-  gem 'capybara'
-  gem 'selenium-webdriver'
 end

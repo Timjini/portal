@@ -7,7 +7,7 @@ class AthleteChecklistStatusService
     @user = @athlete.user
   end
 
-  def call
+  def call # rubocop:disable Metrics/MethodLength
     levels = fetch_levels
     levels_count = count_completed_levels
     percentage = calculate_percentage(levels_count)
@@ -46,7 +46,7 @@ class AthleteChecklistStatusService
     (levels_count / total) * 100
   end
 
-  def determine_level_status(levels)
+  def determine_level_status(levels) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     # Preload all completed athlete levels in one query
     completed_level_ids = @athlete.athlete_levels
                                   .where(status: 'completed')

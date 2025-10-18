@@ -28,6 +28,9 @@ application.register("checklist", ChecklistController)
 import ColorPickerController from "./color_picker_controller"
 application.register("color-picker", ColorPickerController)
 
+import ConfirmController from "./confirm_controller"
+application.register("confirm", ConfirmController)
+
 import CreateChildController from "./create_child_controller"
 application.register("create-child", CreateChildController)
 
