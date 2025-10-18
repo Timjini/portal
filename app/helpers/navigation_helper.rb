@@ -63,7 +63,8 @@ module NavigationHelper
       {
         name: 'Competitions',
         path: admin_competitions_path,
-        icon: 'ticket'
+        icon: 'ticket',
+        tag: 'new'
       }
     ]
   end

@@ -22,6 +22,11 @@
             <%= render partial: "icons/#{item[:icon]}" %>
             </span>
             <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900"><%= item[:name] %></span>
+            <% if item[:tag] %>
+            <span class="inline-flex items-center rounded-md bg-green-500/10 px-2 py-1 text-xs font-medium bg-green-600 text-white animate-pulse ring-1 ring-inset ring-green-500/20">
+               <%=item[:tag]%>
+             </span>
+            <%end%>
             <% end %>
             <!-- Arrow Toggle -->
             <% if item[:children] %>
