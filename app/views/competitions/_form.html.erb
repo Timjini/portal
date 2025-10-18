@@ -17,23 +17,6 @@
         </div>
       <% end %>
 
-      <!-- Cover Image Upload -->
-      <div class="text-center space-y-4">
-        <div class="relative w-full h-48 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shadow-inner">
-          <%= image_tag(
-                competition.image.attached? ? url_for(competition.image) : "https://pub-bc4cae30cb704275a2d82ae56b32c9b6.r2.dev/cfs/dcpa1.webp",
-                class: "w-full h-full object-cover rounded-lg",
-                alt: "Competition Cover Preview"
-              ) %>
-
-          <label for="competition_image_input" class="absolute bottom-2 right-2 flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm cursor-pointer hover:bg-gray-50">
-            <%= render "icons/camera" %>
-            Change Cover
-          </label>
-
-          <%= form.file_field :image, id: "competition_image_input", class: "hidden", accept: "image/*" %>
-        </div>
-      </div>
 
       <!-- Text Inputs -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
