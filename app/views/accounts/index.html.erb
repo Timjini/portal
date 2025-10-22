@@ -1,233 +1,307 @@
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+  <!-- Header -->
+  <header class="mb-8">
+    <h1 class="text-2xl font-bold text-gray-800">Daily Attendance</h1>
+    <p class="text-gray-600">Track your athletes' attendance</p>
+  </header>
 
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <!-- Header -->
-        <header class="mb-8">
-            <h1 class="text-2xl font-bold text-gray-800">Daily Attendance</h1>
-            <p class="text-gray-600">Track your athletes' attendance</p>
-        </header>
+  <!-- Step 1: Date and Session Selector -->
+  <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <div
+      class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+    >
+      <div class="w-full md:w-auto">
+        <label for="date" class="block text-sm font-medium text-gray-700 mb-1"
+          >Date</label
+        >
+        <input
+          type="date"
+          id="date"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
 
-        <!-- Step 1: Date and Session Selector -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div class="w-full md:w-auto">
-                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                    <input type="date" id="date" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                
-                <div class="w-full md:w-auto">
-                    <label for="session" class="block text-sm font-medium text-gray-700 mb-1">Session</label>
-                    <select id="session" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                        <option value="morning">Morning</option>
-                        <option value="afternoon">Afternoon</option>
-                        <option value="evening">Evening</option>
-                        <option value="custom">Custom Time</option>
-                    </select>
-                </div>
-                
-                <div class="w-full md:w-auto hidden" id="custom-time-container">
-                    <label for="custom-time" class="block text-sm font-medium text-gray-700 mb-1">Custom Time</label>
-                    <input type="time" id="custom-time" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                </div>
+      <div class="w-full md:w-auto">
+        <label
+          for="session"
+          class="block text-sm font-medium text-gray-700 mb-1"
+          >Session</label
+        >
+        <select
+          id="session"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+        >
+          <option value="morning">Morning</option>
+          <option value="afternoon">Afternoon</option>
+          <option value="evening">Evening</option>
+          <option value="custom">Custom Time</option>
+        </select>
+      </div>
+
+      <div class="w-full md:w-auto hidden" id="custom-time-container">
+        <label
+          for="custom-time"
+          class="block text-sm font-medium text-gray-700 mb-1"
+          >Custom Time</label
+        >
+        <input
+          type="time"
+          id="custom-time"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Athlete List -->
+  <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
+    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+      <h2 class="font-medium text-gray-800">Athletes</h2>
+      <button
+        id="mark-all"
+        class="text-sm text-blue-600 hover:text-blue-800 font-medium"
+      >
+        Mark All Present
+      </button>
+    </div>
+
+    <div class="divide-y divide-gray-200">
+      <!-- Athlete 1 -->
+      <div class="p-4 hover:bg-gray-50 athlete-row">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <div
+              class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-800 font-medium"
+            >
+              JD
             </div>
-        </div>
-
-        <!-- Step 2: Athlete List -->
-        <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
-            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-                <h2 class="font-medium text-gray-800">Athletes</h2>
-                <button id="mark-all" class="text-sm text-blue-600 hover:text-blue-800 font-medium">Mark All Present</button>
+            <div>
+              <h3 class="text-sm font-medium text-gray-900">John Doe</h3>
+              <p class="text-sm text-gray-500">Sprint Team</p>
             </div>
-            
-            <div class="divide-y divide-gray-200">
-                <!-- Athlete 1 -->
-                <div class="p-4 hover:bg-gray-50 athlete-row">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-800 font-medium">
-                                JD
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-medium text-gray-900">John Doe</h3>
-                                <p class="text-sm text-gray-500">Sprint Team</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-4">
-                            <input type="checkbox" id="attendance-1" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500 attendance-checkbox">
-                            <input type="time" id="time-1" class="hidden time-input px-2 py-1 border border-gray-300 rounded-md text-sm">
-                            <button class="notes-btn text-gray-400 hover:text-gray-600">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="notes-container hidden mt-3">
-                        <textarea placeholder="Add notes (injury, late, etc.)" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"></textarea>
-                    </div>
-                </div>
-                
-                <!-- Athlete 2 -->
-                <div class="p-4 hover:bg-gray-50 athlete-row">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-800 font-medium">
-                                AS
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-medium text-gray-900">Alice Smith</h3>
-                                <p class="text-sm text-gray-500">Jump Team</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-4">
-                            <input type="checkbox" id="attendance-2" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500 attendance-checkbox">
-                            <input type="time" id="time-2" class="hidden time-input px-2 py-1 border border-gray-300 rounded-md text-sm">
-                            <button class="notes-btn text-gray-400 hover:text-gray-600">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="notes-container hidden mt-3">
-                        <textarea placeholder="Add notes (injury, late, etc.)" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"></textarea>
-                    </div>
-                </div>
-                
-                <!-- Athlete 3 -->
-                <div class="p-4 hover:bg-gray-50 athlete-row">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-800 font-medium">
-                                RJ
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-medium text-gray-900">Robert Johnson</h3>
-                                <p class="text-sm text-gray-500">Distance Team</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-4">
-                            <input type="checkbox" id="attendance-3" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500 attendance-checkbox">
-                            <input type="time" id="time-3" class="hidden time-input px-2 py-1 border border-gray-300 rounded-md text-sm">
-                            <button class="notes-btn text-gray-400 hover:text-gray-600">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="notes-container hidden mt-3">
-                        <textarea placeholder="Add notes (injury, late, etc.)" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
+          </div>
 
-        <!-- Step 3: Save Button -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <button id="save-btn" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150 ease-in-out">
-                Save Attendance
+          <div class="flex items-center space-x-4">
+            <input
+              type="checkbox"
+              id="attendance-1"
+              class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500 attendance-checkbox"
+            />
+            <input
+              type="time"
+              id="time-1"
+              class="hidden time-input px-2 py-1 border border-gray-300 rounded-md text-sm"
+            />
+            <button class="notes-btn text-gray-400 hover:text-gray-600">
+              <i class="fas fa-edit"></i>
             </button>
+          </div>
         </div>
-    </div>
-
-    <!-- Toast Notification (hidden by default) -->
-    <div id="toast" class="fixed bottom-4 right-4 hidden">
-        <div class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2">
-            <i class="fas fa-check-circle"></i>
-            <span>Attendance saved successfully!</span>
+        <div class="notes-container hidden mt-3">
+          <textarea
+            placeholder="Add notes (injury, late, etc.)"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+          ></textarea>
         </div>
-    </div>
+      </div>
 
-    <!-- Auto-save Timer -->
-    <div id="timer" class="fixed bottom-4 left-4 hidden">
-        <div class="bg-yellow-500 text-white px-4 py-2 rounded-full text-sm shadow">
-            Auto-saving in <span id="countdown">30</span>s
+      <!-- Athlete 2 -->
+      <div class="p-4 hover:bg-gray-50 athlete-row">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <div
+              class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-800 font-medium"
+            >
+              AS
+            </div>
+            <div>
+              <h3 class="text-sm font-medium text-gray-900">Alice Smith</h3>
+              <p class="text-sm text-gray-500">Jump Team</p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <input
+              type="checkbox"
+              id="attendance-2"
+              class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500 attendance-checkbox"
+            />
+            <input
+              type="time"
+              id="time-2"
+              class="hidden time-input px-2 py-1 border border-gray-300 rounded-md text-sm"
+            />
+            <button class="notes-btn text-gray-400 hover:text-gray-600">
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
         </div>
-    </div>
+        <div class="notes-container hidden mt-3">
+          <textarea
+            placeholder="Add notes (injury, late, etc.)"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+          ></textarea>
+        </div>
+      </div>
 
-    <script>
-        // Set today's date as default
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('date').value = today;
-            
-            // Show/hide custom time based on session selection
-            document.getElementById('session').addEventListener('change', function() {
-                const customTimeContainer = document.getElementById('custom-time-container');
-                customTimeContainer.classList.toggle('hidden', this.value !== 'custom');
-            });
-            
-            // Mark all present button
-            document.getElementById('mark-all').addEventListener('click', function() {
-                document.querySelectorAll('.attendance-checkbox').forEach(checkbox => {
-                    checkbox.checked = true;
-                    checkbox.dispatchEvent(new Event('change'));
-                });
-            });
-            
-            // Toggle time input when checkbox is checked
-            document.querySelectorAll('.attendance-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const row = this.closest('.athlete-row');
-                    const timeInput = row.querySelector('.time-input');
-                    
-                    if (this.checked) {
-                        timeInput.classList.remove('hidden');
-                        row.classList.add('bg-green-50');
-                        
-                        // Set current time
-                        const now = new Date();
-                        const hours = now.getHours().toString().padStart(2, '0');
-                        const minutes = now.getMinutes().toString().padStart(2, '0');
-                        timeInput.value = `${hours}:${minutes}`;
-                    } else {
-                        timeInput.classList.add('hidden');
-                        row.classList.remove('bg-green-50');
-                    }
-                });
-            });
-            
-            // Toggle notes
-            document.querySelectorAll('.notes-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const container = this.closest('.athlete-row').querySelector('.notes-container');
-                    container.classList.toggle('hidden');
-                });
-            });
-            
-            // Save button
-            document.getElementById('save-btn').addEventListener('click', function() {
-                // Show toast
-                const toast = document.getElementById('toast');
-                toast.classList.remove('hidden');
-                
-                // Hide after 3 seconds
-                setTimeout(() => {
-                    toast.classList.add('hidden');
-                }, 3000);
-                
-                // Start auto-save timer (demo)
-                startAutoSaveTimer();
-            });
-            
-            // Auto-save timer
-            function startAutoSaveTimer() {
-                const timer = document.getElementById('timer');
-                timer.classList.remove('hidden');
-                
-                let seconds = 30;
-                const countdown = document.getElementById('countdown');
-                countdown.textContent = seconds;
-                
-                const interval = setInterval(() => {
-                    seconds--;
-                    countdown.textContent = seconds;
-                    
-                    if (seconds <= 0) {
-                        clearInterval(interval);
-                        timer.classList.add('hidden');
-                        
-                        // In a real app, this would trigger an auto-save
-                        console.log('Auto-saving...');
-                    }
-                }, 1000);
-            }
-        });
-    </script>
+      <!-- Athlete 3 -->
+      <div class="p-4 hover:bg-gray-50 athlete-row">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <div
+              class="flex-shrink-0 h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-800 font-medium"
+            >
+              RJ
+            </div>
+            <div>
+              <h3 class="text-sm font-medium text-gray-900">Robert Johnson</h3>
+              <p class="text-sm text-gray-500">Distance Team</p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <input
+              type="checkbox"
+              id="attendance-3"
+              class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500 attendance-checkbox"
+            />
+            <input
+              type="time"
+              id="time-3"
+              class="hidden time-input px-2 py-1 border border-gray-300 rounded-md text-sm"
+            />
+            <button class="notes-btn text-gray-400 hover:text-gray-600">
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+        </div>
+        <div class="notes-container hidden mt-3">
+          <textarea
+            placeholder="Add notes (injury, late, etc.)"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Save Button -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <button
+      id="save-btn"
+      class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150 ease-in-out"
+    >
+      Save Attendance
+    </button>
+  </div>
+</div>
+
+<!-- Toast Notification (hidden by default) -->
+<div id="toast" class="fixed bottom-4 right-4 hidden">
+  <div
+    class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2"
+  >
+    <i class="fas fa-check-circle"></i>
+    <span>Attendance saved successfully!</span>
+  </div>
+</div>
+
+<!-- Auto-save Timer -->
+<div id="timer" class="fixed bottom-4 left-4 hidden">
+  <div class="bg-yellow-500 text-white px-4 py-2 rounded-full text-sm shadow">
+    Auto-saving in <span id="countdown">30</span>s
+  </div>
+</div>
+
+<script>
+  // Set today's date as default
+  document.addEventListener('DOMContentLoaded', function () {
+    const today = new Date().toISOString().split('T')[0]
+    document.getElementById('date').value = today
+
+    // Show/hide custom time based on session selection
+    document.getElementById('session').addEventListener('change', function () {
+      const customTimeContainer = document.getElementById(
+        'custom-time-container'
+      )
+      customTimeContainer.classList.toggle('hidden', this.value !== 'custom')
+    })
+
+    // Mark all present button
+    document.getElementById('mark-all').addEventListener('click', function () {
+      document.querySelectorAll('.attendance-checkbox').forEach((checkbox) => {
+        checkbox.checked = true
+        checkbox.dispatchEvent(new Event('change'))
+      })
+    })
+
+    // Toggle time input when checkbox is checked
+    document.querySelectorAll('.attendance-checkbox').forEach((checkbox) => {
+      checkbox.addEventListener('change', function () {
+        const row = this.closest('.athlete-row')
+        const timeInput = row.querySelector('.time-input')
+
+        if (this.checked) {
+          timeInput.classList.remove('hidden')
+          row.classList.add('bg-green-50')
+
+          // Set current time
+          const now = new Date()
+          const hours = now.getHours().toString().padStart(2, '0')
+          const minutes = now.getMinutes().toString().padStart(2, '0')
+          timeInput.value = `${hours}:${minutes}`
+        } else {
+          timeInput.classList.add('hidden')
+          row.classList.remove('bg-green-50')
+        }
+      })
+    })
+
+    // Toggle notes
+    document.querySelectorAll('.notes-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const container =
+          this.closest('.athlete-row').querySelector('.notes-container')
+        container.classList.toggle('hidden')
+      })
+    })
+
+    // Save button
+    document.getElementById('save-btn').addEventListener('click', function () {
+      // Show toast
+      const toast = document.getElementById('toast')
+      toast.classList.remove('hidden')
+
+      // Hide after 3 seconds
+      setTimeout(() => {
+        toast.classList.add('hidden')
+      }, 3000)
+
+      // Start auto-save timer (demo)
+      startAutoSaveTimer()
+    })
+
+    // Auto-save timer
+    function startAutoSaveTimer() {
+      const timer = document.getElementById('timer')
+      timer.classList.remove('hidden')
+
+      let seconds = 30
+      const countdown = document.getElementById('countdown')
+      countdown.textContent = seconds
+
+      const interval = setInterval(() => {
+        seconds--
+        countdown.textContent = seconds
+
+        if (seconds <= 0) {
+          clearInterval(interval)
+          timer.classList.add('hidden')
+
+          // In a real app, this would trigger an auto-save
+          console.log('Auto-saving...')
+        }
+      }, 1000)
+    }
+  })
+</script>
