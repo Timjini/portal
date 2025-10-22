@@ -10,4 +10,8 @@ class CompetitionEntry < ApplicationRecord
     subscribed: 'subscribed',
     cancelled: 'cancelled'
   }, prefix: true
+
+  def participants
+    user_id
+  end
 end

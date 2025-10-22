@@ -7,9 +7,14 @@ class CompetitionsController < ApplicationController
 
   # GET /competitions or /competitions.json
   def index
-    @competitions = Competition.where('date > ?',
-                                      Time.zone.today).where(status: 'active').includes(%i[competition_entries
-                                                                                           image_attachment])
+    @competitions = Competition.where('date > ?', Time.zone.today)
+                               .where(status: 'active')
+                               .includes(:image_attachment)
+                               .includes(:competition_entries)
+                               .left_joins(:competition_entries)
+                               .select('competitions.*, COUNT(competition_entries.id) as entries_count')
+                               .group('competitions.id')
+                               .order('competitions.date ASC')
   end
 
   # GET /competitions/1 or /competitions/1.json
