@@ -118,7 +118,9 @@
                                 "field-name": "password",
                                 "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
                             } %>
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" data-action="click->signup-validation#togglePasswordVisibility">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" 
+                             data-action="click->signup-validation#togglePasswordVisibility"
+                             data-field-type="password">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-signup-validation-target="passwordIcon">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -129,8 +131,9 @@
                 </div>
 
                 <!-- Password Confirmation Field -->
-                <div>
-                    <%= form.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+              <div>
+                <%= form.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+                <div class="relative">
                     <%= form.password_field :password_confirmation, 
                         class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
                         placeholder: "••••••••",
@@ -139,7 +142,16 @@
                             "field-name": "passwordConfirmation",
                             "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
                         } %>
-                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="passwordConfirmationError"></p>
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" 
+                        data-action="click->signup-validation#togglePasswordVisibility"
+                        data-field-type="passwordConfirmation">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </div>
+                </div>
+                <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="passwordConfirmationError"></p>
                 </div>
             </div>
 
