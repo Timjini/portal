@@ -87,7 +87,13 @@ module NavigationHelper
   def child_nav_items
     [
       { name: 'Dashboard', path: juniors_dashboard_index_path, icon: 'dashboard' },
-      { name: 'Profile', path: athlete_profile_path(current_user.athlete_profile), icon: 'user' }
+      { name: 'Profile', path: athlete_profile_path(current_user.athlete_profile), icon: 'user' },
+      {
+        name: 'Competitions',
+        path: competitions_path,
+        icon: 'ticket',
+        tag: 'new'
+      }
     ]
   end
 end
