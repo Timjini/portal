@@ -28,7 +28,14 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :coach_calendars, dependent: :destroy
 
   has_many :user_logins, dependent: :destroy
-  has_many :assessments, dependent: :destroy
+  has_many :assessments_as_athlete, # rubocop:disable Rails/InverseOf
+           class_name: 'Assessment',
+           foreign_key: :athlete_id,
+           dependent: :destroy
+  has_many :assessments_as_coach, # rubocop:disable Rails/InverseOf
+           class_name: 'Assessment',
+           foreign_key: :coach_id,
+           dependent: :destroy
   has_one :athlete_level # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :attendance, dependent: :destroy
   has_many :competition_entries, dependent: :destroy

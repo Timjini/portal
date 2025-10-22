@@ -9,7 +9,8 @@ AllCops:
     - 'bin/*'
     - 'node_modules/**/*'
     - 'vendor/**/*'
-
+# remove this to see useful gems
+  SuggestExtensions: false
 Rails:
   Enabled: true
 
