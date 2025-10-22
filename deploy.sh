@@ -14,4 +14,7 @@ sudo docker-compose down
 echo "Building and restarting containers..."
 sudo docker-compose up --build -d
 
+echo "Connection nginx to docker..."
+sudo docker network connect nginx-server_default portal-production-app
+
 echo "Deployment completed!"
