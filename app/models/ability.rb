@@ -17,7 +17,7 @@ class Ability
       can %i[read update edit update_user], User # Coaches can edit user profiles
 
     elsif user.parent_user?
-      can :manage, User
+      can :manage, User, id: [user.id] + user.children.pluck(:id)
       can :read, Competition
 
     else
