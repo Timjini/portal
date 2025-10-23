@@ -13,19 +13,25 @@ class Ability
       can :manage, Exercise
       can :manage, Assessment
       can :manage, Competition
+      can :manage, AthleteProfile
       can :read, CoachCalendar
       can %i[read update edit update_user], User # Coaches can edit user profiles
+      can :manage, UserChecklist
+      can :manage, Review
 
     elsif user.parent_user?
       can :manage, User, id: [user.id] + user.children.pluck(:id)
-      can :read, Competition
+      can :index, Competition
+      can %i[read update edit update_user], AthleteProfile, user_id: user.children.pluck(:id)
 
     else
       # Default for athlete, child_user
-      can :read, Competition
+      can :index, Competition
       # Users can manage their own profile
       can %i[read update edit update_user], User, id: user.id
       can %i[read update edit update_user], AthleteProfile, user_id: user.id
+      can :read, UserChecklist, user_id: user.id
+      can :read, Review, user_id: user.id
 
     end
   end

@@ -7,7 +7,7 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   def index
     @kpi_categories = KpiCategory.order(:id)
     @structured_data = ExerciseStructureQuery.new.call
-    @user = User.all
+    @users = User.all
   end
 
   def show
@@ -49,50 +49,44 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   end
 
   def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    Rails.logger.level = Logger::DEBUG
-    Rails.logger.debug 'DEBUG LOG: creating assessment...'
-    Rails.logger.info "INFO LOG: assessment params: #{params.inspect}"
-    Rails.logger.error 'ERROR LOG: something went wrong...'
-    begin
-      level_data = JSON.parse(params['assessment']['kpi_data'])
-      check_lists = CheckList.where(level_id: level_data['id'])
-      user_ids = params['user_ids'].split(',')
+    level_data = JSON.parse(params['assessment']['kpi_data'])
+    check_lists = CheckList.where(level_id: level_data['id'])
+    user_ids = params['user_ids'].split(',')
 
-      user_ids.each do |u_id|
-        @assessment = Assessment.find_or_initialize_by(
-          athlete_id: u_id,
-          coach_id: current_user.id,
-          level_id: level_data['id']
+    user_ids.each do |u_id|
+      @assessment = Assessment.find_or_initialize_by(
+        athlete_id: u_id,
+        coach_id: current_user.id,
+        level_id: level_data['id']
+      )
+
+      @assessment.assign_attributes(
+        notes: 'Coach assessment',
+        kpi_data: level_data,
+        completed: true,
+        completed_at: Time.current
+      )
+      @assessment.save!
+
+      check_lists.each do |l|
+        AssessmentChecklist.find_or_create_by!(
+          assessment_id: @assessment.id,
+          check_list_id: l.id
         )
-
-        @assessment.assign_attributes(
-          notes: 'Coach assessment',
-          kpi_data: level_data,
-          completed: true,
-          completed_at: Time.current
-        )
-        @assessment.save!
-
-        check_lists.each do |l|
-          AssessmentChecklist.find_or_create_by!(
-            assessment_id: @assessment.id,
-            check_list_id: l.id
-          )
-        end
       end
-
-      redirect_to coaches_assessments_path, notice: 'Assessment saved successfully' # rubocop:disable Rails/I18nLocaleTexts
-    rescue JSON::ParserError => e
-      Rails.logger.error "Invalid JSON for level data: #{e.message}"
-      redirect_to coaches_assessments_path, alert: 'Invalid level data provided.' # rubocop:disable Rails/I18nLocaleTexts
-    rescue ActiveRecord::RecordInvalid => e
-      Rails.logger.error "Validation failed: #{e.message}"
-      redirect_to coaches_assessments_path,
-                  alert: "Assessment could not be saved: #{e.record.errors.full_messages.to_sentence}"
-    rescue StandardError => e
-      Rails.logger.error "Unexpected error creating assessment: #{e.message}"
-      redirect_to coaches_assessments_path, alert: 'An unexpected error occurred. Please try again.' # rubocop:disable Rails/I18nLocaleTexts
     end
+
+    redirect_to coaches_assessments_path, notice: 'Assessment saved successfully' # rubocop:disable Rails/I18nLocaleTexts
+  rescue JSON::ParserError => e
+    Rails.logger.error "Invalid JSON for level data: #{e.message}"
+    redirect_to coaches_assessments_path, alert: 'Invalid level data provided.' # rubocop:disable Rails/I18nLocaleTexts
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error "Validation failed: #{e.message}"
+    redirect_to coaches_assessments_path,
+                alert: "Assessment could not be saved: #{e.record.errors.full_messages.to_sentence}"
+  rescue StandardError => e
+    Rails.logger.error "Unexpected error creating assessment: #{e.message}"
+    redirect_to coaches_assessments_path, alert: 'An unexpected error occurred. Please try again.' # rubocop:disable Rails/I18nLocaleTexts
   end
 
   # def create

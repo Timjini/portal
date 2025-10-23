@@ -1,21 +1,23 @@
 <div data-controller="multi-select"
      data-multi-select-placeholder-value="Search for the good stuff!"
      data-multi-select-no-results-text-value="No Athletes Available"
-     class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-     >
+     class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
   
   <select id="coach-select" 
           data-multi-select-target="select" 
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" 
           multiple>
-    <% @users.each do |u| %>
-      <option value="<%= u.id %>"><%= u.full_name %></option>
+    <% if @users.present? %>
+      <% @users.each do |u| %>
+        <option value="<%= u.id %>"><%= u.email %></option>
+      <% end %>
+    <% else %>
+      <option disabled>No users available</option>
     <% end %>
   </select>
   
   <input type="hidden" 
          name="user_ids" 
          data-multi-select-target="hidden"
-         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-         >
+         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
 </div>

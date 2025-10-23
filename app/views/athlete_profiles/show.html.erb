@@ -19,5 +19,7 @@
       </span>
     </div>
   </div>
-  <%= render 'athlete_profiles/athlete_data'%> 
+
+  <%= @athlete.user.assessments_as_athlete.inspect%>
+  <% render 'athlete_profiles/athlete_data'%> 
 </div>

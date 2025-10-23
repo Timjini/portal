@@ -179,7 +179,11 @@ Rails.application.routes.draw do
 
   # Admin Routes
   namespace :admins do
-    resources :users, only: %i[index create update destroy]
+    resources :users do
+      collection do
+        get :search
+      end
+    end
     resources :academy, only: [:index]
     resources :reports, only: [:index]
     resources :content, only: %i[index edit update]

@@ -54,6 +54,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    query = params[:q]
+    users = User.where('first_name ILIKE ? OR last_name ILIKE ? OR username ILIKE ?',
+                       "%#{query}%", "%#{query}%", "%#{query}%")
+                .where(role: %w[athlete child_user])
+                .limit(10)
+                .select(:id, :first_name, :last_name, :username, :role)
+
+    render json: users
+  end
+
   private
 
   def user_params

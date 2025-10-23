@@ -4,6 +4,7 @@ class AthleteProfilesController < ApplicationController
   before_action :authenticate_user!
   skip_forgery_protection only: %i[create checked_items]
   include NotificationHelper
+  load_and_authorize_resource
 
   def index
     @users = User.where(role: %w[child_user athlete])
