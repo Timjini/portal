@@ -117,6 +117,7 @@ Rails.application.routes.draw do
   get 'users/edit_user/:id', to: 'users#edit_user', as: 'edit_user'
   get 'users/edit/:id', to: 'users#edit', as: 'edit'
   patch 'users/update_user/:id', to: 'users#update_user', as: 'update_user'
+  post 'users/search_user_by_level', to: 'users#search_user_by_level', as: 'search_user_by_level'
   delete '/delete_user/:id', to: 'users#delete_user'
 
   # Admin API Routes
@@ -173,13 +174,18 @@ Rails.application.routes.draw do
     resources :sessions, only: %i[new create index]
     resources :assessments do
       post 'get-kpis', on: :collection, to: 'assessments#get_kpis'
+      get 'get_assessments', on: :collection, to: 'assessments#get_assessments'
     end
     resources :messages, only: %i[index show create]
   end
 
   # Admin Routes
   namespace :admins do
-    resources :users, only: %i[index create update destroy]
+    resources :users do
+      collection do
+        get :search
+      end
+    end
     resources :academy, only: [:index]
     resources :reports, only: [:index]
     resources :content, only: %i[index edit update]

@@ -60,9 +60,35 @@
     </div>
 
     <!-- Search box -->
-    <div class="mt-4">
-      <%= render partial: 'users/user_search', locals: { users: @users } %>
+    <div data-controller="athlete-search" 
+     data-athlete-search-search-url-value="<%= search_admins_users_path %>"
+     class="space-y-4">
+  
+  <div class="relative">
+    <input type="text" 
+           data-athlete-search-target="searchInput"
+           data-action="input->athlete-search#searchUsers focus->athlete-search#searchUsers"
+           placeholder="Search users by name or username..."
+           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+    
+    <div data-athlete-search-target="results" 
+         class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto hidden"
+         data-action="click->athlete-search#clearSearch">
     </div>
+  </div>
+
+  <div class="space-y-2">
+    <h3 class="font-medium text-gray-700">Selected Users</h3>
+    <div data-athlete-search-target="selectedUsers" class="space-y-2 max-h-48 overflow-y-auto">
+      <!-- Selected users will appear here -->
+    </div>
+  </div>
+
+  <input type="hidden" 
+         name="user_ids" 
+         data-athlete-search-target="hiddenInput"
+         value="<%= @selected_users&.pluck(:id)&.to_json || '[]' %>">
+</div>
 
     <!-- Standout submit button -->
     <div class="pt-4">

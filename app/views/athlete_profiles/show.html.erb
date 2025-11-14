@@ -1,23 +1,157 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-    <%= render 'components/back_button'%>
-    <%= render 'athlete_profiles/athlete_profile_card'%> 
-  <div class="max-w-4xl mx-auto mb-6 mt-1">
-    <div class="flex flex-col items-center space-y-2">
-      <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
-        <div 
-          class="bg-blue-600 h-4 rounded-full transition-all duration-500 ease-out" 
-          style="width: <%= @percentage %>%"
-          role="progressbar" 
-          aria-valuenow="<%= @percentage %>" 
-          aria-valuemin="0" 
-          aria-valuemax="100"
-        >
-        </div>
-      </div>
-      <span class="text-sm font-medium text-gray-700">
-        <%= @percentage %>% Complete
-      </span>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+  <!-- Back Button -->
+  <%= render 'components/back_button' %>
+
+  <!-- Athlete Profile Card -->
+  <%= render 'athlete_profiles/athlete_profile_card' %>
+
+  <!-- Category Filter Controller Wrapper -->
+  <div data-controller="category-filter" class="space-y-12">
+
+    <!-- Category Instruction -->
+    <div class="text-center space-y-2">
+      <h2 class="text-xl font-semibold text-gray-800">Choose a Category</h2>
+      <p class="text-sm text-gray-500">Click a category below to view levels and assessments.</p>
     </div>
+
+    <!-- Category Buttons -->
+    <div class="flex justify-center flex-wrap gap-4">
+      <% @levels.group_by(&:category).keys.each do |category| %>
+        <button
+          data-category="<%= category %>"
+          data-action="click->category-filter#filter"
+          class="px-5 py-2.5 rounded-full bg-gray-100 text-gray-700 font-medium hover:bg-blue-100 transition shadow-sm">
+          <%= category.titleize %>
+        </button>
+      <% end %>
+    </div>
+
+    <!-- Category Content Sections -->
+    <% @levels.group_by(&:category).each do |category, levels| %>
+      <div
+        data-category-filter-target="card"
+        data-category="<%= category %>"
+        class="hidden">
+
+        <section class="max-w-5xl mx-auto space-y-10">
+
+          <!-- Category Title -->
+          <h1 class="text-3xl font-bold text-gray-900 text-center tracking-tight border-b pb-2">
+            <%= category.titleize %>
+          </h1>
+
+          <% levels.each do |level| %>
+
+            <!-- Accordion Panel -->
+            <div data-controller="collapsible"
+                class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden hover:shadow-md transition">
+
+              <!-- Header -->
+              <header data-action="click->collapsible#toggle"
+                      class="flex justify-between items-center p-6 cursor-pointer select-none bg-gray-50 hover:bg-gray-100 transition">
+
+                <div class="space-y-1">
+                  <h2 class="text-lg font-semibold text-gray-900">
+                    <%= level.title || level.step.humanize %>
+                  </h2>
+
+                  <span class="text-xs px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-medium">
+                    Level Step: <%= level.id %>
+                  </span>
+                </div>
+
+                <div class="flex items-center space-x-4">
+
+                  <span class="text-sm bg-white border px-3 py-1 rounded-full shadow-sm">
+                    Assessments:
+                    <span class="font-semibold text-gray-900">
+                      <%= @assessments.where(level_id: level.id).count %>
+                    </span>
+                  </span>
+
+                  <!-- Icon -->
+                  <svg data-collapsible-target="icon"
+                      class="w-6 h-6 text-gray-700 transition-transform duration-300"
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </div>
+              </header>
+
+              <!-- Content -->
+              <div data-collapsible-target="content" class="hidden p-8 space-y-10">
+
+                <!-- Checklist Timeline -->
+                <div class="space-y-7 relative">
+
+                  <% level.check_lists.each do |checklist| %>
+                    <% assigned = @assessments.where(level_id: level.id)
+                                              .joins(:assessment_checklists)
+                                              .where(assessment_checklists: { check_list_id: checklist.id })
+                                              .exists? %>
+
+                    <div class="relative pl-12">
+
+                      <!-- Timeline Line -->
+                      <div class="absolute left-5 top-0 bottom-0 w-px bg-gray-300"></div>
+
+                      <!-- Bullet -->
+                      <div class="absolute left-3 top-1 w-5 h-5 rounded-full shadow-sm
+                                  <%= assigned ? 'bg-green-500' : 'bg-gray-300' %>">
+                      </div>
+
+                      <!-- Content -->
+                      <div class="flex justify-between items-center">
+                        <span class="font-sm text-gray-800">
+                          <%= checklist.title %>
+                        </span>
+
+                        <span class="text-xs px-3 py-1.5 rounded-full
+                                    <%= assigned ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-600' %>">
+                          <%= assigned ? 'Completed' : 'Pending' %>
+                        </span>
+                      </div>
+
+                    </div>
+                  <% end %>
+                </div>
+
+                <!-- Summary -->
+                <% completed_count = level.check_lists.count { |cl|
+                    @assessments.where(level_id: level.id)
+                                .joins(:assessment_checklists)
+                                .where(assessment_checklists: { check_list_id: cl.id }).exists?
+                  }
+                %>
+
+                <% total_count = level.check_lists.size %>
+                <% percentage = total_count.zero? ? 0 : (completed_count.to_f / total_count * 100).round %>
+
+                <div class="flex items-center justify-between">
+
+                  <span class="text-sm px-3 py-2 rounded-full bg-blue-50 text-blue-700 font-medium">
+                    <%= completed_count %> / <%= total_count %> Completed
+                  </span>
+
+                  <span class="text-sm px-3 py-2 rounded-full
+                              <%= percentage == 100 ? 'bg-green-200 text-green-800' : 'bg-blue-200 text-blue-800' %>">
+                    <%= percentage %>% Done
+                  </span>
+
+                </div>
+
+              </div>
+            </div>
+
+          <% end %>
+
+        </section>
+
+      </div>
+    <% end %>
+
   </div>
-  <%= render 'athlete_profiles/athlete_data'%> 
+
 </div>

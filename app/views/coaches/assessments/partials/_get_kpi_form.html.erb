@@ -1,0 +1,35 @@
+<%= form_with url: "/coaches/assessments/get-kpis", method: :post, class: "space-y-8" do |form| %>
+    <div class="items-center grid grid-cols-1 md:grid-cols-4 gap-4">
+    <!-- Level Dropdown -->
+    <div>
+      <%= form.select :degree,
+          Level.degrees,
+          {},
+          class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" %>
+    </div>
+  
+    <!-- Categories Dropdown -->
+    <div>
+      <%= form.select :category,
+          Level.categories,
+          {},
+          class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" %>
+    </div>
+  
+    <!-- Steps Dropdown -->
+    <div>
+      <%= form.select :step,
+          Level.steps,
+          {},
+          class: "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" %>
+    </div>
+
+     <!-- Submit Button -->
+    <div class="">
+      <%= form.submit "Get KPIs",
+        class: "btn" %>
+    </div>
+    </div>
+  
+  
+<% end %>

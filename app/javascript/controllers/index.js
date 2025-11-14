@@ -7,6 +7,9 @@ import { application } from "./application"
 import AddressAutocompleteController from "./address_autocomplete_controller"
 application.register("address-autocomplete", AddressAutocompleteController)
 
+import AthelteSearchController from "./athelte_search_controller"
+application.register("athelte-search", AthelteSearchController)
+
 import AttendanceController from "./attendance_controller"
 application.register("attendance", AttendanceController)
 
@@ -16,6 +19,9 @@ application.register("avatar", AvatarController)
 import CalendarController from "./calendar_controller"
 application.register("calendar", CalendarController)
 
+import CategoryFilterController from "./category_filter_controller"
+application.register("category-filter", CategoryFilterController)
+
 import ChartController from "./chart_controller"
 application.register("chart", ChartController)
 
@@ -24,6 +30,9 @@ application.register("check-all", CheckAllController)
 
 import ChecklistController from "./checklist_controller"
 application.register("checklist", ChecklistController)
+
+import CollapsibleController from "./collapsible_controller"
+application.register("collapsible", CollapsibleController)
 
 import ColorPickerController from "./color_picker_controller"
 application.register("color-picker", ColorPickerController)
@@ -67,6 +76,9 @@ application.register("kpi-table", KpiTableController)
 import LevelController from "./level_controller"
 application.register("level", LevelController)
 
+import LevelsCarouselController from "./levels_carousel_controller"
+application.register("levels-carousel", LevelsCarouselController)
+
 import MobileMenuController from "./mobile_menu_controller"
 application.register("mobile-menu", MobileMenuController)
 
@@ -96,6 +108,9 @@ application.register("test", TestController)
 
 import ThemeController from "./theme_controller"
 application.register("theme", ThemeController)
+
+import UserSearchByLevelController from "./user_search_by_level_controller"
+application.register("user-search-by-level", UserSearchByLevelController)
 
 import UserSearchController from "./user_search_controller"
 application.register("user-search", UserSearchController)
