@@ -4,6 +4,7 @@ class AthleteProfilesController < ApplicationController
   before_action :authenticate_user!
   skip_forgery_protection only: %i[create checked_items]
   include NotificationHelper
+
   load_and_authorize_resource
 
   def index
@@ -15,18 +16,23 @@ class AthleteProfilesController < ApplicationController
                 end
   end
 
-  def show # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  def show
     service = CheckListService.new(params)
     result = service.show_athlete_status
+
     @athlete = result[:athlete]
-    @levels = result[:levels]
+    all_levels = result[:levels]
     @user = result[:user]
     @percentage = result[:percentage]
     @status = result[:status]
     @checklist_items_completed = result[:checklist_items_completed]
-    @athlete_level = UserChecklist.where(completed: true, user_id: @athlete.user_id)
 
-    # @reviews = Review.where(user_id: @athlete.user_id)
+    # Only levels that match the athlete's profile level
+    athlete_level_degree = @user.athlete_profile.level
+    @levels = all_levels.select { |level| level.degree == athlete_level_degree }
+
+    # Fetch all assessments for this athlete for the filtered levels
+    @assessments = Assessment.where(athlete_id: @athlete.user.id, level_id: @levels.map(&:id))
 
     respond_to do |format|
       format.html

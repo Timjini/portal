@@ -19,6 +19,9 @@ application.register("avatar", AvatarController)
 import CalendarController from "./calendar_controller"
 application.register("calendar", CalendarController)
 
+import CategoryFilterController from "./category_filter_controller"
+application.register("category-filter", CategoryFilterController)
+
 import ChartController from "./chart_controller"
 application.register("chart", ChartController)
 
@@ -27,6 +30,9 @@ application.register("check-all", CheckAllController)
 
 import ChecklistController from "./checklist_controller"
 application.register("checklist", ChecklistController)
+
+import CollapsibleController from "./collapsible_controller"
+application.register("collapsible", CollapsibleController)
 
 import ColorPickerController from "./color_picker_controller"
 application.register("color-picker", ColorPickerController)
@@ -69,6 +75,9 @@ application.register("kpi-table", KpiTableController)
 
 import LevelController from "./level_controller"
 application.register("level", LevelController)
+
+import LevelsCarouselController from "./levels_carousel_controller"
+application.register("levels-carousel", LevelsCarouselController)
 
 import MobileMenuController from "./mobile_menu_controller"
 application.register("mobile-menu", MobileMenuController)
