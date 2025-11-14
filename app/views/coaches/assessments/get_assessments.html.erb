@@ -1,0 +1,48 @@
+<%= form_with url: coaches_assessments_path, method: :post, class: "space-y-6 py-6", data: { turbo: false } do |form| %>
+
+<div class="max-w-4xl mx-auto mt-10">
+  <h2 class="text-xl font-semibold mb-4">
+    Selected Users for Level: <%= @level.title || @level.degree.humanize %>
+  </h2>
+
+  <% @users.each do |user| %>
+    <div class="p-4 mb-6 border rounded-lg shadow-sm bg-white">
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <p class="font-medium text-gray-800">
+            <%= user.first_name %> <%= user.last_name %> (<%= user.username %>)
+          </p>
+          <p class="text-sm text-gray-500"><%= user.role %></p>
+        </div>
+        <div class="text-sm text-gray-600">
+          Assessments: <%= @assessments.where(athlete_id: user.id).count %>
+        </div>
+      </div>
+
+      <!-- Checklist for this user -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <% @level.check_lists.each do |checklist| %>
+          <% # check if this checklist is already assigned to the user %>
+          <% assigned = @assessments.where(athlete_id: user.id).joins(:assessment_checklists)
+                                    .where(assessment_checklists: { check_list_id: checklist.id }).exists? %>
+
+          <div class="flex items-start space-x-3">
+            <%= hidden_field_tag "assessment[users][#{user.id}][checklists][#{checklist.id}]", "0" %>
+            <%= check_box_tag "assessment[users][#{user.id}][checklists][#{checklist.id}]", "1", assigned,
+                class: "kpi-checkbox h-5 w-5 mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500 flex-shrink-0" %>
+            <label class="text-gray-800 leading-relaxed cursor-pointer">
+              <%= checklist.title %>
+            </label>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <%= hidden_field_tag "assessment[kpi_data]", @level.to_json %>
+    <%= hidden_field_tag "user_ids", @users.pluck(:id).join(",") %>
+  <% end %>
+</div>
+
+<div class="max-w-4xl mx-auto">
+    <%= form.submit "Assign KPIs", class: "btn", data: { turbo_submits_with: "Saving..." } %>
+  </div>
+<% end %>

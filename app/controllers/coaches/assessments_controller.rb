@@ -2,7 +2,7 @@
 
 class Coaches::AssessmentsController < ApplicationController # rubocop:disable Style/ClassAndModuleChildren
   before_action :authenticate_user!
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:create]
   # rescue_from Errors::QueryError, with: :handle_query_error
   def index
     @kpi_categories = KpiCategory.order(:id)
@@ -44,29 +44,36 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   end
 
   def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    level_data = JSON.parse(params['assessment']['kpi_data'])
-    check_lists = CheckList.where(level_id: level_data['id'])
-    user_ids = params['user_ids'].split(',')
+    level_data = JSON.parse(params[:assessment][:kpi_data])
+    user_ids = params[:user_ids].split(',')
+    submitted_users = params[:assessment][:users] || {}
 
     user_ids.each do |u_id|
+      user_checklists = submitted_users.dig(u_id, 'checklists') || {}
+
       @assessment = Assessment.find_or_initialize_by(
         athlete_id: u_id,
         coach_id: current_user.id,
         level_id: level_data['id']
       )
 
-      @assessment.assign_attributes(
+      @assessment.update!(
         notes: 'Coach assessment',
         kpi_data: level_data,
         completed: true,
         completed_at: Time.current
       )
-      @assessment.save!
 
-      check_lists.each do |l|
-        AssessmentChecklist.find_or_create_by!(
+      # Clear old checklist links
+      @assessment.assessment_checklists.destroy_all
+
+      # Create only the selected ones
+      user_checklists.each do |checklist_id, value|
+        next unless value == '1'
+
+        AssessmentChecklist.create!(
           assessment_id: @assessment.id,
-          check_list_id: l.id
+          check_list_id: checklist_id
         )
       end
     end
@@ -84,48 +91,24 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
     redirect_to coaches_assessments_path, alert: 'An unexpected error occurred. Please try again.' # rubocop:disable Rails/I18nLocaleTexts
   end
 
-  # def create
-  #   Rails.logger.info "------------------>, #{@levels.inspect}"
-  #   Rails.logger.info "Assessment creation started with params: #{params.permit!.to_h}"
+  def get_assessments
+    user_ids = params[:user_ids].to_s.split(',')
+    level_id = params[:level_id]
 
-  #   @athlete = User.find(params[:athlete_id])
-  #   Rails.logger.info "Athlete found===>: #{@athlete.inspect}"
+    service = KpiService.new(Level.find(level_id))
+    @levels = service.fetch_level_by_params
 
-  #   @raw_assesemnts = JSON.parse(params[:kpi_data].to_json) if params[:kpi_data].present?
-  #   Rails.logger.info "Assessment raw data: #{params[:kpi_data].inspect}"
+    @level = Level.find(level_id)
+    @users = User.where(id: user_ids)
 
-  #   begin
-  #     @assessment = Assessment.new(
-  #       notes: params[:notes],
-  #       kpi_data: @raw_assesemnts,
-  #       recommendation: params[:recommendation],
-  #       athlete_id: @athlete.id,
-  #       coach_id: current_user.id
-  #     )
-  #     @assessment.save!
-  #     Rails.logger.info "Assessment object created: #{@assessment.inspect}"
-  #   rescue StandardError => e
-  #     Rails.logger.error "Error creating assessment: #{e.message}"
-  #   end
+    # Fetch assessments for the users and level
+    @assessments = Assessment.where(athlete_id: @users.pluck(:id), level_id: @level.id)
 
-  #   #   if @assessment.save
-  #   #     Rails.logger.info "Assessment created successfully: #{@assessment.attributes}"
-  #   #     redirect_to all_accounts_accounts_path, notice: 'Assessment saved successfully'
-  #   #   else
-  #   #     Rails.logger.error "Assessment failed to save: #{@assessment.errors.full_messages}"
-  #   #     @kpi_categories = KpiCategory.all
-  #   #     @structured_data = ExerciseStructureQuery.new.call
-  #   #     render :new, status: :unprocessable_entity
-  #   #   end
-  #   # rescue ActiveRecord::RecordInvalid => e
-  #   #   Rails.logger.error "Record invalid: #{e.message}\n#{e.record.errors.full_messages}"
-  #   #   @kpi_categories = KpiCategory.all
-  #   #   @structured_data = ExerciseStructureQuery.new.call
-  #   #   render :new, status: :unprocessable_entity
-  #   # rescue StandardError => e
-  #   #   Rails.logger.error "Unexpected error: #{e.class} - #{e.message}\n#{e.backtrace.join("\n")}"
-  #   #   redirect_to all_accounts_accounts_path, alert: 'Failed to create assessment'
-  # end
+    respond_to do |format|
+      format.html # renders get_assessments.html.erb
+      format.json { render json: { users: @users, assessments: @assessments, levels: @levels } }
+    end
+  end
 
   def require_coach
     return if current_user.role == 'coach'

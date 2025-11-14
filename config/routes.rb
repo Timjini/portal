@@ -174,6 +174,7 @@ Rails.application.routes.draw do
     resources :sessions, only: %i[new create index]
     resources :assessments do
       post 'get-kpis', on: :collection, to: 'assessments#get_kpis'
+      get 'get_assessments', on: :collection, to: 'assessments#get_assessments'
     end
     resources :messages, only: %i[index show create]
   end

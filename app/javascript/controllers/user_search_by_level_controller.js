@@ -37,8 +37,8 @@ export default class extends Controller {
     this.resultsTarget.innerHTML = users
       .map(
         (user) => `
-      <div class="cursor-pointer px-3 py-2 bg-white hover:bg-blue-50 rounded-lg flex items-center justify-between"
-           data-action="click->user-search#select"
+      <div class="cursor-pointer px-3 py-2 bg-white hover:bg-blue-50 flex items-center justify-between"
+           data-action="click->user-search-by-level#select"
            data-user='${JSON.stringify(user)}'>
         <span class="text-gray-700">${user.first_name} ${user.last_name} (${user.username})</span>
         <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-lg">${user.role}</span>
@@ -56,6 +56,7 @@ export default class extends Controller {
 
     this.selectedUsers.push(user)
     this.renderSelected()
+    console.log('Selected Users:', this.selectedUsers)
   }
 
   renderSelected() {
@@ -73,35 +74,62 @@ export default class extends Controller {
       return
     }
 
-    this.selectedTarget.innerHTML = this.selectedUsers
-      .map(
-        (u) => `
-      <div class="flex items-center justify-between bg-white p-3 rounded-xl shadow-sm mb-2">
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-medium">
-            ${u.first_name[0]}${u.last_name[0]}
+    this.selectedTarget.innerHTML = `
+      ${this.selectedUsers
+        .map(
+          (u) => `
+        <div class="flex items-center justify-between bg-white p-3 rounded-xl shadow-sm mb-2">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-medium">
+              ${u.first_name[0]}${u.last_name[0]}
+            </div>
+            <div>
+              <p class="font-medium text-gray-800">${u.first_name} ${u.last_name}</p>
+              <p class="text-xs text-gray-500">${u.username}</p>
+            </div>
           </div>
-          <div>
-            <p class="font-medium text-gray-800">${u.first_name} ${u.last_name}</p>
-            <p class="text-xs text-gray-500">${u.username}</p>
-          </div>
+          <button class="text-gray-400 hover:text-red-500" data-action="click->user-search-by-level#remove" data-user-id="${u.id}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
-        <button class="text-gray-400 hover:text-red-500" data-action="click->user-search#remove" data-user-id="${u.id}">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-               viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12" />
-          </svg>
+      `
+        )
+        .join('')}
+  
+      <div class="mt-4 text-right">
+        <button data-action="click->user-search-by-level#assign" class="btn">
+          Assign to Athletes
         </button>
       </div>
     `
-      )
-      .join('')
+  }
+
+  assign() {
+    if (this.selectedUsers.length === 0) return
+
+    const userIds = this.selectedUsers.map((u) => u.id)
+    const levelId = this.levelIdValue
+
+    console.log('Assigning users:', userIds, 'for level:', levelId)
+
+    // Navigate to new route or POST
+    // Example: GET request to `get_assessments` with params
+    const params = new URLSearchParams({
+      user_ids: userIds.join(','),
+      level_id: levelId
+    })
+
+    window.location.href = `/coaches/assessments/get_assessments?${params.toString()}`
   }
 
   remove(event) {
     const userId = parseInt(event.currentTarget.dataset.userId)
     this.selectedUsers = this.selectedUsers.filter((u) => u.id !== userId)
     this.renderSelected()
+    console.log('Selected Users:', this.selectedUsers)
   }
 }
