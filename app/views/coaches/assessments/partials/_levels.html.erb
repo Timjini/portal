@@ -1,16 +1,4 @@
-<div class="container mx-auto px-8 py-8 max-w-3xl">
-<!-- Header -->
-        <header class="mb-8">
-            <h1 class="text-2xl font-bold text-gray-800">Athletes Assessment</h1>
-            <p class="text-gray-600">Track your athletes' KPIs</p>
-        </header>
-
-<!-- STEP 1 Get KPIs -->
-
-  <%= render 'coaches/assessments/partials/get_kpi_form' %>
-
-<!-- END STEP 1      -->
-  <%= turbo_frame_tag "levels" do %>
+<div>
         <div class="flex flex-col items-center justify-center py-10 text-center border border-dashed border-gray-300 rounded-lg bg-gray-50 mt-6">
             <svg class="w-10 h-10 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -19,4 +7,4 @@
             <p class="text-gray-600 font-medium">No parameters selected</p>
             <p class="text-sm text-gray-400">Choose parameters to begin tracking KPIs.</p>
         </div>
-  <% end %>
+  </div>

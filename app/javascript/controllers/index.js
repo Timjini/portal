@@ -100,6 +100,9 @@ application.register("test", TestController)
 import ThemeController from "./theme_controller"
 application.register("theme", ThemeController)
 
+import UserSearchByLevelController from "./user_search_by_level_controller"
+application.register("user-search-by-level", UserSearchByLevelController)
+
 import UserSearchController from "./user_search_controller"
 application.register("user-search", UserSearchController)
 

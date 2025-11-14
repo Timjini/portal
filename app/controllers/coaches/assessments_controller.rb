@@ -29,20 +29,15 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
     # @structured_data = ExerciseStructureQuery.new.call
   end
 
-  def get_kpis # rubocop:disable Metrics/MethodLength,Naming/AccessorMethodName
+  def get_kpis # rubocop:disable Naming/AccessorMethodName
     service = KpiService.new(params)
     @levels = service.fetch_level_by_params
-
-    Rails.logger.info "=========================>#{@levels.inspect}"
-    # this is a terrible way of doing this !!
-    @users = User.where(role: %i[athlete child_user])
-    return if @levels.nil?
 
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.update('levels', partial: 'coaches/assessments/level',
-                                        locals: { levels: @levels, users: @users })
+          turbo_stream.update('levels', partial: 'coaches/assessments/partials/users_search_form',
+                                        locals: { levels: @levels })
         ]
       end
     end

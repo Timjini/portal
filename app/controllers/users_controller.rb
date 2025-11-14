@@ -65,6 +65,20 @@ class UsersController < ApplicationController
     render json: users
   end
 
+  def search_user_by_level
+    query = params[:q]
+    level_value = Level.find(params[:level_id]).degree
+
+    users = User.joins(:athlete_profile) # join athlete_profiles
+                .where(athlete_profiles: { level: level_value }) # filter by level column
+                .where(role: %w[athlete child_user])             # filter by role
+                .where('users.first_name LIKE :q OR users.last_name LIKE :q OR users.username LIKE :q', q: "%#{query}%")
+                .limit(10)
+                .select('users.id, users.first_name, users.last_name, users.username, users.role')
+
+    render json: users
+  end
+
   private
 
   def user_params
