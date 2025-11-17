@@ -33,7 +33,10 @@ class AthleteChecklistStatusService
     cleaned_params = hash.slice(*permitted_params).compact
 
     # Add index if you frequently filter by these columns
-    Level.where(cleaned_params).order(:degree, :step, :category)
+    Level
+      .includes(:check_lists)
+      .where(cleaned_params)
+      .order(:degree, :step, :category)
   end
 
   def count_completed_levels

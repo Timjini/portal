@@ -44,12 +44,15 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   end
 
   def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+    puts params.inspect
     level_data = JSON.parse(params[:assessment][:kpi_data])
     user_ids = params[:user_ids].split(',')
     submitted_users = params[:assessment][:users] || {}
 
     user_ids.each do |u_id|
       user_checklists = submitted_users.dig(u_id, 'checklists') || {}
+
+      completed = user_checklists.value?('1') || 0
 
       @assessment = Assessment.find_or_initialize_by(
         athlete_id: u_id,
@@ -60,7 +63,7 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
       @assessment.update!(
         notes: 'Coach assessment',
         kpi_data: level_data,
-        completed: true,
+        completed: completed,
         completed_at: Time.current
       )
 

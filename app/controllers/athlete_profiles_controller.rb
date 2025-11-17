@@ -27,12 +27,25 @@ class AthleteProfilesController < ApplicationController
     @status = result[:status]
     @checklist_items_completed = result[:checklist_items_completed]
 
-    # Only levels that match the athlete's profile level
+    # Only levels matching the athlete's profile level
     athlete_level_degree = @user.athlete_profile.level
     @levels = all_levels.select { |level| level.degree == athlete_level_degree }
 
-    # Fetch all assessments for this athlete for the filtered levels
-    @assessments = Assessment.where(athlete_id: @athlete.user.id, level_id: @levels.map(&:id))
+    # Fetch all assessments for these levels
+    @assessments = Assessment.where(
+      athlete_id: @athlete.user.id,
+      level_id: @levels.map(&:id)
+    )
+
+    # ⭐ One SQL query to count completed per level
+    @completed_counts = Assessment
+                        .where(
+                          athlete_id: @athlete.user.id,
+                          completed: true,
+                          level_id: @levels.map(&:id)
+                        )
+                        .group(:level_id)
+                        .count
 
     respond_to do |format|
       format.html

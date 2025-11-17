@@ -57,16 +57,20 @@
                   </h2>
 
                   <span class="text-xs px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-medium">
-                    Level Step: <%= level.id %>
+                    Level Step: <%= level.step %>
                   </span>
                 </div>
 
                 <div class="flex items-center space-x-4">
 
                   <span class="text-sm bg-white border px-3 py-1 rounded-full shadow-sm">
-                    Assessments:
+                    Total Assessments:
                     <span class="font-semibold text-gray-900">
-                      <%= @assessments.where(level_id: level.id).count %>
+                      <%= completed_count = level.check_lists.count { |cl|
+                    @assessments.where(level_id: level.id)
+                                .joins(:assessment_checklists)
+                                .where(assessment_checklists: { check_list_id: cl.id }).exists?
+                  } %>
                     </span>
                   </span>
 
