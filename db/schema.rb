@@ -58,7 +58,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
     t.text "context", size: :long, collation: "utf8mb4_bin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.check_constraint "json_valid(`context`)", name: "app_errors_chk_1"
+    t.check_constraint "json_valid(`context`)", name: "context"
   end
 
   create_table "assessment_checklists", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -165,7 +165,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "competition_entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "competition_entries", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "competition_id", null: false
     t.string "status", default: "subscribed"
@@ -176,7 +176,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
     t.index ["user_id"], name: "index_competition_entries_on_user_id"
   end
 
-  create_table "competitions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "competitions", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "title"
     t.string "description"
     t.date "date"
@@ -189,7 +189,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
   create_table "dcpa_events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "title"
     t.string "coach"
-    t.text "dates", size: :long, collation: "utf8mb4_bin"
+    t.text "dates", size: :long, default: "[]", collation: "utf8mb4_bin"
     t.time "time_start"
     t.time "time_end"
     t.string "location"
@@ -201,7 +201,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.check_constraint "json_valid(`dates`)", name: "dcpa_events_chk_1"
+    t.check_constraint "json_valid(`dates`)", name: "dates"
   end
 
   create_table "exercises", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -220,14 +220,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
     t.string "notes"
     t.string "muscle_group"
     t.string "primary_focus"
-    t.text "movement_patterns", size: :long, collation: "utf8mb4_bin"
-    t.text "equipment", size: :long, collation: "utf8mb4_bin"
-    t.text "extra_attributes", size: :long, collation: "utf8mb4_bin"
+    t.text "movement_patterns", size: :long, default: "[]", collation: "utf8mb4_bin"
+    t.text "equipment", size: :long, default: "[]", collation: "utf8mb4_bin"
+    t.text "extra_attributes", size: :long, default: "[]", collation: "utf8mb4_bin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.check_constraint "json_valid(`equipment`)", name: "exercises_chk_2"
-    t.check_constraint "json_valid(`extra_attributes`)", name: "exercises_chk_3"
-    t.check_constraint "json_valid(`movement_patterns`)", name: "exercises_chk_1"
+    t.check_constraint "json_valid(`equipment`)", name: "equipment"
+    t.check_constraint "json_valid(`extra_attributes`)", name: "extra_attributes"
+    t.check_constraint "json_valid(`movement_patterns`)", name: "movement_patterns"
   end
 
   create_table "forms", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -313,11 +313,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
     t.bigint "questionnaire_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "options", size: :long, collation: "utf8mb4_bin"
+    t.text "options", size: :long, default: "[]", collation: "utf8mb4_bin"
     t.integer "position"
     t.string "illness_tag"
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
-    t.check_constraint "json_valid(`options`)", name: "questions_chk_1"
+    t.check_constraint "json_valid(`options`)", name: "options"
   end
 
   create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -395,10 +395,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
     t.string "recurrence_rule"
     t.datetime "recurrence_end"
     t.string "slot_type", default: "CoachTimeSlot"
-    t.text "group_types", size: :long, collation: "utf8mb4_bin"
+    t.text "group_types", size: :long, default: "[]", collation: "utf8mb4_bin"
     t.string "title"
     t.bigint "coach_calendar_id"
-    t.check_constraint "json_valid(`group_types`)", name: "time_slots_chk_1"
+    t.check_constraint "json_valid(`group_types`)", name: "group_types"
   end
 
   create_table "training_bookings", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -434,10 +434,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_18_200919) do
     t.string "status", default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "extra", size: :long, null: false, collation: "utf8mb4_bin"
+    t.text "extra", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
     t.date "start_date"
     t.date "ending_date"
-    t.check_constraint "json_valid(`extra`)", name: "training_packages_chk_1"
+    t.check_constraint "json_valid(`extra`)", name: "extra"
   end
 
   create_table "user_checklists", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
