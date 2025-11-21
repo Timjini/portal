@@ -36,7 +36,7 @@ module Api
           render json: { status: 'success', data: Api::V2::FormSerializer.new(form).serializable_hash },
                  status: :created
         else
-          render json: { status: 'error', message: form.errors.full_messages }, status: :unprocessable_entity
+          render json: { status: 'error', message: form.errors.full_messages }, status: :unprocessable_content
         end
       rescue StandardError => e
         render json: { status: 'error', message: "Something went wrong: #{e.message}" }, status: :internal_server_error

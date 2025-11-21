@@ -3,9 +3,9 @@
 require_relative 'boot'
 require 'rails/all'
 require 'dotenv/load'
-require 'sendgrid-ruby'
+# require 'sendgrid-ruby'
 # this should be fixed here
-include SendGrid # rubocop:disable Style/MixinUsage
+# include SendGrid
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

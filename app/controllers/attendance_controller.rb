@@ -24,13 +24,13 @@ class AttendanceController < ApplicationController
     users_status = params.dig(:attendance, :users) || {}
 
     if params[:attendance].blank? || users_status.blank?
-      render json: { error: 'No attendance data provided.' }, status: :unprocessable_entity
+      render json: { error: 'No attendance data provided.' }, status: :unprocessable_content
       return
     end
 
     users_status = params.dig(:attendance, :users) || {}
     if users_status.empty?
-      render json: { error: 'No users selected for attendance.' }, status: :unprocessable_entity
+      render json: { error: 'No users selected for attendance.' }, status: :unprocessable_content
       return
     end
     users_status.each do |user_id, present_value|
@@ -49,6 +49,6 @@ class AttendanceController < ApplicationController
     render json: { message: 'Attendance recorded successfully.' }, status: :created
   rescue StandardError => e
     Rails.logger.error "Error recording attendance: #{e.message}"
-    render json: { error: "Failed to record attendance. #{e.message}" }, status: :unprocessable_entity
+    render json: { error: "Failed to record attendance. #{e.message}" }, status: :unprocessable_content
   end
 end

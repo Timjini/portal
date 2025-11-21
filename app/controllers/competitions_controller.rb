@@ -40,8 +40,8 @@ class CompetitionsController < ApplicationController
         end
         format.json { render :show, status: :created, location: @competition }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @competition.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @competition.errors, status: :unprocessable_content }
       end
     end
   end
@@ -56,8 +56,8 @@ class CompetitionsController < ApplicationController
         end
         format.json { render :show, status: :ok, location: @competition }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @competition.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @competition.errors, status: :unprocessable_content }
       end
     end
   end

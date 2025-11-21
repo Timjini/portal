@@ -43,8 +43,8 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
     end
   end
 
-  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    puts params.inspect
+  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity
+    Rails.logger.debug params.inspect
     level_data = JSON.parse(params[:assessment][:kpi_data])
     user_ids = params[:user_ids].split(',')
     submitted_users = params[:assessment][:users] || {}
@@ -94,7 +94,7 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
     redirect_to coaches_assessments_path, alert: 'An unexpected error occurred. Please try again.' # rubocop:disable Rails/I18nLocaleTexts
   end
 
-  def get_assessments
+  def get_assessments # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Naming/AccessorMethodName
     user_ids = params[:user_ids].to_s.split(',')
     level_id = params[:level_id]
 
