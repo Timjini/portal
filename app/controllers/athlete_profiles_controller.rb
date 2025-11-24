@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AthleteProfilesController < ApplicationController
+class AthleteProfilesController < ApplicationController # rubocop:disable Style/ClassAndModuleChildren
   before_action :authenticate_user!
   skip_forgery_protection only: %i[create checked_items]
   include NotificationHelper
