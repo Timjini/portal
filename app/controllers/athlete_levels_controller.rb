@@ -29,8 +29,8 @@ class AthleteLevelsController < ApplicationController
         format.html { redirect_to @athlete_level, notice: 'Athlete level was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: @athlete_level }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @athlete_level.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @athlete_level.errors, status: :unprocessable_content }
       end
     end
   end
@@ -42,8 +42,8 @@ class AthleteLevelsController < ApplicationController
         format.html { redirect_to @athlete_level, notice: 'Athlete level was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @athlete_level }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @athlete_level.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @athlete_level.errors, status: :unprocessable_content }
       end
     end
   end

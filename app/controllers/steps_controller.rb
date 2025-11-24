@@ -29,8 +29,8 @@ class StepsController < ApplicationController
         format.html { redirect_to @step, notice: 'Step was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: @step }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @step.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @step.errors, status: :unprocessable_content }
       end
     end
   end
@@ -42,8 +42,8 @@ class StepsController < ApplicationController
         format.html { redirect_to @step, notice: 'Step was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @step }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @step.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @step.errors, status: :unprocessable_content }
       end
     end
   end

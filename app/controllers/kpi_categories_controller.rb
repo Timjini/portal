@@ -29,8 +29,8 @@ class KpiCategoriesController < ApplicationController
         format.html { redirect_to @kpi_category, notice: 'Kpi category was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: @kpi_category }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @kpi_category.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @kpi_category.errors, status: :unprocessable_content }
       end
     end
   end
@@ -42,8 +42,8 @@ class KpiCategoriesController < ApplicationController
         format.html { redirect_to @kpi_category, notice: 'Kpi category was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @kpi_category }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @kpi_category.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @kpi_category.errors, status: :unprocessable_content }
       end
     end
   end

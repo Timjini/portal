@@ -11,10 +11,10 @@ module Api
         if @training_booking.save
           render json: { message: 'Training booking created successfully', data: @training_booking }, status: :created
         else
-          render json: { errors: @training_booking.errors.full_messages }, status: :unprocessable_entity
+          render json: { errors: @training_booking.errors.full_messages }, status: :unprocessable_content
         end
       rescue ActiveRecord::RecordInvalid => e
-        render json: { error: e.message }, status: :unprocessable_entity
+        render json: { error: e.message }, status: :unprocessable_content
       rescue StandardError => e
         render json: { error: "Something went wrong: #{e.message}" }, status: :internal_server_error
       end

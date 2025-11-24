@@ -39,7 +39,7 @@ class KpiController < ApplicationController
       render json: {
         status: 'error',
         message: result[:errors].join(', ')
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 

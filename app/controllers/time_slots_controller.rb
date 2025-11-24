@@ -49,8 +49,8 @@ class TimeSlotsController < ApplicationController
         format.html { redirect_to time_slot_url(@time_slot), notice: 'Time slot was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @time_slot }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @time_slot.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @time_slot.errors, status: :unprocessable_content }
       end
     end
   end
@@ -82,8 +82,8 @@ class TimeSlotsController < ApplicationController
 
   def handle_failure(format, result)
     @time_slot = result[:time_slot] || TimeSlot.new(time_slot_params)
-    format.html { render :new, status: :unprocessable_entity }
-    format.json { render json: result[:errors], status: :unprocessable_entity }
+    format.html { render :new, status: :unprocessable_content }
+    format.json { render json: result[:errors], status: :unprocessable_content }
   end
 
   # Use callbacks to share common setup or constraints between actions.

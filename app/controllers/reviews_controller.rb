@@ -36,7 +36,7 @@ class ReviewsController < ApplicationController
           render turbo_stream: turbo_stream.replace('review_form', partial: 'reviews/form',
                                                                    locals: { review: @review, level: @level, athlete: @athlete }) # rubocop:disable Layout/LineLength
         end
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
       end
     end
   end

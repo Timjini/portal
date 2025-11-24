@@ -54,7 +54,8 @@ gem 'mailtrap', '~> 0.1.0'
 gem 'rack-cors'
 gem 'recurrence', '~> 1.3'
 gem 'rqrcode'
-gem 'sendgrid-ruby'
+# gem 'sendgrid-ruby'
+gem 'sib-api-v3-sdk'
 gem 'will_paginate'
 
 # dev tools

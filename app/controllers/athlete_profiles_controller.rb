@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AthleteProfilesController < ApplicationController # rubocop:disable Style/ClassAndModuleChildren
+class AthleteProfilesController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :authenticate_user!
   skip_forgery_protection only: %i[create checked_items]
   include NotificationHelper
@@ -16,7 +16,7 @@ class AthleteProfilesController < ApplicationController # rubocop:disable Style/
                 end
   end
 
-  def show
+  def show # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     service = CheckListService.new(params)
     result = service.show_athlete_status
 

@@ -11,11 +11,11 @@ module Api
       end
 
       def start_time_formated
-        object.time_start.strftime('%H:%M') if object.time_start.present?
+        object.time_start.presence&.strftime('%H:%M')
       end
 
       def end_time_formated
-        object.time_end.strftime('%H:%M') if object.time_end.present?
+        object.time_end.presence&.strftime('%H:%M')
       end
 
       def dcpa_price

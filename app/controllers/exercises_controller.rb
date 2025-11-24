@@ -40,8 +40,8 @@ class ExercisesController < ApplicationController
         format.html { redirect_to @exercise, notice: 'Exercise was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: @exercise }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @exercise.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @exercise.errors, status: :unprocessable_content }
       end
     end
   end
@@ -55,8 +55,8 @@ class ExercisesController < ApplicationController
 
     saved_file = SaveAttachmentToPublic.call(csv_file)
     unless saved_file
-      format.html { render :new, status: :unprocessable_entity }
-      format.json { render json: 'File upload failed', status: :unprocessable_entity }
+      format.html { render :new, status: :unprocessable_content }
+      format.json { render json: 'File upload failed', status: :unprocessable_content }
       return
     end
 
@@ -75,8 +75,8 @@ class ExercisesController < ApplicationController
         format.html { redirect_to @exercise, notice: 'Exercise was successfully updated.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :ok, location: @exercise }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @exercise.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @exercise.errors, status: :unprocessable_content }
       end
     end
   end

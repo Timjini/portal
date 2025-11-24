@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
     end
     render json: { status: 'success', message: 'Answers created successfully' }
   rescue StandardError => e
-    render json: { status: 'error', message: e.message }, status: :unprocessable_entity
+    render json: { status: 'error', message: e.message }, status: :unprocessable_content
   end
 
   # private

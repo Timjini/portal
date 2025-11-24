@@ -71,7 +71,7 @@ class AccountsController < ApplicationController
             render json: {
               status: 'error',
               errors: @account.errors.full_messages
-            }, status: :unprocessable_entity
+            }, status: :unprocessable_content
           end
         end
       end

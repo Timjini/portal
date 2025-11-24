@@ -117,15 +117,15 @@ Rails.application.configure do
   # Trap Email
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name: 'apikey',
-    password: ENV.fetch('SEND_GRID_SECRET', nil),
-    domain: 'chambersforsport.com',
-    address: 'smtp.sendgrid.net',
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
+    user_name: ENV.fetch('BREVO_SMTP_LOGIN', nil),
+    password: ENV.fetch('BREVO_SMTP_KEY', nil),
+    domain: 'club.chambersforsport.com',
+    address: ENV.fetch('BREVO_SMTP_SERVER', nil),
+    port: ENV.fetch('BREVO_SMTP_PORT', nil),
+    authentication: :login,
+    enable_starttls_auto: true,
+    openssl_verify_mode: 'peer'
   }
-
   config.action_mailer.default_url_options = {
     host: 'club.chambersforsport.com',
     protocol: 'https'
