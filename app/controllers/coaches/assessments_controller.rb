@@ -44,7 +44,6 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   end
 
   def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity
-    Rails.logger.debug params.inspect
     level_data = JSON.parse(params[:assessment][:kpi_data])
     user_ids = params[:user_ids].split(',')
     submitted_users = params[:assessment][:users] || {}
