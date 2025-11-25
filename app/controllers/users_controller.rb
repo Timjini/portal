@@ -74,7 +74,7 @@ class UsersController < ApplicationController
                 .where(role: %w[athlete child_user])
                 .where('users.first_name LIKE :q OR users.last_name LIKE :q OR users.username LIKE :q', q: "%#{query}%")
                 .limit(10)
-                .select('users.id, users.first_name, users.last_name, users.username, users.role')
+                .select('users.id, users.first_name, users.last_name, users.username, users.role').order('users.first_name ASC') # rubocop:disable Layout/LineLength
 
     render json: users
   end
