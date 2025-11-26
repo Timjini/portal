@@ -20,11 +20,12 @@ class BrevoMailerService
     api_instance = Brevo::TransactionalEmailsApi.new
 
     email = Brevo::SendSmtpEmail.new(
-      sender: { email: 'no-reply@club.chambersforsport.com', name: 'Club' },
+      sender: { email: 'no-reply@club.chambersforsport.com', name: 'Chambers For Sport Academy' },
       to: [{ email: user.email }],
       templateId: 1,
       params: {
-        reset_url: reset_url
+        reset_url: reset_url,
+        username: user.username || user.email
       }
     )
 
