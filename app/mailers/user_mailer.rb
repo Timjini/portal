@@ -3,7 +3,7 @@
 class UserMailer < ApplicationMailer
   # include MailSender
   def test_email
-    mail(to: 'hatim.jini@gmail.com', subject: 'Test Email', from: 'info@chambersforsport.com') do |format| # rubocop:disable Rails/I18nLocaleTexts
+    mail(to: 'hatim.jini@gmail.com', subject: 'Test Email', from: 'no-reply@club.chambersforsport.com') do |format| # rubocop:disable Rails/I18nLocaleTexts
       format.text { render plain: 'This is a test email sent from MailCatcher.' }
     end
   end
