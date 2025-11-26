@@ -106,17 +106,6 @@ Rails.application.configure do
   #   authentication: :login
   # }
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    user_name: 'BREVO_SMTP_LOGIN',
-    password: ENV.fetch('BREVO_SMTP_KEY', nil),
-    domain: 'club.chambersforsport.com',
-    address: ENV.fetch('BREVO_SMTP_SERVER'),
-    port: ENV.fetch('BREVO_SMTP_PORT'),
-    authentication: :login,
-    enable_starttls_auto: true,
-    openssl_verify_mode: 'peer'
-  }
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Raises error for missing translations.
