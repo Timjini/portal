@@ -16,8 +16,16 @@ class UserMailer < ApplicationMailer
   end
 
   def reset_password_instructions(user, token, _opts = {})
+    Rails.logger.info("Preparing to send reset password email to #{user.email}")
     @resource = user
     @token = token
-    mail(to: @resource.email, subject: 'Password Reset Instructions') # rubocop:disable Rails/I18nLocaleTexts
+    @reset_url = edit_user_password_url(reset_password_token: @token)
+    Rails.logger.info("Reset URL: #{@reset_url}")
+
+    begin
+      BrevoMailerService.new(@resource, @reset_url).send_reset_password_email
+    rescue StandardError => e
+      Rails.logger.error("Failed to send reset password email: #{e.message}")
+    end
   end
 end

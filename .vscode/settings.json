@@ -2,6 +2,7 @@
   "cSpell.words": [
     "ALLOWFROM",
     "antiquewhite",
+    "Brevo",
     "cancancan",
     "checkin",
     "hotwired",
@@ -11,31 +12,26 @@
     "progname",
     "replit",
     "rgba",
-    "sslca"
+    "sslca",
+    "transac"
   ],
-
   "files.associations": {
     "*.html.erb": "erb"
   },
-
   "editor.formatOnSave": true,
-
   "[ruby]": {
     "editor.defaultFormatter": "Shopify.ruby-lsp",
     "editor.formatOnSave": true
   },
-
   "[erb]": {
     "editor.defaultFormatter": null,
     "editor.formatOnSave": false
   },
-
   "rubyLsp.enabledFeatures": {
     "diagnostics": true,
     "formatting": true
   },
   "rubyLsp.rubocop.enabled": true,
-
   "rubyLsp.testFramework": "rspec",
   "rubyLsp.rspecCommand": "bundle exec rspec",
   "rubyLsp.rspecOptions": [
