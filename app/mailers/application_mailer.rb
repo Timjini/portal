@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationMailer < ActionMailer::Base
-  default from: 'info@chambersforsport.com'
+  default from: 'no-reply@club.chambersforsport.com'
   layout 'mailer'
 end
