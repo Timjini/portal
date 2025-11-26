@@ -55,9 +55,9 @@ gem 'rack-cors'
 gem 'recurrence', '~> 1.3'
 gem 'rqrcode'
 # gem 'sendgrid-ruby'
+gem 'brevo'
 gem 'sib-api-v3-sdk'
 gem 'will_paginate'
-gem 'brevo'
 
 # dev tools
 gem 'guard-livereload', '~> 2.5', require: false
