@@ -194,7 +194,11 @@ Rails.application.routes.draw do
 
   resources :kpi_categories
   resources :athlete_levels
-  resources :attendance, only: %i[index create]
+  resources :attendance do
+    collection do
+      get :fetch
+    end
+  end
 
   namespace :admin do
     resources :dashboard, only: [:index]

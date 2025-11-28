@@ -86,14 +86,8 @@
                     <%= render 'icons/edit' %>
                   </a>
 
-                  <% if account.role == 'coach' && account.coach_calendars.present? %>
-                    <a href="/coach_calendar/<%= account.id %>" class="text-indigo-600 hover:text-indigo-900" title="Calendar">
-                      <%= render 'icons/calendar' %>
-                    </a>
-                  <% end %>
-
                   <% if account.role == 'child_user' ||  account.role == 'athlete' %>
-                    <a href="/coaches/assessments/<%= account.id %>" class="text-indigo-600 hover:text-indigo-900" title="Calendar">
+                    <a href="/coaches/assessments" class="text-indigo-600 hover:text-indigo-900" title="Calendar">
                       <%= render 'icons/calendar' %>
                     </a>
                     <a href="/athlete_profiles/<%= account.athlete_profile&.id %>" class="text-indigo-600 hover:text-indigo-900" title="Assessments">

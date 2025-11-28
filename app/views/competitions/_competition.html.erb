@@ -82,8 +82,6 @@
     <button class="btn-secondary bg-gray-400 text-white px-4 py-2 rounded" disabled>
       Not Available for <%= current_user.role.titleize %>s
     </button>
-     <% elsif ["parent_user"].include?(current_user.role) %>
-    <%= current_user.children.inspect%>
     <% else %>
       <%= form_with model: [competition, CompetitionEntry.new], class:"w-full" do |f| %>
       <%= f.submit "Participate", class:"btn w-full", data:{turbo_confirm: 'Please make sure that you have subscribed on the link provided?',turbo_submits_with: 'Saving...'} %>

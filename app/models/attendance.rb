@@ -12,8 +12,15 @@ class Attendance < ApplicationRecord
   private
 
   def not_already_present_today
-    return unless user.attendance.exists?(['DATE(attended_at) = ?', Time.zone.today])
+    return if attended_at.blank?
 
-    errors.add(:base, 'User has already been marked present today.')
+    date_range = attended_at.to_date.all_day
+
+    if Attendance.where(user_id: user_id)
+                 .where(attended_at: date_range)
+                 .where.not(id: id)
+                 .exists?
+      errors.add(:user, 'already has attendance recorded for this date.')
+    end
   end
 end
