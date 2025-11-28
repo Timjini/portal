@@ -79,11 +79,9 @@ class AccountsController < ApplicationController
   end
 
   def all_accounts # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    Rails.logger.info "Fetching accounts with params: #{params.inspect}"
-
     base_scope = User.includes(:athlete_profile, avatar_attachment: :blob)
     base_scope = base_scope.where(role: params[:role]) if params[:role].present?
-    base_scope = base_scope.with_coach_calendars if params[:role].nil? || params[:role] == 'coach'
+    # base_scope = base_scope.with_coach_calendars if params[:role].nil? || params[:role] == 'coach'
 
     @accounts = if params[:search].present?
                   search_accounts(params)

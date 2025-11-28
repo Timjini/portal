@@ -20,35 +20,35 @@ class AttendanceController < ApplicationController
     )
   end
 
-  def create # rubocop:disable Metrics/MethodLength,Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+    selected_date = if params[:attendance][:attended_at].present?
+                      Date.parse(params[:attendance][:attended_at])
+                    else
+                      Time.zone.today
+                    end
+
     users_status = params.dig(:attendance, :users) || {}
 
-    if params[:attendance].blank? || users_status.blank?
-      render json: { error: 'No attendance data provided.' }, status: :unprocessable_content
-      return
-    end
-
-    users_status = params.dig(:attendance, :users) || {}
-    if users_status.empty?
-      render json: { error: 'No users selected for attendance.' }, status: :unprocessable_content
-      return
-    end
     users_status.each do |user_id, present_value|
       status = present_value == '1' ? 'present' : 'absent'
 
-      # If you have unique attendance per day, find or create
       attendance = Attendance.find_or_initialize_by(
         user_id: user_id,
-        attended_at: Time.zone.today.all_day
+        attended_at: selected_date
       )
+
       attendance.status = status
-      attendance.attended_at ||= Time.zone.now
+      attendance.attended_at = selected_date
       attendance.save!
     end
 
     render json: { message: 'Attendance recorded successfully.' }, status: :created
-  rescue StandardError => e
-    Rails.logger.error "Error recording attendance: #{e.message}"
-    render json: { error: "Failed to record attendance. #{e.message}" }, status: :unprocessable_content
+  end
+
+  def fetch
+    date = params[:date].present? ? Date.parse(params[:date]) : Time.zone.today
+    records = Attendance.where(attended_at: date.all_day)
+
+    render json: records.map { |a| { user_id: a.user_id, status: a.status } }
   end
 end
