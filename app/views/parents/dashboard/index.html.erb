@@ -55,7 +55,6 @@
           </select>
         <% end %>
       </div>
-      
       <% if @milestones&.any? %>
         <div class="relative pl-6 pb-6 border-l-2 border-gray-200 space-y-6">
           <% @milestones.each do |milestone| %>
@@ -196,10 +195,9 @@
             </span>
             Attendance
           </h2>
-          
-          <% if @children_attendance&.any? %>
+          <% if @children_attendances&.any? %>
             <div class="space-y-4">
-              <% @children_attendance.each do |attendance| %>
+              <% @children_attendances.each do |attendance| %>
                 <div>
                   <div class="flex justify-between mb-2">
                     <p class="font-medium"><%= attendance[:child_name] %></p>
@@ -225,12 +223,12 @@
               </button>
             </div>
           <% else %>
-            <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
-              <span class="material-symbols-outlined text-gray-400">event_available</span>
-              <p class="text-sm text-gray-500 mt-2">No attendance data available</p>
-            </div>
+              <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+                <span class="material-symbols-outlined text-gray-400">event_available</span>
+                <p class="text-sm text-gray-500 mt-2">No attendance data available</p>
+              </div>
           <% end %>
-        </div>
+          </div>
         
         <!-- Notifications -->
         <div>

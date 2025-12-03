@@ -37,7 +37,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
            foreign_key: :coach_id,
            dependent: :destroy
   has_one :athlete_level # rubocop:disable Rails/HasManyOrHasOneDependent
-  has_many :attendance, dependent: :destroy
+  has_many :attendances, dependent: :destroy
   has_many :competition_entries, dependent: :destroy
 
   # Scopes

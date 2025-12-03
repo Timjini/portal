@@ -228,6 +228,7 @@ GEM
     hashie (5.0.0)
     hoe (4.3.0)
       rake (>= 0.8, < 15.0)
+    htmlbeautifier (1.4.3)
     http_parser.rb (0.8.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -577,6 +578,7 @@ DEPENDENCIES
   ffi (~> 1.9, >= 1.9.10)
   groupdate
   guard-livereload (~> 2.5)
+  htmlbeautifier
   image_processing (~> 1.2)
   jbuilder
   jsbundling-rails

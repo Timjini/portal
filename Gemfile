@@ -54,6 +54,8 @@ gem 'mailtrap', '~> 0.1.0'
 gem 'rack-cors'
 gem 'recurrence', '~> 1.3'
 gem 'rqrcode'
+gem 'htmlbeautifier'
+
 # gem 'sendgrid-ruby'
 gem 'brevo'
 gem 'sib-api-v3-sdk'

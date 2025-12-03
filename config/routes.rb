@@ -114,7 +114,7 @@ Rails.application.routes.draw do
   get '/subscriptions', to: 'home#subscriptions'
 
   # User Edit Routes
-  get 'users/edit_user/:id', to: 'users#edit_user', as: 'edit_user'
+  # get 'users/edit_user/:id', to: 'users#edit_user', as: 'edit_user'
   get 'users/edit/:id', to: 'users#edit', as: 'edit'
   patch 'users/update_user/:id', to: 'users#update_user', as: 'update_user'
   post 'users/search_user_by_level', to: 'users#search_user_by_level', as: 'search_user_by_level'
