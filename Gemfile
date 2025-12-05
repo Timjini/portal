@@ -50,11 +50,11 @@ gem 'sentry-ruby'
 # Utilities
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 gem 'groupdate'
+gem 'htmlbeautifier'
 gem 'mailtrap', '~> 0.1.0'
 gem 'rack-cors'
 gem 'recurrence', '~> 1.3'
 gem 'rqrcode'
-gem 'htmlbeautifier'
 
 # gem 'sendgrid-ruby'
 gem 'brevo'
