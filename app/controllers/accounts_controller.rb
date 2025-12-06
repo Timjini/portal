@@ -64,8 +64,8 @@ class AccountsController < ApplicationController
       else
         respond_to do |format|
           format.html do
-            flash.now[:alert] = @account.errors.full_messages.to_sentence || 'Failed to create child user.'
-            redirect_to add_child_accounts_path, alert: 'Failed to create child user.' # rubocop:disable Rails/I18nLocaleTexts
+            flash[:alert] = @account.errors.full_messages.to_sentence
+            redirect_to add_child_accounts_path
           end
           format.json do
             render json: {
