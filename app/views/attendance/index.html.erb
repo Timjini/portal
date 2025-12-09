@@ -1,11 +1,14 @@
-<%= form_with url: attendance_index_path(page: params[:page]), method: :post, local: true, data: { controller: "attendance" } do |form| %>
-  <div class="container mx-auto px-8 py-8 max-w-3xl">
+<div class="container mx-auto px-8 py-8 max-w-3xl">
     <header class="mb-8">
       <h1 class="text-2xl font-bold text-gray-800">Daily Attendance</h1>
       <p class="text-gray-600">Track your athletes' attendance</p>
     </header>
+     <!-- Filter  -->
+    <%= render 'attendance/partials/filter'%>
+<%= form_with url: attendance_index_path(page: params[:page]), method: :post, local: true, data: { controller: "attendance" } do |form| %>
+
     <!-- Step 1: Date and Session Selector -->
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
+  <div class="bg-white rounded-lg shadow p-6 mb-6">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div class="w-full md:w-auto">
           <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
@@ -26,8 +29,6 @@
         </div>
       </div>
     </div>
-    <!-- Filter  -->
-    <%= render 'attendance/partials/filter'%>
     <%= csrf_meta_tags %>
     <!-- Step 2: Athlete List -->
     <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
@@ -54,8 +55,10 @@
             <div class="flex items-center space-x-4">
               <label class="flex items-center space-x-2">
                 <%= hidden_field_tag "attendance[users][#{user.id}]", "0" %>
-                <%= check_box_tag "temp", "1", user.attended_today?, class: "attendance-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500", data: { action: "change->attendance#toggleCheckbox" } %>
-                <span>Present</span>
+                <%= check_box_tag "attendance[users][#{user.id}]", "1", user.attended_today?,
+                  class: "attendance-checkbox",
+                  data: { action: "change->attendance#toggleCheckbox" } %>                
+                  <span>Present</span>
               </label>
             </div>
           </div>
@@ -70,5 +73,6 @@
       <%= form.submit "Save Attendance", id: "save-btn", data: { action: "attendance#submitForm" }, class: "w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150 ease-in-out" %>
     </div>
   </div>
-</div>
 <% end %>
+
+</div>

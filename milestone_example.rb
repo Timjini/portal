@@ -1,4 +1,6 @@
-ex = [
+# frozen_string_literal: true
+
+[
   {
     title: 'Skills Assessment Completed',
     date: 'Today, 10:30 AM',
