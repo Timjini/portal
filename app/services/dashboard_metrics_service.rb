@@ -45,8 +45,8 @@ class DashboardMetricsService
   end
 
   def assessments_per_day
-    Assessment.where(completed_at: @start_date..@end_date)
-              .group_by { |a| a.completed_at.to_date }
+    Assessment.where(attended_at: @start_date..@end_date)
+              .group_by { |a| a.attended_at.to_date }
               .transform_values(&:count)
               .values
               .then { |vals| vals.sum / vals.size.to_f }

@@ -14,11 +14,13 @@
     "ILIKE",
     "jbuilder",
     "msapplication",
+    "panzoom",
     "progname",
     "replit",
     "rgba",
     "sidekiq",
     "sslca",
+    "titleize",
     "transac"
   ],
   "files.associations": {
