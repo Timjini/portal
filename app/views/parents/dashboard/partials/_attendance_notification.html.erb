@@ -1,0 +1,51 @@
+<!-- Attendance & Notifications -->
+<div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-6">
+   <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+      <!-- Attendance -->
+      <div>
+         <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+            <span class="text-green-600">
+            <span class="material-symbols-outlined">event_available</span>
+            </span>
+            Attendance
+         </h2>
+         <% if children_attendances&.any? %>
+         <div class="space-y-4">
+            <% children_attendances.flatten.each do |attendance| %>
+            <div class="mb-4">
+               <!-- Header with name and percentage -->
+               <div class="flex justify-between mb-2">
+                  <p class="font-medium"><%= attendance[:child_name] %></p>
+                  <p class="text-sm font-medium <%= attendance[:percentage_class] %>">
+                     <%= attendance[:percentage] %>%
+                  </p>
+               </div>
+               <!-- Mini attendance bars -->
+               <div class="flex gap-1">
+                  <% attendance[:attendance_bars].each do |bar| %>
+                  <div class="h-2 flex-1 <%= bar[:class] %> rounded"></div>
+                  <% end %>
+               </div>
+               <!-- Missed sessions text -->
+               <p class="text-xs text-gray-500 mt-1">
+                  <%= attendance[:missed_sessions] %> missed session<%= attendance[:missed_sessions] == 1 ? '' : 's' %>
+                  <%= attendance[:last_missed] ? "(last #{attendance[:last_missed]})" : '' %>
+               </p>
+            </div>
+            <% end %>
+            <button class="hidden w-full mt-4 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-sm">download</span>
+            Download Attendance Records
+            </button>
+         </div>
+         <% else %>
+         <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+            <span class="material-symbols-outlined text-gray-400">event_available</span>
+            <p class="text-sm text-gray-500 mt-2">No attendance data available</p>
+         </div>
+         <% end %>
+      </div>
+      <!-- Notifications -->
+     
+   </div>
+</div>

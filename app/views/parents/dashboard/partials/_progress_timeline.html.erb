@@ -1,0 +1,41 @@
+<div class=" bg-white rounded-xl shadow-sm p-6" id="progress-timeline">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+      <span class="text-blue-600">
+        <span class="material-symbols-outlined">timeline</span>
+      </span>
+      Progress Timeline
+    </h2>
+    <% if children&.any? %>
+      <div class="flex items-center gap-2">
+        <% if selected_child %>
+          <div class="flex items-center gap-2">
+            <% if selected_child.avatar.attached? %>
+              <%= image_tag selected_child.avatar, class: "w-8 h-8 rounded-full" %>
+            <% else %>
+              <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                <span class="text-gray-500 text-sm"><%= selected_child.initials %></span>
+              </div>
+            <% end %>
+            <span class="text-sm text-gray-700"><%= selected_child.full_name %></span>
+          </div>
+        <% end %>
+        <select 
+          class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-1 focus:ring-blue-500 focus:border-blue-500"
+          data-action="change->child-selector#selectChild"
+        >
+          <% children.each do |child| %>
+            <option 
+              value="<%= child.id %>" 
+              <%= 'selected' if child == selected_child %>
+            >
+              <%= child.full_name %>
+            </option>
+          <% end %>
+        </select>
+      </div>
+    <% end %>
+  </div>
+  
+  <%= render 'parents/dashboard/partials/milestones', milestones: milestones %>
+</div>

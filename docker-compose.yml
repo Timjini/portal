@@ -1,4 +1,11 @@
 services:
+  redis:
+      image: redis:7-alpine
+      ports:
+        - "6379:6379"
+      volumes:
+        - redis_data:/data
+      command: redis-server --appendonly yes
   production-app:
     container_name: portal-production-app
     build: .
@@ -16,3 +23,4 @@ services:
 
 volumes:
   portal-production-app-volume:
+  redis_data:

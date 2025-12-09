@@ -31,6 +31,9 @@ application.register("check-all", CheckAllController)
 import ChecklistController from "./checklist_controller"
 application.register("checklist", ChecklistController)
 
+import ChildSelectorController from "./child_selector_controller"
+application.register("child-selector", ChildSelectorController)
+
 import CollapsibleController from "./collapsible_controller"
 application.register("collapsible", CollapsibleController)
 
@@ -84,6 +87,9 @@ application.register("mobile-menu", MobileMenuController)
 
 import MultiSelectController from "./multi_select_controller"
 application.register("multi-select", MultiSelectController)
+
+import NotificationsController from "./notifications_controller"
+application.register("notifications", NotificationsController)
 
 import QuestionnaireController from "./questionnaire_controller"
 application.register("questionnaire", QuestionnaireController)

@@ -43,5 +43,16 @@
   "rubyLsp.rspecOptions": [
     "--format",
     "documentation"
-  ]
+  ],
+  "ruby.rubocop.executePath": "",
+  "ruby.rubocop.path": "/Users/guldehangizemlaajini/.rbenv/shims/rubocop",
+  "ruby.rubocop.args": [
+    "--force-exclusion"
+  ],
+  "ruby.useLanguageServer": true,
+  "ruby.lint": {
+    "rubocop": {
+      "enabled": true
+    }
+  }
 }

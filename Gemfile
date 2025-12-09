@@ -61,6 +61,11 @@ gem 'brevo'
 gem 'sib-api-v3-sdk'
 gem 'will_paginate'
 
+# caching
+gem 'redis', '~> 5.0'
+gem 'redis-namespace'
+gem 'redis-rails'
+
 # dev tools
 gem 'guard-livereload', '~> 2.5', require: false
 gem 'rubocop', '~> 1.67'

@@ -1,0 +1,46 @@
+<% notifications = current_user.notifications%>
+<div data-controller="notifications" class="relative">
+
+  <!-- Toggle Button -->
+  <button data-action="click->notifications#toggle"
+          class="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition">
+    <span class="material-symbols-outlined">notifications</span>
+    Notification Center
+  </button>
+
+  <!-- Panel -->
+  <div data-notifications-target="panel"
+       class="hidden absolute right-0 mt-3 w-80 bg-white shadow-xl border rounded-xl z-40">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center px-4 py-3 border-b">
+      <h2 class="font-semibold text-gray-800">Notifications</h2>
+
+      <button class="text-sm text-blue-600 hover:underline">
+        Mark all as read
+      </button>
+    </div>
+
+    <!-- List -->
+    <div class="max-h-80 overflow-y-auto">
+
+      <% if notifications.any? %>
+        <% notifications.each do |notification| %>
+          <div class="px-4 py-3 border-b last:border-0
+                      <%= 'bg-blue-50' unless notification.read? %>">
+            <p class="text-sm text-gray-800"><%= notification.message %></p>
+            <p class="text-xs text-gray-500 mt-1">
+              <%= time_ago_in_words(notification.created_at) %> ago
+            </p>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="px-4 py-6 text-gray-500 text-center">
+          No notifications yet.
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+
+</div>

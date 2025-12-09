@@ -1,0 +1,42 @@
+    <!-- Upcoming Events -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-red-500">
+            <span class="material-symbols-outlined">event</span>
+          </span>
+          Upcoming Events
+        </h2>
+        <button class="text-blue-600 text-sm font-medium">View Calendar</button>
+      </div>
+      
+      <% if @upcoming_events&.any? %>
+        <div class="space-y-4">
+          <% @upcoming_events.each do |event| %>
+            <div class="border-l-4 <%= event[:border_class] %> pl-4 py-2">
+              <div class="flex justify-between">
+                <p class="font-medium"><%= event[:title] %></p>
+                <span class="text-xs <%= event[:badge_bg_class] %> <%= event[:badge_text_class] %> px-2 py-1 rounded-full">
+                  <%= event[:child_name] %>
+                </span>
+              </div>
+              <p class="text-sm text-gray-600 mt-1"><%= event[:date_time] %></p>
+              <p class="text-sm mt-1"><%= event[:description] %></p>
+              <% if event[:actions]&.any? %>
+                <% event[:actions].each do |action| %>
+                  <button class="mt-2 <%= action[:text_class] %> text-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm"><%= action[:icon] %></span>
+                    <%= action[:label] %>
+                  </button>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+          <span class="material-symbols-outlined text-gray-400">event_available</span>
+          <p class="text-sm text-gray-500 mt-2">No upcoming events scheduled</p>
+        </div>
+      <% end %>
+    </div>

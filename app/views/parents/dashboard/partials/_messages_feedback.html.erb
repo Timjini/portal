@@ -1,0 +1,47 @@
+    <!-- Messages & Feedback -->
+     <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+          <span class="text-amber-500">
+            <span class="material-symbols-outlined">forum</span>
+          </span>
+          Coach Feedback
+        </h2>
+        <button class="text-blue-600 text-sm font-medium">Message Coaches</button>
+      </div>
+      
+      <% if @coach_feedback&.any? %>
+        <div class="space-y-4">
+          <% @coach_feedback.each do |feedback| %>
+            <div class="<%= feedback[:bg_class] %> rounded-lg p-4">
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0">
+                  <div class="w-10 h-10 rounded-full <%= feedback[:avatar_bg_class] %> <%= feedback[:avatar_text_class] %> flex items-center justify-center">
+                    <span class="material-symbols-outlined"><%= feedback[:avatar_icon] %></span>
+                  </div>
+                </div>
+                <div>
+                  <p class="font-medium"><%= feedback[:coach_name] %> · <span class="text-sm text-gray-600"><%= feedback[:date] %></span></p>
+                  <p class="text-sm mt-1">"<%= feedback[:message] %>"</p>
+                  <% if feedback[:actions]&.any? %>
+                    <div class="mt-2 flex gap-2">
+                      <% feedback[:actions].each do |action| %>
+                        <button class="<%= action[:text_class] %> text-sm flex items-center gap-1">
+                          <span class="material-symbols-outlined text-sm"><%= action[:icon] %></span>
+                          <%= action[:label] %>
+                        </button>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
+          <span class="material-symbols-outlined text-gray-400">forum</span>
+          <p class="text-sm text-gray-500 mt-2">No recent coach feedback</p>
+        </div>
+      <% end %>
+    </div>

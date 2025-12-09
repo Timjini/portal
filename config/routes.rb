@@ -142,7 +142,11 @@ Rails.application.routes.draw do
 
   # Parent Routes
   namespace :parents do
-    resources :dashboard, only: [:index]
+    resources :dashboard, only: [:index] do
+      collection do
+        post 'select_child/:child_id', to: 'dashboard#select_child', as: :select_child
+      end
+    end
     resources :profiles, only: %i[show edit update]
     resources :messages, only: %i[index show create]
     resources :billing, only: %i[index show]
