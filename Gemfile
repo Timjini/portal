@@ -33,9 +33,6 @@ gem 'activestorage', '7.1.2'
 gem 'aws-sdk-s3', '~> 1.136', require: false
 gem 'image_processing', '~> 1.2'
 
-# Redis
-gem 'redis', '>= 4.0.1'
-
 # Authentication & security
 gem 'devise', '~> 4.9'
 gem 'jwt'
