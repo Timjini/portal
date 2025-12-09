@@ -1,3 +1,4 @@
+   <% if upcoming_events.respond_to?(:any?) && upcoming_events.any? %>
     <!-- Upcoming Events -->
     <div class="bg-white rounded-xl shadow-sm p-6">
       <div class="flex justify-between items-center mb-6">
@@ -40,3 +41,8 @@
         </div>
       <% end %>
     </div>
+   <% else %>
+  <div class="bg-gray-50 rounded-lg p-6">
+    <p class="text-sm text-gray-500">No upcoming events</p>
+  </div>
+<% end %>

@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def safe_any?(collection)
+    collection.respond_to?(:any?) && collection.any?
+  end
+
   def render_coach_dashboard_if_coach(user) # rubocop:disable Metrics/MethodLength
     if user&.admin?
       render 'admin/dashboard'

@@ -108,6 +108,22 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  # Caching with Redis
+  # config/environments/development.rb
+  begin
+    redis = Redis.new(url: ENV.fetch('REDIS_URL', 'redis://localhost:6379/1'))
+    redis.ping
+
+    config.cache_store = :redis_cache_store, {
+      url: ENV.fetch('REDIS_URL', 'redis://localhost:6379/1'),
+      expires_in: 1.hour,
+      namespace: 'myapp_dev'
+    }
+  rescue Redis::CannotConnectError
+    puts '⚠️  Redis not available, falling back to memory store'
+    config.cache_store = :memory_store, { size: 64.megabytes }
+  end
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

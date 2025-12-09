@@ -16,36 +16,88 @@ class AthleteProfilesController < ApplicationController # rubocop:disable Metric
                 end
   end
 
-  def show # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    service = CheckListService.new(params)
-    result = service.show_athlete_status
+  # def show
+  #   service = CheckListService.new(params)
+  #   result = service.show_athlete_status
 
-    @athlete = result[:athlete]
-    all_levels = result[:levels]
-    @user = result[:user]
-    @percentage = result[:percentage]
-    @status = result[:status]
-    @checklist_items_completed = result[:checklist_items_completed]
+  #   @athlete = result[:athlete]
+  #   all_levels = result[:levels]
+  #   @user = result[:user]
+  #   @percentage = result[:percentage]
+  #   @status = result[:status]
+  #   @checklist_items_completed = result[:checklist_items_completed]
 
-    # Only levels matching the athlete's profile level
-    athlete_level_degree = @user.athlete_profile.level
-    @levels = all_levels.select { |level| level.degree == athlete_level_degree }
+  #   # Only levels matching the athlete's profile level
+  #   athlete_level_degree = @user.athlete_profile.level
+  #   @levels = all_levels.select { |level| level.degree == athlete_level_degree }
 
-    # Fetch all assessments for these levels
-    @assessments = Assessment.where(
-      athlete_id: @athlete.user.id,
-      level_id: @levels.map(&:id)
-    )
+  #   # Fetch all assessments for these levels
+  #   @assessments = Assessment.where(
+  #     athlete_id: @athlete.user.id,
+  #     level_id: @levels.map(&:id)
+  #   )
 
-    # ⭐ One SQL query to count completed per level
-    @completed_counts = Assessment
-                        .where(
-                          athlete_id: @athlete.user.id,
-                          completed: true,
-                          level_id: @levels.map(&:id)
-                        )
-                        .group(:level_id)
-                        .count
+  #   # ⭐ One SQL query to count completed per level
+  #   @completed_counts = Assessment
+  #                       .where(
+  #                         athlete_id: @athlete.user.id,
+  #                         completed: true,
+  #                         level_id: @levels.map(&:id)
+  #                       )
+  #                       .group(:level_id)
+  #                       .count
+
+  #   respond_to do |format|
+  #     format.html
+  #     format.turbo_stream
+  #   end
+  # end
+
+  def show
+    @athlete = AthleteProfile.includes(:user, user: [:avatar_attachment]).find(params[:id])
+    @user = @athlete.user
+
+    # Cache the entire athlete profile data
+    cache_key = "athlete_profile_#{@athlete.id}_#{@athlete.updated_at.to_i}_#{@user.updated_at.to_i}"
+
+    profile_data = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+      service = CheckListService.new(params)
+      result = service.show_athlete_status
+
+      all_levels = result[:levels]
+
+      # Only levels matching the athlete's profile level
+      athlete_level_degree = @user.athlete_profile.level
+      levels = all_levels.select { |level| level.degree == athlete_level_degree }
+
+      # Fetch all assessments for these levels with includes
+      assessments = Assessment.includes(:assessment_checklists)
+                              .where(
+                                athlete_id: @user.id,
+                                level_id: levels.map(&:id)
+                              )
+
+      # Preload checklist completion status in one query
+      completed_checklist_ids = assessments.flat_map do |assessment|
+        assessment.assessment_checklists.pluck(:check_list_id)
+      end.uniq
+
+      {
+        levels: levels,
+        assessments: assessments,
+        completed_checklist_ids: completed_checklist_ids,
+        percentage: result[:percentage],
+        status: result[:status],
+        checklist_items_completed: result[:checklist_items_completed]
+      }
+    end
+
+    @levels = profile_data[:levels]
+    @assessments = profile_data[:assessments]
+    @completed_checklist_ids = profile_data[:completed_checklist_ids]
+    @percentage = profile_data[:percentage]
+    @status = profile_data[:status]
+    @checklist_items_completed = profile_data[:checklist_items_completed]
 
     respond_to do |format|
       format.html
