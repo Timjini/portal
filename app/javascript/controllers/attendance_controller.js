@@ -89,13 +89,13 @@ export default class extends Controller {
     dateInput.value = selectedDate
     form.appendChild(dateInput)
 
-    Object.entries(this.attendanceState).forEach(([userId, isChecked]) => {
-      const hidden = document.createElement('input')
-      hidden.type = 'hidden'
-      hidden.name = `attendance[users][${userId}]`
-      hidden.value = isChecked ? '1' : '0'
-      form.appendChild(hidden)
-    })
+    // Object.entries(this.attendanceState).forEach(([userId, isChecked]) => {
+    //   const hidden = document.createElement('input')
+    //   hidden.type = 'hidden'
+    //   hidden.name = `attendance[users][${userId}]`
+    //   hidden.value = isChecked ? '1' : '0'
+    //   form.appendChild(hidden)
+    // })
 
     localStorage.removeItem('attendanceCache')
     const formData = new FormData(form)
