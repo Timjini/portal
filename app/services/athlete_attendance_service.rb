@@ -14,7 +14,9 @@ class AthleteAttendanceService
   private
 
   def grouped_attendance
-    Attendance.includes(:user).group_by(&:user_id)
+    Attendance.includes(:user)
+              .where(user_id: @athlete.id)
+              .group_by(&:user_id)
   end
 
   def build_stats(user_id, records)
