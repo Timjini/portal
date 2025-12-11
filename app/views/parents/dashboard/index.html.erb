@@ -37,14 +37,14 @@
     <div id="progress-timeline-container" data-controller="child-selector" class="lg:col-span-2"
        data-child-selector-url-value="<%= select_child_parents_dashboard_index_path(child_id: ':child_id') %>">
       <%= render 'parents/dashboard/partials/progress_timeline', 
-                  milestones: @milestones, 
-                  children: @children, 
-                  selected_child: @selected_child %>
+            milestones: @milestones || [], 
+            children: @children, 
+            selected_child: @selected_child %>
     </div>
     <!-- Messages & Feedback -->
-    <%= render 'parents/dashboard/partials/messages_feedback', coach_feedback: @coach_feedback %>
-    <!-- Upcoming Events -->
-    <%= render 'parents/dashboard/partials/upcoming_events', upcoming_events: @upcoming_events %>
+    <%= render 'parents/dashboard/partials/messages_feedback', coach_feedback: @coach_feedback || [] %>
+    <%= render 'parents/dashboard/partials/upcoming_events', upcoming_events: @upcoming_events || [] %>
+
     <!-- Attendance & Notifications -->
     <%= render 'parents/dashboard/partials/attendance_notification', children_attendances: @children_attendances%>
   </div>

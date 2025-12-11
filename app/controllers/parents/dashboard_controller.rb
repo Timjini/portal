@@ -7,7 +7,7 @@ module Parents
                       .includes(:avatar_attachment, :athlete_profile, :attendances)
       # default to first child
       @selected_child = @children.first
-      load_child_data(@selected_child)
+      load_child_data(@selected_child) if @selected_child.present?
     end
 
     def select_child # rubocop:disable Metrics/MethodLength
@@ -28,6 +28,8 @@ module Parents
     private
 
     def load_child_data(child)
+      return if child.nil?
+
       @children_attendances = [AthleteAttendanceService.new(child).call]
 
       @milestones = Assessment.where(athlete_id: child.id)
