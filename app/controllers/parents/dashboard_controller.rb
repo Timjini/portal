@@ -5,9 +5,15 @@ module Parents
     def index
       @children = User.where(parent_id: current_user.id)
                       .includes(:avatar_attachment, :athlete_profile, :attendances)
-      # default to first child
+
       @selected_child = @children.first
-      load_child_data(@selected_child) if @selected_child.present?
+
+      if @selected_child
+        load_child_data(@selected_child)
+      else
+        @milestones = []
+        @children_attendances = []
+      end
     end
 
     def select_child # rubocop:disable Metrics/MethodLength
