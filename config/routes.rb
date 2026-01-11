@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'sidekiq/web'
+# require 'sidekiq/web'
 
 Rails.application.routes.draw do
   resources :athlete_level_categories
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     end
   end
   resources :steps
-  mount Sidekiq::Web => '/sidekiq'
+  # mount Sidekiq::Web => '/sidekiq'
 
   # Common Routes
   resources :dcpa_events

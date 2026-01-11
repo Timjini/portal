@@ -7,7 +7,7 @@ ruby '3.2.2'
 # gem 'pg'
 gem 'mysql2', '~> 0.5.4'
 gem 'puma', '>= 5.0'
-gem 'rails', '~> 7.1.2'
+gem 'rails', '~> 8.0.1'
 
 # assets and JS bundling
 gem 'cssbundling-rails'
@@ -25,11 +25,11 @@ gem 'active_model_serializers', '~> 0.10.2'
 gem 'jbuilder'
 
 # Background jobs with redis/sidekiq
-gem 'sidekiq', '~> 7.1', '>= 7.1.2'
-gem 'sidekiq-cron', '~> 1.2'
+# gem 'sidekiq', '~> 7.1', '>= 7.1.2'
+# gem 'sidekiq-cron', '~> 1.2'
 
 # Storage
-gem 'activestorage', '7.1.2'
+gem 'activestorage', '8.0.3'
 gem 'aws-sdk-s3', '~> 1.136', require: false
 gem 'image_processing', '~> 1.2'
 
@@ -59,9 +59,9 @@ gem 'sib-api-v3-sdk'
 gem 'will_paginate'
 
 # caching
-gem 'redis', '~> 5.0'
-gem 'redis-namespace'
-gem 'redis-rails'
+# gem 'redis', '~> 5.4.1'
+# gem 'redis-namespace'
+# gem 'redis-rails'
 
 # dev tools
 gem 'guard-livereload', '~> 2.5', require: false

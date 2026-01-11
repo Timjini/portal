@@ -47,7 +47,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :children, -> { where(role: 'child_user') }, class_name: 'User', foreign_key: 'parent_id' # rubocop:disable Rails/HasManyOrHasOneDependent,Rails/InverseOf
 
   # Enums
-  enum role: ROLE_TYPES # rubocop:disable Rails/EnumSyntax
+  # enum role: ROLE_TYPES # rubocop:disable Rails/EnumSyntax
 
   # Validations
   validates :username,
@@ -136,7 +136,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   ## Authentication Methods
   def generate_jwt
-    JWT.encode({ user_id: id, exp: 24.hours.from_now.to_i }, Rails.application.secrets.secret_key_base)
+    JWT.encode({ user_id: id, exp: 24.hours.from_now.to_i }, Rails.application.credentials.secret_key_base)
   end
 
   def level

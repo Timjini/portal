@@ -4,6 +4,7 @@ module Admin
   class DashboardController < ApplicationController
     before_action :authenticate_user!
     authorize_resource class: false
+    # layout "admin"
 
     def index # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
       @recent_logins = User.where.not(last_login_at: nil)

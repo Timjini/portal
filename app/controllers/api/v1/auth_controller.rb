@@ -10,20 +10,27 @@ module Api
       include AthleteProfilesHelper
 
       def login # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-        user = User.where('lower(email) = ?', params[:user][:email].downcase).first
-        if user.nil?
-          render json: { type: 'Error', message: 'Account not found' }, status: :not_found
-        elsif user&.valid_password?(params[:user][:password])
-          token_expire = Time.zone.today + 365.days
-          user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: token_expire.to_time.to_i })
-          user_data = ActiveModelSerializers::SerializableResource.new(user,
-                                                                      each_serializer: Api::V1::UsersSerializer) # rubocop:disable Layout/ArgumentAlignment
-          result = { type: 'Success', data: user_data, message: 'User signed in successfully.', status: 200 }
-          render json: result
-          nil
-        else
-          render json: { type: 'Error', message: 'Password or Email incorrect' }, status: :unauthorized
-        end
+        username = params[:user][:username].downcase.gsub(' ', '')
+        email = params[:user][:email].downcase.gsub(' ', '')
+
+        # here I need to validate if username and email are correct.
+
+        @user = User.where('lower(email) = ?', params[:user][:email].downcase).first
+
+        render json: @user
+        # if user.nil?
+        #   render json: { type: 'Error', message: 'Account not found' }, status: :not_found
+        # elsif user&.valid_password?(params[:user][:password])
+        #   token_expire = Time.zone.today + 365.days
+        #   user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: token_expire.to_time.to_i })
+        #   user_data = ActiveModelSerializers::SerializableResource.new(user,
+        #                                                               each_serializer: Api::V1::UsersSerializer) # rubocop:disable Layout/ArgumentAlignment
+        #   result = { type: 'Success', data: user_data, message: 'User signed in successfully.', status: 200 }
+        #   render json: result
+        #   nil
+        # else
+        #   render json: { type: 'Error', message: 'Password or Email incorrect' }, status: :unauthorized
+        # end
       end
 
       def sign_up # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
