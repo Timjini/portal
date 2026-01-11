@@ -69,6 +69,6 @@ class StepExercisesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def step_exercise_params
-    params.require(:step_exercise).permit(:step_id, :exercise_id, :order)
+    params.expect(step_exercise: %i[step_id exercise_id order])
   end
 end

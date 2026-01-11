@@ -119,6 +119,6 @@ class Coaches::AssessmentsController < ApplicationController # rubocop:disable S
   end
 
   def assessment_params
-    params.require(:assessment).permit(:kpi_data, :user_ids, :checklists)
+    params.expect(assessment: %i[kpi_data user_ids checklists])
   end
 end

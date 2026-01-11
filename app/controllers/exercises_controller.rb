@@ -98,7 +98,7 @@ class ExercisesController < ApplicationController
   end
 
   def exercise_params
-    params.require(:exercise).permit(:name, :description, :reps, :sets, :duration_seconds, :distance_meters,
-                                     :male_benchmark, :female_benchmark, :notes, :movement_patterns, :image, :difficulty_level, :intensity, :muscle_group, :primary_focus, :equipment, :video_url, extra_attributes: {}) # rubocop:disable Layout/LineLength
+    params.expect(exercise: [:name, :description, :reps, :sets, :duration_seconds, :distance_meters,
+                             :male_benchmark, :female_benchmark, :notes, :movement_patterns, :image, :difficulty_level, :intensity, :muscle_group, :primary_focus, :equipment, :video_url, { extra_attributes: {} }]) # rubocop:disable Layout/LineLength
   end
 end

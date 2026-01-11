@@ -58,7 +58,7 @@ module Api
       end
 
       def form_params
-        params.require(:form).permit(:email, :title, :name, :phone, :subject, :status, :message)
+        params.expect(form: %i[email title name phone subject status message])
       end
     end
   end

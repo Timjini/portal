@@ -48,8 +48,8 @@ module Users
     private
 
     def user_params
-      params.require(:user).permit(:email, :phone, :username, :first_name, :last_name, :address, :city, :avatar,
-                                   :password, :password_confirmation, :role)
+      params.expect(user: %i[email phone username first_name last_name address city avatar
+                             password password_confirmation role])
     end
 
     def handle_successful_creation # rubocop:disable Metrics/AbcSize

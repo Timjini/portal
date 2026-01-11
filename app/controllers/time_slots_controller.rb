@@ -93,7 +93,7 @@ class TimeSlotsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def time_slot_params
-    params.require(:time_slot).permit(:title, :date, :start_time, :end_time, :slot_type,
-                                      :recurrence_rule, :recurrence_end, group_types: [])
+    params.expect(time_slot: [:title, :date, :start_time, :end_time, :slot_type,
+                              :recurrence_rule, :recurrence_end, { group_types: [] }])
   end
 end

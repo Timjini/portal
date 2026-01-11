@@ -26,6 +26,6 @@ class QrCodesController < ApplicationController
   private
 
   def qr_code_params
-    params.require(:qr_code).permit(:user_id, :data, :scanned)
+    params.expect(qr_code: %i[user_id data scanned])
   end
 end

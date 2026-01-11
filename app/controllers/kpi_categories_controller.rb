@@ -69,6 +69,6 @@ class KpiCategoriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def kpi_category_params
-    params.require(:kpi_category).permit(:name, :description)
+    params.expect(kpi_category: %i[name description])
   end
 end

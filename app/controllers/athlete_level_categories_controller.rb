@@ -70,6 +70,6 @@ class AthleteLevelCategoriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def athlete_level_category_params
-    params.require(:athlete_level_category).permit(:athlete_level_id, :kpi_category_id)
+    params.expect(athlete_level_category: %i[athlete_level_id kpi_category_id])
   end
 end

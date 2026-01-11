@@ -82,9 +82,9 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(
-      :email, :username, :first_name, :last_name,
-      :phone, :address, :avatar, :role
+    params.expect(
+      user: %i[email username first_name last_name
+               phone address avatar role]
     )
   end
 

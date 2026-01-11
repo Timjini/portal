@@ -69,6 +69,6 @@ class AthleteLevelsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def athlete_level_params
-    params.require(:athlete_level).permit(:name, :position, :description, :min_age, :max_age, :color, :active)
+    params.expect(athlete_level: %i[name position description min_age max_age color active])
   end
 end

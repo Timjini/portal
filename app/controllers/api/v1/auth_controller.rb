@@ -75,7 +75,7 @@ module Api
       private
 
       def user_params
-        params.require(:user).permit(:email, :username, :first_name, :last_name, :role, :password, :phone, :address)
+        params.expect(user: %i[email username first_name last_name role password phone address])
       end
 
       # TODO: this should be an event

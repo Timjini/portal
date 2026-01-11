@@ -65,6 +65,6 @@ class StepsController < ApplicationController
   end
 
   def step_params
-    params.require(:step).permit(:athlete_level_category_id, :step_number)
+    params.expect(step: %i[athlete_level_category_id step_number])
   end
 end

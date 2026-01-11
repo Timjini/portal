@@ -44,6 +44,6 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    params.require(:reviews).permit(:comment, :reviewable_type, :reviewable_id, :coach_id, :user_id)
+    params.expect(reviews: %i[comment reviewable_type reviewable_id coach_id user_id])
   end
 end

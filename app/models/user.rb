@@ -47,7 +47,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :children, -> { where(role: 'child_user') }, class_name: 'User', foreign_key: 'parent_id' # rubocop:disable Rails/HasManyOrHasOneDependent,Rails/InverseOf
 
   # Enums
-  # enum role: ROLE_TYPES # rubocop:disable Rails/EnumSyntax
+  # enum role: ROLE_TYPES
 
   # Validations
   validates :username,

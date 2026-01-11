@@ -54,23 +54,23 @@ module Admin
     end
 
     def taster_booking_params # rubocop:disable Metrics/MethodLength
-      params.require(:taster_booking).permit(
-        :firstName,
-        :lastName,
-        :email,
-        :phone,
-        :athleteBirthDate,
-        :parentFirstName,
-        :parentLastName,
-        :parentEmail,
-        :parentPhone,
-        :childFullName,
-        :childBirthDate,
-        :dateSelect,
-        :healthIssues,
-        :registrationConfirmation,
-        :policyAgreement,
-        :status
+      params.expect(
+        taster_booking: %i[firstName
+                           lastName
+                           email
+                           phone
+                           athleteBirthDate
+                           parentFirstName
+                           parentLastName
+                           parentEmail
+                           parentPhone
+                           childFullName
+                           childBirthDate
+                           dateSelect
+                           healthIssues
+                           registrationConfirmation
+                           policyAgreement
+                           status]
       )
     end
   end

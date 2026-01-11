@@ -118,6 +118,6 @@ class AccountsController < ApplicationController
   private
 
   def account_params
-    params.require(:user).permit(:email, :username, :password, :role)
+    params.expect(user: %i[email username password role])
   end
 end

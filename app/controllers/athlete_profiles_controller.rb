@@ -134,7 +134,7 @@ class AthleteProfilesController < ApplicationController # rubocop:disable Metric
   private
 
   def athlete_params
-    params.require(:athlete_profile).permit(:first_name, :last_name, :dob, :height, :weight, :email, :phone,
-                                            :school_name, :address, :city, :power_of_ten, :level, :image, :user_id)
+    params.expect(athlete_profile: %i[first_name last_name dob height weight email phone
+                                      school_name address city power_of_ten level image user_id])
   end
 end
