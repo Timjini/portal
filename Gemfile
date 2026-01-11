@@ -27,7 +27,8 @@ gem 'jbuilder'
 # Background jobs with redis/sidekiq
 # gem 'sidekiq', '~> 7.1', '>= 7.1.2'
 # gem 'sidekiq-cron', '~> 1.2'
-
+# Event store
+gem 'rails_event_store', '~> 2.17', '>= 2.17.1'
 # Storage
 gem 'activestorage', '8.0.3'
 gem 'aws-sdk-s3', '~> 1.136', require: false

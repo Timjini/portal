@@ -99,7 +99,7 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
   #
   #
-  config.example_status_persistence_file_path = 'spec/examples.txt'
+  config.example_status_persistence_file_path = 'spec/tests.txt'
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end

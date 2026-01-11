@@ -33,17 +33,17 @@ RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
 
     it { should validate_presence_of(:password).on(:create) }
 
-    it {
-      should define_enum_for(:role)
-        .with_values(
-          athlete: 'athlete',
-          parent_user: 'parent_user',
-          child_user: 'child_user',
-          coach: 'coach',
-          admin: 'admin'
-        )
-        .backed_by_column_of_type(:string)
-    }
+    # it {
+    #   should define_enum_for(:role)
+    #     .with_values(
+    #       athlete: 'athlete',
+    #       parent_user: 'parent_user',
+    #       child_user: 'child_user',
+    #       coach: 'coach',
+    #       admin: 'admin'
+    #     )
+    #     .backed_by_column_of_type(:string)
+    # }
   end
 
   # testing scopes

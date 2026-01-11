@@ -10,27 +10,28 @@ module Api
       include AthleteProfilesHelper
 
       def login # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-        username = params[:user][:username].downcase.gsub(' ', '')
-        email = params[:user][:email].downcase.gsub(' ', '')
+        username = params[:user][:username]
+        email = params[:user][:email]
 
         # here I need to validate if username and email are correct.
+        user =  if username.present?
+                  User.find_by(username: username.downcase.delete(' '))
+                else
+                  User.find_by(email: email.downcase.delete(' '))
+                end
 
-        @user = User.where('lower(email) = ?', params[:user][:email].downcase).first
-
-        render json: @user
-        # if user.nil?
-        #   render json: { type: 'Error', message: 'Account not found' }, status: :not_found
-        # elsif user&.valid_password?(params[:user][:password])
-        #   token_expire = Time.zone.today + 365.days
-        #   user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: token_expire.to_time.to_i })
-        #   user_data = ActiveModelSerializers::SerializableResource.new(user,
-        #                                                               each_serializer: Api::V1::UsersSerializer) # rubocop:disable Layout/ArgumentAlignment
-        #   result = { type: 'Success', data: user_data, message: 'User signed in successfully.', status: 200 }
-        #   render json: result
-        #   nil
-        # else
-        #   render json: { type: 'Error', message: 'Password or Email incorrect' }, status: :unauthorized
-        # end
+        if user.nil?
+          render json: { type: 'Error', message: 'Account not found' }, status: :not_found
+        elsif user&.valid_password?(params[:user][:password])
+          JwtPolicy.call(user)
+          user_data = ActiveModelSerializers::SerializableResource.new(user,
+                                                                      each_serializer: Api::V1::UsersSerializer) # rubocop:disable Layout/ArgumentAlignment
+          result = { type: 'Success', data: user_data, message: 'User signed in successfully.', status: 200 }
+          render json: result
+          nil
+        else
+          render json: { type: 'Error', message: 'Password or Email incorrect' }, status: :unauthorized
+        end
       end
 
       def sign_up # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
@@ -50,8 +51,8 @@ module Api
           return result
         end
 
-        token_expire = Time.zone.today + 365.days
-        user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: token_expire.to_time.to_i })
+        # Generate JWT Token
+        JwtPolicy.call(user)
 
         if user.save
           handle_successful_creation(user)
@@ -77,6 +78,7 @@ module Api
         params.require(:user).permit(:email, :username, :first_name, :last_name, :role, :password, :phone, :address)
       end
 
+      # TODO: this should be an event
       def handle_successful_creation(user)
         create_athlete_profile(user.id, params[:user][:dob]) if user.role == 'athlete'
         begin
