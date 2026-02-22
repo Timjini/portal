@@ -16,6 +16,9 @@ gem 'jsbundling-rails'
 gem 'sprockets-rails'
 gem 'tailwindcss-rails', '~> 3.0'
 
+# Integrations
+gem 'gocardless_pro'
+
 # Hotwire
 gem 'stimulus-rails'
 gem 'turbo-rails'
