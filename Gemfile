@@ -96,6 +96,8 @@ group :development, :test do
   gem 'ruby-lsp-rails', require: false
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do

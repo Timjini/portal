@@ -136,7 +136,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   ## Authentication Methods
   def generate_jwt
-    JWT.encode({ user_id: id, exp: 24.hours.from_now.to_i }, Rails.application.secrets.secret_key_base)
+    JWT.encode({ user_id: id, exp: 24.hours.from_now.to_i }, Rails.application.credentials.secret_key_base)
   end
 
   def level

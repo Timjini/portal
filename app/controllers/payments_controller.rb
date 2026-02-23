@@ -9,8 +9,21 @@ class PaymentsController < ApplicationController
       environment: :sandbox
     )
 
-    @client.bank_authorisations.get('BAU123')
+    @client.billing_requests.create(
+      params: {
+        payment_request: {
+          description: 'First Payment',
+          amount: '125',
+          currency: 'GBP'
+        },
+        mandate_request: {
+          scheme: 'pad',
+          consent_type: 'recurring',
+          currency: 'GBP'
+        }
 
-    puts @client.inspect
+      }
+    )
+    Rails.logger(@client.inspect)
   end
 end
