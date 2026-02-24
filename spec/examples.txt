@@ -66,4 +66,4 @@ example_id                                                  | status  | run_time
 ./spec/models/user_spec.rb[1:5:2]                           | passed  | 0.00297 seconds |
 ./spec/models/user_spec.rb[1:6:1:1]                         | passed  | 0.00288 seconds |
 ./spec/models/user_spec.rb[1:6:2:1]                         | passed  | 0.00247 seconds |
-./spec/services/billing_service_spec.rb[1:1:1]              | failed  | 0.06034 seconds |
+./spec/services/billing_service_spec.rb[1:1:1]              | failed  | 0.21404 seconds |

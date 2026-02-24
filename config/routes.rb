@@ -13,7 +13,12 @@ Rails.application.routes.draw do
   resources :steps
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :payments
+  resources :payments do
+    get 'landing', on: :collection, to: 'payments#landing'
+    get 'exit', on: :collection, to: 'payments#exit'
+    get 'requests', on: :collection, to: 'payments#requests'
+    get 'subscription', on: :collection, to: 'payments#subscription'
+  end
   # Common Routes
   resources :dcpa_events
   resources :time_slots
