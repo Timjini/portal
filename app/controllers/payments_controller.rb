@@ -12,37 +12,26 @@ class PaymentsController < ApplicationController
 
   def index
     service = BillingService.new(current_user)
-    @subscription = service.get_subscription
+
+    auth_url = service.create_billing
+
+    redirect_to auth_url, allow_other_host: true
   end
 
-  def subscription
-  end
+  def subscription; end
 
   def requests
-    service = BillingService.new(200, 'new product', current_user)
-    billing = service.list_billing_requests # This is the ListResponse object
+    service = BillingService.new(current_user)
+    billing = service.list_billing_requests
 
     # Use .records to get the array of objects
     @billing_requests = billing.records
   end
 
   def landing
-    puts params.inspect
-    # The ID comes back in the params
-    # brq_id = params[:billing_request_id]
-
-    # You can now verify if it's successful
-    # result = @client.billing_requests.get(brq_id)
-
-    # if result.status == 'fulfilled'
-    #   flash[:notice] = 'Thank you! Your bank is now linked.'
-    # else
-    #   flash[:alert] = 'Something went wrong.'
-    # end
-
-    # redirect_to dashboard_path
+    service = BillingService.new(current_user)
+    @data = service.list_mandates
   end
 
-  def exit
-  end
+  def exit; end
 end
