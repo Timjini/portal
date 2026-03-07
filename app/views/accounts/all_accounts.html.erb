@@ -1,22 +1,22 @@
 <% if current_user.role.in?(%w[admin coach]) %>
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6" data-controller="user-table">
-  <!-- Header Section -->
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-    <div class="flex items-center gap-4">
-      <%= render 'components/back_button' %>
-      <div class="inline-flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 mb-4">
-        <h1 class="text-2xl font-bold text-gray-800">User Accounts</h1>
-      </div>
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <div class="flex items-center gap-4">
+            <%= render 'components/back_button' %>
+            <div class="inline-flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 mb-4">
+                <h1 class="text-2xl font-bold text-gray-800">User Accounts</h1>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <%= render 'accounts/tabs' %>
+    <%= render 'accounts/tabs' %>
 
-  
+
 </div>
 
-  <!-- Search and Table -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Search and Table -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Search Bar -->
     <div class="p-4 border-b border-gray-200">
         <div class="relative max-w-xs flex flex-row gap-4">
@@ -28,18 +28,17 @@
     </div>
     <!-- Table -->
     <div id="accounts_list">
-      <% if @accounts.present? %>
+        <% if @accounts.present? %>
         <%= render 'accounts/account_list', locals: { accounts: @accounts } %>
 
         <!-- Pagination -->
         <div class="flex justify-center mt-4 pb-6">
-          <%= will_paginate @accounts, renderer: TailwindPaginationRenderer %>
+            <%= will_paginate @accounts, renderer: TailwindPaginationRenderer %>
         </div>
-      <% else %>
+        <% else %>
         <div class="p-6 text-center text-gray-500">Oops! No accounts found.</div>
-      <% end %>
+        <% end %>
     </div>
-  </div>
+</div>
 </div>
 <%end%>
-

@@ -79,7 +79,7 @@ class UsersController < ApplicationController
     render json: users
   end
 
-  def update_plan
+  def update_plan # rubocop:disable Metrics/MethodLength
     @user = User.find(params[:id])
     @plan = Plan.find(params[:plan_id])
 

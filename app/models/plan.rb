@@ -28,7 +28,7 @@ class Plan < ApplicationRecord
 
   # private
 
-  # def validate_fx_structure # rubocop:disable Metrics/AbcSize
+  # def validate_fx_structure
   #   return if fx.blank?
 
   #   unless fx.key?('exchange_rate') && fx.key?('fx_currency')

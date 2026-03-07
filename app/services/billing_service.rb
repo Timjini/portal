@@ -23,7 +23,7 @@ class BillingService
     'FAILED - 1'
   end
 
-  def billing_request_flow(billing_id)
+  def billing_request_flow(billing_id) # rubocop:disable Metrics/MethodLength
     flow = @client.billing_request_flows.create(
       params: {
         redirect_uri: 'http://localhost:3000/payments/landing',
@@ -47,7 +47,7 @@ class BillingService
     flow.authorisation_url
   end
 
-  def create_subscription
+  def create_subscription # rubocop:disable Metrics/MethodLength
     client.subscriptions.create(
       params: {
         amount: 1500,
