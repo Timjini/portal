@@ -64,7 +64,7 @@
                         </span>
                     </td>
                     <td>
-                      <% if ['athlete', 'child_athlete'].include?(account.role)%>
+                      <% if !['admin', 'parent_user'].include?(account.role)%>
                         <%= form_with(url: update_plan_user_path(account), method: :patch, data: { controller: "plan-selection" }) do |f| %>
                         <div class="w-full sm:w-64">
                             <select name="plan_id" data-action="change->plan-selection#change" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500">
