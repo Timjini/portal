@@ -23,7 +23,7 @@ class Plan < ApplicationRecord
 
   # --- JSON Store Validations ---
   # Validating keys inside JSON blocks
-  validate :validate_fx_structure
+  # validate :validate_fx_structure
   validate :validate_links_presence
 
   private
