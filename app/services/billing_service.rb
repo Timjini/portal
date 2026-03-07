@@ -55,12 +55,12 @@ class BillingService
         interval_unit: 'monthly',
         day_of_month: '6',
         links: {
-          # mandate: 'MD01KK0SNK56YDC1DPEVQX20E9A5'
+          # mandate: ''
           mandate: mandate_id
           # Mandate ID from the last section
         },
         metadata: {
-          subscription_number: 'PL01KJ72NZX1WS1XDT1KQQ8742SE'
+          subscription_number: ''
         }
       },
       headers: {
@@ -70,7 +70,7 @@ class BillingService
   end
 
   def subscription
-    @client.subscriptions.get('BRT01KJ72NZYRSK6DSY0GVHTR873Q')
+    @client.subscriptions.get('')
   end
 
   def list_billing_requests
