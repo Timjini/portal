@@ -28,17 +28,17 @@ class Plan < ApplicationRecord
 
   private
 
-  def validate_fx_structure # rubocop:disable Metrics/AbcSize
-    return if fx.blank?
+  # def validate_fx_structure # rubocop:disable Metrics/AbcSize
+  #   return if fx.blank?
 
-    unless fx.key?('exchange_rate') && fx.key?('fx_currency')
-      errors.add(:fx, 'must contain exchange_rate and fx_currency keys')
-    end
+  #   unless fx.key?('exchange_rate') && fx.key?('fx_currency')
+  #     errors.add(:fx, 'must contain exchange_rate and fx_currency keys')
+  #   end
 
-    return unless fx['exchange_rate'].present? && !fx['exchange_rate'].is_a?(Numeric)
+  #   return unless fx['exchange_rate'].present? && !fx['exchange_rate'].is_a?(Numeric)
 
-    errors.add(:fx, 'exchange_rate must be a number')
-  end
+  #   errors.add(:fx, 'exchange_rate must be a number')
+  # end
 
   def validate_links_presence
     return unless links.blank? || links['organisation'].blank?
