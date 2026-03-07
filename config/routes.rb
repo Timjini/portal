@@ -125,6 +125,11 @@ Rails.application.routes.draw do
   patch 'users/update_user/:id', to: 'users#update_user', as: 'update_user'
   post 'users/search_user_by_level', to: 'users#search_user_by_level', as: 'search_user_by_level'
   delete '/delete_user/:id', to: 'users#delete_user'
+  resources :users do
+    member do
+      patch :update_plan
+    end
+  end
 
   # Admin API Routes
   namespace :api do

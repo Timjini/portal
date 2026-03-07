@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_24_122921) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_07_050247) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -269,6 +269,31 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_24_122921) do
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
+  create_table "plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "day_of_month"
+    t.integer "day_of_week"
+    t.integer "month"
+    t.integer "interval"
+    t.string "interval_unit"
+    t.string "payment_reference"
+    t.string "currency"
+    t.string "status", default: "active"
+    t.string "redirect_url"
+    t.integer "count"
+    t.integer "scheme_notice_period"
+    t.boolean "has_pending_update", default: false, null: false
+    t.boolean "scheduled_to_pause", default: false, null: false
+    t.boolean "instant_bank_pay", default: false, null: false
+    t.json "links"
+    t.json "organisation_details"
+    t.json "fx"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pricing_packages", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.decimal "price_per_session", precision: 8, scale: 2
@@ -472,6 +497,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_24_122921) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_user_logins_on_user_id"
+  end
+
+  create_table "user_plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plan_id"], name: "index_user_plans_on_plan_id"
+    t.index ["user_id"], name: "index_user_plans_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|

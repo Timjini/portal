@@ -79,6 +79,22 @@ class UsersController < ApplicationController
     render json: users
   end
 
+  def update_plan
+    @user = User.find(params[:id])
+    @plan = Plan.find(params[:plan_id])
+
+    @user_plan = UserPlan.find_or_initialize_by(user: @user)
+
+    if @user_plan.update(plan: @plan)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @user, notice: I18n.t('flash.plan_updated') }
+      end
+    else
+      render :edit, status: :unprocessable_content
+    end
+  end
+
   private
 
   def user_params

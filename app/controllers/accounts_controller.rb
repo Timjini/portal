@@ -79,10 +79,10 @@ class AccountsController < ApplicationController
   end
 
   def all_accounts # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    base_scope = User.includes(:athlete_profile, avatar_attachment: :blob)
+    base_scope = User.includes(:athlete_profile, :plan, avatar_attachment: :blob)
     base_scope = base_scope.where(role: params[:role]) if params[:role].present?
     # base_scope = base_scope.with_coach_calendars if params[:role].nil? || params[:role] == 'coach'
-
+    @plans = Plan.pluck(:id, :name)
     @accounts = if params[:search].present?
                   search_accounts(params)
                 else
