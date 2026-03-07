@@ -24,9 +24,9 @@ class Plan < ApplicationRecord
   # --- JSON Store Validations ---
   # Validating keys inside JSON blocks
   # validate :validate_fx_structure
-  validate :validate_links_presence
+  # validate :validate_links_presence
 
-  private
+  # private
 
   # def validate_fx_structure # rubocop:disable Metrics/AbcSize
   #   return if fx.blank?
@@ -40,9 +40,9 @@ class Plan < ApplicationRecord
   #   errors.add(:fx, 'exchange_rate must be a number')
   # end
 
-  def validate_links_presence
-    return unless links.blank? || links['organisation'].blank?
+  # def validate_links_presence
+  #   return unless links.blank? || links['organisation'].blank?
 
-    errors.add(:links, 'must include an organisation reference')
-  end
+  #   errors.add(:links, 'must include an organisation reference')
+  # end
 end
