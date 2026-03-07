@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require 'dotenv/load'
+
 class JsonWebToken
-  def self.encode(payload, exp = 24.hours.from_now)
-    payload[:exp] = exp.to_i
-    JWT.encode(payload, ENV.fetch('JWT_SECRET_KEY', nil))
+  def self.encode(payload, exp = 7.days.from_now)
+    payload['exp'] = exp.to_i
+    JWT.encode(payload, ENV.fetch('JWT_SECRET_KEY', nil), 'HS256')
   end
 
   # def self.encode(token)
@@ -11,7 +13,7 @@ class JsonWebToken
   # end
 
   def self.decode(token)
-    decoded = JWT.decode(token, ENV.fetch('JWT_SECRET_KEY', nil))[0]
+    decoded = JWT.decode(token, ENV.fetch('JWT_SECRET_KEY', nil), true, { algorithm: 'HS256' })[0]
     ActiveSupport::HashWithIndifferentAccess.new(decoded)
   rescue JWT::ExpiredSignature, JWT::VerificationError
     nil

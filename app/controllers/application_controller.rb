@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     render json: { status: 'success' }.merge(serialized_data.as_json), status:
   end
 
-  def render_error(message = 'Something went wrong', status: :unprocessable_entity)
+  def render_error(message = 'Something went wrong', status: :unprocessable_content)
     render json: { status: 'error', message: }, status:
   end
 

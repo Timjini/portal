@@ -39,8 +39,8 @@ module TimeSlotsHelper
         format.html { redirect_to time_slot_url(time_slot), notice: 'Time slot was successfully created.' } # rubocop:disable Rails/I18nLocaleTexts
         format.json { render :show, status: :created, location: time_slot }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: time_slot.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: time_slot.errors, status: :unprocessable_content }
       end
     end
   end

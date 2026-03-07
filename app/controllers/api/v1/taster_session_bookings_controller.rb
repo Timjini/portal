@@ -59,7 +59,7 @@ module Api
           session.health_issues = params[:healthIssues]
           session.save
         else
-          render json: { status: :unprocessable_entity }
+          render json: { status: :unprocessable_content }
 
         end
 

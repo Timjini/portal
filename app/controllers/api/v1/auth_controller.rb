@@ -14,8 +14,7 @@ module Api
         if user.nil?
           render json: { type: 'Error', message: 'Account not found' }, status: :not_found
         elsif user&.valid_password?(params[:user][:password])
-          token_expire = Time.zone.today + 365.days
-          user.auth_token = JsonWebToken.encode({ user_id: user.id, exp: token_expire.to_time.to_i })
+          user.auth_token = JsonWebToken.encode({ user_id: user.id, user_role: user.role, user_email: user.email })
           user_data = ActiveModelSerializers::SerializableResource.new(user,
                                                                       each_serializer: Api::V1::UsersSerializer) # rubocop:disable Layout/ArgumentAlignment
           result = { type: 'Success', data: user_data, message: 'User signed in successfully.', status: 200 }
