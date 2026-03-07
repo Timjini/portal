@@ -264,10 +264,11 @@ plans = [
       exchange_rate: nil,
       estimated_exchange_rate: nil
     },
-    links: {
-      organisation: 'OR000118GEK031',
-      billing_request_template: 'BRT00049MZAAM67'
-    },
+    links: {},
+    # links: {
+    #   organisation: 'OR000118GEK031',
+    #   billing_request_template: 'BRT00049MZAAM67'
+    # },
     organisation_details: {
       name: 'Dwain Chambers Performance Academy',
       nickname: nil
@@ -298,10 +299,11 @@ plans = [
       exchange_rate: nil,
       estimated_exchange_rate: nil
     },
-    links: {
-      organisation: 'OR000118GEK031',
-      billing_request_template: 'BRT00049MYGXJA1'
-    },
+    links: {},
+    # links: {
+    #   organisation: 'OR000118GEK031',
+    #   billing_request_template: 'BRT00049MYGXJA1'
+    # },
     organisation_details: {
       name: 'Dwain Chambers Performance Academy',
       nickname: nil
@@ -332,10 +334,11 @@ plans = [
       exchange_rate: nil,
       estimated_exchange_rate: nil
     },
-    links: {
-      organisation: 'OR000118GEK031',
-      billing_request_template: 'BRT00049MYE272P'
-    },
+    links: {},
+    # links: {
+    #   organisation: 'OR000118GEK031',
+    #   billing_request_template: 'BRT00049MYE272P'
+    # },
     organisation_details: {
       name: 'Dwain Chambers Performance Academy',
       nickname: nil
@@ -366,10 +369,11 @@ plans = [
       exchange_rate: nil,
       estimated_exchange_rate: nil
     },
-    links: {
-      organisation: 'OR000118GEK031',
-      billing_request_template: 'BRT00049MYC1TX6'
-    },
+    links: {},
+    # links: {
+    #   organisation: 'OR000118GEK031',
+    #   billing_request_template: 'BRT00049MYC1TX6'
+    # },
     organisation_details: {
       name: 'Dwain Chambers Performance Academy',
       nickname: nil
@@ -400,10 +404,11 @@ plans = [
       exchange_rate: nil,
       estimated_exchange_rate: nil
     },
-    links: {
-      organisation: 'OR000118GEK031',
-      billing_request_template: 'BRT00049MY7WGXN'
-    },
+    links: {},
+    # links: {
+    #   organisation: 'OR000118GEK031',
+    #   billing_request_template: 'BRT00049MY7WGXN'
+    # },
     organisation_details: {
       name: 'Dwain Chambers Performance Academy',
       nickname: nil
@@ -434,10 +439,11 @@ plans = [
       exchange_rate: nil,
       estimated_exchange_rate: nil
     },
-    links: {
-      organisation: 'OR000118GEK031',
-      billing_request_template: 'BRT00049MXF1PEZ'
-    },
+    links: {},
+    # links: {
+    #   organisation: 'OR000118GEK031',
+    #   billing_request_template: 'BRT00049MXF1PEZ'
+    # },
     organisation_details: {
       name: 'Dwain Chambers Performance Academy',
       nickname: nil
