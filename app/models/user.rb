@@ -46,6 +46,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :parents, -> { where(role: 'parent_user') }
   has_many :children, -> { where(role: 'child_user') }, class_name: 'User', foreign_key: 'parent_id' # rubocop:disable Rails/HasManyOrHasOneDependent,Rails/InverseOf
 
+  has_one :user_plan, dependent: :destroy
+  has_one :plan, through: :user_plan
   # Enums
   enum role: ROLE_TYPES # rubocop:disable Rails/EnumSyntax
 

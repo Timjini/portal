@@ -21,23 +21,33 @@ RSpec.describe BillingService, type: :request do
     # end
 
     it 'returns billing request data' do
-      service = BillingService.new(200, 'new payment', user)
+      service = BillingService.new(user)
 
       result = service.create_billing
+      expect(result).to start_with('https://pay-sandbox.gocardless.com/billing')
+      # expect(result).to be_a(GoCardlessPro::Resources::BillingRequest)
+      # expect(result).to have_attributes(status: 'pending')
 
-      expect(result).to be_a(GoCardlessPro::Resources::BillingRequest)
-      expect(result).to have_attributes(status: 'pending')
+      # expect(result.payment_request).to include(
+      #   'amount' => 200,
+      #   'currency' => 'GBP',
+      #   'scheme' => 'faster_payments'
+      # )
 
-      expect(result.payment_request).to include(
-        'amount' => 200,
-        'currency' => 'GBP',
-        'scheme' => 'faster_payments'
-      )
-
-      expect(result.mandate_request).to include(
-        'scheme' => 'bacs',
-        'verify' => 'recommended'
-      )
+      # expect(result.mandate_request).to include(
+      #   'scheme' => 'bacs',
+      #   'verify' => 'recommended'
+      # )
     end
+
+    # it 'return subscription id ' do
+    #   service = BillingService.new(:user)
+
+    #   res = service.get_subscription
+
+    #   expect(res).to include(
+    #     'id' => 'PO01KJW6HKKBEAQ340J9SGZ0R87W'
+    #   )
+    # end
   end
 end

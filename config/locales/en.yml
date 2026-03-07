@@ -29,3 +29,24 @@
 
 en:
   hello: "Hello world"
+
+  flash:
+    plan_updated: "Plan updated successfully!"
+  
+  activerecord:
+    models:
+      plan: "Subscription Plan"
+    attributes:
+      plan:
+        currency: "ISO Currency Code"
+        fx: "Foreign Exchange Data"
+    errors:
+      models:
+        plan:
+          attributes:
+            currency:
+              invalid: "must be a 3-letter ISO code"
+            fx:
+              invalid_structure: "must contain exchange_rate and fx_currency keys"
+            url:
+              invalid: "must be a valid URL"

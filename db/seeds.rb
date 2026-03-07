@@ -238,3 +238,217 @@
 # end
 
 # Rails.logger.debug { "✅ Done seeding #{TOTAL_USERS} users." }
+
+plans = [
+  {
+    amount: 12_400,
+    name: 'Dwain Chambers Performance Academy: Advanced Group - 3 sessions per week',
+    day_of_month: 1,
+    day_of_week: nil,
+    month: nil,
+    interval: 1,
+    interval_unit: 'monthly',
+    payment_reference: nil,
+    currency: 'GBP',
+    redirect_url: nil,
+    count: nil,
+    created_at: '2026-01-23T10:28:24.918Z',
+    status: 'active',
+    has_pending_update: false,
+    scheme_notice_period: 3,
+    scheduled_to_pause: false,
+    instant_bank_pay: false,
+    fx: {
+      fx_currency: nil,
+      fx_amount: nil,
+      exchange_rate: nil,
+      estimated_exchange_rate: nil
+    },
+    links: {
+      organisation: 'OR000118GEK031',
+      billing_request_template: 'BRT00049MZAAM67'
+    },
+    organisation_details: {
+      name: 'Dwain Chambers Performance Academy',
+      nickname: nil
+    },
+    url: 'https://pay.gocardless.com/BRT00049MZAAM67'
+  },
+  {
+    amount: 9500,
+    name: 'Dwain Chambers Performance Academy: Advanced Group - 2 sessions per week',
+    day_of_month: 1,
+    day_of_week: nil,
+    month: nil,
+    interval: 1,
+    interval_unit: 'monthly',
+    payment_reference: nil,
+    currency: 'GBP',
+    redirect_url: nil,
+    count: nil,
+    created_at: '2026-01-23T10:22:29.879Z',
+    status: 'active',
+    has_pending_update: false,
+    scheme_notice_period: 3,
+    scheduled_to_pause: false,
+    instant_bank_pay: false,
+    fx: {
+      fx_currency: nil,
+      fx_amount: nil,
+      exchange_rate: nil,
+      estimated_exchange_rate: nil
+    },
+    links: {
+      organisation: 'OR000118GEK031',
+      billing_request_template: 'BRT00049MYGXJA1'
+    },
+    organisation_details: {
+      name: 'Dwain Chambers Performance Academy',
+      nickname: nil
+    },
+    url: 'https://pay.gocardless.com/BRT00049MYGXJA1'
+  },
+  {
+    amount: 5000,
+    name: 'Dwain Chambers Performance Academy: Advanced Group - 1 session per week',
+    day_of_month: 1,
+    day_of_week: nil,
+    month: nil,
+    interval: 1,
+    interval_unit: 'monthly',
+    payment_reference: nil,
+    currency: 'GBP',
+    redirect_url: nil,
+    count: nil,
+    created_at: '2026-01-23T10:21:54.297Z',
+    status: 'active',
+    has_pending_update: false,
+    scheme_notice_period: 3,
+    scheduled_to_pause: false,
+    instant_bank_pay: false,
+    fx: {
+      fx_currency: nil,
+      fx_amount: nil,
+      exchange_rate: nil,
+      estimated_exchange_rate: nil
+    },
+    links: {
+      organisation: 'OR000118GEK031',
+      billing_request_template: 'BRT00049MYE272P'
+    },
+    organisation_details: {
+      name: 'Dwain Chambers Performance Academy',
+      nickname: nil
+    },
+    url: 'https://pay.gocardless.com/BRT00049MYE272P'
+  },
+  {
+    amount: 12_400,
+    name: 'Dwain Chambers Performance Academy: 3 sessions per week',
+    day_of_month: 1,
+    day_of_week: nil,
+    month: nil,
+    interval: 1,
+    interval_unit: 'monthly',
+    payment_reference: nil,
+    currency: 'GBP',
+    redirect_url: nil,
+    count: nil,
+    created_at: '2026-01-23T10:20:36.655Z',
+    status: 'active',
+    has_pending_update: false,
+    scheme_notice_period: 3,
+    scheduled_to_pause: false,
+    instant_bank_pay: false,
+    fx: {
+      fx_currency: nil,
+      fx_amount: nil,
+      exchange_rate: nil,
+      estimated_exchange_rate: nil
+    },
+    links: {
+      organisation: 'OR000118GEK031',
+      billing_request_template: 'BRT00049MYC1TX6'
+    },
+    organisation_details: {
+      name: 'Dwain Chambers Performance Academy',
+      nickname: nil
+    },
+    url: 'https://pay.gocardless.com/BRT00049MYC1TX6'
+  },
+  {
+    amount: 8100,
+    name: 'Dwain Chambers Performance Academy: 2 sessions per week',
+    day_of_month: 1,
+    day_of_week: nil,
+    month: nil,
+    interval: 1,
+    interval_unit: 'monthly',
+    payment_reference: nil,
+    currency: 'GBP',
+    redirect_url: nil,
+    count: nil,
+    created_at: '2026-01-23T10:19:31.037Z',
+    status: 'active',
+    has_pending_update: false,
+    scheme_notice_period: 3,
+    scheduled_to_pause: false,
+    instant_bank_pay: false,
+    fx: {
+      fx_currency: nil,
+      fx_amount: nil,
+      exchange_rate: nil,
+      estimated_exchange_rate: nil
+    },
+    links: {
+      organisation: 'OR000118GEK031',
+      billing_request_template: 'BRT00049MY7WGXN'
+    },
+    organisation_details: {
+      name: 'Dwain Chambers Performance Academy',
+      nickname: nil
+    },
+    url: 'https://pay.gocardless.com/BRT00049MY7WGXN'
+  },
+  {
+    amount: 3800,
+    name: 'Dwain Chambers Performance Academy: 1 session per week',
+    day_of_month: 1,
+    day_of_week: nil,
+    month: nil,
+    interval: 1,
+    interval_unit: 'monthly',
+    payment_reference: nil,
+    currency: 'GBP',
+    redirect_url: nil,
+    count: nil,
+    created_at: '2026-01-23T10:12:04.109Z',
+    status: 'active',
+    has_pending_update: false,
+    scheme_notice_period: 3,
+    scheduled_to_pause: false,
+    instant_bank_pay: false,
+    fx: {
+      fx_currency: nil,
+      fx_amount: nil,
+      exchange_rate: nil,
+      estimated_exchange_rate: nil
+    },
+    links: {
+      organisation: 'OR000118GEK031',
+      billing_request_template: 'BRT00049MXF1PEZ'
+    },
+    organisation_details: {
+      name: 'Dwain Chambers Performance Academy',
+      nickname: nil
+    },
+    url: 'https://pay.gocardless.com/BRT00049MXF1PEZ'
+  }
+]
+
+plans.each do |p|
+  Plan.create(p)
+end
+
+plans_count = Plan.count
+Rails.logger.info " plans created : #{plans_count}"

@@ -46,3 +46,7 @@
 sendgrid.env
 
 .byebug_history
+/fixtures/*
+
+/.idea
+/.vscode

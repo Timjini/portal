@@ -1,0 +1,76 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api-sandbox.gocardless.com/subscriptions/BRT01KJ72NZYRSK6DSY0GVHTR873Q
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - gocardless-pro-ruby/v4.2.0 ruby/3.2.2p53 ruby/3.2.2 arm64-darwin23 faraday/2.14.0
+      Gocardless-Version:
+      - '2015-07-06'
+      Content-Type:
+      - application/json
+      Gocardless-Client-Library:
+      - gocardless-pro-ruby
+      Gocardless-Client-Version:
+      - 4.2.0
+      Authorization:
+      - Bearer <GOCARDLESS_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Tue, 24 Feb 2026 06:01:58 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache
+      Expires:
+      - '0'
+      X-Request-Id:
+      - 23BF3277B9B8_0A147E2A1F92_699D3E9B_01E90001
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+      Vary:
+      - Origin
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Ratelimit-Limit:
+      - '1600'
+      Ratelimit-Remaining:
+      - '1599'
+      Ratelimit-Reset:
+      - Tue, 24 Feb 2026 06:02:00 GMT
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=6BWgi20fP1__94kxLbKKdRCZwazViMLMN9hhAi5rX9I-1771912918-1.0.1.1-ov_JRAo1oSeotqkB1UNun6QyOg5tjS_tUlrmTkmVI1FJfjZBHoZV5QsINkLvhDhnihZpeKMIBEMI29.6JGbhGjkNG91z8wVdZLd_3znXgok;
+        path=/; expires=Tue, 24-Feb-26 06:31:58 GMT; domain=.gocardless.com; HttpOnly;
+        Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 9d2cc05e7e71a57f-TXL
+    body:
+      encoding: ASCII-8BIT
+      string: '{"error":{"message":"Resource not found","errors":[{"reason":"resource_not_found","message":"Resource
+        not found"}],"documentation_url":"https://developer.gocardless.com/api-reference#resource_not_found","type":"invalid_api_usage","request_id":"23BF3277B9B8_0A147E2A1F92_699D3E9B_01E90001","code":404}}'
+  recorded_at: Tue, 24 Feb 2026 06:01:58 GMT
+recorded_with: VCR 6.4.0

@@ -91,6 +91,9 @@ application.register("multi-select", MultiSelectController)
 import NotificationsController from "./notifications_controller"
 application.register("notifications", NotificationsController)
 
+import PlanSelectionController from "./plan_selection_controller"
+application.register("plan-selection", PlanSelectionController)
+
 import QuestionnaireController from "./questionnaire_controller"
 application.register("questionnaire", QuestionnaireController)
 

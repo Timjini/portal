@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>customer</th>
+      <th>mandate</th>
+      <th>Status</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @billing_requests.each do |brq| %>
+      <tr>
+        <td><%= brq.id %></td>
+        <td><%= brq.links.customer %></td>
+        <td>
+          <%= brq.links.mandate_request_mandate %>
+        </td>
+        <td><%= brq.status %></td>
+        <td><%= brq.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
