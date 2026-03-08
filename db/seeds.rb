@@ -191,7 +191,9 @@
 #       package_type: 'group_training',
 #       training_type: 'group_training',
 #       duration: 'month',
-#       status: 'active'
+#       status: 'active',
+#       start_date: '2026-04-01',
+#       ending_date: '2026-05-01'
 #     )
 #   end
 # end
