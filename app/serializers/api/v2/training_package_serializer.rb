@@ -3,8 +3,8 @@
 module Api
   module V2
     class TrainingPackageSerializer < ActiveModel::Serializer
-      attributes :id, :name, :description, :features, :formatted_price, :duration_in_days, :package_type, :training_type,
-                 :duration, :status, :extra, :formatted_start_date, :formatted_end_date
+      attributes :id, :name, :description, :features, :formatted_price, :duration_in_days, :package_type,
+                 :training_type, :duration, :status, :extra, :formatted_start_date, :formatted_end_date
 
       def formatted_price
         object.price.round
