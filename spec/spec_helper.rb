@@ -109,6 +109,8 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
   #
   #
+  #
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.example_status_persistence_file_path = 'spec/examples.txt'
   config.expect_with :rspec do |c|
     c.syntax = :expect

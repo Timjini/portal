@@ -5,7 +5,7 @@ module Api
     class BaseController < ApiBaseController
       require 'json_web_token'
       protect_from_forgery with: :null_session
-      before_action :authenticate_user!
+      before_action :authenticate_user!, :deep_underscore_params!
 
       protected
 
@@ -19,6 +19,10 @@ module Api
 
       def invalid_authentication
         render json: { error: 'Invalid Request' }, status: :unauthorized
+      end
+
+      def deep_underscore_params!
+        params.transform_keys! { |k| k.to_s.underscore }
       end
 
       private

@@ -22,10 +22,10 @@ module Api
       private
 
       def training_booking_params
-        params.require(:training_booking).permit(
-          :user_id, :training_package_id, :first_name, :last_name, :athlete_full_name,
-          :email, :phone, :address, :role, :birth_date, :health_issues,
-          :training_package_name, :approval_status, :payment_status
+        params.except(:training_booking).permit(
+          :role, :first_name, :last_name, :email, :phone,
+          :birth_date, :health_issues,
+          :training_package_id
         )
       end
     end
