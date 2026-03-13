@@ -145,6 +145,7 @@ Rails.application.routes.draw do
 
     namespace :v2 do
       resources :forms, only: %i[index create show]
+      resources :news_letters, only: %i[create]
       resources :training_packages, only: [:index]
       resources :training_bookings, only: %i[index create]
       resources :dcpa_events, only: [:index]

@@ -26,10 +26,11 @@ module Api
       end
 
       def create # rubocop:disable Metrics/MethodLength
+        Rails.logger.info("data ------> #{params.inspect}")
         form = Form.new(form_params)
         if form.save
           begin
-            FormMailer.contact_form_submission(form).deliver_now
+            # FormMailer.contact_form_submission(form).deliver_now
           rescue StandardError => e
             Rails.logger.debug { "----->issues#{e.message}" }
           end
