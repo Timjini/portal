@@ -13,7 +13,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins lambda { |origin, _env|
       # List your allowed domains here
-      allowed = ['http://localhost:3000', 'https://www.chambersforsport.com', 'https://website.chambersforsport.com', 'https://www.4f1t.com']
+      allowed = ['http://localhost:3000', 'https://chambersforsport.com', 'https://www.chambersforsport.com',
+                 'https://website.chambersforsport.com', 'https://www.4f1t.com']
       allowed.include?(origin)
     }
 
