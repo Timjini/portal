@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-class TasterBooking < ApplicationRecord
-  self.table_name = 'training_bookings'
-  alias_attribute :status , :approval_status
+class TasterBooking < SecondaryRecord
+  self.table_name = 'booking_data'
 
   enum :status, {
     pending: 'pending',
