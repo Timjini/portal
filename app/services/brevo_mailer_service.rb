@@ -25,7 +25,7 @@ class BrevoMailerService
   def mailer_settings
     Brevo::SendSmtpEmail.new(
       sender: { email: ENV.fetch('PORTAL_SENDER_EMAIL', nil), name: 'Chambers For Sport Academy' },
-      to: [{ email: @email_content[:user][:email] }],
+      to: [{ email: @email_content[:to] }],
       templateId: @email_content[:template_id],
       params: @email_content[:params]
     )
