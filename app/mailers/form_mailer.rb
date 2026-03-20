@@ -20,7 +20,7 @@ class FormMailer < ApplicationMailer
     begin
       BrevoMailerService.new(email_setting).send
     rescue StandardError => e
-      Rails.logger.error("Failed to send reset password email: #{e.message}")
+      Rails.logger.error("Failed to send form mailer: #{e.message}")
     end
   end
 end
