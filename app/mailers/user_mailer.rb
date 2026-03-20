@@ -19,7 +19,6 @@ class UserMailer < ApplicationMailer
     email_setting = {
       reset_url: @reset_url,
       template_id: 1,
-      user: user,
       to: user.email,
       params: {
         reset_url: @reset_url,
