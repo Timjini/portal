@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Form < ApplicationRecord
+  after_create -> { admin_notification_email }
+
   validate :personal_information, on: :personal_info
   validate :contact_information, on: :contact_info
 
@@ -20,5 +22,12 @@ class Form < ApplicationRecord
     errors.add(:base, 'Name must be present') if name.blank?
     errors.add(:base, 'Email must be present') if email.blank?
     errors.add(:base, 'Phone number must be present') if phone.blank?
+  end
+
+  private # rubocop:disable Lint/UselessAccessModifier
+
+  def admin_notification_email
+    FormMailer.contact_form_submission(self)
+    Rails.logger.info('Admin Notification Email sent')
   end
 end

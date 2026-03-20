@@ -26,7 +26,6 @@ module Api
       end
 
       def create # rubocop:disable Metrics/MethodLength
-        Rails.logger.info("data ------> #{params.inspect}")
         form = Form.new(form_params)
         if form.save
           begin

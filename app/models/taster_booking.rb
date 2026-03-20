@@ -2,7 +2,7 @@
 
 class TasterBooking < ApplicationRecord
   self.table_name = 'training_bookings'
-  alias_attribute :status , :approval_status
+  alias_attribute :status, :approval_status
 
   enum :status, {
     pending: 'pending',
