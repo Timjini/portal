@@ -7,41 +7,27 @@ class BrevoMailerService
     config.api_key['api-key'] = ENV.fetch('BREVO_API_KEY', nil)
   end
 
-  attr_reader :user, :reset_url
-
-  def initialize(user, reset_url)
-    @user = user
-    @reset_url = reset_url
+  def initialize(email_content)
+    @email_content = email_content
   end
 
-  def send_reset_password_email # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    Rails.logger.info("[BrevoMailerService] Preparing to send reset password email to #{user.email}")
-
+  def send
     api_instance = Brevo::TransactionalEmailsApi.new
-
-    email = Brevo::SendSmtpEmail.new(
-      sender: { email: 'no-reply@club.chambersforsport.com', name: 'Chambers For Sport Academy' },
-      to: [{ email: user.email }],
-      templateId: 1,
-      params: {
-        reset_url: reset_url,
-        username: user.username || user.email
-      }
-    )
-
-    Rails.logger.debug { "[BrevoMailerService] Email payload: #{email.to_hash.inspect}" }
-
-    response = api_instance.send_transac_email(email)
-
-    Rails.logger.info("[BrevoMailerService] Email sent successfully. Response: #{response.to_hash.inspect}")
-    response
+    api_instance.send_transac_email(mailer_settings)
   rescue Brevo::ApiError => e
     Rails.logger.error("[BrevoMailerService] Brevo API Error: #{e.response_body}")
     Rails.logger.error(e.backtrace.join("\n"))
     nil
-  rescue StandardError => e
-    Rails.logger.error("[BrevoMailerService] Unexpected error: #{e.message}")
-    Rails.logger.error(e.backtrace.join("\n"))
-    nil
+  end
+
+  private
+
+  def mailer_settings
+    Brevo::SendSmtpEmail.new(
+      sender: { email: ENV.fetch('PORTAL_SENDER_EMAIL', nil), name: 'Chambers For Sport Academy' },
+      to: [{ email: @email_content[:user][:email] }],
+      templateId: @email_content[:template_id],
+      params: @email_content[:params]
+    )
   end
 end

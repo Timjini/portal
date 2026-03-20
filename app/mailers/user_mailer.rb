@@ -11,19 +11,24 @@ class UserMailer < ApplicationMailer
   def welcome_email(user)
     @user = user
     @url  = 'https://club.chambersforsport.com/users/sign_in'
-    # This will automatically render the welcome_email.html.erb and welcome_email.text.erb templates
     mail(to: @user.email, subject: 'Welcome to Chambers For Sport') # rubocop:disable Rails/I18nLocaleTexts
   end
 
-  def reset_password_instructions(user, token, _opts = {})
-    Rails.logger.info("Preparing to send reset password email to #{user.email}")
-    @resource = user
-    @token = token
-    @reset_url = edit_user_password_url(reset_password_token: @token)
-    Rails.logger.info("Reset URL: #{@reset_url}")
+  def reset_password_instructions(user, token, _opts = {}) # rubocop:disable Metrics/MethodLength
+    @reset_url = edit_user_password_url(reset_password_token: token)
+    email_setting = {
+      reset_url: @reset_url,
+      template_id: 1,
+      user: user,
+      to: user.email,
+      params: {
+        reset_url: @reset_url,
+        username: user.username || user.email
+      }
+    }
 
     begin
-      BrevoMailerService.new(@resource, @reset_url).send_reset_password_email
+      BrevoMailerService.new(email_setting).send
     rescue StandardError => e
       Rails.logger.error("Failed to send reset password email: #{e.message}")
     end
