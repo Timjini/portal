@@ -1,26 +1,30 @@
 # frozen_string_literal: true
 
-class FormMailer < ApplicationMailer
-  def contact_form_submission(form_data)
+class FormMailer
+  def initialize(form)
+    @form = form
+  end
+
+  def contact_form_submission # rubocop:disable Metrics/MethodLength
     email_setting = {
-      reset_url: form_data.id,
+      reset_url: @form.id,
       template_id: 2,
       to: ENV.fetch('ADMIN_EMAIL', nil),
       params: {
-        request: form_data.title,
-        url: form.id,
-        full_name: form_data.name,
-        customer_email: form_data.email,
-        phone: form_data.phone,
-        subject: form_data.subject,
-        message: form_data.message,
+        request: @form.title,
+        url: @form.id,
+        full_name: @form.name,
+        customer_email: @form.email,
+        phone: @form.phone,
+        subject: @form.subject,
+        message: @form.message
       }
     }
 
     begin
       BrevoMailerService.new(email_setting).send
     rescue StandardError => e
-      Rails.logger.error("Failed to send reset password email: #{e.message}")
+      Rails.logger.error("Failed to send form mailer: #{e.message}")
     end
   end
 end

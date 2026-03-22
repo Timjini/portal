@@ -9,7 +9,6 @@ module Api
 
       def index
         forms = Form.where(title: params[:title], status: 'new')
-        Rails.logger.debug { "========> forms #{forms.inspect}" }
 
         return render json: { status: 'error', message: 'No entries found' }, status: :not_found if forms.empty?
 
@@ -25,14 +24,9 @@ module Api
         render json: { status: 'error', message: 'Form not found' }, status: :not_found
       end
 
-      def create # rubocop:disable Metrics/MethodLength
+      def create
         form = Form.new(form_params)
         if form.save
-          begin
-            # FormMailer.contact_form_submission(form).deliver_now
-          rescue StandardError => e
-            Rails.logger.debug { "----->issues#{e.message}" }
-          end
           render json: { status: 'success', data: Api::V2::FormSerializer.new(form).serializable_hash },
                  status: :created
         else
