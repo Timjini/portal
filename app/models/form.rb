@@ -27,7 +27,8 @@ class Form < ApplicationRecord
   private # rubocop:disable Lint/UselessAccessModifier
 
   def admin_notification_email
-    FormMailer.contact_form_submission(self)
+    mailer = FormMailer.new(self)
+    mailer.contact_form_submission
     Rails.logger.info('Admin Notification Email sent')
   end
 end
