@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_13_202743) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_23_092127) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -415,6 +415,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_13_202743) do
     t.text "health_issues"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "extra"
+    t.boolean "registration_confirmation", default: false, null: false
+    t.bigint "training_package_id"
+    t.boolean "policy_agreement", default: false, null: false
+    t.index ["training_package_id"], name: "index_taster_session_bookings_on_training_package_id"
     t.index ["user_id"], name: "index_taster_session_bookings_on_user_id"
   end
 
@@ -569,6 +574,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_13_202743) do
   add_foreign_key "steps", "athlete_level_categories"
   add_foreign_key "subscriptions", "pricing_packages"
   add_foreign_key "subscriptions", "users"
+  add_foreign_key "taster_session_bookings", "training_packages"
   add_foreign_key "taster_session_bookings", "users"
   add_foreign_key "training_bookings", "training_packages"
   add_foreign_key "training_bookings", "users"
