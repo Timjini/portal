@@ -147,7 +147,7 @@ Rails.application.routes.draw do
       resources :forms, only: %i[index create show]
       resources :news_letters, only: %i[create]
       resources :training_packages, only: [:index]
-      resources :training_bookings, only: %i[index create]
+      resources :taster_session_bookings, only: %i[index create]
       resources :dcpa_events, only: [:index]
     end
   end
