@@ -6,6 +6,9 @@ module Api
       skip_before_action :authenticate_user!
 
       def create
+        # TasterSessionBooking (id: integer, user_id: integer, first_name: string, last_name: string,
+        # athlete_full_name: string, email: string, phone: string, role: string,
+        # birth_date: date, taster_session_date: date, health_issues: text)
         @training_booking = TrainingBooking.new(training_booking_params)
 
         if @training_booking.save
