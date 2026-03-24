@@ -32,7 +32,7 @@ class BillingService
           given_name: @user.first_name,
           family_name: @user.last_name,
           email: @user.email,
-          phone_number: @user.phone,
+          # phone_number: @user.phone,
           address_line1: '',
           postal_code: '',
           city: '',
@@ -43,24 +43,23 @@ class BillingService
         }
       }
     )
-
     flow.authorisation_url
   end
 
   def create_subscription # rubocop:disable Metrics/MethodLength
-    client.subscriptions.create(
+    @client.subscriptions.create(
       params: {
-        amount: 1500,
+        amount: @user.plan.amount,
         currency: @currency,
-        interval_unit: 'monthly',
+        interval_unit: @user.plan.interval_unit,
         day_of_month: '6',
         links: {
           # mandate: ''
-          mandate: mandate_id
+          mandate: ''
           # Mandate ID from the last section
         },
         metadata: {
-          subscription_number: ''
+          subscription_number: @user.id
         }
       },
       headers: {

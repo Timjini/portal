@@ -174,29 +174,29 @@
 # ]
 
 # questions_data.each { |q| Question.create!(q) } if Question.count.zero?
-if TrainingPackage.count.zero?
-  [
-    ['1 session a week', 38.00],
-    ['2 sessions a week', 81.00],
-    ['3 sessions a week', 124.00]
-  ].each do |name, price|
-    TrainingPackage.create!(
-      name: name,
-      description: "#{name.split.first} training session#{if name.include?('2') || name.include?('3')
-                                                            's'
-                                                          end} per week, billed monthly.",
-      features: ['Access to group training', 'Weekly guidance and support'].to_json,
-      price: price,
-      duration_in_days: 30,
-      package_type: 'group_training',
-      training_type: 'group_training',
-      duration: 'month',
-      status: 'active',
-      start_date: '2026-04-01',
-      ending_date: '2026-05-01'
-    )
-  end
-end
+# if TrainingPackage.count.zero?
+#   [
+#     ['1 session a week', 38.00],
+#     ['2 sessions a week', 81.00],
+#     ['3 sessions a week', 124.00]
+#   ].each do |name, price|
+#     TrainingPackage.create!(
+#       name: name,
+#       description: "#{name.split.first} training session#{if name.include?('2') || name.include?('3')
+#                                                             's'
+#                                                           end} per week, billed monthly.",
+#       features: ['Access to group training', 'Weekly guidance and support'].to_json,
+#       price: price,
+#       duration_in_days: 30,
+#       package_type: 'group_training',
+#       training_type: 'group_training',
+#       duration: 'month',
+#       status: 'active',
+#       start_date: '2026-04-01',
+#       ending_date: '2026-05-01'
+#     )
+#   end
+# end
 
 # require 'faker'
 
