@@ -15,9 +15,14 @@ class BillingService
     @scheme = 'bacs'
   end
 
+  # function handling multiple tasks !
   def create_billing
     res = @client.billing_requests.create(params: loading_params)
-    # Save the billing id
+    begin
+      save_billing_information_to_user(res)
+    rescue StandardError => e
+      Rails.logger.info("failed to save data to user #{e.message}")
+    end
     billing_request_flow(res.id)
   rescue GoCardlessPro::InvalidStateError
     'FAILED - 1'
@@ -26,17 +31,12 @@ class BillingService
   def billing_request_flow(billing_id) # rubocop:disable Metrics/MethodLength
     flow = @client.billing_request_flows.create(
       params: {
-        redirect_uri: 'http://localhost:3000/payments/landing',
-        exit_uri: 'http://localhost:3000/payments/exit',
+        redirect_uri: ENV.fetch('GOCARDLESS_LANDING_PAGE', nil),
+        exit_uri: ENV.fetch('GOCARDLESS_EXIT_PAGE', nil),
         prefilled_customer: {
           given_name: @user.first_name,
           family_name: @user.last_name,
-          email: @user.email,
-          # phone_number: @user.phone,
-          address_line1: '',
-          postal_code: '',
-          city: '',
-          country_code: ''
+          email: @user.email
         },
         links: {
           billing_request: billing_id
@@ -49,23 +49,20 @@ class BillingService
   def create_subscription # rubocop:disable Metrics/MethodLength
     @client.subscriptions.create(
       params: {
-        amount: @user.plan.amount,
+        amount: @user.plan.amount_string,
         currency: @currency,
-        interval_unit: @user.plan.interval_unit,
-        day_of_month: '6',
+        interval_unit: 'monthly',
+        day_of_month: 1,
         links: {
-          # mandate: ''
-          mandate: ''
-          # Mandate ID from the last section
-        },
-        metadata: {
-          subscription_number: @user.id
+          mandate: @user.plan.links['mandate']
         }
       },
       headers: {
-        'Idempotency-Key' => 'random_subscription_specific_string'
+        'Idempotency-Key' => @user.id
       }
     )
+  rescue StandardError => e
+    Rails.logger.info("error catching #{e.message}")
   end
 
   def subscription
@@ -86,5 +83,17 @@ class BillingService
         scheme: @scheme
       }
     }
+  end
+
+  def save_billing_information_to_user(res)
+    @user.plan.links = {
+      'request_id' => res.id,
+      'customer' => res.links.customer,
+      'customer_billing_detail' => res.links.customer_billing_detail,
+      'creditor' => res.links.creditor,
+      'organisation' => res.links.organisation,
+      'mandate_request' => res.links.mandate_request
+    }
+    @user.save
   end
 end

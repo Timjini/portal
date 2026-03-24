@@ -29,12 +29,10 @@ class PaymentsController < ApplicationController
   end
 
   def landing
-    begin
     service = BillingService.new(current_user)
     service.create_subscription
-    rescue StandardError => e 
-      Rails.logger.info("issue with subscription #{e.message}")
-    end
+  rescue StandardError => e
+    Rails.logger.info("issue with subscription #{e.message}")
   end
 
   def exit; end
