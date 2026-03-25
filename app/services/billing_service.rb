@@ -19,6 +19,9 @@ class BillingService
   def create_billing
     res = @client.billing_requests.create(params: loading_params)
     begin
+      if(!@user.plan)
+        return 'You must have a subscription!'
+      end
       save_billing_information_to_user(res)
     rescue StandardError => e
       Rails.logger.info("failed to save data to user #{e.message}")

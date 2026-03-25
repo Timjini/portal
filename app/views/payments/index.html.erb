@@ -1,1 +1,7 @@
-<%=@subscription.inspect%>
+<%=form_with url:'/payments', method: :post, data: {turbo: false} do |f|%>
+
+<%= f.select :athlete , current_user.children.map {|child| [child.full_name, child.id]} %>
+
+<%=f.submit "pay"%>
+
+<%end%>

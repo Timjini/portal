@@ -11,10 +11,18 @@ class PaymentsController < ApplicationController
   # end
 
   def index
-    service = BillingService.new(current_user)
+
+  end
+
+  def create 
+    Rails.logger.info("creating payments #{params.inspect}")
+    user = User.find(params[:athlete])
+    Rails.logger.info("user found #{user.inspect}")
+    flash[:alert] = user.errors.full_messages.to_sentence unless user.plan
+    # Errros needs UI handling here
+    service = BillingService.new(user)
 
     auth_url = service.create_billing
-
     redirect_to auth_url, allow_other_host: true
   end
 
