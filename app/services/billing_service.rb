@@ -5,7 +5,7 @@ class BillingService
     # @amount = amount
     # @description = description
     @user = user
-
+    @plan = user.plan
     @currency = ENV.fetch('PORTAL_CURRENCY', nil)
 
     @client = GoCardlessPro::Client.new(
@@ -19,9 +19,8 @@ class BillingService
   def create_billing
     res = @client.billing_requests.create(params: loading_params)
     begin
-      if(!@user.plan)
-        return 'You must have a subscription!'
-      end
+      return nil unless @user.user_plan
+
       save_billing_information_to_user(res)
     rescue StandardError => e
       Rails.logger.info("failed to save data to user #{e.message}")
@@ -89,7 +88,7 @@ class BillingService
   end
 
   def save_billing_information_to_user(res)
-    @user.plan.links = {
+    links_data = {
       'request_id' => res.id,
       'customer' => res.links.customer,
       'customer_billing_detail' => res.links.customer_billing_detail,
@@ -97,6 +96,7 @@ class BillingService
       'organisation' => res.links.organisation,
       'mandate_request' => res.links.mandate_request
     }
-    @user.save
+    Payment.create(user_id: @user.id, status: 'pending', user_plan_id: @user.user_plan.id, amount: @plan.amount,
+                   links: links_data)
   end
 end

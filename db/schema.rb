@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_23_092127) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_29_220421) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -274,6 +274,20 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_23_092127) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
+  end
+
+  create_table "payments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.date "payment_date"
+    t.decimal "amount", precision: 10, scale: 2
+    t.string "status", default: "pending"
+    t.date "due_date"
+    t.json "links"
+    t.bigint "user_id"
+    t.bigint "user_plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_payments_on_user_id"
+    t.index ["user_plan_id"], name: "index_payments_on_user_plan_id"
   end
 
   create_table "plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

@@ -1,7 +1,122 @@
-<%=form_with url:'/payments', method: :post, data: {turbo: false} do |f|%>
+<% plan = if current_user.role == 'parent_user' 
+    current_user.children.first.plan 
+    else 
+    current_user.plan 
+    end
+%>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
 
-<%= f.select :athlete , current_user.children.map {|child| [child.full_name, child.id]} %>
+        <div class="flex items-center gap-4">
+            <%= link_to :back, class: "inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200 border border-gray-300 shadow-sm hover:shadow-md" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Back</span>
+            <% end %>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Payments</h1>
+                <p class="text-sm text-gray-600 mt-1">Manage all Payments & Subscriptions</p>
+            </div>
+        </div>
+    </div>
 
-<%=f.submit "pay"%>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div class="lg:col-span-2">
+            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Active Subscription</h3>
+            <% if plan %>
+            <div class="relative overflow-hidden bg-gradient-to-br from-indigo-600 to-blue-700 rounded-2xl p-8 shadow-xl text-white min-h-[220px]">
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
 
-<%end%>
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                    <div>
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-widest mb-3 inline-block">Current Plan</span>
+                        <h2 class="text-2xl font-bold"><%= plan.name %></h2>
+                        <p class="text-blue-100 opacity-90 text-sm mt-1 uppercase tracking-tight">Billed <%= plan.interval_unit %></p>
+                    </div>
+                    <div class="text-left md:text-right">
+                        <p class="text-4xl font-black">
+                            <%= "#{ "%.2f" % (plan.amount.round / 100.0) }" %>
+                            <span class="text-lg font-medium opacity-80"><%= plan.currency %></span>
+                        </p>
+                        <p class="text-blue-100 text-sm">Renews automatically</p>
+                    </div>
+                </div>
+            </div>
+            <% else %>
+            <div class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center">
+                <p class="text-gray-500 font-medium">No active subscription found.</p>
+            </div>
+            <% end %>
+        </div>
+
+        <div class="lg:col-span-1">
+            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Make a Payment</h3>
+            <div class="bg-white border border-gray-200 shadow-sm rounded-2xl p-6">
+                <%= form_with url: '/payments', method: :post, data: { turbo: false }, class: "space-y-4" do |f| %>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Select Athlete</label>
+                    <% if current_user.role == 'parent_user' %>
+                    <%= f.select :athlete, current_user.children.map {|child| [child.full_name, child.id]}, {}, class: "block w-full rounded-xl border-gray-200 bg-gray-50 py-3 pl-4 pr-10 text-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" %>
+                    <% else %>
+                    <%= f.hidden_field :athlete, value: current_user.id %>
+                    <div class="py-3 px-4 bg-gray-50 rounded-xl border border-gray-100 text-sm text-gray-600">
+                        Personal Account: <%= current_user.full_name %>
+                    </div>
+                    <% end %>
+                </div>
+
+                <%= f.submit "Pay for Subscription", class: "btn w-full" %>
+                <p class="text-[10px] text-center text-gray-400 mt-2">Secure encrypted payment processing</p>
+                <% end %>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="font-bold text-gray-900">Transaction History</h3>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <% ["Plan Name", "Amount", "Date", "Status", "Actions"].each do |head| %>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest"><%= head %></th>
+                        <% end %>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <% if @payments.empty? %>
+                    <tr>
+                        <td colspan="5" class="px-6 py-12 text-center">
+                            <div class="flex flex-col items-center">
+                                <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                                    </svg>
+                                </div>
+                                <p class="text-gray-500 font-medium">No transactions yet</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <% else %>
+                    <% @payments.each do |p| %>
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 text-sm text-gray-900 font-medium"><%=p.id%></td>
+                        <td class="px-6 py-4 text-sm text-gray-600"><%= p.formatted_price %></td>
+                        <td class="px-6 py-4 text-sm text-gray-600"><%=p.created_at%></td>
+                        <td class="px-6 py-4"><%=p.status%></td>
+                        <td class="px-6 py-4 text-sm">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-900 font-semibold">Receipt
+                            </a>
+                        </td>
+                    </tr>
+                    <% end %>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

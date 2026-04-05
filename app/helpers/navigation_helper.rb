@@ -67,18 +67,28 @@ module NavigationHelper
         name: 'Competitions',
         path: competitions_path,
         icon: 'ticket',
+      },
+      {
+        name: 'Payments',
+        path: payments_path,
+        icon: 'payment',
         tag: 'new'
       }
     ]
   end
 
-  def parent_nav_items
+  def parent_nav_items # rubocop:disable Metrics/MethodLength
     [
       { name: 'Dashboard', path: parents_dashboard_index_path, icon: 'dashboard' },
       {
         name: 'Competitions',
         path: competitions_path,
-        icon: 'ticket',
+        icon: 'ticket'
+      },
+      {
+        name: 'Payments',
+        path: payments_path,
+        icon: 'payment',
         tag: 'new'
       }
     ]

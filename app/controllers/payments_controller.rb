@@ -11,18 +11,22 @@ class PaymentsController < ApplicationController
   # end
 
   def index
-
+    @payments = if current_user.role == 'parent_user'
+                  current_user.children.flat_map(&:payments)
+                else
+                  current_user.payments
+                end
   end
 
-  def create 
-    Rails.logger.info("creating payments #{params.inspect}")
+  def create
     user = User.find(params[:athlete])
-    Rails.logger.info("user found #{user.inspect}")
     flash[:alert] = user.errors.full_messages.to_sentence unless user.plan
-    # Errros needs UI handling here
-    service = BillingService.new(user)
 
+    service = BillingService.new(user)
     auth_url = service.create_billing
+
+    return flash[:alert] = 'Must have a subscription' unless auth_url # rubocop:disable Rails/I18nLocaleTexts
+
     redirect_to auth_url, allow_other_host: true
   end
 
