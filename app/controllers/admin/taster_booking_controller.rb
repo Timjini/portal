@@ -18,13 +18,13 @@ module Admin
     def show; end
 
     def new
-      @taster_booking = TasterBooking.new
+      @taster_booking = TasterSessionBooking.new
     end
 
     def edit; end
 
     def create
-      @taster_booking = TasterBooking.new(taster_booking_params)
+      @taster_booking = TasterSessionBooking.new(taster_booking_params)
 
       if @taster_booking.save
         redirect_to @taster_booking, notice: 'Taster booking was successfully created.' # rubocop:disable Rails/I18nLocaleTexts
@@ -50,7 +50,7 @@ module Admin
     private
 
     def set_taster_booking
-      @taster_booking = TasterBooking.find(params[:id])
+      @taster_booking = TasterSessionBooking.find(params[:id])
     end
 
     def taster_booking_params # rubocop:disable Metrics/MethodLength
