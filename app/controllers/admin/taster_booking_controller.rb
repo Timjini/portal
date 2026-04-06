@@ -5,9 +5,6 @@ module Admin
     before_action :authenticate_user!
     authorize_resource class: false
 
-    # Define actions for the TasterBooking controller
-    # Assuming this controller manages taster bookings in the admin section
-    # Adjust the actions as necessary based on your application's requirements
     before_action :set_taster_booking, only: %i[show edit update destroy]
 
     def index
