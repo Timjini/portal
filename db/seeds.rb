@@ -174,7 +174,7 @@
 # ]
 
 # questions_data.each { |q| Question.create!(q) } if Question.count.zero?
-if TrainingPackage.count.zero?
+if TrainingPackage.none?
   [
     ['1 session a week', 38.00],
     ['2 sessions a week', 81.00],
