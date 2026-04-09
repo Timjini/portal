@@ -10,17 +10,20 @@ class PaymentsController < ApplicationController
   #   redirect_to auth_url, allow_other_host: true
   # end
 
-  def index
-    @payments = if current_user.role == 'parent_user'
-                  current_user.children.flat_map(&:payments)
-                else
-                  current_user.payments
-                end
+  def index # rubocop:disable Metrics/AbcSize
+    @payment_information = {}
+    if current_user.role == 'parent_user'
+      @payment_information[:payments] = current_user.children.includes(%i[payments]).flat_map(&:payments)
+      @payment_information[:current_plan] = current_user.children
+    else
+      @payment_information[:payments] = current_user.payments
+      @payment_information[:current_plan] = current_user
+    end
   end
 
   def create
     user = User.find(params[:athlete])
-    flash[:alert] = user.errors.full_messages.to_sentence unless user.plan
+    UserPlan.create!(user_id: user.id, plan_id: params[:plan_id]) unless user.plan
 
     service = BillingService.new(user)
     auth_url = service.create_billing

@@ -1,160 +1,50 @@
-<% plan = if current_user.role == 'parent_user' 
-    current_user.children.first&.plan 
-    else 
-    current_user&.plan 
-    end
-%>
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+    <!-- PAGE HEADER --->
+    <%= render :partial => 'components/page_header', :locals => { title: 'Payments', description: 'Manage all Payments & Subscriptions'} %>
 
-        <div class="flex items-center gap-4">
-            <%= link_to :back, class: "inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200 border border-gray-300 shadow-sm hover:shadow-md" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            <span>Back</span>
-            <% end %>
-            <div>
-                <h1 class="text-2xl font-bold text-gray-900">Payments</h1>
-                <p class="text-sm text-gray-600 mt-1">Manage all Payments & Subscriptions</p>
-            </div>
-        </div>
-    </div>
-
+    <% if !@payment_information[:current_plan].nil?%>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-        <div class="lg:col-span-2">
-            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Active Subscription</h3>
-            <% if plan %>
-            <div class="relative overflow-hidden bg-gradient-to-br from-indigo-600 to-blue-700 rounded-2xl p-8 shadow-xl text-white min-h-[220px]">
-                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+        <% user = @payment_information[:current_plan].is_a?(Array) ? @payment_information[:current_plan].first : @payment_information[:current_plan] %>
+        <% if user.present? %>
+        <div class="lg:col-span-1">
+            <% if !user.plan.nil?%>
+            <div class="flex flex-col h-full justify-between">
+                <div class="relative overflow-hidden bg-gradient-to-br from-indigo-600 to-blue-700 rounded-2xl p-8 shadow-xl text-white min-h-[220px]">
+                    <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
 
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-                    <div>
-                        <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-widest mb-3 inline-block">Current Plan</span>
-                        <h2 class="text-2xl font-bold"><%= plan.name %></h2>
-                        <p class="text-blue-100 opacity-90 text-sm mt-1 uppercase tracking-tight">Billed <%= plan.interval_unit %></p>
-                    </div>
-                    <div class="text-left md:text-right">
-                        <p class="text-4xl font-black">
-                            <%= "#{ "%.2f" % (plan.amount.round / 100.0) }" %>
-                            <span class="text-lg font-medium opacity-80"><%= plan.currency %></span>
-                        </p>
-                        <p class="text-blue-100 text-sm">Renews automatically</p>
-                    </div>
-                </div>
-            </div>
-            <% else %>
-            <div class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-                    <div class="lg:col-span-2">
-                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Available Plans</h3>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <% Plan.all.each do |p| %>
-                            <div class="relative overflow-hidden bg-white border-2 <%= plan&.id == p.id ? 'border-indigo-600 ring-2 ring-indigo-100' : 'border-gray-100 hover:border-indigo-300' %> rounded-2xl p-6 shadow-sm transition-all">
-                                <% if plan&.id == p.id %>
-                                <div class="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase">
-                                    Current
-                                </div>
-                                <% end %>
-
-                                <div class="flex flex-col h-full justify-between">
-                                    <div>
-                                        <h2 class="text-xl font-bold text-gray-900"><%= p.name %></h2>
-                                        <p class="text-gray-500 text-xs uppercase tracking-tight mb-4">Billed <%= p.interval_unit %></p>
-
-                                        <p class="text-3xl font-black text-gray-900">
-                                            <%= number_to_currency(p.amount / 100.0, unit: p.currency == "GBP" ? "£" : "$") %>
-                                        </p>
-                                    </div>
-
-                                    <% if plan&.id != p.id %>
-                                    <%= button_to "Select Plan", '#', class: "mt-6 w-full py-2 px-4 bg-indigo-50 text-indigo-700 font-bold rounded-xl hover:bg-indigo-600 hover:text-white transition-colors text-sm" %>
-                                    <% else %>
-                                    <div class="mt-6 w-full py-2 px-4 bg-green-50 text-green-700 font-bold rounded-xl text-center text-sm border border-green-100">
-                                        Active Plan
-                                    </div>
-                                    <% end %>
-                                </div>
-                            </div>
-                            <% end %>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                        <div>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-widest mb-3 inline-block">Plan</span>
+                            <h2 class="text-2xl font-bold"><%= user.plan.name %></h2>
+                            <p class="text-blue-100 opacity-90 text-sm mt-1 uppercase tracking-tight">Billed <%= user.plan.interval_unit %></p>
+                        </div>
+                        <div class="text-left md:text-right">
+                            <p class="text-4xl font-black">
+                                <%= "#{ "%.2f" % (user.plan.amount.round / 100.0) }" %>
+                                <span class="text-lg font-medium opacity-80"><%= user.plan.currency %></span>
+                            </p>
+                            <p class="text-blue-100 text-sm">Renews automatically</p>
                         </div>
                     </div>
-
-                </div>
-            </div>
-            <% end %>
-        </div>
-
-        <div class="lg:col-span-1">
-            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Make a Payment</h3>
-            <div class="bg-white border border-gray-200 shadow-sm rounded-2xl p-6">
-                <%= form_with url: '/payments', method: :post, data: { turbo: false }, class: "space-y-4" do |f| %>
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Select Athlete</label>
-                    <% if current_user.role == 'parent_user' %>
-                        <% if current_user.children.nil?%>
-                            <%= f.select :athlete, current_user.children.map {|child| [child.full_name, child.id]}, {}, class: "block w-full rounded-xl border-gray-200 bg-gray-50 py-3 pl-4 pr-10 text-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" %>
-                        <%else%>
-                            <span> No kids </span>
-                        <%end%>
-                    <% else %>
-                    <%= f.hidden_field :athlete, value: current_user.id %>
-                    <div class="py-3 px-4 bg-gray-50 rounded-xl border border-gray-100 text-sm text-gray-600">
-                        Personal Account: <%= current_user.full_name %>
+                    <div class="mt-4">
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-widest mb-3 inline-block"> <%=user.full_name%> </span>
                     </div>
-                    <% end %>
                 </div>
-                <%= f.submit "Pay for Subscription", class: "btn w-full" %>
-                <p class="text-[10px] text-center text-gray-400 mt-2">Secure encrypted payment processing</p>
-                <% end %>
             </div>
+            <%else%>
+            <div class="relative overflow-hidden bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-8 shadow-xl text-white min-h-[220px] flex flex-col justify-between">
+                <div>
+                    <p class="text-xl font-bold mb-4">Plan Required</p>
+                    <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-widest mb-3 inline-block"> <%=user.full_name%> </span>
+                </div>
+                <%= button_to "Subscribe" , subscriptions_url, method: :get , params: {user_id: user.id},  class:"btn bg-white text-red-600 font-semibold py-2 px-4 rounded-lg hover:bg-red-100 hover:text-gray-900 transition duration-150" %>
+            </div>
+            <%end%>
         </div>
+        <%end%>
     </div>
 
-    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-        <div class="px-6 py-5 border-b border-gray-100">
-            <h3 class="font-bold text-gray-900">Transaction History</h3>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <% ["Plan Name", "Amount", "Date", "Status", "Actions"].each do |head| %>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest"><%= head %></th>
-                        <% end %>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <% if @payments.empty? %>
-                    <tr>
-                        <td colspan="5" class="px-6 py-12 text-center">
-                            <div class="flex flex-col items-center">
-                                <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
-                                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
-                                    </svg>
-                                </div>
-                                <p class="text-gray-500 font-medium">No transactions yet</p>
-                            </div>
-                        </td>
-                    </tr>
-                    <% else %>
-                    <% @payments.each do |p| %>
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4 text-sm text-gray-900 font-medium"><%=p.id%></td>
-                        <td class="px-6 py-4 text-sm text-gray-600"><%= p.formatted_price %></td>
-                        <td class="px-6 py-4 text-sm text-gray-600"><%=p.created_at%></td>
-                        <td class="px-6 py-4"><%=p.status%></td>
-                        <td class="px-6 py-4 text-sm">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900 font-semibold">Receipt
-                            </a>
-                        </td>
-                    </tr>
-                    <% end %>
-                    <% end %>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <%end%>
+
+    <%= render 'payments/payment_history' , payments: @payment_information[:payments] %>
 </section>

@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     get 'requests', on: :collection, to: 'payments#requests'
     get 'subscription', on: :collection, to: 'payments#subscription'
   end
+
+  resources :subscriptions, only: %i[index create] do # rubocop:disable Lint/EmptyBlock
+  end
   # Common Routes
   resources :dcpa_events
   resources :time_slots

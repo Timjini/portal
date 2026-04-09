@@ -14,7 +14,6 @@ FactoryBot.define do
   end
 end
 
-
 # name: "Basic Plan",
 #  amount: 0.5e4,
 #  day_of_month: 1,

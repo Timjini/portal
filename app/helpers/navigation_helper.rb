@@ -59,14 +59,14 @@ module NavigationHelper
   end
 
   # === ATHLETE MENU ===
-  def athlete_nav_items
+  def athlete_nav_items # rubocop:disable Metrics/MethodLength
     [
       { name: 'Dashboard', path: athletes_dashboard_index_path, icon: 'dashboard' },
       { name: 'Profile', path: athlete_profile_path(current_user.athlete_profile), icon: 'user' },
       {
         name: 'Competitions',
         path: competitions_path,
-        icon: 'ticket',
+        icon: 'ticket'
       },
       {
         name: 'Payments',
