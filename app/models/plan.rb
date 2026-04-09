@@ -45,4 +45,8 @@ class Plan < ApplicationRecord
 
   #   errors.add(:links, 'must include an organisation reference')
   # end
+
+  def amount_string
+    amount.to_i.to_s
+  end
 end

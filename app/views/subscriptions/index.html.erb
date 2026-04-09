@@ -1,0 +1,73 @@
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <%= render :partial => 'components/page_header', :locals => { title: 'Pricing Plans', description: 'Simple, transparent pricing for everyone.'} %>
+
+    <% if current_user.nil? || current_user.plan.nil? %>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <% @subscription_plans.each_with_index do |plan, index| %>
+            <% is_featured = index == 1 %>
+            
+            <div class="relative flex flex-col rounded-2xl border <%= is_featured ? 'border-red-600 ring-2 ring-red-600 shadow-xl' : 'border-slate-200 shadow-sm' %> bg-white p-8 transition-transform hover:scale-105">
+                
+                <% if is_featured %>
+                    <span class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-red-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                        Most Popular
+                    </span>
+                <% end %>
+
+                <div class="mb-4">
+                    <h2 class="text-xl font-bold text-slate-900">
+                        <%= plan.name %>
+                    </h2>
+                    <p class="text-sm text-slate-500 mt-2">Perfect for growing teams and individuals.</p>
+                </div>
+
+                <div class="my-6">
+                    <div class="flex items-baseline">
+                        <span class="text-3xl font-extrabold tracking-tight text-slate-900">
+                            <%= number_to_currency(plan.amount / 100.0, unit: plan.currency == 'USD' ? '$' : plan.currency) %>
+                        </span>
+                        <span class="ml-2 text-xl font-semibold text-slate-500">
+                            /<%= plan.interval_unit %>
+                        </span>
+                    </div>
+                </div>
+
+                <ul class="mb-8 space-y-4 text-sm text-slate-600  flex-1">
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        All core features included
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Premium 24/7 Support
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Cancel anytime
+                    </li>
+                </ul>
+
+                <%= form_with url: '/payments', method: :post, data: { turbo: false }, class: "space-y-4" do |f| %>
+                    <%= f.hidden_field :plan_id, value: plan.id %>
+                    <%= f.hidden_field :athlete, value: params[:user_id] %>
+                    <button type="submit" class="w-full py-3 px-4 rounded-lg font-bold transition-colors <%= is_featured ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-slate-100 text-slate-900 hover:bg-slate-200' %>">
+                        Get Started
+                    </button>
+                <%end%>
+            </div>
+        <% end %>
+    </div>
+
+    <div class="mt-12 flex flex-col items-center justify-center space-y-4">
+        <div class="flex items-center space-x-2 text-slate-500 text-sm">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+            <span>Secure SSL Encryption & PCI Compliance</span>
+        </div>
+        <div class="flex gap-4 opacity-50 grayscale">
+            <%= image_tag "visa_logo.svg" , alt:"Visa" , class:"h-6" %>
+            <%= image_tag "mastercard_logo.svg" , alt:"Visa" , class:"h-6" %>
+            <%= image_tag "stripe_logo.svg" , alt:"Visa" , class:"h-6" %>
+        </div>
+    </div>
+    <% end %>
+</section>

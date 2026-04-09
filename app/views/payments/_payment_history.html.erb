@@ -1,0 +1,45 @@
+<div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+    <div class="px-6 py-5 border-b border-gray-100">
+        <h3 class="font-bold text-gray-900">Transaction History</h3>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <% ["Plan Name", "Amount", "Date", "Status", "Actions"].each do |head| %>
+                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest"><%= head %></th>
+                    <% end %>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <% if payments.nil? %>
+                <tr>
+                    <td colspan="5" class="px-6 py-12 text-center">
+                        <div class="flex flex-col items-center">
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                                </svg>
+                            </div>
+                            <p class="text-gray-500 font-medium">No transactions yet</p>
+                        </div>
+                    </td>
+                </tr>
+                <% else %>
+                <% payments.each do |p| %>
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4 text-sm text-gray-900 font-medium"><%=p.id%></td>
+                    <td class="px-6 py-4 text-sm text-gray-600"><%= p.formatted_price %></td>
+                    <td class="px-6 py-4 text-sm text-gray-600"><%=p.created_at%></td>
+                    <td class="px-6 py-4"><%=p.status%></td>
+                    <td class="px-6 py-4 text-sm">
+                        <a href="#" class="text-indigo-600 hover:text-indigo-900 font-semibold">Receipt
+                        </a>
+                    </td>
+                </tr>
+                <% end %>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>

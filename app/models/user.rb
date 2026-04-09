@@ -48,6 +48,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   has_one :user_plan, dependent: :destroy
   has_one :plan, through: :user_plan
+  has_many :payments, dependent: :destroy
   # Enums
   enum role: ROLE_TYPES # rubocop:disable Rails/EnumSyntax
 

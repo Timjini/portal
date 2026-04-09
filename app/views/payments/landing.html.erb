@@ -1,1 +1,43 @@
-<%=@data.inspect%>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center justify-center min-h-screen">
+    
+    <div class="max-w-3xl w-full bg-gray-100 border border-gray-200 shadow-2xl rounded-xl overflow-hidden">
+        <div class="bg-emerald-50 p-8 text-center border-b border-emerald-100">
+            <h1 class="text-3xl font-extrabold text-gray-900">Welcome to Chambers For Sport!</h1>
+            <p class="text-emerald-700 font-medium mt-2">Your subscription is active and your account is ready.</p>
+        </div>
+
+        <div class="p-8 md:p-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">What happens now?</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 mt-0.5">1</span>
+                            <p class="text-gray-600 text-sm">A PDF receipt has been sent to your registered email.</p>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 mt-0.5">2</span>
+                            <p class="text-gray-600 text-sm">Manage or cancel your subscription anytime via your <a href="/payments" class="text-indigo-600 underline">Billing Portal</a>.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Support & Security</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                            <p class="text-sm text-gray-600"><span class="font-semibold">info@chambersforsport.com</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 text-center">
+                <a href="/dashboard" class="btn">
+                    Go to my Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

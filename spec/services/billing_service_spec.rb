@@ -7,47 +7,25 @@
 #
 # to record new episode
 # vcr: { record: :new_episodes }
-
+require 'spec_helper'
 require 'rails_helper'
-RSpec.describe BillingService, type: :request do
+RSpec.describe BillingService, type: :request, vcr: true do
   let(:user) { create(:user) }
-  describe 'creates a mandate', vcr: true do
-    # it 'returns FAILED - 1 when the currency/scheme mismatch occurs' do
-    #   service = BillingService.new(200, 'new payment', user)
+  let(:plan) { create(:plan) }
+  describe 'creates a mandate' do
+    it 'create billing successfully' do
+      user.plan = plan
+      service = BillingService.new(user)
+      result = service.create_billing
 
-    #   result = service.create_billing
-
-    #   expect(result).to eq('FAILED - 1')
-    # end
+      expect(result).to start_with('https://pay-sandbox.gocardless.com/billing')
+    end
 
     it 'returns billing request data' do
       service = BillingService.new(user)
-
-      result = service.create_billing
-      expect(result).to start_with('https://pay-sandbox.gocardless.com/billing')
-      # expect(result).to be_a(GoCardlessPro::Resources::BillingRequest)
-      # expect(result).to have_attributes(status: 'pending')
-
-      # expect(result.payment_request).to include(
-      #   'amount' => 200,
-      #   'currency' => 'GBP',
-      #   'scheme' => 'faster_payments'
-      # )
-
-      # expect(result.mandate_request).to include(
-      #   'scheme' => 'bacs',
-      #   'verify' => 'recommended'
-      # )
+      VCR.use_cassette('gocardless/returns_billing_requests_data') do
+        service.list_billing_requests
+      end
     end
-
-    # it 'return subscription id ' do
-    #   service = BillingService.new(:user)
-
-    #   res = service.get_subscription
-
-    #   expect(res).to include(
-    #     'id' => 'PO01KJW6HKKBEAQ340J9SGZ0R87W'
-    #   )
-    # end
   end
 end
