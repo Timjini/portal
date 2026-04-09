@@ -10,7 +10,7 @@ class PaymentsController < ApplicationController
   #   redirect_to auth_url, allow_other_host: true
   # end
 
-  def index # rubocop:disable Metrics/AbcSize
+  def index
     @payment_information = {}
     if current_user.role == 'parent_user'
       @payment_information[:payments] = current_user.children.includes(%i[payments]).flat_map(&:payments)
