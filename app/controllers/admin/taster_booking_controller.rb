@@ -5,26 +5,23 @@ module Admin
     before_action :authenticate_user!
     authorize_resource class: false
 
-    # Define actions for the TasterBooking controller
-    # Assuming this controller manages taster bookings in the admin section
-    # Adjust the actions as necessary based on your application's requirements
     before_action :set_taster_booking, only: %i[show edit update destroy]
 
     def index
-      @taster_bookings = TasterBooking.where(dateSelect: Time.zone.today..).paginate(page: params[:page],
-                                                                                     per_page: 10)
+      @taster_bookings = TasterSessionBooking.where(taster_session_date: Time.zone.today..)
+                                             .paginate(page: params[:page], per_page: 10)
     end
 
     def show; end
 
     def new
-      @taster_booking = TasterBooking.new
+      @taster_booking = TasterSessionBooking.new
     end
 
     def edit; end
 
     def create
-      @taster_booking = TasterBooking.new(taster_booking_params)
+      @taster_booking = TasterSessionBooking.new(taster_booking_params)
 
       if @taster_booking.save
         redirect_to @taster_booking, notice: 'Taster booking was successfully created.' # rubocop:disable Rails/I18nLocaleTexts
@@ -50,7 +47,7 @@ module Admin
     private
 
     def set_taster_booking
-      @taster_booking = TasterBooking.find(params[:id])
+      @taster_booking = TasterSessionBooking.find(params[:id])
     end
 
     def taster_booking_params # rubocop:disable Metrics/MethodLength

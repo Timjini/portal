@@ -15,12 +15,12 @@
             
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                    <%= form.text_field :firstName, class: input_style %>
+                    <%= form.text_field :first_name, class: input_style %>
                 </div>
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                    <%= form.text_field :lastName, class: input_style %>
+                    <%= form.text_field :last_name, class: input_style %>
                 </div>
                 
                 <div>
@@ -35,7 +35,7 @@
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Birth Date</label>
-                    <%= form.date_field :athleteBirthDate, class: input_style %>
+                    <%= form.date_field :birth_date, class: input_style %>
                 </div>
 
             </div>
@@ -47,13 +47,17 @@
             
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Selected Date</label>
-                <%= form.date_field :dateSelect, class: input_style %>
+                <%= form.date_field :taster_session_date, class: input_style %>
             </div>
             
-            <div>
+            <%
+=begin%>
+ <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <%= form.select :status, options_for_select(['pending', 'confirmed', 'cancelled'], @taster_booking.status), {}, class: input_style %>
-            </div>
+            </div> 
+<%
+=end%>
             
             <!-- Parent/Guardian Information -->
             <div class="space-y-4 md:col-span-2">
@@ -62,22 +66,22 @@
             
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Parent First Name</label>
-                <%= form.text_field :parentFirstName, class: input_style %>
+                <%= form.text_field :first_name, class: input_style %>
             </div>
             
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Parent Last Name</label>
-                <%= form.text_field :parentLastName, class: input_style %>
+                <%= form.text_field :last_name, class: input_style %>
             </div>
             
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Parent Email</label>
-                <%= form.email_field :parentEmail, class: input_style %>
+                <%= form.email_field :email, class: input_style %>
             </div>
             
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Parent Phone</label>
-                <%= form.telephone_field :parentPhone, class: input_style %>
+                <%= form.telephone_field :phone, class: input_style %>
             </div>
             
             <!-- Child Information (if applicable) -->
@@ -87,28 +91,28 @@
             
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Child Full Name</label>
-                <%= form.text_field :childFullName, class: input_style %>
+                <%= form.text_field :athlete_full_name, class: input_style %>
             </div>
             
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Child Birth Date</label>
-                <%= form.date_field :childBirthDate, class: input_style %>
+                <%= form.date_field :birth_date, class: input_style %>
             </div>
             
             <!-- Additional Information -->
             <div class="md:col-span-2">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Health Issues/Notes</label>
-                <%= form.text_area :healthIssues, rows: 3, class: input_style %>
+                <%= form.text_area :health_issues, rows: 3, class: input_style %>
             </div>
             
             <div class="md:col-span-2 flex items-center space-x-4">
                 <div class="flex items-center">
-                    <%= form.check_box :registrationConfirmation, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" %>
+                    <%= form.check_box :registration_confirmation, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" %>
                     <label class="ml-2 text-sm font-medium text-gray-700">Registration Confirmed</label>
                 </div>
                 
                 <div class="flex items-center">
-                    <%= form.check_box :policyAgreement, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" %>
+                    <%= form.check_box :policy_agreement, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" %>
                     <label class="ml-2 text-sm font-medium text-gray-700">Policy Agreement</label>
                 </div>
             </div>

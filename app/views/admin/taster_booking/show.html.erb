@@ -7,14 +7,14 @@
 
   <div class="bg-white rounded-xl shadow-md overflow-hidden general_card">
     <!-- Status Header -->
-    <div class="px-6 py-4 border-b flex justify-between items-center <%= status_bg_color(@taster_booking.status) %>">
+    <div class="px-6 py-4 border-b flex justify-between items-center <%= status_bg_color('pending') %>">
       <div>
-        <span class="text-lg font-semibold <%= status_text_color(@taster_booking.status) %>">
+        <span class="text-lg font-semibold <%= status_text_color('pending') %>">
           Booking #<%= @taster_booking.id %>
         </span>
       </div>
       <div>
-        <%= render 'status_badge', status: @taster_booking.status %>
+        <%= render 'status_badge', status: 'pending' %>
       </div>
     </div>
 
@@ -26,7 +26,7 @@
         
         <div>
           <p class="text-sm text-gray-500">Full Name</p>
-          <p class="font-medium"><%= @taster_booking.firstName %> <%= @taster_booking.lastName %></p>
+          <p class="font-medium"><%= @taster_booking.first_name %> <%= @taster_booking.last_name %></p>
         </div>
         
         <div>
@@ -41,7 +41,7 @@
         
         <div>
           <p class="text-sm text-gray-500">Birth Date</p>
-          <p class="font-medium"><%= @taster_booking.athleteBirthDate.strftime("%B %d, %Y") if @taster_booking.athleteBirthDate %></p>
+          <p class="font-medium"><%= @taster_booking.birth_date.strftime("%B %d, %Y") if @taster_booking.birth_date %></p>
         </div>
       </div>
 
@@ -51,21 +51,21 @@
         
         <div>
           <p class="text-sm text-gray-500">Scheduled Date</p>
-          <p class="font-medium"><%= @taster_booking.dateSelect.strftime("%A, %B %d, %Y") if @taster_booking.dateSelect %></p>
+          <p class="font-medium"><%= @taster_booking.taster_session_date.strftime("%A, %B %d, %Y") if @taster_booking.taster_session_date %></p>
         </div>
         
         <div>
           <p class="text-sm text-gray-500">Health Notes</p>
-          <p class="font-medium"><%= @taster_booking.healthIssues.presence || "None reported" %></p>
+          <p class="font-medium"><%= @taster_booking.health_issues.presence || "None reported" %></p>
         </div>
         
         <div class="flex items-center space-x-4">
           <div class="flex items-center">
-            <%= check_icon(@taster_booking.registrationConfirmation) %>
+            <%= check_icon(@taster_booking.registration_confirmation) %>
             <span class="ml-2">Registration Confirmed</span>
           </div>
           <div class="flex items-center">
-            <%= check_icon(@taster_booking.policyAgreement) %>
+            <%= check_icon(@taster_booking.policy_agreement) %>
             <span class="ml-2">Policy Agreement</span>
           </div>
         </div>
@@ -78,35 +78,35 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <p class="text-sm text-gray-500">Name</p>
-            <p class="font-medium"><%= @taster_booking.parentFirstName %> <%= @taster_booking.parentLastName %></p>
+            <p class="font-medium"><%= @taster_booking.first_name %> <%= @taster_booking.last_name %></p>
           </div>
           
           <div>
             <p class="text-sm text-gray-500">Email</p>
-            <p class="font-medium"><%= @taster_booking.parentEmail %></p>
+            <p class="font-medium"><%= @taster_booking.email %></p>
           </div>
           
           <div>
             <p class="text-sm text-gray-500">Phone</p>
-            <p class="font-medium"><%= @taster_booking.parentPhone %></p>
+            <p class="font-medium"><%= @taster_booking.phone %></p>
           </div>
         </div>
       </div>
 
       <!-- Child Information (if applicable) -->
-      <% if @taster_booking.childFullName.present? %>
+      <% if @taster_booking.athlete_full_name.present? %>
         <div class="space-y-4 md:col-span-2 border-t pt-6">
           <h2 class="text-lg font-semibold text-gray-700 border-b pb-2">Child Information</h2>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <p class="text-sm text-gray-500">Full Name</p>
-              <p class="font-medium"><%= @taster_booking.childFullName %></p>
+              <p class="font-medium"><%= @taster_booking.athlete_full_name %></p>
             </div>
             
             <div>
               <p class="text-sm text-gray-500">Birth Date</p>
-              <p class="font-medium"><%= @taster_booking.childBirthDate.strftime("%B %d, %Y") if @taster_booking.childBirthDate %></p>
+              <p class="font-medium"><%= @taster_booking.birth_date.strftime("%B %d, %Y") if @taster_booking.birth_date %></p>
             </div>
           </div>
         </div>
