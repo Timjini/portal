@@ -92,7 +92,7 @@ Rails.application.routes.draw do
   end
 
   # Booking Routes
-  resources :taster_session_bookings, only: [:index]
+  # resources :taster_session_bookings, only: [:index]
   resources :answers, only: [:create]
 
   # Tracking & Achievements Routes

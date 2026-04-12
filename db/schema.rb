@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_29_220421) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_12_202230) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -433,6 +433,14 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_29_220421) do
     t.boolean "registration_confirmation", default: false, null: false
     t.bigint "training_package_id"
     t.boolean "policy_agreement", default: false, null: false
+    t.string "status", default: "pending"
+    t.datetime "start_time"
+    t.string "location"
+    t.string "emergency_contact_name"
+    t.string "emergency_contact_phone"
+    t.string "referral_source"
+    t.text "internal_notes"
+    t.datetime "reminder_sent_at"
     t.index ["training_package_id"], name: "index_taster_session_bookings_on_training_package_id"
     t.index ["user_id"], name: "index_taster_session_bookings_on_user_id"
   end

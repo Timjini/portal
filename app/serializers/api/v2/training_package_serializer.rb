@@ -11,11 +11,11 @@ module Api
       end
 
       def formatted_start_date
-        object.start_date.strftime('%a %d %B')
+        object.start_date&.strftime('%a %d %B')
       end
 
       def formatted_end_date
-        object.ending_date.strftime('%a %d %B')
+        object.ending_date&.strftime('%a %d %B')
       end
     end
   end

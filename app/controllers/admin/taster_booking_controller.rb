@@ -31,6 +31,7 @@ module Admin
     end
 
     def update
+      Rails.logger.info("Updating......... #{taster_booking_params.inspect}")
       if @taster_booking.update(taster_booking_params)
         flash[:notice] = 'Taster booking was successfully updated.' # rubocop:disable Rails/I18nLocaleTexts
         redirect_to edit_admin_taster_booking_path(@taster_booking)
@@ -51,22 +52,22 @@ module Admin
     end
 
     def taster_booking_params # rubocop:disable Metrics/MethodLength
-      params.require(:taster_booking).permit(
-        :firstName,
-        :lastName,
+      params.require(:taster_session_booking).permit(
+        :first_name,
+        :last_name,
         :email,
         :phone,
-        :athleteBirthDate,
-        :parentFirstName,
-        :parentLastName,
-        :parentEmail,
-        :parentPhone,
-        :childFullName,
-        :childBirthDate,
-        :dateSelect,
-        :healthIssues,
-        :registrationConfirmation,
-        :policyAgreement,
+        :athlete_birth_date,
+        :parent_first_name,
+        :parent_last_name,
+        :parent_email,
+        :parent_phone,
+        :child_full_name,
+        :child_birth_date,
+        :date_select,
+        :health_issues,
+        :registration_confirmation,
+        :policy_agreement,
         :status
       )
     end

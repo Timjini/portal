@@ -4,6 +4,16 @@ class TasterSessionBooking < ApplicationRecord
   belongs_to :training_package
   after_create -> { admin_notification_email }
 
+  STATUSES = {
+    pending: 'pending',
+    confirmed: 'confirmed',
+    completed: 'completed',
+    cancelled: 'cancelled',
+    no_show: 'no_show'
+  }.freeze
+
+  enum :status, STATUSES, default: :pending
+
   # belongs_to :user
   before_validation(on: :create) do
     self.training_package = TrainingPackage.first if training_package.nil?

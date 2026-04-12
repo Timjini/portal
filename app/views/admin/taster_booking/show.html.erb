@@ -7,14 +7,14 @@
 
   <div class="bg-white rounded-xl shadow-md overflow-hidden general_card">
     <!-- Status Header -->
-    <div class="px-6 py-4 border-b flex justify-between items-center <%= status_bg_color('pending') %>">
+    <div class="px-6 py-4 border-b flex justify-between items-center <%= status_bg_color(@taster_booking.status) %>">
       <div>
-        <span class="text-lg font-semibold <%= status_text_color('pending') %>">
+        <span class="text-lg font-semibold <%= status_text_color(@taster_booking.status) %>">
           Booking #<%= @taster_booking.id %>
         </span>
       </div>
       <div>
-        <%= render 'status_badge', status: 'pending' %>
+        <%= render 'status_badge', status: @taster_booking.status %>
       </div>
     </div>
 
