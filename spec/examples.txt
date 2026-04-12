@@ -69,3 +69,4 @@ example_id                                                                  | st
 ./spec/models/user_spec.rb[1:6:2:1]                                         | failed  | 0.00029 seconds |
 ./spec/services/billing_service_spec.rb[1:1:1]                              | passed  | 0.12692 seconds |
 ./spec/services/billing_service_spec.rb[1:1:2]                              | passed  | 0.01055 seconds |
+./spec/services/qr_code_generator_service_spec.rb[1:1:1]                    | passed  | 0.1679 seconds  |

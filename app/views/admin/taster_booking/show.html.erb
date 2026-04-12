@@ -23,7 +23,7 @@
       <!-- Athlete Information -->
       <div class="space-y-4">
         <h2 class="text-lg font-semibold text-gray-700 border-b pb-2">Athlete Information</h2>
-        
+          <%= image_tag @taster_booking.qr_code, class: "h-48 w-48 rounded-full object-cover border border-gray-200" %>
         <div>
           <p class="text-sm text-gray-500">Full Name</p>
           <p class="font-medium"><%= @taster_booking.first_name %> <%= @taster_booking.last_name %></p>

@@ -3,6 +3,8 @@
 class TasterSessionBooking < ApplicationRecord
   belongs_to :training_package
   after_create -> { admin_notification_email }
+  after_create -> { generate_qr_code }
+  has_one_attached :qr_code
 
   STATUSES = {
     pending: 'pending',
@@ -26,8 +28,14 @@ class TasterSessionBooking < ApplicationRecord
   private
 
   def admin_notification_email
+    return unless Rails.env.production?
+
     mailer = TasterSessionMailer.new(self)
     mailer.contact_form_submission
     Rails.logger.info('Admin Notification Email sent')
+  end
+
+  def generate_qr_code
+    QrCodeGeneratorService.call(self, 'https://club.chambersforsport.com')
   end
 end

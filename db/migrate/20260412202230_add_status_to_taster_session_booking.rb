@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddStatusToTasterSessionBooking < ActiveRecord::Migration[7.1]
   def change
     add_column :taster_session_bookings, :status, :string, default: 'pending' # rubocop:disable Rails/BulkChangeTable
