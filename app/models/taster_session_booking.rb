@@ -3,7 +3,7 @@
 class TasterSessionBooking < ApplicationRecord
   belongs_to :training_package
   after_create -> { admin_notification_email }
-  after_create -> { generate_qr_code }
+  # after_create -> { generate_qr_code }
   has_one_attached :qr_code
 
   STATUSES = {
@@ -35,7 +35,7 @@ class TasterSessionBooking < ApplicationRecord
     Rails.logger.info('Admin Notification Email sent')
   end
 
-  def generate_qr_code
-    QrCodeGeneratorService.call(self, 'https://club.chambersforsport.com')
-  end
+  # def generate_qr_code
+  #   QrCodeGeneratorService.call(self, 'https://club.chambersforsport.com')
+  # end
 end
