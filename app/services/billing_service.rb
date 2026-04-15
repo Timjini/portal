@@ -20,7 +20,7 @@ class BillingService
     res = @client.billing_requests.create(params: loading_params)
     begin
       return nil unless @user.user_plan
-
+      
       save_billing_information_to_user(res)
     rescue StandardError => e
       Rails.logger.info("failed to save data to user #{e.message}")
