@@ -49,7 +49,6 @@ class BillingService
   end
 
   def create_subscription # rubocop:disable Metrics/MethodLength
-
     response = @client.subscriptions.create(
       params: {
         amount: @user.plan.amount,
