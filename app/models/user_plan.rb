@@ -8,7 +8,7 @@ class UserPlan < ApplicationRecord
     pending: 'pending',
     processing: 'processing',
     confirmed: 'active',
-    cancelled: 'cancelled',
+    cancelled: 'cancelled'
   }.freeze
 
   enum :status, STATUSES, default: :pending

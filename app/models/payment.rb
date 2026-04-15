@@ -13,12 +13,10 @@ class Payment < ApplicationRecord
   end
 
   def update_user_plan_status
-  begin
-    plan = self.user_plan
+    plan = user_plan
     plan.status = 'processing'
     plan.save
-  rescue StandardError => e 
-    Rails.logger.info("Issue updating user plan status to processing")
-  end
+  rescue StandardError
+    Rails.logger.info('Issue updating user plan status to processing')
   end
 end
