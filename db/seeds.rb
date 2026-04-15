@@ -242,29 +242,29 @@
 # Rails.logger.debug { "✅ Done seeding #{TOTAL_USERS} users." }
 
 # Seeding Plans
-plan = {
-  name: "Basic Plan",
-  amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-  day_of_month: Faker::Number.between(from: 1, to: 28),
-  day_of_week: Faker::Number.between(from: 1, to: 7),
-  month: Faker::Number.between(from: 1, to: 12),
-  interval: Faker::Number.between(from: 1, to: 6),
-  interval_unit: ["monthly"].sample,
-  payment_reference: Faker::Alphanumeric.alphanumeric(number: 10),
-  currency: "GBP",
-  status: "active",
-  redirect_url: Faker::Internet.url,
-  count: 1,
-  scheme_notice_period: 1,
-  has_pending_update: [true, false].sample,
-  scheduled_to_pause: [true, false].sample,
-  instant_bank_pay: [true, false].sample,
-  links: { "documentation" => Faker::Internet.url, "help" => Faker::Internet.url }.to_json,
-  organisation_details: { "org_name" => Faker::Company.name, "org_address" => Faker::Address.full_address }.to_json,
-  fx: { "rate" => Faker::Number.decimal(l_digits: 2, r_digits: 4), "currency" => "GBP" }.to_json,
-  url: Faker::Internet.url,
-  created_at: Faker::Time.backward(days: 30),
-  updated_at: Faker::Time.backward(days: 15)
-}
+# plan = {
+#   name: "Basic Plan",
+#   amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
+#   day_of_month: Faker::Number.between(from: 1, to: 28),
+#   day_of_week: Faker::Number.between(from: 1, to: 7),
+#   month: Faker::Number.between(from: 1, to: 12),
+#   interval: Faker::Number.between(from: 1, to: 6),
+#   interval_unit: ["monthly"].sample,
+#   payment_reference: Faker::Alphanumeric.alphanumeric(number: 10),
+#   currency: "GBP",
+#   status: "active",
+#   redirect_url: Faker::Internet.url,
+#   count: 1,
+#   scheme_notice_period: 1,
+#   has_pending_update: [true, false].sample,
+#   scheduled_to_pause: [true, false].sample,
+#   instant_bank_pay: [true, false].sample,
+#   links: { "documentation" => Faker::Internet.url, "help" => Faker::Internet.url }.to_json,
+#   organisation_details: { "org_name" => Faker::Company.name, "org_address" => Faker::Address.full_address }.to_json,
+#   fx: { "rate" => Faker::Number.decimal(l_digits: 2, r_digits: 4), "currency" => "GBP" }.to_json,
+#   url: Faker::Internet.url,
+#   created_at: Faker::Time.backward(days: 30),
+#   updated_at: Faker::Time.backward(days: 15)
+# }
 
 # Plan.create(plan)
