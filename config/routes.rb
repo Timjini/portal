@@ -152,6 +152,7 @@ Rails.application.routes.draw do
       resources :training_packages, only: [:index]
       resources :taster_session_bookings, only: %i[index create]
       resources :dcpa_events, only: [:index]
+      resources :webhooks, only[:create]
     end
   end
 
