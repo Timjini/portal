@@ -2,8 +2,6 @@
 
 class BillingService
   def initialize(user)
-    # @amount = amount
-    # @description = description
     @user = user
     @plan = user.plan
     @currency = ENV.fetch('PORTAL_CURRENCY', nil)
