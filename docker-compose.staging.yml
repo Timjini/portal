@@ -1,5 +1,5 @@
 services:
-  production-app:
+  staging-app:
     container_name: portal-staging-app
     build: .
     command: >
