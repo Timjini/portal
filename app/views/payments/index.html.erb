@@ -8,18 +8,34 @@
         <% Array(@payment_information[:current_plan]).flatten.each do |user| %>
             <div class="flex flex-col">
                 <% if user.respond_to?(:plan) && user.plan.present? %>
-                    <div class="relative overflow-hidden bg-gradient-to-br from-indigo-600 to-blue-700 rounded-2xl p-8 shadow-xl text-white h-full flex flex-col justify-between transition-all hover:shadow-2xl">
+                    <%
+                    status_styles = {
+                        'active'     => { bg: 'from-emerald-500 to-teal-600', text: 'text-emerald-100', icon: 'text-emerald-200' },
+                        'pending'    => { bg: 'from-amber-400 to-orange-600', text: 'text-amber-100',  icon: 'text-amber-200' },
+                        'processing' => { bg: 'from-blue-500 to-indigo-600',  text: 'text-blue-100',   icon: 'text-blue-200' },
+                        'cancelled'  => { bg: 'from-slate-500 to-slate-700',  text: 'text-slate-200',  icon: 'text-slate-300' }
+                    }[user.user_plan.status] || { bg: 'from-gray-400 to-gray-600', text: 'text-gray-100', icon: 'text-gray-200' }
+                    %>
+
+                    <div class="relative overflow-hidden bg-gradient-to-br <%= status_styles[:bg] %> rounded-2xl p-8 shadow-xl text-white h-full flex flex-col justify-between transition-all hover:shadow-2xl">
                         <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+                        
                         <div class="relative z-10">
                             <div class="flex justify-between items-start mb-6">
-                                <span class="px-2.5 py-1 bg-white/20 rounded-lg text-[10px] font-bold uppercase tracking-widest text-white border border-white/30 backdrop-blur-sm">Active Subscription</span>
+                                <span class="px-2.5 py-1 bg-white/20 rounded-lg text-[10px] font-bold uppercase tracking-widest text-white border border-white/30 backdrop-blur-sm">
+                                    <%= user.user_plan.status %> Subscription
+                                </span>
                                 <div class="p-1.5 bg-white/10 rounded-full">
-                                    <svg class="w-5 h-5 text-blue-200" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zM10 5a1 1 0 00-1 1v3a1 1 0 001 1h3a1 1 0 100-2h-2V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                                    <svg class="w-5 h-5 <%= status_styles[:icon] %>" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zM10 5a1 1 0 00-1 1v3a1 1 0 001 1h3a1 1 0 100-2h-2V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
                                 </div>
                             </div>
                             
                             <h2 class="text-2xl font-bold leading-tight tracking-tight"><%= user.plan.name %></h2>
-                            <p class="text-blue-100 opacity-90 text-xs mt-1 uppercase tracking-widest font-semibold">Billed <%= user.plan.interval_unit %></p>
+                            <p class="<%= status_styles[:text] %> opacity-90 text-xs mt-1 uppercase tracking-widest font-semibold">
+                                Billed <%= user.plan.interval_unit %>
+                            </p>
                             
                             <div class="mt-8 flex items-baseline gap-1">
                                 <span class="text-4xl font-black tracking-tight"><%= number_to_currency(user.plan.amount / 100.0) %></span>
@@ -35,6 +51,33 @@
                                 <p class="text-[10px] uppercase tracking-tighter opacity-70 font-bold">Account Holder</p>
                                 <p class="text-sm font-bold tracking-tight"><%= user.full_name %></p>
                             </div>
+                        </div>
+
+                        <%# Conditional Action Area %>
+                        <div class="mx-auto mt-6 w-full">
+                            <% case user.user_plan.status %>
+                            <% when 'pending' %>
+                                <%= button_to payments_path, method: :post, params: { athlete: user.id }, data: { turbo: false }, class: "w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-white text-orange-700 font-bold rounded-xl hover:bg-orange-50 shadow-lg transition-all active:scale-[0.98]" do %>
+                                    <span>Complete Payment</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                                <% end %>
+                            
+                            <% when 'processing' %>
+                                <div class="w-full py-3.5 px-4 bg-white/10 border border-white/20 rounded-xl text-center text-sm font-bold animate-pulse">
+                                    Verifying Transaction...
+                                </div>
+
+                            <% when 'active' %>
+                                <div class="w-full py-3.5 px-4 bg-emerald-700/50 border border-emerald-400/30 rounded-xl text-center text-sm font-bold flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                    Active Account
+                                </div>
+
+                            <% when 'cancelled' %>
+                                <%= button_to payments_path, method: :post, params: { athlete: user.id }, data: { turbo: false }, class: "w-full py-3.5 px-4 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-900 transition-all" do %>
+                                    Reactivate Plan
+                                <% end %>
+                            <% end %>
                         </div>
                     </div>
 

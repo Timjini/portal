@@ -49,20 +49,23 @@ class BillingService
   end
 
   def create_subscription # rubocop:disable Metrics/MethodLength
-    @client.subscriptions.create(
+
+    response = @client.subscriptions.create(
       params: {
-        amount: @user.plan.amount_string,
-        currency: @currency,
+        amount: @user.plan.amount,
+        currency: 'GBP',
+        name: @user.plan.name,
         interval_unit: 'monthly',
+        interval: 1,
         day_of_month: 1,
+        start_date: '2026-04-20',
         links: {
-          mandate: @user.plan.links['mandate']
+          mandate: @user.payments.last.links['mandate_request']
         }
-      },
-      headers: {
-        'Idempotency-Key' => @user.id
       }
     )
+
+    Rails.logger.info("response #{response.inspect}")
   rescue StandardError => e
     Rails.logger.info("error catching #{e.message}")
   end
@@ -72,7 +75,7 @@ class BillingService
   end
 
   def list_billing_requests
-    @client.billing_requests.list
+    @client.billing_requests.get('')
   end
 
   def list_mandates

@@ -47,6 +47,6 @@ class Plan < ApplicationRecord
   # end
 
   def amount_string
-    amount.to_i.to_s
+    amount.to_s
   end
 end
