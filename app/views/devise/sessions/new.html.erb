@@ -87,10 +87,7 @@
           </div>
 
           <div class="pt-4">
-            <%= f.submit "Enter Platform", 
-                class: "btn-brand-primary w-full", 
-                style: "background-color: #01003d;",
-                data: { turbo_submits_with: "Accessing..." } %>
+           <%= f.submit "Access Platform", class: "btn-brand-primary w-full" , data: { turbo_submits_with: "Loading..." }  %>
           </div>
         <% end %>
 

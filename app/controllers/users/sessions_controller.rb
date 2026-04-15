@@ -14,7 +14,7 @@ module Users
 
     # define user sign in username and password
     def create # rubocop:disable Metrics/AbcSize
-      user = User.find_by(username: params['user']['username']&.downcase) || User.find_by(email: params['user']['username']&.downcase) # rubocop:disable Layout/LineLength
+      user = User.find_by(username: params[:user][:email]&.downcase) || User.find_by(email: params[:user][:email]&.downcase) # rubocop:disable Layout/LineLength
       if user&.valid_password?(params[:user][:password])
         sign_in(user)
         redirect_to dashboard_path

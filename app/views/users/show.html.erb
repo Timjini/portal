@@ -1,121 +1,145 @@
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    .tab-active {
-      border-bottom: 3px solid #dc2626;
-      color: #dc2626;
-      font-weight: 600;
-    }
-    .notification-dot {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #ef4444;
-      color: white;
-      font-size: 0.7rem;
-      # display: flex;
-      # align-items: center;
-      # justify-content: center;
-    }
-    .chat-bubble {
-      max-width: 70%;
-      border-radius: 1rem;
-      padding: 0.75rem 1rem;
-      margin: 0.5rem 0;
-    }
-    .chat-bubble.self {
-      background-color: #dc2626;
-      color: white;
-      margin-left: auto;
-    }
-    .chat-bubble.other {
-      background-color: #f3f4f6;
-      color: #4b5563;
-    }
-    .animate-pulse {
-      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-  </style>
-</head>
-<div class="min-h-screen">
-  <div class="max-w-4xl mx-auto p-4 sm:p-6">
-    <!-- Back Button -->
-     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <div class="flex items-center gap-4 ">
-            <%= render 'components/back_button' %>
-            <div class="inline-flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 mb-4">
-            <h1 class="text-2xl font-bold text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 mx-auto">Profile</h1>
-            </div>
-        </div>
+<div class="min-h-screen bg-gray-50/50 py-8">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    
+    <div class="flex items-center gap-4 mb-8">
+      <%= render 'components/back_button' %>
+      <h1 class="text-3xl font-black text-[#01003d] uppercase tracking-tighter">
+        User <span class="text-transparent" style="-webkit-text-stroke: 1px #01003d;">Profile</span>
+      </h1>
     </div>
 
-    <!-- Profile Card -->
-    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
-      <!-- Profile Header with Edit Button -->
-      <div class="p-6 sm:p-8 border-b border-gray-100 flex justify-between items-start">
-        <div class="flex flex-col sm:flex-row items-center gap-6">
-         <%= image_tag(@user.avatar_thumbnail, class: "w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-blue-50 object-cover shadow-sm") %>
-          <div class="text-center sm:text-left mt-4 sm:mt-0">
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900"><%= @user.full_name %></h1>
-            <div class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-              <%= @user.role.humanize%>
+    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-blue-900/5 overflow-hidden border border-gray-100 dark:border-gray-800">
+      
+      <div class="p-8 sm:p-12 border-b border-gray-50 dark:border-gray-800 flex flex-col sm:flex-row justify-between items-center sm:items-end gap-6">
+        <div class="flex flex-col sm:flex-row items-center gap-8">
+          <div class="relative">
+            <%= image_tag(@user.avatar_thumbnail, class: "w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white object-cover shadow-2xl ring-1 ring-gray-100") %>
+            <div class="absolute bottom-2 right-2 w-5 h-5 bg-green-500 border-4 border-white rounded-full"></div>
+          </div>
+          
+          <div class="text-center sm:text-left">
+            <h2 class="text-3xl font-black text-[#01003d] dark:text-white uppercase tracking-tighter">
+              <%= @user.full_name %>
+            </h2>
+            <div class="mt-2 flex flex-wrap justify-center sm:justify-start gap-3">
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-[#01003d] text-white shadow-sm">
+                <%= @user.role.humanize %>
+              </span>
+              <span class="text-sm font-bold text-gray-400">@<%= @user.username %></span>
             </div>
-            <p class="mt-2 text-gray-500">@<%=@user.username%></p>
           </div>
         </div>
-        <%= link_to "Edit Profile",
-        edit_path,
-            class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" %>
 
+        <%= link_to edit_path, class: "btn-brand-primary flex items-center gap-2 py-3 px-8 text-xs" do %>
+          <span class="material-symbols-outlined text-sm">edit_square</span>
+          Edit Profile
+        <% end %>
       </div>
 
-      <!-- Tabs Navigation -->
-           <%= render 'users/partials/navigation'%>
+      <div class="bg-gray-50/50 dark:bg-slate-800/50 px-8 border-b border-gray-100 dark:border-gray-800">
+        <nav class="flex gap-8 overflow-x-auto no-scrollbar" role="tablist">
+          <% [
+            { id: 'profile', icon: 'person', label: 'Overview' },
+            # { id: 'notifications', icon: 'notifications', label: 'Updates', badge: true },
+            # { id: 'chat', icon: 'forum', label: 'Messages' },
+            # { id: 'settings', icon: 'settings', label: 'Account' }
+          ].each_with_index do |tab, idx| %>
+            <button 
+              class="tab-button group flex items-center gap-2 py-5 border-b-2 transition-all duration-200 <%= idx == 0 ? 'border-[#01003d] text-[#01003d]' : 'border-transparent text-gray-400 hover:text-gray-600' %>"
+              data-tab="<%= tab[:id] %>"
+              role="tab"
+            >
+              <span class="material-symbols-outlined !text-[20px] <%= idx == 0 ? 'text-[#01003d]' : 'text-gray-400 group-hover:text-gray-600' %>">
+                <%= tab[:icon] %>
+              </span>
+              <span class="text-[11px] font-black uppercase tracking-widest"><%= tab[:label] %></span>
+              
+              <% if tab[:badge] %>
+                <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm shadow-red-200">2</span>
+              <% end %>
+            </button>
+          <% end %>
+        </nav>
+      </div>
 
-      <!-- Tab Contents -->
-      <div class="p-6 sm:p-8">
-        <!-- Profile Tab Content -->
-           <%= render 'users/partials/profile', object: @user %>
+      <div class="p-8 sm:p-12">
+        <div id="tab-profile" class="tab-content">
+          <%= render 'users/partials/profile', object: @user %>
+          
+          <% if @user.child_users.any? %>
+            <div class="mt-12 pt-12 border-t border-gray-100 dark:border-gray-800">
+              <div class="flex items-center gap-2 mb-8">
+                <div class="h-1 w-8 bg-[#01003d] rounded-full"></div>
+                <h3 class="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Linked Athletes</h3>
+              </div>
+              <%= render 'users/partials/children' %>
+            </div>
+          <% end %>
+        </div>
 
-            <!-- Children Section -->
-            <% if !@user.child_users.empty? %>
-                <%= render 'users/partials/children'%>
-            <% end %>
+        <div id="tab-notifications" class="tab-content hidden animate-in fade-in slide-in-from-bottom-2">
+          <%= render 'users/partials/notifications' %>
+        </div>
 
-        <!-- Notifications Tab Content -->
-          <%= render 'users/partials/notifications'%>
+        <div id="tab-chat" class="tab-content hidden animate-in fade-in slide-in-from-bottom-2">
+          <%= render 'users/partials/chat' %>
+        </div>
 
-        <!-- Settings Tab Content -->
-          <%= render 'users/partials/settings'%>
-
-        <!-- Chats Tab Content -->
-          <%= render 'users/partials/chat'%>
+        <div id="tab-settings" class="tab-content hidden animate-in fade-in slide-in-from-bottom-2">
+          <%= render 'users/partials/settings' %>
+        </div>
       </div>
     </div>
   </div>
 </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Tab switching functionality
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const tabContents = document.querySelectorAll('.tab-content');
-      
-      tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          const tabId = button.getAttribute('data-tab');
-          
-          // Update button states
-          tabButtons.forEach(btn => btn.classList.remove('tab-active'));
-          button.classList.add('tab-active');
-          
-          // Update content visibility
-          tabContents.forEach(content => content.classList.add('hidden'));
-          document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+<style>
+  /* Chambers Tab Active State */
+  .tab-button.active {
+    border-color: #01003d;
+    color: #01003d;
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Custom Chat Bubbles to match brand */
+  .chat-bubble.self {
+    background-color: #01003d !important;
+    border-bottom-right-radius: 4px;
+  }
+  .chat-bubble.other {
+    background-color: #f8fafc !important;
+    border-bottom-left-radius: 4px;
+    border: 1px solid #f1f5f9;
+  }
+</style>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    const buttons = document.querySelectorAll('.tab-button');
+    const contents = document.querySelectorAll('.tab-content');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+
+        // Reset Buttons
+        buttons.forEach(b => {
+          b.classList.remove('border-[#01003d]', 'text-[#01003d]');
+          b.classList.add('border-transparent', 'text-gray-400');
+          b.querySelector('.material-symbols-outlined').classList.replace('text-[#01003d]', 'text-gray-400');
         });
+
+        // Activate Current Button
+        btn.classList.add('border-[#01003d]', 'text-[#01003d]');
+        btn.classList.remove('border-transparent', 'text-gray-400');
+        btn.querySelector('.material-symbols-outlined').classList.replace('text-gray-400', 'text-[#01003d]');
+
+        // Switch Content
+        contents.forEach(c => c.classList.add('hidden'));
+        document.getElementById(`tab-${target}`).classList.remove('hidden');
       });
-    
     });
-  </script>
+  });
+</script>
