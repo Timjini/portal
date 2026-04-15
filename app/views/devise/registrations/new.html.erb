@@ -1,263 +1,177 @@
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { controller: "signup-validation" }) do |form| %>
-<div class="">
-    <div class="w-full md:w-[500px] max-w-2xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
-        <!-- Progress Steps -->
-        <div class="flex justify-center py-4 border-b border-gray-200 dark:border-gray-700">
-            <div class="flex space-x-4">
-                <button type="button" class="step-indicator flex items-center justify-center w-10 h-10 rounded-full bg-indigo-600 text-white font-medium" data-signup-validation-target="step1Indicator" data-action="click->signup-validation#goToStep1">
-                    1
-                </button>
-                <div class="flex items-center">
-                    <div class="w-16 h-1 bg-gray-300 dark:bg-gray-600"></div>
-                </div>
-                <button type="button" class="step-indicator flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-300 font-medium" data-signup-validation-target="step2Indicator" data-action="click->signup-validation#goToStep2">
-                    2
-                </button>
-            </div>
+<section class="grid grid-cols-1 lg:grid-cols-2 min-h-screen bg-gray-50 dark:bg-slate-950 w-full">
+
+    <div class="relative hidden lg:flex flex-col justify-center items-start px-12 xl:px-24 overflow-hidden" style="background-color: #01003d;">
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <svg width="100%" height="100%">
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
         </div>
-
-        <!-- Step 1 - Personal Information -->
-        <div class="p-8" data-signup-validation-target="step1">
-            <!-- [Previous content remains the same until the form fields] -->
-            <div class="mb-5 text-center" data-controller="avatar">
-                <div class="mx-auto w-28 h-28 mb-2 border rounded-full relative bg-gray-100 mb-4 shadow-inset">
-                    <div data-loading-indicator-target="loadingIndicator" class="loading-indicator hidden">
-                        <div role="status">
-                            <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
-                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
-                            </svg>
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-                    <div class="panzoom-container absolute inset-0 overflow-hidden rounded-full">
-                        <img id="image" class="w-full h-full object-cover" 
-                            src="/assets/user.png" 
-                            alt="Avatar Preview" 
-                            data-avatar-target="image">
-                        </div>
-                </div>
-                <label for="avatarInput" type="button" class="cursor-pointer inline-flex justify-between items-center focus:outline-none border py-2 px-4 rounded-lg shadow-sm text-left text-gray-600 bg-white hover:bg-gray-100 font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-flex flex-shrink-0 w-6 h-6 -mt-1 mr-1" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-                        <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"></path>
-                        <circle cx="12" cy="13" r="3"></circle>
-                    </svg>
-                    Browse Photo
-                </label>
-                <div class="mx-auto w-48 text-gray-500 text-xs text-center mt-1">Click to add profile picture</div>
-                <%= form.file_field :avatar, class: "hidden", id: "avatarInput", data: { avatar_target: "input" } %>
-            </div>
-            <!-- Updated Form Fields for Step 1 -->
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <!-- Email Field -->
-                <div>
-                    <%= form.label :email, "Email Address", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-                    <%= form.email_field :email, 
-                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
-                        placeholder: "you@example.com",
-                        data: { 
-                            "signup-validation-target": "email",
-                            "field-name": "email",
-                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
-                        } %>
-                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="emailError"></p>
-                </div>
-
-                <!-- Username Field -->
-                <div>
-                    <%= form.label :username, "Username", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-                    <%= form.text_field :username, 
-                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
-                        placeholder: "username123",
-                        data: { 
-                            "signup-validation-target": "username",
-                            "field-name": "username",
-                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
-                        } %>
-                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="usernameError"></p>
-                </div>
-
-                <!-- First Name Field -->
-                <div>
-                    <%= form.label :first_name, "First Name", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-                    <%= form.text_field :first_name, 
-                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
-                        placeholder: "John",
-                        data: { 
-                            "signup-validation-target": "firstName",
-                            "field-name": "firstName",
-                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
-                        } %>
-                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="firstNameError"></p>
-                </div>
-
-                <!-- Last Name Field -->
-                <div>
-                    <%= form.label :last_name, "Last Name", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-                    <%= form.text_field :last_name, 
-                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
-                        placeholder: "Doe",
-                        data: { 
-                            "signup-validation-target": "lastName",
-                            "field-name": "lastName",
-                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
-                        } %>
-                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="lastNameError"></p>
-                </div>
-
-                <!-- Password Field -->
-                <div>
-                    <%= form.label :password, "Password", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-                    <div class="relative">
-                        <%= form.password_field :password, 
-                            class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
-                            placeholder: "••••••••",
-                            data: { 
-                                "signup-validation-target": "password",
-                                "field-name": "password",
-                                "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
-                            } %>
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" 
-                             data-action="click->signup-validation#togglePasswordVisibility"
-                             data-field-type="password">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-signup-validation-target="passwordIcon">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="passwordError"></p>
-                </div>
-
-                <!-- Password Confirmation Field -->
-              <div>
-                <%= form.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-                <div class="relative">
-                    <%= form.password_field :password_confirmation, 
-                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
-                        placeholder: "••••••••",
-                        data: { 
-                            "signup-validation-target": "passwordConfirmation",
-                            "field-name": "passwordConfirmation",
-                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
-                        } %>
-                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" 
-                        data-action="click->signup-validation#togglePasswordVisibility"
-                        data-field-type="passwordConfirmation">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                    </div>
-                </div>
-                <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="passwordConfirmationError"></p>
-                </div>
-            </div>
-
-            <div class="mt-6 flex items-center justify-between">
-                <%= link_to "Already have an account?", new_session_path(resource_name), class: "text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400" %>
-                <button type="button" class="next-step-btn inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" data-action="click->signup-validation#nextStep" data-signup-validation-target="nextButton" disabled>
-                    Next Step
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 -mr-1 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Step 2 - Additional Information -->
-        <div class="p-8 hidden" data-signup-validation-target="step2">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Additional Information</h2>
-                <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">Step 2: Complete your profile</p>
-            </div>
-
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <!-- Phone Field -->
-                <div>
-                    <%= form.label :phone, "Phone Number", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-                    <%= form.text_field :phone, 
-                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
-                        placeholder: "+1 (555) 123-4567",
-                        data: { 
-                            "signup-validation-target": "phone",
-                            "field-name": "phone",
-                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"
-                        } %>
-                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="phoneError"></p>
-                </div>
-
-                <!-- Address Field -->
-                <div data-controller="address-autocomplete" data-address-autocomplete-api-key-value="<%= ENV['GOOGLE_API_KEY'] %>">
-                    <%= form.label :address, "Address", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-                    <%= form.text_field :address,
-                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
-                        placeholder: "123 Main St, City, Country",
-                        data: { 
-                            "address-autocomplete-target": "input",
-                            "action": "place_changed->address-autocomplete#placeSelected input->signup-validation#validateField blur->signup-validation#markAsTouched",
-                            "signup-validation-target": "address",
-                            "field-name": "address"
-                        } %>
-                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="addressError"></p>
-                </div>
-
-                <!-- Date of Birth Field -->
-                <div>
-                    <%= form.label :dob, "Guardian/Parent Date Of Birth", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-                    <%= form.date_field :dob, 
-                        class: "m-2 rounded bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
-                        data: { 
-                            "signup-validation-target": "dob",
-                            "field-name": "dob",
-                            "action": "change->signup-validation#validateField blur->signup-validation#markAsTouched"
-                        } %>
-                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="dobError"></p>
-                </div>
-
-                <!-- Role Selection -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">I am</label>
-                    <div class="mt-2 space-y-2" data-action="change->signup-validation#validateField click->signup-validation#markAsTouched">
-                        <div class="flex items-center">
-                            <%= form.radio_button :role, 'parent_user', 
-                                checked: false,
-                                class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700",
-                                data: { 
-                                    "signup-validation-target": "role",
-                                    "field-name": "role"
-                                } %>
-                            <%= form.label :parent_user, "a Parent of an Athlete(s)", class: "ml-2 block text-sm text-gray-900 dark:text-gray-300" %>
-                        </div>
-                        <div class="flex items-center">
-                            <%= form.radio_button :role, 'athlete', 
-                                checked: false,
-                                class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700",
-                                data: { 
-                                    "signup-validation-target": "role",
-                                    "field-name": "role"
-                                } %>
-                            <%= form.label :athlete, "an Athlete", class: "ml-2 block text-sm text-gray-900 dark:text-gray-300" %>
-                        </div>
-                    </div>
-                    <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="roleError"></p>
-                </div>
-            </div>
-
-            <div class="mt-6 flex items-center justify-between">
-                <button type="button" class="inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" data-action="click->signup-validation#prevStep">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 -ml-1 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                    </svg>
-                    Previous
-                </button>
-                <%= form.submit "Create Account", 
-                    class: "inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed",
-                    data: { "signup-validation-target": "submitButton" },
-                    disabled: true %>
-            </div>
+        <div class="relative z-10">
+            <h1 class="text-5xl xl:text-6xl font-black text-white leading-tight uppercase tracking-tighter">
+                Join the <br /> <span class="text-transparent" style="-webkit-text-stroke: 1px white;">Academy</span>
+            </h1>
+            <div class="w-20 h-1 mt-6 bg-white"></div>
+            <p class="mt-8 text-lg text-blue-100/80 max-w-md font-light">Complete your profile to access the Chambers ecosystem.</p>
         </div>
     </div>
-</div>
-<% end %>
+
+    <div class="flex flex-col justify-center px-6 py-12 lg:px-12 xl:px-24">
+        <div class="sm:mx-auto sm:w-full sm:max-w-2xl">
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { controller: "signup-validation" }) do |form| %>
+
+            <div class="flex items-center justify-between mb-12 max-w-xs mx-auto">
+                <div class="flex flex-col items-center gap-2">
+                    <button type="button" class="w-10 h-10 rounded-full font-bold transition-all duration-300" style="background-color: #01003d; color: white;" data-signup-validation-target="step1Indicator" data-action="click->signup-validation#goToStep1">1</button>
+                    <span class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Personal</span>
+                </div>
+                <div class="flex-1 h-[2px] mx-4 bg-gray-200 dark:bg-gray-800 self-center -mt-6"></div>
+                <div class="flex flex-col items-center gap-2">
+                    <button type="button" class="w-10 h-10 rounded-full font-bold border-2 border-gray-200 text-gray-400 transition-all duration-300" data-signup-validation-target="step2Indicator" data-action="click->signup-validation#goToStep2">2</button>
+                    <span class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Details</span>
+                </div>
+            </div>
+
+            <div class="" data-signup-validation-target="step1">
+                <div class="mb-10 text-center" data-controller="avatar">
+                    <div class="mx-auto w-32 h-32 mb-6 relative group">
+                        <div class="panzoom-container absolute inset-0 overflow-hidden rounded-full border-4 border-white shadow-xl ring-1 ring-gray-200">
+                            <img id="image" class="w-full h-full object-cover" src="/assets/user.png" data-avatar-target="image">
+                        </div>
+                        <label for="avatarInput" class="absolute bottom-0 right-0 p-2 bg-[#01003d] text-white rounded-full cursor-pointer shadow-lg hover:scale-110 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </label>
+                    </div>
+                    <%= form.file_field :avatar, class: "hidden", id: "avatarInput", data: { avatar_target: "input" } %>
+                </div>
+
+                <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                    <div>
+                        <%= form.label :email, class: "label-brand-caps" %>
+                        <%= form.email_field :email, class: "input-brand-underline", placeholder: "you@example.com", data: { signup_validation_target: "email", field_name: "email", action: "input->signup-validation#validateField blur->signup-validation#markAsTouched" } %>
+                        <p class="mt-2 text-[10px] font-bold uppercase text-red-500 hidden" data-signup-validation-target="emailError"></p>
+                    </div>
+
+                    <div>
+                        <%= form.label :username, class: "label-brand-caps" %>
+                        <%= form.text_field :username, class: "input-brand-underline", placeholder: "username123", data: { signup_validation_target: "username", field_name: "username", action: "input->signup-validation#validateField blur->signup-validation#markAsTouched" } %>
+                        <p class="mt-2 text-[10px] font-bold uppercase text-red-500 hidden" data-signup-validation-target="usernameError"></p>
+                    </div>
+
+                    <div>
+                        <%= form.label :first_name, class: "label-brand-caps" %>
+                        <%= form.text_field :first_name, class: "input-brand-underline", placeholder: "John", data: { signup_validation_target: "firstName", field_name: "firstName", action: "input->signup-validation#validateField blur->signup-validation#markAsTouched" } %>
+                        <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="firstNameError"></p>
+                    </div>
+
+                    <div>
+                        <%= form.label :last_name, class: "label-brand-caps" %>
+                        <%= form.text_field :last_name, class: "input-brand-underline", placeholder: "Doe", data: { signup_validation_target: "lastName", field_name: "lastName", action: "input->signup-validation#validateField blur->signup-validation#markAsTouched" } %>
+                        <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="lastNameError"></p>
+                    </div>
+
+                    <div class="relative">
+                        <%= form.password_field :password, autocomplete: "current-password", placeholder: "••••••••", 
+                            class: "block w-full rounded-none border-0 border-b-2 border-gray-200 bg-transparent px-0 py-3 text-gray-900 focus:border-[#01003d] focus:ring-0 sm:text-sm transition-colors dark:text-white dark:border-gray-700",
+                            data: { 
+                                signup_validation_target: "password", 
+                                field_name: "password", 
+                                action: "input->signup-validation#validateField blur->signup-validation#markAsTouched" 
+                            } %>
+                        <div class="absolute inset-y-0 right-0 flex items-center cursor-pointer" data-action="click->signup-validation#togglePasswordVisibility" data-field-type="password">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </div>
+                        <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="passwordError"></p>
+                    </div>
+
+                    <div class="relative">
+                        <%= form.password_field :password_confirmation, autocomplete: "current-password", placeholder: "••••••••", 
+                            class: "block w-full rounded-none border-0 border-b-2 border-gray-200 bg-transparent px-0 py-3 text-gray-900 focus:border-[#01003d] focus:ring-0 sm:text-sm transition-colors dark:text-white dark:border-gray-700",
+                            data: {   "signup-validation-target": "passwordConfirmation",
+                            "field-name": "passwordConfirmation",
+                            "action": "input->signup-validation#validateField blur->signup-validation#markAsTouched"  } %>
+                        <div class="absolute inset-y-0 right-0 flex items-center cursor-pointer" data-action="click->signup-validation#togglePasswordVisibility" data-field-type="passwordConfirmation">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </div>
+                        <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="passwordConfirmationError"></p>
+                    </div>
+                </div>
+
+                <div class="mt-10 flex flex-col gap-4">
+                    <button type="button" class="next-step-btn btn-brand-primary w-full disabled:opacity-50 disabled:cursor-not-allowed" data-action="click->signup-validation#nextStep" data-signup-validation-target="nextButton" disabled>
+                        Next: Professional Details
+                    </button>
+                    <%= link_to "Back to Sign In", new_session_path(resource_name), class: "text-center text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-black" %>
+                </div>
+            </div>
+
+            <div class="hidden" data-signup-validation-target="step2">
+                <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                    <div>
+                        <%= form.label :phone, class: "label-brand-caps" %>
+                        <%= form.text_field :phone, class: "input-brand-underline", placeholder: "+1...", data: { signup_validation_target: "phone", field_name: "phone", action: "input->signup-validation#validateField blur->signup-validation#markAsTouched" } %>
+                        <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="phoneError"></p>
+                    </div>
+
+                    <div data-controller="address-autocomplete" data-address-autocomplete-api-key-value="<%= ENV['GOOGLE_API_KEY'] %>">
+                        <%= form.label :address, class: "label-brand-caps" %>
+                        <%= form.text_field :address, class: "input-brand-underline", placeholder: "123 Street...", data: { address_autocomplete_target: "input", action: "place_changed->address-autocomplete#placeSelected input->signup-validation#validateField blur->signup-validation#markAsTouched", signup_validation_target: "address", field_name: "address" } %>
+                        <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="addressError"></p>
+                    </div>
+
+                    <div>
+                        <%= form.label :dob, "Date of Birth", class: "label-brand-caps" %>
+                        <%= form.date_field :dob, class: "input-brand-underline", data: { signup_validation_target: "dob", field_name: "dob", action: "change->signup-validation#validateField blur->signup-validation#markAsTouched" } %>
+                        <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="dobError"></p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">I am</label>
+                        <div class="mt-2 space-y-2" data-action="change->signup-validation#validateField click->signup-validation#markAsTouched">
+                            <div class="flex items-center">
+                                <%= form.radio_button :role, 'parent_user', 
+                                checked: false,
+                                class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700",
+                                data: { 
+                                    "signup-validation-target": "role",
+                                    "field-name": "role"
+                                } %>
+                                <%= form.label :parent_user, "a Parent of an Athlete(s)", class: "ml-2 block text-sm text-gray-900 dark:text-gray-300" %>
+                            </div>
+                            <div class="flex items-center">
+                                <%= form.radio_button :role, 'athlete', 
+                                checked: false,
+                                class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700",
+                                data: { 
+                                    "signup-validation-target": "role",
+                                    "field-name": "role"
+                                } %>
+                                <%= form.label :athlete, "an Athlete", class: "ml-2 block text-sm text-gray-900 dark:text-gray-300" %>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-sm text-red-600 hidden" data-signup-validation-target="roleError"></p>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex items-center justify-between">
+                    <button type="button" class="btn-brand-secondary" data-action="click->signup-validation#prevStep">
+                        Previous
+                    </button>
+                    <%= form.submit "Create Account", 
+                    class: "btn-brand-primary disabled:opacity-50 disabled:cursor-not-allowed",
+                    data: { "signup-validation-target": "submitButton" },
+                    disabled: true %>
+                </div>
+            </div>
+            <% end %>
+        </div>
+    </div>
+</section>
