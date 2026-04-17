@@ -1,60 +1,80 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        color: #333;
-      }
-      .container {
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
-      }
-      h1 {
-        color: #004a99;
-      }
-      p {
-        font-size: 16px;
-      }
-      .button {
-        background-color: #333;
-        color: white;
-        padding: 10px 20px;
-        text-decoration: none;
-        display: inline-block;
-        border-radius: 5px;
-      }
-      .image-container {
-        text-align: center;
-        margin-top: 20px;
-      }
-      .image-container img {
-        max-width: 100px;
-        height: auto;
-        border: 0;
-        display: block;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Welcome, <%= @user.first_name %> <%= @user.last_name %>!</h1>
-      <p>Thank you for signing for to the Chambers For Sport portal. We're excited to have you on board.</p>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Dwain Chambers Performance Academy</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
+    <tr>
+      <td align="center" style="padding: 40px 0;">
+        <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 24px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(1, 0, 61, 0.05);">
+          
+          <tr>
+            <td align="center" style="padding: 40px 40px 20px 40px;">
+              <img src="https://pub-bc4cae30cb704275a2d82ae56b32c9b6.r2.dev/cfs/mailer_logo.png" alt="Chambers For Sport" width="100" style="display: block; border: 0;">
+            </td>
+          </tr>
 
-      <p>To get started, please log in using the following link:</p>
+          <tr>
+            <td align="center" style="padding: 0 50px 30px 50px;">
+              <h1 style="color: #01003d; font-size: 32px; font-weight: 900; margin: 0; text-transform: uppercase; letter-spacing: -1px;">
+                Welcome to the <span style="color: #3b82f6;">Portal</span>
+              </h1>
+              <div style="height: 4px; width: 40px; background-color: #01003d; margin: 20px 0;"></div>
+            </td>
+          </tr>
 
-      <p><a href="<%= @url %>" class="button "><span>Sign In</span></a></p>
+          <tr>
+            <td align="left" style="padding: 0 50px 40px 50px;">
+              <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+                Hello <strong><%= @user.first_name %></strong>,
+              </p>
+              <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-bottom: 25px;">
+                Your account is officially active. You now have access to the Dwain Chambers Performance Academy (DCPA) platform where you can track metrics, manage competitions, academy subscriptions, and follow professional training insights.
+              </p>
+              
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td align="center" style="padding: 10px 0 30px 0;">
+                    <a href="<%= @url %>" style="background-color: #01003d; color: #ffffff; padding: 18px 35px; text-decoration: none; display: inline-block; border-radius: 12px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 6px rgba(1, 0, 61, 0.15);">
+                      Sign In To Portal
+                    </a>
+                  </td>
+                </tr>
+              </table>
 
-      <p>If you have any questions or need assistance, please do not hesitate to let us know by replying to this email.</p>
+              <p style="color: #64748b; font-size: 14px; line-height: 1.6; border-top: 1px solid #f1f5f9; padding-top: 25px;">
+                If you have any questions or need assistance, please do not hesitate to let us know by emailing us at info@chambersforsoport.com.
+              </p>
+            </td>
+          </tr>
 
-      <p>Best regards,<br>
-        Dwain Chambers & the Chambers For Sport Team
-      </p>
-       <div class="image-container">
-        <img src="https://pub-bc4cae30cb704275a2d82ae56b32c9b6.r2.dev/cfs/mailer_logo.png" alt="chambers for sport"/>
-      </div>
-    </div>
-  </body>
+          <tr>
+            <td align="left" style="padding: 0 50px 50px 50px;">
+              <p style="color: #01003d; font-size: 14px; font-weight: 800; margin: 0; text-transform: uppercase; letter-spacing: 1px;">
+                Dwain Chambers & Team DCPA 
+              </p>
+              <p style="color: #94a3b8; font-size: 12px; font-weight: 700; margin: 0; text-transform: uppercase;">
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td height="8" style="background-color: #01003d;"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="center" style="padding-bottom: 40px;">
+        <p style="color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">
+          &copy; <%= Time.zone.now.year %> Dwain Chambers Performance Academy.
+        </p>
+      </td>
+    </tr>
+  </table>
+</body>
 </html>

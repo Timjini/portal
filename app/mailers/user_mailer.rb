@@ -11,7 +11,7 @@ class UserMailer < ApplicationMailer
   def welcome_email(user)
     @user = user
     @url  = 'https://club.chambersforsport.com/users/sign_in'
-    mail(to: @user.email, subject: 'Welcome to Chambers For Sport') # rubocop:disable Rails/I18nLocaleTexts
+    mail(to: @user.email, subject: 'Dwain Chambers Performance Academy') # rubocop:disable Rails/I18nLocaleTexts
   end
 
   def reset_password_instructions(user, token, _opts = {}) # rubocop:disable Metrics/MethodLength
