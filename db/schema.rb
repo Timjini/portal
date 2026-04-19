@@ -189,7 +189,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
   create_table "dcpa_events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "title"
     t.string "coach"
-    t.text "dates", size: :long, default: "[]", collation: "utf8mb4_bin"
+    t.text "dates", size: :long, collation: "utf8mb4_bin"
     t.time "time_start"
     t.time "time_end"
     t.string "location"
@@ -220,9 +220,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.string "notes"
     t.string "muscle_group"
     t.string "primary_focus"
-    t.text "movement_patterns", size: :long, default: "[]", collation: "utf8mb4_bin"
-    t.text "equipment", size: :long, default: "[]", collation: "utf8mb4_bin"
-    t.text "extra_attributes", size: :long, default: "[]", collation: "utf8mb4_bin"
+    t.text "movement_patterns", size: :long, collation: "utf8mb4_bin"
+    t.text "equipment", size: :long, collation: "utf8mb4_bin"
+    t.text "extra_attributes", size: :long, collation: "utf8mb4_bin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.check_constraint "json_valid(`equipment`)", name: "equipment"
@@ -258,7 +258,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.integer "step"
   end
 
-  create_table "news_letters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "news_letters", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "email"
     t.string "name"
     t.datetime "created_at", null: false
@@ -276,21 +276,22 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
-  create_table "payments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "payments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.date "payment_date"
     t.decimal "amount", precision: 10, scale: 2
     t.string "status", default: "pending"
     t.date "due_date"
-    t.json "links"
+    t.text "links", size: :long, collation: "utf8mb4_bin"
     t.bigint "user_id"
     t.bigint "user_plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_payments_on_user_id"
     t.index ["user_plan_id"], name: "index_payments_on_user_plan_id"
+    t.check_constraint "json_valid(`links`)", name: "links"
   end
 
-  create_table "plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "plans", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.decimal "amount", precision: 10, scale: 2
     t.integer "day_of_month"
@@ -307,12 +308,15 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.boolean "has_pending_update", default: false, null: false
     t.boolean "scheduled_to_pause", default: false, null: false
     t.boolean "instant_bank_pay", default: false, null: false
-    t.json "links"
-    t.json "organisation_details"
-    t.json "fx"
+    t.text "links", size: :long, collation: "utf8mb4_bin"
+    t.text "organisation_details", size: :long, collation: "utf8mb4_bin"
+    t.text "fx", size: :long, collation: "utf8mb4_bin"
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.check_constraint "json_valid(`fx`)", name: "fx"
+    t.check_constraint "json_valid(`links`)", name: "links"
+    t.check_constraint "json_valid(`organisation_details`)", name: "organisation_details"
   end
 
   create_table "pricing_packages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -359,7 +363,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.bigint "questionnaire_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "options", size: :long, default: "[]", collation: "utf8mb4_bin"
+    t.text "options", size: :long, collation: "utf8mb4_bin"
     t.integer "position"
     t.string "illness_tag"
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
@@ -429,7 +433,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.text "health_issues"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "extra"
+    t.text "extra", size: :long, collation: "utf8mb4_bin"
     t.boolean "registration_confirmation", default: false, null: false
     t.bigint "training_package_id"
     t.boolean "policy_agreement", default: false, null: false
@@ -443,6 +447,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.datetime "reminder_sent_at"
     t.index ["training_package_id"], name: "index_taster_session_bookings_on_training_package_id"
     t.index ["user_id"], name: "index_taster_session_bookings_on_user_id"
+    t.check_constraint "json_valid(`extra`)", name: "extra"
   end
 
   create_table "time_slots", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -454,7 +459,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.string "recurrence_rule"
     t.datetime "recurrence_end"
     t.string "slot_type", default: "CoachTimeSlot"
-    t.text "group_types", size: :long, default: "[]", collation: "utf8mb4_bin"
+    t.text "group_types", size: :long, collation: "utf8mb4_bin"
     t.string "title"
     t.bigint "coach_calendar_id"
     t.check_constraint "json_valid(`group_types`)", name: "group_types"
@@ -493,7 +498,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.string "status", default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "extra", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
+    t.text "extra", size: :long, collation: "utf8mb4_bin"
     t.date "start_date"
     t.date "ending_date"
     t.check_constraint "json_valid(`extra`)", name: "extra"
@@ -522,8 +527,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.datetime "updated_at", null: false
     t.string "degree"
     t.index ["level_id"], name: "index_user_levels_on_level_id"
-    t.index ["user_id", "status", "level_id"], name: "index_user_levels_on_user_id_and_status_and_level_id"
-    t.index ["user_id", "status"], name: "index_user_levels_on_user_id_and_status"
     t.index ["user_id"], name: "index_user_levels_on_user_id"
   end
 
@@ -535,7 +538,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_062023) do
     t.index ["user_id"], name: "index_user_logins_on_user_id"
   end
 
-  create_table "user_plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "user_plans", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "plan_id"
     t.datetime "created_at", null: false

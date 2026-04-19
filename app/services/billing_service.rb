@@ -87,7 +87,7 @@ class BillingService
     }
   end
 
-  def save_billing_information_to_user(res)
+  def save_billing_information_to_user(res) # rubocop:disable Metrics/AbcSize
     links_data = {
       'request_id' => res.id,
       'customer' => res.links.customer,
@@ -95,7 +95,7 @@ class BillingService
       'creditor' => res.links.creditor,
       'organisation' => res.links.organisation,
       'mandate_request' => res.links.mandate_request
-    }
+    }.to_json
     Payment.create(user_id: @user.id, status: 'pending', user_plan_id: @user.user_plan.id, amount: @plan.amount,
                    links: links_data)
   end
