@@ -1,6 +1,7 @@
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <%= render 'shared/page_header_with_nav', title:"Financial Center", description: "Subscription management & billing records" %>
-
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-6">
+        <%= render 'shared/page_header_with_nav', title:"Financial Center", description: "Subscription management & billing records" %>
+    </div>
     <% if @payment_information[:current_plan].present? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
         
@@ -38,7 +39,7 @@
                             </p>
                             
                             <div class="mt-8 flex items-baseline gap-2 text-white">
-                                <span class="text-5xl font-black tracking-tighter"><%= number_to_currency(user.plan.amount / 100.0) %></span>
+                                <span class="text-5xl font-black tracking-tighter"><%= (user.plan.amount).round(2) %></span>
                                 <span class="text-sm font-bold opacity-60 uppercase tracking-widest"><%= user.plan.currency %></span>
                             </div>
                         </div>

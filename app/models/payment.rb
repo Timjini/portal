@@ -9,7 +9,7 @@ class Payment < ApplicationRecord
   enum :status, { active: 'active', pending: 'pending', failed: 'failed', retrying: 'retrying' }, default: 'active'
 
   def formatted_price
-    "#{format('%.2f', amount.round / 100.0)} #{user_plan.plan.currency}"
+    "#{format('%.2f', amount.round / 100.0)} GPB"
   end
 
   def update_user_plan_status
