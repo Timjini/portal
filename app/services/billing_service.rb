@@ -2,8 +2,6 @@
 
 class BillingService
   def initialize(user)
-    # @amount = amount
-    # @description = description
     @user = user
     @plan = user.plan
     @currency = ENV.fetch('PORTAL_CURRENCY', nil)
@@ -49,20 +47,22 @@ class BillingService
   end
 
   def create_subscription # rubocop:disable Metrics/MethodLength
-    @client.subscriptions.create(
+    response = @client.subscriptions.create(
       params: {
-        amount: @user.plan.amount_string,
-        currency: @currency,
+        amount: @user.plan.amount,
+        currency: 'GBP',
+        name: @user.plan.name,
         interval_unit: 'monthly',
+        interval: 1,
         day_of_month: 1,
+        start_date: '2026-04-20',
         links: {
-          mandate: @user.plan.links['mandate']
+          mandate: @user.payments.last.links['mandate_request']
         }
-      },
-      headers: {
-        'Idempotency-Key' => @user.id
       }
     )
+
+    Rails.logger.info("response #{response.inspect}")
   rescue StandardError => e
     Rails.logger.info("error catching #{e.message}")
   end
@@ -72,7 +72,7 @@ class BillingService
   end
 
   def list_billing_requests
-    @client.billing_requests.list
+    @client.billing_requests.get('')
   end
 
   def list_mandates
@@ -87,7 +87,7 @@ class BillingService
     }
   end
 
-  def save_billing_information_to_user(res)
+  def save_billing_information_to_user(res) # rubocop:disable Metrics/AbcSize
     links_data = {
       'request_id' => res.id,
       'customer' => res.links.customer,
@@ -95,7 +95,7 @@ class BillingService
       'creditor' => res.links.creditor,
       'organisation' => res.links.organisation,
       'mandate_request' => res.links.mandate_request
-    }
+    }.to_json
     Payment.create(user_id: @user.id, status: 'pending', user_plan_id: @user.user_plan.id, amount: @plan.amount,
                    links: links_data)
   end

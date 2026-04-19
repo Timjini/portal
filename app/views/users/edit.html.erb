@@ -1,124 +1,120 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
-<% input_style = "w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" %>
-<%= form_with model: @user, url: update_user_path(@user), local: true, data: { turbo: true } do |form| %>
-  <div class="max-w-4xl mx-auto p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
-      <%= @user.athlete? ? "ATHLETE PROFILE" : "USER PROFILE" %>
-    </h2>
-
-    <% if current_user.admin? %>
-      <div class="mb-6 p-4 bg-blue-50 rounded-lg">
-        <label class="block text-sm font-medium text-blue-800 mb-1">User Role*</label>
-        <%= form.select :role, 
-            options_for_select(
-              User::ROLE_TYPES.map { |k,v| [k.to_s.titleize, v] },
-              selected: @user.role
-            ), 
-            {},
-            class: input_style,
-            disabled: !current_user.admin? %>
-        <p class="mt-1 text-xs text-blue-600">Only admins can modify roles</p>
-      </div>
-    <% end %>
-
-    <!-- Avatar Section -->
-    <div class="flex flex-col md:flex-row gap-8 mb-6">
-      <div class="mb-5 text-center" data-controller="avatar">
-                <div class="mx-auto w-28 h-28 mb-2 border rounded-full relative bg-gray-100 mb-4 shadow-inset">
-                    <div data-loading-indicator-target="loadingIndicator" class="loading-indicator hidden">
-                        <div role="status">
-                            <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
-                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
-                            </svg>
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-                    <div class="panzoom-container absolute inset-0 overflow-hidden rounded-full">
-                      <%= image_tag(@user.avatar_thumbnail, id: "image", class: "w-full h-full object-cover", data: { avatar_target: "image" }, alt: "Avatar Preview") %>
-                    </div>
-                </div>
-                <label for="avatarInput" type="button" class="cursor-pointer inline-flex justify-between items-center focus:outline-none border py-2 px-4 rounded-lg shadow-sm text-left text-gray-600 bg-white hover:bg-gray-100 font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-flex flex-shrink-0 w-6 h-6 -mt-1 mr-1" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-                        <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"></path>
-                        <circle cx="12" cy="13" r="3"></circle>
-                    </svg>
-                    Browse Photo
-                </label>
-                <div class="mx-auto w-48 text-gray-500 text-xs text-center mt-1">Click to add profile picture</div>
-                <%= form.file_field :avatar, class: "hidden", id: "avatarInput", data: { avatar_target: "input" } %>
-            </div>
-
-      <!-- User Details -->
-      <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Email*</label>
-          <%= form.email_field :email, class: input_style, required: true %>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Username*</label>
-          <%= form.text_field :username, class: input_style, required: true %>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">First Name*</label>
-          <%= form.text_field :first_name, class: input_style, required: true %>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Last Name*</label>
-          <%= form.text_field :last_name, class: input_style, required: true %>
-        </div>
-      </div>
-    </div>
-
-    <!-- Athlete Profile Section -->
-    <div class="border-t pt-6">
-      <h3 class="text-lg font-medium text-gray-900 mb-4">Athlete Details</h3>
-
-      <%= form.fields_for :athlete_profile, @profile do |profile_form| %>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-            <%= profile_form.date_field :dob, class: input_style, max: Date.today %>
+<div class="max-w-5xl mx-auto px-4 py-10">
+  <%= form_with model: @user, url: update_user_path(@user), local: true, data: { turbo: true }, class: "space-y-8" do |form| %>
+    
+    <div class="bg-white dark:bg-slate-900 shadow-xl shadow-blue-900/5 overflow-hidden border border-gray-100 dark:border-gray-800">
+      
+      <div class="p-8 md:p-12 border-b border-gray-50 dark:border-gray-800">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div class="text-center md:text-left">
+            <h2 class="text-3xl font-black text-[#01003d] dark:text-white uppercase tracking-tighter">
+              <%= @user.athlete? ? "Athlete" : "User" %> <span class="text-transparent" style="-webkit-text-stroke: 1px #01003d;">Settings</span>
+            </h2>
+            <p class="text-gray-500 font-medium mt-1">Manage account security and performance vitals</p>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">School Name</label>
-            <%= profile_form.text_field :school_name, class: input_style %>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Height (cm)</label>
-            <%= profile_form.number_field :height, class: input_style, min: 0, step: 0.1 %>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
-            <%= profile_form.number_field :weight, class: input_style, min: 0, step: 0.1 %>
-          </div>
+          
           <% if current_user.admin? %>
-          <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Power of Ten URL</label>
-            <%= profile_form.text_field :power_of_ten, 
-                class: input_style,
-                placeholder: "https://www.thepowerof10.info/athletes/profile.aspx?athleteid=..." %>
-            <p class="mt-1 text-xs text-gray-500">Link to athlete's Power of Ten profile</p>
-          </div>
-          <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Level</label>
-            <%= profile_form.select :level, ['development', 'intermediate', 'advanced'], {}, class: input_style %>
-          </div>
+            <div class="bg-blue-50 dark:bg-blue-900/20 px-6 py-3 rounded-2xl border border-blue-100 dark:border-blue-800/50">
+              <label class="label-brand-caps text-blue-700 dark:text-blue-400 mb-2 block">System Role</label>
+              <%= form.select :role, 
+                  User::ROLE_TYPES.map { |k,v| [k.to_s.titleize, v] }, 
+                  {}, 
+                  class: "bg-transparent font-bold text-[#01003d] dark:text-white border-none focus:ring-0 p-0 text-sm" %>
+            </div>
           <% end %>
         </div>
-      <% end %>
-    </div>
+      </div>
 
-    <div class="mt-8 flex justify-end gap-3">
-      <%
-=begin%>
- <%= link_to "Cancel", users_path(@user), class: "px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" %> 
-<%
-=end%>
-      <%= form.submit "Save Changes", class: "btn" , data: { turbo_submits_with: "Saving..." } %>
+      <div class="p-8 md:p-12 space-y-12">
+        
+        <div class="flex flex-col lg:flex-row gap-12 items-start">
+          <div class="w-full lg:w-auto flex flex-col items-center" data-controller="avatar">
+            <div class="relative group">
+              <div class="w-36 h-36 rounded-full border-4 border-white shadow-2xl overflow-hidden bg-gray-50 ring-1 ring-gray-100 relative">
+                <div data-loading-indicator-target="loadingIndicator" class="hidden absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                  <%= render "shared/loading_spinner" %>
+                </div>
+                <div class="panzoom-container w-full h-full">
+                  <%= image_tag(@user.avatar_thumbnail, id: "image", class: "w-full h-full object-cover", data: { avatar_target: "image" }) %>
+                </div>
+              </div>
+              
+              <label for="avatarInput" class="absolute bottom-1 right-1 p-3 bg-[#01003d] text-white rounded-full cursor-pointer shadow-lg hover:scale-110 transition-transform active:scale-95 z-20">
+                <span class="material-symbols-outlined !text-[20px]">photo_camera</span>
+              </label>
+            </div>
+            <div class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mt-4">Profile Identity</div>
+            <%= form.file_field :avatar, class: "hidden", id: "avatarInput", data: { avatar_target: "input", action: "change->avatar#handleFileSelect" } %>
+          </div>
+
+          <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
+            <div class="space-y-1">
+              <%= form.label :username, "Display Username", class: "label-brand-caps" %>
+              <%= form.text_field :username, class: "input-brand-underline", required: true %>
+            </div>
+            <div class="space-y-1">
+              <%= form.label :email, "Primary Email", class: "label-brand-caps" %>
+              <%= form.email_field :email, class: "input-brand-underline", required: true %>
+            </div>
+            <div class="space-y-1">
+              <%= form.label :first_name, "Legal First Name", class: "label-brand-caps" %>
+              <%= form.text_field :first_name, class: "input-brand-underline", required: true %>
+            </div>
+            <div class="space-y-1">
+              <%= form.label :last_name, "Legal Last Name", class: "label-brand-caps" %>
+              <%= form.text_field :last_name, class: "input-brand-underline", required: true %>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-gray-50 dark:border-gray-800">
+
+        <div>
+          <div class="flex items-center gap-3 mb-8">
+            <span class="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+              <span class="material-symbols-outlined !text-[20px]">fitness_center</span>
+            </span>
+            <h3 class="text-sm font-black uppercase tracking-widest text-[#01003d] dark:text-white">Performance Vitals</h3>
+          </div>
+
+          <%= form.fields_for :athlete_profile, @profile do |profile_form| %>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div class="space-y-1">
+                <%= profile_form.label :dob, "Date of Birth", class: "label-brand-caps" %>
+                <%= profile_form.date_field :dob, class: "input-brand-underline", max: Date.today %>
+              </div>
+              <div class="space-y-1">
+                <%= profile_form.label :school_name, "Academic Institution", class: "label-brand-caps" %>
+                <%= profile_form.text_field :school_name, class: "input-brand-underline" %>
+              </div>
+              <div class="space-y-1">
+                <%= profile_form.label :height, "Height (cm)", class: "label-brand-caps" %>
+                <%= profile_form.number_field :height, class: "input-brand-underline", step: 0.1 %>
+              </div>
+              <div class="space-y-1">
+                <%= profile_form.label :weight, "Weight (kg)", class: "label-brand-caps" %>
+                <%= profile_form.number_field :weight, class: "input-brand-underline", step: 0.1 %>
+              </div>
+
+              <% if current_user.admin? %>
+                <div class="md:col-span-2 lg:col-span-3 space-y-1">
+                  <%= profile_form.label :power_of_ten, "Power of Ten URL", class: "label-brand-caps text-blue-600" %>
+                  <%= profile_form.text_field :power_of_ten, class: "input-brand-underline border-blue-200", placeholder: "https://www.thepowerof10.info/..." %>
+                </div>
+                <div class="md:col-span-2 lg:col-span-1 space-y-1">
+                  <%= profile_form.label :level, "Athlete Status", class: "label-brand-caps text-blue-600" %>
+                  <%= profile_form.select :level, ['development', 'intermediate', 'advanced'], {}, class: "input-brand-underline" %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="pt-10 flex flex-col md:flex-row justify-end gap-4 border-t border-gray-50 dark:border-gray-800">
+          <%= form.submit "Update Profile", 
+              class: "btn-brand-primary w-full md:w-auto px-12 py-4", 
+              data: { turbo_submits_with: "Syncing..." } %>
+        </div>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 </div>

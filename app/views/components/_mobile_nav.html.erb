@@ -1,93 +1,108 @@
-            <div data-controller="mobile-menu" class="flex flex-col flex-wrap align-center gap-4">
-              <a class="dashboard_logo block md:hidden" href="/"></a>
-              <button 
-                data-action="click->mobile-menu#toggle"
-                class="hamburger-button p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 hover:bg-gray-50 transition-all duration-200 absolute top-4 right-2 z-50"
-              >
-                <div class="flex flex-col items-center justify-center w-6">
-                  <div class="w-6 h-0.5 bg-gray-600 rounded-full transition-all duration-300 mb-1.5 origin-center" 
-                      data-mobile-menu-target="bar1"></div>
-                  <div class="w-6 h-0.5 bg-gray-600 rounded-full transition-all duration-300 mb-1.5" 
-                      data-mobile-menu-target="bar2"></div>
-                  <div class="w-6 h-0.5 bg-gray-600 rounded-full transition-all duration-300 origin-center" 
-                      data-mobile-menu-target="bar3"></div>
-                </div>
-              </button>
+<div data-controller="mobile-menu" class="flex flex-col flex-wrap align-center gap-4 lg:hidden mb-24">
+  <div class="absolute top-4 left-4 z-50">
+    <a href="/">
+      <%= image_tag('cfs-dark.png', alt: "Logo", class: 'h-24 w-auto') %>
+    </a>
+  </div>
 
-              <!-- Fullscreen Menu -->
-              <div 
-                data-mobile-menu-target="menu"
-                class="hidden absolute inset-0 bg-white z-40 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-8 bg-gradient-to-b from-blue-50 via-blue-100 to-gray-50"
-              >
-              <div class="mt-24">
-                <% nav_items_for_current_user.each do |item| %>
-              <div class="nav-group">
-                 <div
-                    class="flex items-center gap-2 py-2 px-2 rounded-md transition-colors nav_item
-                    <%= 'bg-blue-200 font-semibold' if request.path == item[:path] %>">
-                    <!-- Main Link -->
-                    <%= link_to item[:path], class: "flex items-center gap-2 flex-1" do %>
-                    <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-gray-700">
-                    <%= render partial: "icons/#{item[:icon]}" %>
-                    </span>
-                    <span class="text-sm font-normal text-gray-600 group-hover:text-gray-900"><%= item[:name] %></span>
-                    <% if item[:tag] %>
-                    <span class="inline-flex items-center rounded-md bg-green-500/10 px-2 py-1 text-xs font-medium bg-green-600 text-white animate-pulse ring-1 ring-inset ring-green-500/20">
-                       <%=item[:tag]%>
-                     </span>
-                    <%end%>
-                    <% end %>
-                    <!-- Arrow Toggle -->
-                    <% if item[:children] %>
-                    <span class="ml-auto material-symbols-outlined arrow transition-transform duration-200 cursor-pointer"
-                       onclick="this.closest('.nav-group').querySelector('.children').classList.toggle('hidden'); this.classList.toggle('rotate-90')">
-                    keyboard_arrow_right
-                    </span>
-                    <% end %>
-                 </div>
-                 <% if item[:children] %>
-                 <div class="children ml-6 flex-col space-y-1 mt-1 hidden">
-                    <% item[:children].each do |child| %>
-                    <%= link_to child[:path],
-                       class: "group flex items-center gap-2 py-1 px-2 rounded-md transition-colors nav_item #{'bg-blue-100 font-semibold' if request.path == child[:path]} hover:bg-gray-50" do %>
-                    <span class="material-symbols-outlined text-gray-400 text-[18px] group-hover:text-gray-600">
-                    <%= render partial: "icons/#{child[:icon]}" %>
-                    </span>
-                    <span class="text-sm font-normal text-gray-500 group-hover:text-gray-700"><%= child[:name] %></span>
-                    <% end %>
-                    <% end %>
-                 </div>
-                 <% end %>
-              </div>
-              <%end%>
-              </div>
+  <button 
+    data-action="click->mobile-menu#toggle"
+    class="hamburger-button p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-gray-100 transition-all duration-200 absolute top-3 right-3 z-50 shadow-sm border border-gray-100 bg-white"
+    style="--tw-ring-color: #01003d;"
+  >
+    <div class="flex flex-col items-center justify-center w-6 h-6">
+      <div class="w-6 h-0.5 rounded-full transition-all duration-300 mb-1.5 origin-center" 
+          style="background-color: #01003d;" data-mobile-menu-target="bar1"></div>
+      <div class="w-4 h-0.5 rounded-full transition-all duration-300 mb-1.5 self-end" 
+          style="background-color: #01003d;" data-mobile-menu-target="bar2"></div>
+      <div class="w-6 h-0.5 rounded-full transition-all duration-300 origin-center" 
+          style="background-color: #01003d;" data-mobile-menu-target="bar3"></div>
+    </div>
+  </button>
 
-                <!-- Logout Button -->
-                <div class="sidebar-footer pt-4 border-t border-gray-100 mt-auto px-1">
-                  <a href="/users/<%= current_user.id %>" class="flex items-center gap-2 mb-3 p-1 rounded-md hover:bg-gray-50 transition-colors">
-                     <% if current_user.avatar_thumbnail.present? %>
-                     <%= image_tag(current_user.avatar_thumbnail, alt: "#{current_user.full_name} avatar", class: "w-7 h-7 rounded-full shadow-sm object-cover border border-gray-200") %>
-                     <% end %>
-                     <div class="user-info">
-                        <div class="user-name text-xs font-medium text-gray-700"><%= current_user.full_name %></div>
-                        <div class="user-role text-[11px] text-gray-400 capitalize"><%= current_user.role %></div>
-                     </div>
-                  </a>
-                  <div class="group flex items-center gap-2 py-2 px-2 rounded-md hover:bg-gray-50 transition-colors">
-                     <span class="material-symbols-outlined text-gray-500 text-[20px] group-hover:text-red-500">logout</span>
-                     <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "text-sm font-normal text-gray-600 group-hover:text-red-500 bg-transparent border-none cursor-pointer p-0" %>
-                  </div>
-               </div>
-              </div>
+  <div 
+    data-mobile-menu-target="menu"
+    class="hidden fixed inset-0 z-40 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-6 bg-white"
+  >
+    <div class="mt-20 overflow-y-auto flex-1">
+      <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-6 px-2">Main Navigation</p>
+      
+      <div class="space-y-2">
+        <% nav_items_for_current_user.each do |item| %>
+          <div class="nav-group">
+            <div class="flex items-center gap-3 py-3 px-4 rounded-2xl transition-all
+              <%= request.path == item[:path] ? 'bg-[#01003d] text-white shadow-lg' : 'text-gray-600 active:bg-gray-100' %>">
+              
+              <%= link_to item[:path], class: "flex items-center gap-4 flex-1" do %>
+                <span class="material-symbols-outlined text-[24px]">
+                  <%= render partial: "icons/#{item[:icon]}" %>
+                </span>
+                <span class="text-base font-bold tracking-tight"><%= item[:name] %></span>
+                
+                <% if item[:tag] %>
+                  <span class="inline-flex items-center rounded-full bg-blue-500 px-2 py-0.5 text-[9px] font-black uppercase text-white">
+                    <%= item[:tag] %>
+                  </span>
+                <% end %>
+              <% end %>
+
+              <% if item[:children] %>
+                <span class="material-symbols-outlined arrow transition-transform cursor-pointer"
+                   onclick="this.closest('.nav-group').querySelector('.children').classList.toggle('hidden'); this.classList.toggle('rotate-90')">
+                  expand_more
+                </span>
+              <% end %>
             </div>
 
+            <% if item[:children] %>
+              <div class="children ml-10 flex-col space-y-1 mt-2 hidden border-l-2 border-gray-100">
+                <% item[:children].each do |child| %>
+                  <%= link_to child[:path], class: "py-3 px-4 text-gray-500 font-medium text-sm block" do %>
+                    <%= child[:name] %>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
 
-            <style>
-              /* Add this to your stylesheet or in a style tag */
-              @media (min-width: 1100px) {
-                .hamburger-button,
-                [data-mobile-menu-target="menu"] {
-                  display: none;
-                }
-              }
-            </style>
+    <div class="pt-6 border-t border-gray-100 mt-auto pb-8">
+      <a href="/users/<%= current_user.id %>" class="flex items-center gap-4 mb-6 p-3 rounded-2xl bg-gray-50">
+         <div class="relative">
+            <% if current_user.avatar_thumbnail.present? %>
+              <%= image_tag(current_user.avatar_thumbnail, class: "w-12 h-12 rounded-full object-cover ring-2 ring-white shadow-sm") %>
+            <% else %>
+              <div class="w-12 h-12 rounded-full bg-[#01003d] text-white flex items-center justify-center font-bold">
+                <%= current_user.first_name[0] %>
+              </div>
+            <% end %>
+         </div>
+         <div class="user-info">
+            <div class="text-base font-bold text-gray-800"><%= current_user.full_name %></div>
+            <div class="text-xs font-bold text-gray-400 uppercase tracking-widest"><%= current_user.role %></div>
+         </div>
+      </a>
+
+      <%= button_to destroy_user_session_path, method: :delete, class: "flex w-full items-center justify-center gap-2 py-4 px-4 rounded-2xl bg-red-50 text-red-600 font-bold text-sm transition-active active:scale-95" do %>
+         <span class="material-symbols-outlined text-[20px]">logout</span>
+         Logout from Platform
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Ensure the menu is strictly hidden on desktop */
+  @media (min-width: 1024px) {
+    [data-controller="mobile-menu"] {
+      display: none !important;
+    }
+  }
+
+  /* Hamburger Animation logic (managed by your Stimulus controller) */
+  .mobile-menu-open [data-mobile-menu-target="bar1"] { transform: translateY(8px) rotate(45deg); }
+  .mobile-menu-open [data-mobile-menu-target="bar2"] { opacity: 0; }
+  .mobile-menu-open [data-mobile-menu-target="bar3"] { transform: translateY(-8px) rotate(-45deg); }
+</style>

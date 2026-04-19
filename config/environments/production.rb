@@ -17,8 +17,10 @@ Rails.application.configure do
   config.hosts << 'portal.chambersforsport.com'
   config.hosts << 'club.chambersforsport.com'
   config.hosts << 'portal.chambersforsport.com'
-  config.hosts << 'onrender.com'
   config.hosts << 'localhost:3000'
+  config.hosts << 'localhost:3001'
+  config.hosts << '51.68.215.84:3001'
+  config.hosts << 'staging.chambersforsport.com'
 
   # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 

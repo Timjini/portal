@@ -1,6 +1,6 @@
 <% @children.each do |child| %>
   <% questionnaire_filled = Question.includes(:answers).where(answers: { user_id: child&.id }).exists? %>
-  <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500 relative">
+  <div class="bg-white shadow-sm p-6 border-l-4 border-[#<%=child.color%>] relative">
     <!-- Questionnaire Badge (only shows when not filled) -->
     <% unless questionnaire_filled %>
       <div class="absolute -top-2 -right-2">

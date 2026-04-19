@@ -23,7 +23,9 @@ class PaymentsController < ApplicationController
 
   def create
     user = User.find(params[:athlete])
-    UserPlan.create!(user_id: user.id, plan_id: params[:plan_id]) unless user.plan
+    user_plan = UserPlan.find_or_initialize_by(user_id: params[:athlete])
+    user_plan.plan_id = params[:plan_id]
+    user_plan.save
 
     service = BillingService.new(user)
     auth_url = service.create_billing

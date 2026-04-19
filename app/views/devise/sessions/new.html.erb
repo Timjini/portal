@@ -1,71 +1,106 @@
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "space-y-6") do |f| %>
-  <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <%= image_tag("cfs-dark.png", class: "h-24 w-auto mx-auto") %>
-      <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Sign in to your account</h2>
+<section class="grid grid-cols-1 lg:grid-cols-2 min-h-screen bg-gray-50 dark:bg-slate-950 w-full" >
+  
+  <div class="relative hidden lg:flex flex-col justify-center items-start px-12 xl:px-24 overflow-hidden bg-[#01003d]">
+    
+    <div class="absolute inset-0 opacity-10 pointer-events-none">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
     </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow rounded-lg sm:px-10">
-        <div class="space-y-6">
+    <div class="relative z-10">
+      <div class="mb-8">
+         <%= image_tag("cfs-light.png", class: "h-24 w-auto", alt: "Chambers For Sport") %>
+      </div>
+      
+      <h1 class="text-5xl xl:text-6xl font-black text-white leading-tight uppercase tracking-tighter">
+        Chambers <br/> <span class="text-transparent" style="-webkit-text-stroke: 1px white;">For Sport</span>
+      </h1>
+      
+      <div class="w-20 h-1 mt-6"></div> <p class="mt-8 text-lg text-blue-100/80 max-w-md font-light leading-relaxed">
+        The ultimate ecosystem for elite athletes and sport organizations.
+      </p>
+
+      <div class="mt-16">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-300/60 mb-6">Verified Partners</p>
+        <div class="flex flex-wrap gap-8 opacity-50 hover:opacity-100 transition-opacity duration-500">
+          <div class="h-6 w-20 border border-white/30 rounded"></div> 
+          <div class="h-6 w-20 border border-white/30 rounded"></div>
+          <div class="h-6 w-20 border border-white/30 rounded"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col justify-center px-6 py-12 lg:px-20 xl:px-32">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+      <div class="lg:hidden flex justify-center mb-10">
+         <%= image_tag("cfs-dark.png", class: "h-36 w-auto") %>
+      </div>
+      <h2 class="text-4xl font-extrabold tracking-tight text-[#01003d] dark:text-gray-100">
+        Sign In
+      </h2>
+      <p class="mt-2 text-sm text-gray-500">
+        Enter your credentials to manage your account.
+      </p>
+    </div>
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
+      <div class=" dark:bg-gray-900 py-10 px-0 sm:px-0">
+        
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-6 p-4" }) do |f| %>
+          
           <div>
-            <%= f.label :email, "Email address", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-            <div class="mt-1">
-                <%= f.text_field :username,id:"email", placeholder:"email@example.com", class:"mt-2 rounded bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
-            </div>
+            <%= f.label :email, class: "block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" %>
+            <%= f.email_field :email, autofocus: true, placeholder: "email@chambers.com", 
+                class: "input-brand-underline" %>
           </div>
 
           <div data-controller="visibility">
-            <%= f.label :password, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
-            <div class="mt-1 relative rounded-md shadow-sm">
-              <%= f.password_field :password, autocomplete: "current-password", 
-                  class: "block w-full appearance-none rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white",
-                  placeholder: "••••••••",
+            <div class="flex justify-between items-center">
+              <%= f.label :password, class: "block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" %>
+            </div>
+            <div class="relative">
+              <%= f.password_field :password, autocomplete: "current-password", placeholder: "••••••••", 
+                  class: "block w-full rounded-none border-0 border-b-2 border-gray-200 bg-transparent px-0 py-3 text-gray-900 focus:border-[#01003d] focus:ring-0 sm:text-sm transition-colors dark:text-white dark:border-gray-700",
                   data: { visibility_target: "password" } %>
-              <div class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" data-action="click->visibility#toggleVisibility">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <div class="absolute inset-y-0 right-0 flex items-center cursor-pointer" data-action="click->visibility#toggleVisibility">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
             </div>
           </div>
 
-          <div class="grid grid-cols-2 items-center justify-between">
-            <% if devise_mapping.rememberable? %>
-              <div class="flex items-center">
-                <%= f.check_box :remember_me, class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700" %>
-                <%= f.label :remember_me, class: "ml-2 block text-sm text-gray-900 dark:text-gray-300" %>
-              </div>
-            <% end %>
-
-            <div class="text-sm">
-              <%= link_to "Forgot your password?", new_password_path(resource_name), class: "font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300" %>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <%= f.check_box :remember_me, class: "h-4 w-4 border-gray-300 rounded focus:ring-0", style: "color: #01003d;" %>
+              <%= f.label :remember_me, class: "ml-2 block text-xs font-medium text-gray-500" %>
             </div>
+            <%= link_to "Forgot password?", new_password_path(resource_name), class: "text-xs font-bold uppercase tracking-tighter hover:opacity-70 transition-opacity", style: "color: #01003d;" %>
           </div>
 
-          <div>
-            <%= f.submit "Sign in", class: "flex w-full btn" , data: { turbo_submits_with: "Loading..." }  %>
-          </div>
-        </div>
-
-        <% if devise_mapping.registerable? %>
-          <div class="mt-6">
-            <div class="relative">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
-              </div>
-              <div class="relative flex justify-center text-sm">
-                <span class="bg-white dark:bg-gray-800 px-2 text-gray-500 dark:text-gray-400">Or</span>
-              </div>
-            </div>
-
-            <div class="mt-6">
-              <%= link_to "Create new account", new_registration_path(resource_name), class: "flex w-full justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-white shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200" %>
-            </div>
+          <div class="pt-4">
+           <%= f.submit "Access Platform", class: "btn-brand-primary w-full" , data: { turbo_submits_with: "Loading..." }  %>
           </div>
         <% end %>
+
+        <% if devise_mapping.registerable? %>
+          <div class="mt-12 text-center">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">
+              New to the platform? 
+              <%= link_to "Create Account", new_registration_path(resource_name), class: "ml-1 underline underline-offset-4 decoration-2 hover:text-black transition-colors text-[#01003d] dark:text-gray-100"%>
+            </p>
+          </div>
+        <% end %>
+
       </div>
     </div>
   </div>
-<% end %>
+</section>

@@ -18,6 +18,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=McLaren&family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap" rel="stylesheet">
     <!--QR SCANNER -->
     <script src="https://cdn.jsdelivr.net/npm/quagga/dist/quagga.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -25,16 +27,7 @@
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" />
     <!-- CALENDAR JS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css" rel="stylesheet" />
-    <style>
-        .main-screen {
-            background-image: linear-gradient(270deg, rgba(204, 106, 165, 0.5), rgba(45, 204, 167, 0.5), transparent), url('<%= asset_path('run.jpg') %>');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            position: relative;
-            height: 100vh;
-        }
-    </style>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const flashMessage = document.getElementById("hideMe");
@@ -51,7 +44,7 @@
     <%= turbo_stream_from "flash" %>
     <%= render 'shared/flash' %>
     <% if user_signed_in? %>
-    <main class="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-gray-50">
+    <main class="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-gray-50 via-stone-100 to-gray-50 dark:bg-gradient-to-br dark:from-[#01003d] dark:via-stone-900 dark:to-[#01003d]">
         <%= render 'components/navbar' %>
         <%= render 'components/mobile_nav'%>
         <div class="lg:ml-64 w-full flex-1 mt-8 lg:mt-0">
@@ -59,7 +52,7 @@
         </div>
     </main>
     <%else%>
-    <main class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-gray-200 p-4">
+    <main class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-stone-100 to-gray-200 w-full ">
         <%=yield%>
     </main>
     <%end%>
