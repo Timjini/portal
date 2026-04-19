@@ -18,7 +18,6 @@
     --primary-bg-hover: #f0f0fc;
     --primary-dark: #9c2f2b;
     --primary-border: #c04a45;
-    /* --special-color: conic-gradient(from 90deg at 40% -25%, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700); */
     --logo: url('./cfs-dark.png');
   }
   
@@ -33,7 +32,6 @@
     --hover: rgba(231, 231, 231, 0.35) 0px 5px 15px;
     /* --special-color: conic-gradient(from 90deg at 40% -25%, #49fb35 , #33f71e, #28fc10, #19e203, #15c002); */
     --logo: url('./cfs-light.png');
-  
   }
   
 
@@ -192,4 +190,13 @@
     .label-brand-caps {
       @apply block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2;
     }
+  }
+
+  @media (prefers-color-scheme: dark){
+    .customStroke{
+      -webkit-text-stroke: 1px #f5f5f5;
+    }
+  }
+  .logo{
+    background: url('./cfs-dark.png');
   }

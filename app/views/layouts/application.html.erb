@@ -51,7 +51,7 @@
     <%= turbo_stream_from "flash" %>
     <%= render 'shared/flash' %>
     <% if user_signed_in? %>
-    <main class="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-gray-50 via-stone-100 to-gray-50">
+    <main class="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-gray-50 via-stone-100 to-gray-50 dark:bg-gradient-to-br dark:from-[#01003d] dark:via-stone-900 dark:to-[#01003d]">
         <%= render 'components/navbar' %>
         <%= render 'components/mobile_nav'%>
         <div class="lg:ml-64 w-full flex-1 mt-8 lg:mt-0">
@@ -59,7 +59,7 @@
         </div>
     </main>
     <%else%>
-    <main class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-stone-100 to-gray-200 w-full">
+    <main class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-stone-100 to-gray-200 w-full ">
         <%=yield%>
     </main>
     <%end%>

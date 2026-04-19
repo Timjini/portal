@@ -1,12 +1,5 @@
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <%# Branded Header %>
-    <div class="mb-12">
-      <h1 class="text-4xl font-black text-[#01003d] uppercase tracking-tighter leading-none">
-        Financial <span class="text-transparent" style="-webkit-text-stroke: 1px #01003d;">Center</span>
-      </h1>
-      <div class="w-12 h-1 bg-[#01003d] mt-3 rounded-full"></div>
-      <p class="text-gray-500 mt-4 font-medium uppercase tracking-widest text-[10px]">Subscription management & billing records</p>
-    </div>
+    <%= render 'shared/page_header_with_nav', title:"Financial Center", description: "Subscription management & billing records" %>
 
     <% if @payment_information[:current_plan].present? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -15,7 +8,6 @@
             <div class="flex flex-col h-full">
                 <% if user.respond_to?(:plan) && user.plan.present? %>
                     <%
-                    # Brand-Aligned Status Logic
                     status_styles = {
                         'active'     => { bg: 'bg-[#01003d]', text: 'text-blue-200', badge: 'bg-emerald-500 text-white', accent: 'border-blue-900' },
                         'pending'    => { bg: 'bg-orange-600', text: 'text-orange-100', badge: 'bg-white text-orange-600', accent: 'border-orange-500' },

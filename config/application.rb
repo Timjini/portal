@@ -63,5 +63,7 @@ module Portal
     #
     # Disable the generation of system test files.
     # config.autoload_paths -= %W[#{config.root}/app/disabled]
+    # Font Configuration
+    config.assets.paths << Rails.root.join('app/assets/fonts')
   end
 end
