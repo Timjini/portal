@@ -28,6 +28,8 @@
     <!-- CALENDAR JS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css" rel="stylesheet" />
 
+
+    <link rel="preconnect" href="https://challenges.cloudflare.com" />
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const flashMessage = document.getElementById("hideMe");
@@ -53,6 +55,7 @@
     </main>
     <%else%>
     <main class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-stone-100 to-gray-200 w-full ">
+        <div class="cf-turnstile" data-sitekey="<%=ENV.fetch('CLOUDFLARE_SITE_KEY')%>"></div>
         <%=yield%>
     </main>
     <%end%>
