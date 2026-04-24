@@ -32,7 +32,14 @@ en:
 
   flash:
     plan_updated: "Plan updated successfully!"
-  
+  number:
+    currency:
+      format:
+        unit: "£"
+        format: "%u%n"
+        separator: ","
+        delimiter: "."
+
   activerecord:
     models:
       plan: "Subscription Plan"

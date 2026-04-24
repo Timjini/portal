@@ -71,12 +71,12 @@ class DashboardMetricsService
   def activity_data # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength
     {
       logins: UserLogin.where(created_at: @start_date..@end_date)
-                       .group_by { |u| u.created_at.to_date }
+              .group_by { |u| u.created_at.to_date }
                        .transform_values(&:count)
                        .transform_keys { |d| d.strftime('%Y-%m-%d') },
 
       assessments: Assessment.where(completed_at: @start_date..@end_date)
-                             .group_by { |a| a.completed_at.to_date }
+                   .group_by { |a| a.completed_at.to_date }
                              .transform_values(&:count)
                              .transform_keys { |d| d.strftime('%Y-%m-%d') },
 

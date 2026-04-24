@@ -16,16 +16,15 @@ RSpec.describe BillingService, type: :request, vcr: true do
     it 'create billing successfully' do
       user.plan = plan
       service = BillingService.new(user)
-      result = service.create_billing
-
-      expect(result).to start_with('https://pay-sandbox.gocardless.com/billing')
+      VCR.use_cassette('gocardless/create_billing_successfully') do
+        result = service.create_billing
+        expect(result).to start_with('https://pay-sandbox.gocardless.com/billing')
+      end
     end
 
-    it 'returns billing request data' do
+    it 'create user subscription', vcr: { record: :new_episodes } do
       service = BillingService.new(user)
-      VCR.use_cassette('gocardless/returns_billing_requests_data') do
-        service.list_billing_requests
-      end
+      service.create_subscription
     end
   end
 end
