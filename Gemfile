@@ -32,7 +32,7 @@ gem 'sidekiq', '~> 7.1', '>= 7.1.2'
 gem 'sidekiq-cron', '~> 1.2'
 
 # Storage
-gem 'activestorage', '7.1.2'
+gem 'activestorage', '7.1.5.2'
 gem 'aws-sdk-s3', '~> 1.136', require: false
 gem 'image_processing', '~> 1.2'
 

@@ -2,7 +2,7 @@
 
 require 'rubygems'
 require 'recurrence'
-
+# TODO: This must GOOOO!
 module TimeSlotsHelper
   def create_recurrent_timeslots(time_slot, title, recurrence_rule, recurrence_end, calendar) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     recurrence_end = DateTime.parse(recurrence_end) if recurrence_end.present?

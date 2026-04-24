@@ -54,7 +54,9 @@ class AccountsController < ApplicationController
           params[:school_name],
           params[:password],
           params[:height],
-          params[:weight]
+          params[:weight],
+          params[:first_name],
+          params[:last_name]
         )
 
         respond_to do |format|
