@@ -24,7 +24,7 @@ RSpec.describe BillingService, type: :request, vcr: true do
 
     it 'create user subscription', vcr: { record: :new_episodes } do
       service = BillingService.new(user)
-      result = service.create_subscription
+      service.create_subscription
     end
   end
 end

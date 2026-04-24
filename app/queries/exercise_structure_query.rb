@@ -64,7 +64,7 @@ class ExerciseStructureQuery # rubocop:disable Metrics/ClassLength
   end
 
   def build_structure_query # rubocop:disable Metrics/MethodLength
-    <<-SQL.squish
+    <<~SQL.squish
       SELECT
         athlete_levels.name AS athlete_level_name,
         kpi_categories.name AS kpi_category_name,
