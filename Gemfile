@@ -33,7 +33,8 @@ gem 'sidekiq-cron', '~> 1.2'
 
 # Storage
 gem 'activestorage', '7.1.5.2'
-gem 'aws-sdk-s3', '~> 1.136', require: false
+gem "aws-sdk-s3", "1.170", require: false
+gem "aws-sdk-core", "3.211"
 gem 'image_processing', '~> 1.2'
 
 # Authentication & security
