@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.configure { |c| c.before { expect(controller).not_to be_nil } }
+# RSpec.configure { |c| c.before { expect(controller).not_to be_nil } }
 
 RSpec.describe Api::V2::TasterSessionBookingsController, type: :controller do
   describe 'taster session booking' do

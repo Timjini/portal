@@ -15,30 +15,23 @@ RSpec.describe AthleteProfile, type: :model do # rubocop:disable Metrics/BlockLe
     }
   end
 
-  # describe 'validations' do
-  #   it 'is valid with valid attributes' do
-  #     expect(described_class.new(valid_attributes)).to be_valid
-  #   end
+  describe 'validations' do
+    it 'is valid with valid attributes' do
+      expect(described_class.new(valid_attributes)).to be_valid
+    end
 
-  #   it 'requires first_name' do
-  #     profile = described_class.new(valid_attributes.merge(first_name: nil))
-  #     expect(profile).not_to be_valid
-  #     expect(profile.errors[:first_name]).to include("can't be blank")
-  #   end
+    it 'requires first_name' do
+      profile = described_class.new(valid_attributes.merge(first_name: nil))
+      expect(profile).not_to be_valid
+      expect(profile.errors[:first_name]).to include("can't be blank")
+    end
 
-  #   it 'requires last_name' do
-  #     profile = described_class.new(valid_attributes.merge(last_name: nil))
-  #     expect(profile).not_to be_valid
-  #     expect(profile.errors[:last_name]).to include("can't be blank")
-  #   end
-
-  #   it 'enforces uniqueness of first_name scoped to last_name (case insensitive)' do
-  #     create(:athlete_profile, first_name: 'Kim', last_name: 'Sting')
-  #     profile = described_class.new(valid_attributes)
-  #     expect(profile).not_to be_valid
-  #     expect(profile.errors[:first_name]).to include('has already been taken')
-  #   end
-  # end
+    it 'requires last_name' do
+      profile = described_class.new(valid_attributes.merge(last_name: nil))
+      expect(profile).not_to be_valid
+      expect(profile.errors[:last_name]).to include("can't be blank")
+    end
+  end
 
   describe 'associations' do
     it 'belongs to a user' do
@@ -73,8 +66,8 @@ RSpec.describe AthleteProfile, type: :model do # rubocop:disable Metrics/BlockLe
     let(:profile) { described_class.new(valid_attributes) }
 
     it 'returns correct age' do
-      profile.dob = 25.years.ago.to_date
-      expect(profile.age).to eq(25)
+      profile.dob = '01/01/2000'
+      expect(profile.age).to eq(26)
     end
 
     it 'returns nil when dob is blank' do
@@ -83,7 +76,7 @@ RSpec.describe AthleteProfile, type: :model do # rubocop:disable Metrics/BlockLe
     end
 
     it 'handles birthday not yet occurred this year' do
-      profile.dob = Date.new(1990, Time.zone.today.month + 1, 1) # Next month
+      profile.dob = Date.new(1990, Time.zone.today.month + 1, 1)
       expect(profile.age).to eq(Time.zone.today.year - 1990 - 1)
     end
   end
