@@ -1,4 +1,4 @@
-<div class="min-h-screen p-4 md:p-8">
+<div class="max-w-7xl mx-auto  min-h-screen p-4 md:p-8">
 
   <%= render 'shared/page_header', title: 'Parent Dashboard', description: "Stay connected with your athlete's professional journey", icon: "family" %>
 
@@ -21,7 +21,7 @@
         Track multiple athlete profiles and progress in one ecosystem.
       </p>
       
-      <%= link_to "/accounts/add_child", class:"btn-brand-primary flex items-center gap-2 py-3 px-6 text-xs w-full sm:w-auto" do %>
+      <%= link_to "/accounts/new", class:"btn-brand-primary flex items-center gap-2 py-3 px-6 text-xs w-full sm:w-auto" do %>
         <span class="material-symbols-outlined text-sm">person_add</span>
         Register Child
       <% end %>

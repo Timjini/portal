@@ -72,6 +72,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_save :normalize_username
   # Callbacks
   before_create :assign_unique_color
+  after_create :create_athlete_profile
 
   # Virtual Attributes
   attr_accessor :dob
@@ -209,6 +210,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
           .where.not(questions: { illness_tag: nil })
           .distinct
           .pluck('questions.illness_tag')
+  end
+
+  def create_athlete_profile
+    return if %w[coach parent_user admin].include?(role)
+
+    AthleteProfile.create(user_id: id)
   end
 
   # Private Methods

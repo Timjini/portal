@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class AccountsController < ApplicationController
-  skip_forgery_protection only: [:create_child_user]
+  skip_forgery_protection only: [:new]
   before_action :authenticate_user!
-  include AthleteProfilesHelper
+  # include AthleteProfilesHelper
 
   # load_and_authorize_resource
 
@@ -23,62 +23,63 @@ class AccountsController < ApplicationController
     @account = User.includes([:athlete_profile])
   end
 
+  # def create
+  #   @account = User.new(account_params)
+  #   @account.email = current_user.email
+  #   @account.parent_id = current_user.id
+  #   @account.role = 'child_user'
+  #   @account.save
+  #   redirect_to accounts_path
+  # end
+
   def create
-    @account = User.new(account_params)
-    @account.email = current_user.email
-    @account.parent_id = current_user.id
-    @account.role = 'child_user'
-    @account.save
-    redirect_to accounts_path
+    account = AccountService.new(params)
+    if account.register
+      respond_to do |format|
+        format.html { redirect_to account_path, notice: 'success'}
+      end
+    else
+      render :new, alert: "Registration failed: #{account.errors.full_messages.to_sentence}"
+    end
   end
 
   # this shouldn't be here :(
-  def create_child_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    safe_action(:create_child_user) do # rubocop:disable Metrics/BlockLength
-      @account = User.new(
-        email: current_user.email,
-        parent_id: current_user.id,
-        first_name: params[:first_name],
-        last_name: params[:last_name],
-        username: params[:username].downcase,
-        password: params[:password],
-        avatar: params[:avatar],
-        address: current_user.address,
-        role: 'child_user'
-      )
+  # def create_child_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  #   safe_action(:create_child_user) do # rubocop:disable Metrics/BlockLength
+  #     @account = User.new(
+  #       email: current_user.email,
+  #       parent_id: current_user.id,
+  #       first_name: params[:first_name],
+  #       last_name: params[:last_name],
+  #       username: params[:username].downcase,
+  #       password: params[:password],
+  #       avatar: params[:avatar],
+  #       address: current_user.address,
+  #       role: 'child_user'
+  #     )
 
-      if @account.save
-        create_athlete_child_profile(
-          @account.id,
-          params[:dob],
-          params[:school_name],
-          params[:password],
-          params[:height],
-          params[:weight],
-          params[:first_name],
-          params[:last_name]
-        )
+  #     if @account.save
+  #       respond_to do |format|
+  #         format.html { redirect_to root_path, notice: 'Child created successfully' } # rubocop:disable Rails/I18nLocaleTexts
+  #         format.json { render json: { status: 'success' } }
+  #       end
+  #     else
+  #       respond_to do |format|
+  #         format.html do
+  #           flash[:alert] = @account.errors.full_messages.to_sentence
+  #           redirect_to add_child_accounts_path
+  #         end
+  #         format.json do
+  #           render json: {
+  #             status: 'error',
+  #             errors: @account.errors.full_messages
+  #           }, status: :unprocessable_content
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
-        respond_to do |format|
-          format.html { redirect_to root_path, notice: 'Child created successfully' } # rubocop:disable Rails/I18nLocaleTexts
-          format.json { render json: { status: 'success' } }
-        end
-      else
-        respond_to do |format|
-          format.html do
-            flash[:alert] = @account.errors.full_messages.to_sentence
-            redirect_to add_child_accounts_path
-          end
-          format.json do
-            render json: {
-              status: 'error',
-              errors: @account.errors.full_messages
-            }, status: :unprocessable_content
-          end
-        end
-      end
-    end
-  end
 
   def all_accounts # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     base_scope = User.includes(:athlete_profile, :plan, avatar_attachment: :blob)

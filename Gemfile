@@ -15,6 +15,7 @@ gem 'esbuild-rails'
 gem 'jsbundling-rails'
 gem 'sprockets-rails'
 gem 'tailwindcss-rails', '~> 3.0'
+gem 'view_component', '~> 3.8'
 
 # Integrations
 gem 'gocardless_pro'

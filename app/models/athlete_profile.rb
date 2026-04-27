@@ -7,8 +7,9 @@ class AthleteProfile < ApplicationRecord
   has_one :athlete_level, foreign_key: 'level' # rubocop:disable Rails/HasManyOrHasOneDependent,Rails/InverseOf
 
   # Validations
-  validates :first_name, :last_name, presence: true
-  validates :last_name, :last_name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :user_id, presence: true
   # validates :first_name, uniqueness: { scope: :last_name, case_sensitive: false }
 
   # Enums

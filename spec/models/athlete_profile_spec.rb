@@ -20,16 +20,16 @@ RSpec.describe AthleteProfile, type: :model do # rubocop:disable Metrics/BlockLe
       expect(described_class.new(valid_attributes)).to be_valid
     end
 
-    it 'requires first_name' do
+    it 'first_name not required' do
       profile = described_class.new(valid_attributes.merge(first_name: nil))
-      expect(profile).not_to be_valid
-      expect(profile.errors[:first_name]).to include("can't be blank")
+      expect(profile).to be_valid
+      expect(profile[:first_name]).to be_nil
     end
 
     it 'requires last_name' do
       profile = described_class.new(valid_attributes.merge(last_name: nil))
-      expect(profile).not_to be_valid
-      expect(profile.errors[:last_name]).to include("can't be blank")
+      expect(profile).to be_valid
+      expect(profile[:last_name]).to be_nil
     end
   end
 

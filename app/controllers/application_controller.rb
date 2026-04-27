@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from StandardError, with: :render_error
   after_action :track_login, if: :should_track_login?
+  layout :resolve_layout
 
   protected
 
@@ -47,6 +48,12 @@ class ApplicationController < ActionController::Base
                       user_id: current_user&.id
                     })
     raise
+  end
+
+  def resolve_layout
+    return unless user_signed_in? && current_user.role == 'admin'
+
+    'admin'
   end
 
   private

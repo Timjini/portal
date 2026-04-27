@@ -4,6 +4,8 @@ class Competition < ApplicationRecord
   has_one_attached :image
   has_many :competition_entries, dependent: :destroy
 
+  validates :title, length: { minimum: 12 }
+
   enum :status, {
     active: 'active',
     draft: 'draft',
