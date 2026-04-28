@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class AccountsController < ApplicationController
-  skip_forgery_protection only: [:create_child_user]
+  skip_forgery_protection only: [:new]
   before_action :authenticate_user!
-  include AthleteProfilesHelper
+  # include AthleteProfilesHelper
 
   # load_and_authorize_resource
 
@@ -20,63 +20,21 @@ class AccountsController < ApplicationController
   end
 
   def show
-    @account = User.includes([:athlete_profile])
+    @user = User.find(params[:id])
+  end
+
+  def new
+    @child = current_user.children.build
+    @child.build_athlete_profile
   end
 
   def create
-    @account = User.new(account_params)
-    @account.email = current_user.email
-    @account.parent_id = current_user.id
-    @account.role = 'child_user'
-    @account.save
-    redirect_to accounts_path
-  end
-
-  # this shouldn't be here :(
-  def create_child_user # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    safe_action(:create_child_user) do # rubocop:disable Metrics/BlockLength
-      @account = User.new(
-        email: current_user.email,
-        parent_id: current_user.id,
-        first_name: params[:first_name],
-        last_name: params[:last_name],
-        username: params[:username].downcase,
-        password: params[:password],
-        avatar: params[:avatar],
-        address: current_user.address,
-        role: 'child_user'
-      )
-
-      if @account.save
-        create_athlete_child_profile(
-          @account.id,
-          params[:dob],
-          params[:school_name],
-          params[:password],
-          params[:height],
-          params[:weight],
-          params[:first_name],
-          params[:last_name]
-        )
-
-        respond_to do |format|
-          format.html { redirect_to root_path, notice: 'Child created successfully' } # rubocop:disable Rails/I18nLocaleTexts
-          format.json { render json: { status: 'success' } }
-        end
-      else
-        respond_to do |format|
-          format.html do
-            flash[:alert] = @account.errors.full_messages.to_sentence
-            redirect_to add_child_accounts_path
-          end
-          format.json do
-            render json: {
-              status: 'error',
-              errors: @account.errors.full_messages
-            }, status: :unprocessable_content
-          end
-        end
-      end
+    @child = current_user.children.build(account_params)
+    if @child.save
+      redirect_to dashboard_path, notice: 'Athlete profile created!' # rubocop:disable Rails/I18nLocaleTexts
+    else
+      flash.now[:alert] = 'Please fix the errors below.' # rubocop:disable Rails/I18nLocaleTexts
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -120,6 +78,9 @@ class AccountsController < ApplicationController
   private
 
   def account_params
-    params.require(:user).permit(:email, :username, :password, :role)
+    params.require(:user).permit(
+      :username, :email, :first_name, :last_name, :password, :password_confirmation, :role, :parent_id, :avatar,
+      athlete_profile_attributes: %i[id dob school_name height weight]
+    )
   end
 end

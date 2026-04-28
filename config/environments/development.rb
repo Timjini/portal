@@ -118,7 +118,7 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
-  # Action Cable 
+  # Action Cable
   config.action_cable.url = 'wss://localhost:3000/cable'
 
   # Raise error when a before_action's only/except options reference missing actions

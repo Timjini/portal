@@ -1,0 +1,22 @@
+<nav class="sticky top-0 z-40 w-full px-4 py-3 bg-white/40 dark:bg-black/20 backdrop-blur-xl border-b border-white/20 dark:border-white/10">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+        <div class="flex items-center gap-2">
+            <%= image_tag('cfs-dark.png', alt: "Logo", class: 'logo h-16 w-auto hover:opacity-80 transition-opacity') %>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button class="relative p-2 text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/10 rounded-full transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                </svg>
+                <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 border-2 border-white dark:border-slate-900 rounded-full"></span>
+            </button>
+
+            <button class="flex items-center gap-2 p-0.5 pr-2 hover:bg-white/50 dark:hover:bg-white/10 rounded-full transition-all">
+                <img src="https://ui-avatars.com/api/?name=User+Name&background=0D8ABC&color=fff" alt="Profile" class="w-8 h-8 rounded-full border border-white/50 shadow-sm" />
+            </button>
+        </div>
+    </div>
+</nav>

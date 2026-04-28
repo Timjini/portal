@@ -18,7 +18,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Associations
   has_one_attached :avatar
-  has_one :athlete_profile, dependent: :destroy
+  has_one :athlete_profile, dependent: :destroy, inverse_of: :user
   has_many :comments, dependent: :destroy
   has_many :qr_codes, dependent: :destroy
   has_many :user_checklists, dependent: :destroy
@@ -39,6 +39,11 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one :athlete_level # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :attendances, dependent: :destroy
   has_many :competition_entries, dependent: :destroy
+
+  belongs_to :parent, class_name: 'User', optional: true
+
+  # Attributes
+  accepts_nested_attributes_for :athlete_profile
 
   # Scopes
   scope :coaches, -> { where(role: 'coach') }
@@ -72,6 +77,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_save :normalize_username
   # Callbacks
   before_create :assign_unique_color
+  after_create :create_athlete_profile
 
   # Virtual Attributes
   attr_accessor :dob
@@ -209,6 +215,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
           .where.not(questions: { illness_tag: nil })
           .distinct
           .pluck('questions.illness_tag')
+  end
+
+  def create_athlete_profile
+    return if %w[coach parent_user admin].include?(role)
+
+    AthleteProfile.create(user_id: id)
   end
 
   # Private Methods

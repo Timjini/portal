@@ -1,21 +1,24 @@
 # frozen_string_literal: true
 
 class AthleteProfile < ApplicationRecord
+  MIN_AGE = 8
+  MAX_AGE = 21
   # Associations
-  belongs_to :user, optional: true
+  belongs_to :user, inverse_of: :athlete_profile
   has_one_attached :image
   has_one :athlete_level, foreign_key: 'level' # rubocop:disable Rails/HasManyOrHasOneDependent,Rails/InverseOf
 
   # Validations
-  validates :first_name, :last_name, presence: true
-  validates :last_name, :last_name, presence: true
-  # validates :first_name, uniqueness: { scope: :last_name, case_sensitive: false }
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validate :must_be_within_age_range
+  delegate :first_name, :last_name, :email, to: :user, allow_nil: true
 
   # Enums
   enum :level, {
     development: 0,
     intermediate: 1,
-    advanced: 2 # Fixed typo from 'advance' to 'advanced'
+    advanced: 2
   }, prefix: true
 
   # Callbacks
@@ -105,5 +108,14 @@ class AthleteProfile < ApplicationRecord
 
   def set_default_level
     self.level ||= :development
+  end
+
+  def must_be_within_age_range
+    return false if dob.blank?
+
+    current_age = age
+    return unless current_age < 8 || current_age > 21
+
+    errors.add(:dob, "must result in an age between 8 and 21 (currently #{current_age})")
   end
 end

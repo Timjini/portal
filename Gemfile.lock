@@ -564,6 +564,10 @@ GEM
     uniform_notifier (1.18.0)
     uri (1.1.1)
     vcr (6.4.0)
+    view_component (3.24.0)
+      activesupport (>= 5.2.0, < 8.2)
+      concurrent-ruby (~> 1)
+      method_source (~> 1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -659,6 +663,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   vcr
+  view_component
   web-console
   webmock
   will_paginate

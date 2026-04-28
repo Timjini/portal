@@ -75,11 +75,7 @@ Rails.application.routes.draw do
   resources :reviews
 
   # Accounts Routes
-  resources :accounts, only: %i[new create index show edit update] do
-    get 'all_accounts', on: :collection, to: 'accounts#all_accounts'
-    get 'add_child', on: :collection, to: 'accounts#add_child'
-    post 'create_child_user', on: :collection, to: 'accounts#create_child_user'
-  end
+  resources :accounts, only: %i[new create index show edit update]
 
   # Notification Routes
   resources :notifications, only: %i[index show update] do
