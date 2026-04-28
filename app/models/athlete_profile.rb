@@ -114,8 +114,8 @@ class AthleteProfile < ApplicationRecord
     return false if dob.blank?
 
     current_age = age
-    if current_age < 8 || current_age > 21
-      errors.add(:dob, "must result in an age between 8 and 21 (currently #{current_age})")
-    end
+    return unless current_age < 8 || current_age > 21
+
+    errors.add(:dob, "must result in an age between 8 and 21 (currently #{current_age})")
   end
 end

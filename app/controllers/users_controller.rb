@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UsersController < ApplicationController
+class UsersController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :authenticate_user!, except: [:delete_user]
   skip_before_action :verify_authenticity_token, only: [:delete_user]
   load_and_authorize_resource
@@ -100,6 +100,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(params[:id])
+    if @user.update(athlete_profile_params)
+      redirect_to user_path(@user), notice: 'Profile updated successfully.' # rubocop:disable Rails/I18nLocaleTexts
+    else
+      # Re-render the form with 422 status for Turbo
+      render :edit, status: :unprocessable_content
+    end
+  end
+
   private
 
   def user_params
@@ -110,11 +120,9 @@ class UsersController < ApplicationController
   end
 
   def athlete_profile_params
-    return {} if params[:user][:athlete_profile].blank?
-
-    params.require(:user).require(:athlete_profile).permit(
-      :id, :first_name, :last_name, :dob, :height,
-      :weight, :school_name, :level, :power_of_ten
+    params.require(:user).permit(
+      :username, :email, :first_name, :last_name, :password, :password_confirmation, :role, :parent_id, :avatar,
+      athlete_profile_attributes: %i[id dob school_name height weight power_of_ten level]
     )
   end
 
