@@ -25,6 +25,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def new
+    @user = User.new
+    @user.athlete_profile.build
+  end
+
+  def edit
+    @user = User.find(params[:id])
+    @profile = @user.athlete_profile || @user.build_athlete_profile
+  end
+
   def delete_user
     @user = User.find(params[:id])
 
@@ -35,11 +45,6 @@ class UsersController < ApplicationController
       flash[:alert] = 'User not deleted' # rubocop:disable Rails/I18nLocaleTexts
       render json: { success: false }
     end
-  end
-
-  def edit
-    @user = User.find(params[:id])
-    @profile = @user.athlete_profile || @user.build_athlete_profile
   end
 
   def update_user # rubocop:disable Metrics/AbcSize

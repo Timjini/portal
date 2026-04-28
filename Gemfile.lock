@@ -663,7 +663,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   vcr
-  view_component (~> 3.8)
+  view_component
   web-console
   webmock
   will_paginate

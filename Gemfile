@@ -15,7 +15,7 @@ gem 'esbuild-rails'
 gem 'jsbundling-rails'
 gem 'sprockets-rails'
 gem 'tailwindcss-rails', '~> 3.0'
-gem 'view_component', '~> 3.8'
+gem 'view_component'
 
 # Integrations
 gem 'gocardless_pro'
@@ -34,8 +34,8 @@ gem 'sidekiq-cron', '~> 1.2'
 
 # Storage
 gem 'activestorage', '7.1.5.2'
-gem "aws-sdk-s3", "1.170", require: false
-gem "aws-sdk-core", "3.211"
+gem 'aws-sdk-core', '3.211'
+gem 'aws-sdk-s3', '1.170', require: false
 gem 'image_processing', '~> 1.2'
 
 # Authentication & security

@@ -167,7 +167,7 @@ RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
   # end
 
   # Test callbacks
-  describe 'callbacks' do
+  describe 'callbacks' do # rubocop:disable Metrics/BlockLength
     describe 'before_create' do
       it 'assigns a unique color' do
         new_user = build(:user)

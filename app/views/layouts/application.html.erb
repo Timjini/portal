@@ -48,7 +48,7 @@
     <% if user_signed_in? %>
     <main class="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 via-stone-100 to-gray-50 dark:from-[#01003d] dark:via-stone-900 dark:to-[#01003d]">
         <%= render 'shared/ui/top_navigation_bar'%>
-        <div class="flex-1 px-0 pb-4">
+        <div class="flex-1 px-0 pb-4 mt-2">
             <%= yield %>
         </div>
         <%= render 'shared/ui/bottom_navigation_bar'%>

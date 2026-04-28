@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AccountService
   def initialize(params)
     @params = params
@@ -11,7 +13,7 @@ class AccountService
       AthleteProfile.create!(athlete_params.merge(user_id: @user.id))
     end
   rescue ActiveRecord::RecordInvalid => e
-    Rails.logger.error("Registration failed: #{e.message}")
+    "Registration failed: #{e.message}"
   end
 
   private
@@ -35,8 +37,7 @@ class AccountService
       last_name: @params[:last_name],
       username: @params[:username].downcase,
       password: @params[:password],
-      avatar: @params[:avatar],
-      role: 'child_user'
+      avatar: @params[:avatar]
     }
   end
 end

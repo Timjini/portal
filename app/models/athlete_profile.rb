@@ -2,15 +2,16 @@
 
 class AthleteProfile < ApplicationRecord
   # Associations
-  belongs_to :user, optional: true
+  belongs_to :user, inverse_of: :athlete_profile
   has_one_attached :image
   has_one :athlete_level, foreign_key: 'level' # rubocop:disable Rails/HasManyOrHasOneDependent,Rails/InverseOf
 
   # Validations
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :user_id, presence: true
   # validates :first_name, uniqueness: { scope: :last_name, case_sensitive: false }
+  #
+  delegate :first_name, :last_name, :email, to: :user, allow_nil: true
 
   # Enums
   enum :level, {
