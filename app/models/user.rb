@@ -191,12 +191,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     p.power_of_ten
   end
 
-  def child_password
-    p = AthleteProfile.find_by(user_id: id)
-    return '---' if p.nil?
+  # for testing purpose
+  # def child_password
+  #   p = AthleteProfile.find_by(user_id: id)
+  #   return '---' if p.nil?
 
-    p.child_password
-  end
+  #   p.child_password
+  # end
 
   def athlete_profile_url
     if athlete_profile

@@ -37,7 +37,7 @@ class AthleteProfilesController < ApplicationController # rubocop:disable Metric
       level_id: @levels.map(&:id)
     )
 
-    # ⭐ One SQL query to count completed per level
+    # One SQL query to count completed per level
     @completed_counts = Assessment
                         .where(
                           athlete_id: @athlete.user.id,

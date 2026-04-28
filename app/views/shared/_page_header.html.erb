@@ -1,9 +1,12 @@
-<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
+ <% title_arr = title.split(' ') %>
+
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-1">
     <div>
       <h1 class="text-3xl font-black text-[#01003d] flex items-center gap-3 uppercase tracking-tighter dark:text-gray-100">
           <%= render "shared/common/icons/#{icon}"%>
-        <%= title %>
+          <%= title_arr[0] %>  <span class=" text-[#01003d] dark:text-gray-200 londrina-outline-regular text-4xl" ><%= title_arr[-1]%></span>
       </h1>
+      <div class="w-12 h-1 bg-[#01003d] mt-3 rounded-full"></div>
       <p class="text-gray-500 mt-2 font-medium"><%= description %></p>
     </div>
     <div class="mt-4 md:mt-0 hidden">

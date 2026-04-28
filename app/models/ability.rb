@@ -27,6 +27,7 @@ class Ability
       can %i[read update edit update_user], AthleteProfile, user_id: user.children.pluck(:id)
 
     else
+      can :index, Feed
       # Default for athlete, child_user
       can :index, Competition
       # Users can manage their own profile
