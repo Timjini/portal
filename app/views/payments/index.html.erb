@@ -1,6 +1,6 @@
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-6">
-        <%= render 'shared/page_header_with_nav', title:"Financial Center", description: "Subscription management & billing records" %>
+        <%= render 'shared/page_header', title:"Financial Center", description: "Subscription management & billing records" , icon:'payment'%>
     </div>
     <% if @payment_information[:current_plan].present? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">

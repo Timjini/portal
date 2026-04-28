@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 class FeedsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_feed, only: %i[edit update destroy]
 
+  include FeedHelper
+
   def index
-    @feeds = Feed.all.order(created_at: :desc)
+    @feeds = Feed.all.paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -19,7 +22,7 @@ class FeedsController < ApplicationController
     @feed.creator = current_user
 
     if @feed.save
-      redirect_to dashboard_path, notice: 'Post created!' # rubocop:disable Rails/I18nLocaleTexts
+      redirect_to feed_path(@feed), notice: 'Post created!' # rubocop:disable Rails/I18nLocaleTexts
     else
       flash.now[:alert] = 'Please fix the errors below.' # rubocop:disable Rails/I18nLocaleTexts
       render :new, status: :unprocessable_content
@@ -28,10 +31,10 @@ class FeedsController < ApplicationController
 
   def update
     if @feed.update(feed_params)
-      redirect_to dashboard_path, notice: 'Post updated!' # rubocop:disable Rails/I18nLocaleTexts
+      redirect_to feed_path(@feed), notice: 'Post updated!' # rubocop:disable Rails/I18nLocaleTexts
     else
       flash.now[:alert] = 'Update failed.' # rubocop:disable Rails/I18nLocaleTexts
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

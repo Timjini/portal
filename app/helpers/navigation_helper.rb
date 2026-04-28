@@ -23,8 +23,7 @@ module NavigationHelper
       { name: 'Kpis', path: kpis_path, icon: 'data' },
       { name: 'Assessments', path: coaches_assessments_path, icon: 'assessment' },
       { name: 'Attendance', path: attendance_index_path, icon: 'attendance' },
-      { name: 'Calendar', path: coach_calendar_index_path, icon: 'calendar' },
-      { name: 'Time Slots', path: time_slots_path, icon: 'time_slot' },
+      { name: 'Feed', path: feeds_path, icon: 'calendar' },
       { name: 'Reports', path: reports_questionnaires_path, icon: 'reports' },
       {
         name: 'Content',

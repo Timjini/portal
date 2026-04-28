@@ -1,0 +1,5 @@
+<div class="max-w-7xl mx-auto  min-h-screen py-2">
+    <% @feeds.each do |feed|%>
+        <%= render 'feed_media_card', feed: feed%>
+    <% end %>
+</div>

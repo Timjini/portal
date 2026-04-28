@@ -13,4 +13,12 @@ class Feed < ApplicationRecord
   def event_date
     metadata&.fetch('event_date', nil)
   end
+
+  def feed_thumbnail
+    if media.attached?
+      media
+    else
+      'dashboard.jpg'
+    end
+  end
 end
