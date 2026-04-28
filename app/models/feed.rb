@@ -3,6 +3,7 @@
 class Feed < ApplicationRecord
   belongs_to :creator, class_name: 'User', foreign_key: 'user_id', inverse_of: :feeds
   has_one_attached :media
+  serialize :metadata, JSON
 
   validates :feed_type, inclusion: { in: %w[video youtube event image] }
 
