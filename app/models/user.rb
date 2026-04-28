@@ -39,6 +39,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one :athlete_level # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :attendances, dependent: :destroy
   has_many :competition_entries, dependent: :destroy
+  has_many :feeds, dependent: :destroy
 
   belongs_to :parent, class_name: 'User', optional: true
 

@@ -1,0 +1,62 @@
+<%= form_with model: feed, class: "space-y-6" do |f| %>  
+  <% if feed.errors.any? %>
+    <div id="form-errors" class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 text-red-700 rounded-xl">
+      <p class="font-bold uppercase tracking-wide text-sm mb-2">
+        <%= pluralize(feed.errors.count, "error") %> prohibited this post from being saved:
+      </p>
+      <ul class="list-disc list-inside text-sm">
+        <% feed.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 gap-6">
+    <%# Title %>
+    <div>
+      <%= f.label :title, "Post Title", class: "label-brand-caps" %>
+      <%= f.text_field :title, class: "input-brand-underline", placeholder: "e.g. Morning Sprints Technique" %>
+    </div>
+
+    <%# Feed Type %>
+    <div>
+      <%= f.label :feed_type, "Content Type", class: "label-brand-caps" %>
+      <%= f.select :feed_type, 
+          [['YouTube Video', 'youtube'], ['Direct Video Upload', 'video'], ['Event/Link', 'event']], 
+          { prompt: "Select Type" }, 
+          class: "input-brand-underline" %>
+    </div>
+
+    <%# Metadata URL - Logic to handle Edit pre-filling %>
+    <div>
+      <%= f.label :url, "Link / YouTube URL", class: "label-brand-caps" %>
+      <%= f.text_field :url, 
+          value: feed.metadata&.dig('url'), 
+          name: "feed[metadata][url]", 
+          class: "input-brand-underline",
+          placeholder: "https://..." %>
+    </div>
+
+    <%# File Upload %>
+    <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700">
+      <%= f.label :media, "Upload Media (Image/Video)", class: "label-brand-caps !mb-3" %>
+      <%= f.file_field :media, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" %>
+      
+      <% if feed.media.attached? && feed.persisted? %>
+        <p class="mt-2 text-xs text-emerald-600 font-bold">✓ Currently contains: <%= feed.media.filename %></p>
+      <% end %>
+    </div>
+
+    <%# Description %>
+    <div>
+      <%= f.label :description, "Content Details", class: "label-brand-caps" %>
+      <%= f.text_area :description, rows: 4, class: "input-brand-underline", placeholder: "Explain the post..." %>
+    </div>
+
+    <div class="pt-4">
+      <%= f.submit feed.new_record? ? "Broadcast to Athletes" : "Update Post", 
+          class: "btn-brand-primary w-full" %>
+    </div>
+  </div>
+<% end %>
