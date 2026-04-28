@@ -63,7 +63,7 @@
                     <div>
                         <%= form.label :email, "Email (optional/Guardian's)", class: "label-brand-caps" %>
                         <%# Removed hardcoded value to allow for validation errors to persist %>
-                        <%= form.email_field :email, class: "input-brand-underline", placeholder: "@" %>
+                        <%= form.email_field :email, class: "input-brand-underline", placeholder: "@", value: current_user.email %>
                     </div>
 
                     <div>
@@ -73,7 +73,7 @@
 
                     <div>
                         <%= form.label :last_name, class: "label-brand-caps" %>
-                        <%= form.text_field :last_name, class: "input-brand-underline", placeholder: "Last Name", required: true %>
+                        <%= form.text_field :last_name, class: "input-brand-underline", placeholder: "Last Name", value: current_user.last_name, required: true %>
                     </div>
 
                     <%# --- ATHLETE PROFILE FIELDS START --- %>
@@ -100,9 +100,7 @@
                         </div>
                     </div>
                     <% end %>
-                    <%# --- ATHLETE PROFILE FIELDS END --- %>
 
-                    <div class="grid grid-cols-2 gap-6">
                         <div class="" data-controller="visibility">
                             <%= form.label :password, "Account Password", class: "label-brand-caps" %>
                             <div class="relative">
@@ -114,20 +112,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        <div class="" data-controller="visibility">
-                            <%# Devise uses :password_confirmation, not :password_confirm %>
-                            <%= form.label :password_confirmation, "Confirm Password", class: "label-brand-caps" %>
-                            <div class="relative">
-                                <%= form.password_field :password_confirmation, placeholder: "••••••••", 
-                        class: "input-brand-underline pr-12",
-                        data: { visibility_target: "password" } %>
-                                <button type="button" class="absolute bottom-3 right-0 p-1 text-gray-400 hover:text-[#01003d] transition-colors" data-action="click->visibility#toggleVisibility">
-                                    <%= render "icons/eye" %>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="pt-6">
                         <%= form.submit "Deploy Athlete Account", 
