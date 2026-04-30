@@ -1,8 +1,18 @@
-<div class="max-w-5xl mx-auto px-4 py-10">
-  <%= form_with model: @user, url: update_user_path(@user), local: true, data: { turbo: true }, class: "space-y-8" do |form| %>
-    
+<div class="max-w-5xl mx-auto px-4">
+  <%= form_with model: @user, class: "space-y-8" do |form| %>
     <div class="bg-white dark:bg-slate-900 shadow-xl shadow-blue-900/5 overflow-hidden border border-gray-100 dark:border-gray-800">
-      
+      <% if @user.errors.any? %>
+            <div id="form-errors" class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 text-red-700">
+                <p class="font-bold uppercase tracking-wide text-sm mb-2">
+                <%= pluralize(@user.errors.count, "error") %> prohibited this account from being saved:
+                </p>
+                <ul class="list-disc list-inside text-sm">
+                <% @user.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+                </ul>
+            </div>
+      <% end %>
       <div class="p-8 md:p-12 border-b border-gray-50 dark:border-gray-800">
         <div class="flex flex-col md:flex-row justify-between items-center gap-6">
           <div class="text-center md:text-left">
@@ -76,7 +86,7 @@
             <h3 class="text-sm font-black uppercase tracking-widest text-[#01003d] dark:text-white">Performance Vitals</h3>
           </div>
 
-          <%= form.fields_for :athlete_profile, @profile do |profile_form| %>
+          <%= form.fields_for :athlete_profile  do |profile_form| %>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div class="space-y-1">
                 <%= profile_form.label :dob, "Date of Birth", class: "label-brand-caps" %>

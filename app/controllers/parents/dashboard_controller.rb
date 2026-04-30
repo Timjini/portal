@@ -2,6 +2,7 @@
 
 module Parents
   class DashboardController < ApplicationController
+    layout 'portal'
     def index
       @children = User.where(parent_id: current_user.id)
                       .includes(:avatar_attachment, :athlete_profile, :attendances)

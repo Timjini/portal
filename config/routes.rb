@@ -134,6 +134,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :feeds
   # Admin API Routes
   namespace :api do
     namespace :v1 do
