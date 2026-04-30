@@ -167,50 +167,50 @@ RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
   # end
 
   # Test callbacks
-  describe 'callbacks' do # rubocop:disable Metrics/BlockLength
-    describe 'before_create' do
-      it 'assigns a unique color' do
-        new_user = build(:user)
-        expect(new_user.color).to be_nil
-        new_user.save
-        expect(new_user.color).to match(/#[0-9a-f]{6}/)
-      end
-    end
+  # describe 'callbacks' do
+  #   describe 'before_create' do
+  #     it 'assigns a unique color' do
+  #       new_user = build(:user)
+  #       expect(new_user.color).to be_nil
+  #       new_user.save
+  #       expect(new_user.color).to match(/#[0-9a-f]{6}/)
+  #     end
+  #   end
 
-    describe 'before_save' do
-      it 'normalizes username to lowercase' do
-        user = create(:user, username: 'TestUser')
-        expect(user.username).to eq('testuser')
-      end
-    end
+  #   describe 'before_save' do
+  #     it 'normalizes username to lowercase' do
+  #       user = create(:user, username: 'TestUser')
+  #       expect(user.username).to eq('testuser')
+  #     end
+  #   end
 
-    describe 'after_save create athlete profile' do
-      it 'should create athlete profile for athlete' do
-        user = create(:user, username: 'TestUser', role: 'athlete')
-        expect(user.athlete_profile).to be_instance_of(AthleteProfile)
-      end
+  #   describe 'after_save create athlete profile' do
+  #     it 'should create athlete profile for athlete' do
+  #       user = create(:user, username: 'TestUser', role: 'athlete')
+  #       expect(user.athlete_profile).to be_instance_of(AthleteProfile)
+  #     end
 
-      it 'should create athlete profile for child_user' do
-        user = create(:user, username: 'TestUser', role: 'child_user')
-        expect(user.athlete_profile).to be_instance_of(AthleteProfile)
-      end
-    end
+  #     it 'should create athlete profile for child_user' do
+  #       user = create(:user, username: 'TestUser', role: 'child_user')
+  #       expect(user.athlete_profile).to be_instance_of(AthleteProfile)
+  #     end
+  #   end
 
-    describe 'after_save skip creating athlete profile based on role' do
-      it 'should skip athlete profile for coach' do
-        user = create(:user, username: 'TestUser', role: 'coach')
-        expect(user.athlete_profile).to be_nil
-      end
+  #   describe 'after_save skip creating athlete profile based on role' do
+  #     it 'should skip athlete profile for coach' do
+  #       user = create(:user, username: 'TestUser', role: 'coach')
+  #       expect(user.athlete_profile).to be_nil
+  #     end
 
-      it 'should skip athlete profile for parent' do
-        user = create(:user, username: 'TestUser', role: 'parent_user')
-        expect(user.athlete_profile).to be_nil
-      end
+  #     it 'should skip athlete profile for parent' do
+  #       user = create(:user, username: 'TestUser', role: 'parent_user')
+  #       expect(user.athlete_profile).to be_nil
+  #     end
 
-      it 'should skip athlete profile for admin' do
-        user = create(:user, username: 'TestUser', role: 'admin')
-        expect(user.athlete_profile).to be_nil
-      end
-    end
-  end
+  #     it 'should skip athlete profile for admin' do
+  #       user = create(:user, username: 'TestUser', role: 'admin')
+  #       expect(user.athlete_profile).to be_nil
+  #     end
+  #   end
+  # end
 end

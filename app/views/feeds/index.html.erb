@@ -1,0 +1,20 @@
+  <% if @feeds.any? %>
+    <%= render_feed_by_role  %>
+  <% else %>
+    <%# --- Empty State Div --- %>
+    <div class="flex flex-col items-center justify-center py-20 px-6 text-center bg-white border border-dashed border-gray-300 rounded-xl my-6">
+      <div class="h-20 w-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+        <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-bold text-gray-900">Your feed is empty</h3>
+      <p class="text-sm text-gray-500 max-w-xs mt-1">
+        There are no posts to show right now. Check back later or start by creating a new post.
+      </p>
+      <%= link_to new_feed_path, class: "mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors" do %>
+        <svg class="-ml-1 mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+        Create Post
+      <% end %>
+    </div>
+  <% end %>

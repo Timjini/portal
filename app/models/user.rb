@@ -39,6 +39,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one :athlete_level # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :attendances, dependent: :destroy
   has_many :competition_entries, dependent: :destroy
+  has_many :feeds, dependent: :destroy
 
   belongs_to :parent, class_name: 'User', optional: true
 
@@ -190,12 +191,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     p.power_of_ten
   end
 
-  def child_password
-    p = AthleteProfile.find_by(user_id: id)
-    return '---' if p.nil?
+  # for testing purpose
+  # def child_password
+  #   p = AthleteProfile.find_by(user_id: id)
+  #   return '---' if p.nil?
 
-    p.child_password
-  end
+  #   p.child_password
+  # end
 
   def athlete_profile_url
     if athlete_profile
